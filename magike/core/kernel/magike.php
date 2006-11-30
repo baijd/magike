@@ -6,13 +6,14 @@
  * License   : GNU General Public License 2.0
  *********************************/
 
- class Magike
- {
-	public $stack;
-
+class Magike
+{
 	function __construct($args)
 	{
+		global $stack;
 
+		//初始化堆栈,定义为全局变量
+		$stack = NULL;
 	}
- }
+}
 ?>
