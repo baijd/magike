@@ -6,8 +6,8 @@
  * License   : GNU General Public License 2.0
  *********************************/
 
- class Template extends module
- {
+class Template extends module
+{
 	function __construct($args)
 	{
 
@@ -25,9 +25,9 @@
 		{
 			if(!is_dir($args['template_path']))
 			{
-				
+
 			}
 		}
 	}
- }
+}
 ?>
