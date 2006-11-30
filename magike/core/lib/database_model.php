@@ -6,10 +6,10 @@
  * License   : GNU General Public License 2.0
  *********************************/
 
-$dblink=@mysql_connect(__DBHOST__,__DBUSER__,__DBPASS__) or die(Module::_exception(E_DATABASEINSTALL,mysql_error()));
-@mysql_select_db(__DBNAME__,$dblink) or die(Module::_exception(E_DATABASECONNECT,mysql_error(),'errorDatabaseCallback'));
+$dblink=@mysql_connect(__DBHOST__,__DBUSER__,__DBPASS__) or die(MagikeObject::_exception(E_DATABASEINSTALL,mysql_error()));
+@mysql_select_db(__DBNAME__,$dblink) or die(MagikeObject::_exception(E_DATABASECONNECT,mysql_error(),'errorDatabaseCallback'));
 
-class DatabaseModel extends Module
+class DatabaseModel extends MagikeObject
 {
  	function __construct()
  	{
@@ -41,10 +41,14 @@ class DatabaseModel extends Module
  	public function fectch($args,$callback = NULL,$expection = false)
  	{
  		//设定查询次数
- 		$times = $this->stackPop('system','query_times');
- 		$this->stackPush('system','query_times',$times + 1);
+ 		if(!isset($this->stack['system']['query_times']))
+ 		{
+			$this->setStack('system','query_times',0);
+ 		}
+ 		$this->setStack('system','query_times',$this->stack['system']['query_times']);
 
  		//处理table子句
+ 		$args['table'] = replace('table.',__DBPREFIX__,$args['table']);
 		$table = ' FROM '.$args['table'];
 
 		//处理groupby子句
