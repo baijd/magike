@@ -8,19 +8,31 @@
 
 class MagikeObject
 {
-	public $stack,$database;
+	public $stack;
+	public $database;
 
 	public function __construct()
 	{
-		global $stack,$database;
+		global $stack;
 		$this->stack = $stack;
+	}
+
+	public function initDatabase()
+	{
+		global $database;
+
+		if(!is_a($database,'DatabaseModel'))
+		{
+			$database = new DatabaseModel();
+		}
 		$this->database = $database;
 	}
 
 	public function initStack($value)
 	{
 		global $stack;
-		$stack = array_merge($stack,$value);
+		$stack = $value;
+		$this->stack = $stack;
 	}
 
 	public function setStack($stackType,$stackName,$stackValue)
