@@ -42,10 +42,13 @@ class DatabaseModel extends Module
  	{
  		//设定查询次数
  		$times = $this->stackPop('system','query_times');
- 		$this->stackPush('system','query_times',$times);
+ 		$this->stackPush('system','query_times',$times + 1);
 
  		//处理table子句
 		$table = ' FROM '.$args['table'];
+
+		//处理groupby子句
+		$groupby = isset($args['groupby']) ? ' GROUP BY '.$args['groupby'] : '';
 
 		//处理fields子句
 		$fields = isset($args['fields']) ? 'SELECT '.$args['fields'] : 'SELECT *';
@@ -61,28 +64,14 @@ class DatabaseModel extends Module
 
 		//处理where子句
 		$where = self::praseWhereSentence($args);
-		$query = $fields.$table.$where.$orderby.$limit.$offset;
+		$query = $fields.$table.$where.$groupby.$orderby.$limit.$offset;
 		$resource = mysql_query($query) or die($this->_exception(E_DATABASE,mysql_error(),'errorDatabaseCallback'));
-		$columns = mysql_num_fields($resource);
-		$fields = array();
 		$result = array();
 		$num = 0;
 
-		//载入所有列名
-		for($i = 0;$i < $columns;$i++)
-		{
-			array_push($fields,mysql_field_name($resource, $i));
-		}
-		$fields = array_flip($fields);
-
 		//开始输出
-		while($rows = mysql_fetch_array($query))
+		while($rows = mysql_fetch_array($resource,MYSQL_ASSOC))
 		{
-            foreach($rows as $key => $val)
-            {
-            	if(!isset($fields[$key])) unset($rows[$key]);
-            }
-
 			if(isset($callback['function']))
 			{
 				$callback['data'] = isset($callback['data']) ? $callback['data'] : NULL;
@@ -114,6 +103,34 @@ class DatabaseModel extends Module
 		$where = self::praseWhereSentence($args);
 
 		mysql_query($table.$value.$where) or die($this->_exception(E_DATABASE,mysql_error(),'errorDatabaseCallback'));
+		return mysql_affected_rows();
+ 	}
+
+ 	public function insert($args)
+ 	{
+		$query = 'INSERT INTO '.$args['table'].' ('.implode(',',array_keys($args['value'])).') VALUES('.implode(',',$args['value']).')';
+		mysql_query($query) or die($this->_exception(E_DATABASE,mysql_error(),'errorDatabaseCallback'));
+		return mysql_affected_rows();
+ 	}
+
+ 	public function delete($args)
+ 	{
+ 		$table = 'DELETE FROM '.$args['table'];
+		$where = self::praseWhereSentence($args);
+		mysql_query($table.$where) or die($this->_exception(E_DATABASE,mysql_error(),'errorDatabaseCallback'));
+		return mysql_affected_rows();
+ 	}
+
+ 	public function count($args)
+ 	{
+ 		$fields = 'SELECT COUNT('.$args['key'].') AS number';
+ 		$table = ' FROM '.$args['table'];
+		$groupby = isset($args['groupby']) ? ' GROUP BY '.$args['groupby'] : '';
+ 		$where = self::praseWhereSentence($args);
+
+ 		$resource = mysql_query($fields.$table.$where.$groupby) or die($this->_exception(E_DATABASE,mysql_error(),'errorDatabaseCallback'));
+ 		$result = mysql_fetch_array($resource,MYSQL_ASSOC);
+ 		return $result['number'];
  	}
 }
 ?>
