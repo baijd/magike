@@ -7,7 +7,7 @@
  *********************************/
 
 $dblink=@mysql_connect(__DBHOST__,__DBUSER__,__DBPASS__) or die(Module::_exception(E_DATABASEINSTALL,mysql_error()));
-@mysql_select_db(__DBNAME__,$dblink) or die(Module::_exception(E_DATABASECONNECT,mysql_error(),"error_database_callback"));
+@mysql_select_db(__DBNAME__,$dblink) or die(Module::_exception(E_DATABASECONNECT,mysql_error(),'errorDatabaseCallback'));
 
 class DatabaseModel extends Module
 {
