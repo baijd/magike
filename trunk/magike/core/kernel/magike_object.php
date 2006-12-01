@@ -21,7 +21,7 @@ class MagikeObject
 		foreach($require as $objName)
 		{
 			eval("global \${$objName};");
-			if(is_a((object) $objName,API::objectToModel($objName)))
+			if(is_a((object) $objName,MagikeAPI::objectToModel($objName)))
 			{
 				eval("\$this->{$objName} = \${$objName}");
 			}

@@ -1,12 +1,12 @@
 <?php
 /**********************************
  * Created on: 2006-12-1
- * File Name : api.php
+ * File Name : magike_api.php
  * Copyright : Magike Group
  * License   : GNU General Public License 2.0
  *********************************/
 
-class API
+class MagikeAPI
 {
 	public function magikeExceptionHandler($exception)
 	{

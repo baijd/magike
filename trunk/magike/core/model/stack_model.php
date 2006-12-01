@@ -57,7 +57,7 @@ class StackModel extends MagikeObject
 	public function buildCache()
 	{
 		$this->initStaticValue();
-		API::exportArrayToFile($this->data['static'],'static',__CACHE__.'/system/static.php');
+		MagikeAPI::exportArrayToFile($this->data['static'],'static',__CACHE__.'/system/static.php');
 	}
 
 	private function initStaticValue()

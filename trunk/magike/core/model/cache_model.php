@@ -10,7 +10,6 @@ class CacheModel extends MagikeObject
 {
  	function __construct($file)
  	{
-		parent::__construct();
 		$this->file = $file;
  	}
 
