@@ -6,6 +6,7 @@
  * License   : GNU General Public License 2.0
  *********************************/
 
+global $database;
 $dblink=@mysql_connect(__DBHOST__,__DBUSER__,__DBPASS__) or die(MagikeObject::throwException(E_DATABASEINSTALL,mysql_error()));
 @mysql_select_db(__DBNAME__,$dblink) or die(MagikeObject::throwException(E_DATABASECONNECT,mysql_error(),'errorDatabaseCallback'));
 
@@ -13,7 +14,8 @@ class DatabaseModel extends MagikeObject
 {
  	function __construct()
  	{
-		parent::__construct();
+ 		//获取实例化的stack
+		parent::__construct(array('require' => array('stack')));
  	}
 
 	private function praseWhereSentence($args)
@@ -57,11 +59,11 @@ class DatabaseModel extends MagikeObject
  	public function fectch($args,$callback = NULL,$expection = false)
  	{
  		//设定查询次数
- 		if(!isset($this->stack['system']['query_times']))
+ 		if(!isset($this->stack->data['system']['query_times']))
  		{
-			$this->setStack('system','query_times',0);
+			$this->stack->setStack('system','query_times',0);
  		}
- 		$this->setStack('system','query_times',$this->stack['system']['query_times']);
+ 		$this->stack->setStack('system','query_times',$this->stack->data['system']['query_times']);
 
  		//处理table子句
  		$args['table'] = str_replace('table.',__DBPREFIX__,$args['table']);
@@ -155,4 +157,5 @@ class DatabaseModel extends MagikeObject
  		return $result['number'];
  	}
 }
+$database = new DatabaseModel();
 ?>

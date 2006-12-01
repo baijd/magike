@@ -8,35 +8,29 @@
 
 class MagikeObject
 {
-	public $stack;
-
-	function __construct()
+	function __construct($args = array())
 	{
-		global $stack;
-		$this->$stack = $stack;
+		if(isset($args['require']))
+		{
+			$this->initRequiredObject($args['require']);
+		}
 	}
 
-	public function setStack($stackType,$stackName,$stackValue)
+	private function initRequiredObject($require)
 	{
-		global $stack;
-
-		if(!isset($stack[$stackType])) $stack[$stackType] = array();
-		$stack[$stackType][$stackName] = $stackValue;
-		$this->stack = $stack;
-	}
-
-	public function setStackByType($stackType,$typeValue)
-	{
-		global $stack;
-		$stack[$stackType] = $typeValue;
-		$this->stack = $stack;
-	}
-
-	public function unsetStack($stackType,$stackName)
-	{
-		global $stack;
-		unset($stack[$stackType][$stackName]);
-		$this->stack = $stack;
+		foreach($require as $objName)
+		{
+			eval("global \${$objName};");
+			if(is_a((object) $objName,API::objectToModel($objName)))
+			{
+				eval("\$this->{$objName} = \${$objName}");
+			}
+			else
+			{
+				eval("unset(\${$objName})");
+				$this->throwException(E_OBJECTNOTEXISTS,$objName);
+			}
+		}
 	}
 
 	public function throwException($message,$data = NULL,$callback = NULL)
