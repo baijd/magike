@@ -10,7 +10,7 @@ class Template extends MagikeObject
 {
 	function __construct($args)
 	{
-
+		parent::__construct();
 	}
 
 	function checkArgs($args)
