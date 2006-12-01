@@ -12,24 +12,8 @@ class MagikeObject
 
 	function __construct()
 	{
-		parent::__construct();
-		$this->initStack();
-	}
-
-	public function initStack($value = NULL)
-	{
 		global $stack;
-
-		if(!isset($stack))
-		{
-			$stack['system']['init'] = true;
-		}
-		if($value)
-		{
-			$stack = $value;
-		}
-
-		$this->stack = $stack;
+		$this->$stack = $stack;
 	}
 
 	public function setStack($stackType,$stackName,$stackValue)

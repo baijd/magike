@@ -6,20 +6,20 @@
  * License   : GNU General Public License 2.0
  *********************************/
 
-class Magike extends MagikeObject
+class Magike
 {
 	function __construct($args)
 	{
-		parent::__construct();
-		$this->initDatabase();
-		$this->initOptionValue();
+		global $stack;
 
-		new ExceptionModel();
+		//初始化堆栈
+		$stack = array();
+		$this->loadStaticCache();
 	}
 
-	private function loadOptionCache()
+	private function loadStaticCache()
 	{
-		new CacheModel(array(__CACHE__.'/system/option.php' => array('listener' => 'fileExists',
+		new CacheModel(array(__CACHE__.'/system/static.php' => array('listener' => 'fileExists',
 																	 'callback' => array($this,'buildCache'),
 																	 'else '	=> array($this,'loadCache')
 		)));
@@ -27,28 +27,32 @@ class Magike extends MagikeObject
 
 	public function loadCache()
 	{
-		$option = array();
-		require(__CACHE__.'/system/option.php');
-		$this->setStackByType('option',$option);
+		global $stack;
+
+		$static = array();
+		require(__CACHE__.'/system/static.php');
+		$stack['static'] = $static;
 	}
 
 	public function buildCache()
 	{
-		$this->initOptionValue();
-		exportArrayToFile($this->stack['option'],'option',__CACHE__.'/system/option.php');
+		global $stack;
+		$this->initStaticValue();
+		exportArrayToFile($stack['static'],'static',__CACHE__.'/system/static.php');
 	}
 
-	private function initOptionValue()
+	private function initStaticValue()
 	{
 		global $database;
-		
+
 		$database = new DatabaseModel();
-		$database->fectch(array('table' => 'table.option'),array($this,'pushOpitonValue'));
+		$database->fectch(array('table' => 'table.static'),array($this,'pushStaticValue'));
 	}
 
-	private function pushOpitonValue($val)
+	private function pushStaticValue($val)
 	{
-		$this->setStack('option',$val['op_name'],$val['op_value']);
+		global $stack;
+		$stack['static'][$val['st_name']] = $val['st_value'];
 	}
 }
 ?>
