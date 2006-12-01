@@ -22,5 +22,30 @@ class API
 			}
 		}
 	}
+
+	public function objectToModel($objName)
+	{
+		if(NULL == $objName)
+		{
+			return NULL;
+		}
+		else
+		{
+			return ucfirst($objName).'Model';
+		}
+	}
+
+	public function modelToFile($modelName)
+	{
+		if(NULL == $modelName)
+		{
+			return NULL;
+		}
+		else
+		{
+			$modelName = ereg_replace('([A-Z]+)','_\\1',$modelName);
+			return substr($modelName,0,1);
+		}
+	}
 }
 ?>
