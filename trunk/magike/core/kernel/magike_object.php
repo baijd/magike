@@ -9,29 +9,26 @@
 class MagikeObject
 {
 	public $stack;
-	public $database;
 
-	public function __construct()
+	function __construct()
 	{
-		global $stack;
-		$this->stack = $stack;
+		parent::__construct();
+		$this->initStack();
 	}
 
-	public function initDatabase()
+	public function initStack($value = NULL)
 	{
-		global $database;
+		global $stack;
 
-		if(!is_a($database,'DatabaseModel'))
+		if(!isset($stack))
 		{
-			$database = new DatabaseModel();
+			$stack['system']['init'] = true;
 		}
-		$this->database = $database;
-	}
+		if($value)
+		{
+			$stack = $value;
+		}
 
-	public function initStack($value)
-	{
-		global $stack;
-		$stack = $value;
 		$this->stack = $stack;
 	}
 
@@ -44,6 +41,13 @@ class MagikeObject
 		$this->stack = $stack;
 	}
 
+	public function setStackByType($stackType,$typeValue)
+	{
+		global $stack;
+		$stack[$stackType] = $typeValue;
+		$this->stack = $stack;
+	}
+
 	public function unsetStack($stackType,$stackName)
 	{
 		global $stack;
@@ -51,22 +55,9 @@ class MagikeObject
 		$this->stack = $stack;
 	}
 
-	public function _exception($info,$data,$callback = NULL)
+	public function throwException($message,$data = NULL,$callback = NULL)
 	{
-		if($callback && function_exists($callback)) die(call_user_func($callback));
-
-		$display = "EXCEPTION: ";
-		$display .= $info.",";
-
-		if(is_array($data))
-		{
-			$display .= implode(",",$data);
-		}
-		else
-		{
-			$display .= $data;
-		}
-		die($display);
+		throw new MagikeException($message,$data,$callback);
 	}
 }
 ?>

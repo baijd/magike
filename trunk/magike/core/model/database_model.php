@@ -6,14 +6,14 @@
  * License   : GNU General Public License 2.0
  *********************************/
 
-$dblink=@mysql_connect(__DBHOST__,__DBUSER__,__DBPASS__) or die(MagikeObject::_exception(E_DATABASEINSTALL,mysql_error()));
-@mysql_select_db(__DBNAME__,$dblink) or die(MagikeObject::_exception(E_DATABASECONNECT,mysql_error(),'errorDatabaseCallback'));
+$dblink=@mysql_connect(__DBHOST__,__DBUSER__,__DBPASS__) or die(MagikeObject::throwException(E_DATABASEINSTALL,mysql_error()));
+@mysql_select_db(__DBNAME__,$dblink) or die(MagikeObject::throwException(E_DATABASECONNECT,mysql_error(),'errorDatabaseCallback'));
 
 class DatabaseModel extends MagikeObject
 {
  	function __construct()
  	{
-
+		parent::__construct();
  	}
 
 	private function praseWhereSentence($args)
@@ -23,6 +23,11 @@ class DatabaseModel extends MagikeObject
 		if(isset($args['where']['template']))
 		{
 			$where = $args['where']['template'];
+
+			if(isset($args['where']['value']))
+			{
+			$args['where']['value'] = self::filterQuotesSentence($args['where']['value']);
+
 			while(($pos = strpos($where,'?')) != false)
 			{
 				if($value = array_shift($args['where']['value']))
@@ -31,11 +36,22 @@ class DatabaseModel extends MagikeObject
 					$where = substr_replace($where,$value,$pos,1);
 				}
 			}
+			}
 
 			$where = ' WHERE '.$where;
 		}
 
 		return $where;
+	}
+
+	private function filterQuotesSentence($value)
+	{
+		foreach($value as $key => $val)
+		{
+			$value[$key] = str_replace("'","''",$val);
+		}
+
+		return $value;
 	}
 
  	public function fectch($args,$callback = NULL,$expection = false)
@@ -48,7 +64,7 @@ class DatabaseModel extends MagikeObject
  		$this->setStack('system','query_times',$this->stack['system']['query_times']);
 
  		//处理table子句
- 		$args['table'] = replace('table.',__DBPREFIX__,$args['table']);
+ 		$args['table'] = str_replace('table.',__DBPREFIX__,$args['table']);
 		$table = ' FROM '.$args['table'];
 
 		//处理groupby子句
@@ -69,7 +85,7 @@ class DatabaseModel extends MagikeObject
 		//处理where子句
 		$where = self::praseWhereSentence($args);
 		$query = $fields.$table.$where.$groupby.$orderby.$limit.$offset;
-		$resource = mysql_query($query) or die($this->_exception(E_DATABASE,mysql_error(),'errorDatabaseCallback'));
+		$resource = mysql_query($query) or die($this->throwException(E_DATABASE,mysql_error(),'errorDatabaseCallback'));
 		$result = array();
 		$num = 0;
 
@@ -86,12 +102,13 @@ class DatabaseModel extends MagikeObject
             $num++;
 		}
 
-		if($num == 0 && $expection) die($this->_exception(E_DATABASE,NULL,'error404Callback'));
+		if($num == 0 && $expection) die($this->throwException(E_DATABASE,NULL,'error404Callback'));
 		return $result;
  	}
 
  	public function update($args)
  	{
+ 		$args['value'] = self::filterQuotesSentence($args['value']);
  		$table = 'UPDATE '.$args['table'];
  		$value = ' SET ';
  		$columns = array();
@@ -106,14 +123,15 @@ class DatabaseModel extends MagikeObject
  		$value = $value.implode(' AND ',$columns);
 		$where = self::praseWhereSentence($args);
 
-		mysql_query($table.$value.$where) or die($this->_exception(E_DATABASE,mysql_error(),'errorDatabaseCallback'));
+		mysql_query($table.$value.$where) or die($this->throwException(E_DATABASE,mysql_error(),'errorDatabaseCallback'));
 		return mysql_affected_rows();
  	}
 
  	public function insert($args)
  	{
+ 		$args['value'] = self::filterQuotesSentence($args['value']);
 		$query = 'INSERT INTO '.$args['table'].' ('.implode(',',array_keys($args['value'])).') VALUES('.implode(',',$args['value']).')';
-		mysql_query($query) or die($this->_exception(E_DATABASE,mysql_error(),'errorDatabaseCallback'));
+		mysql_query($query) or die($this->throwException(E_DATABASE,mysql_error(),'errorDatabaseCallback'));
 		return mysql_affected_rows();
  	}
 
@@ -121,7 +139,7 @@ class DatabaseModel extends MagikeObject
  	{
  		$table = 'DELETE FROM '.$args['table'];
 		$where = self::praseWhereSentence($args);
-		mysql_query($table.$where) or die($this->_exception(E_DATABASE,mysql_error(),'errorDatabaseCallback'));
+		mysql_query($table.$where) or die($this->throwException(E_DATABASE,mysql_error(),'errorDatabaseCallback'));
 		return mysql_affected_rows();
  	}
 
@@ -132,7 +150,7 @@ class DatabaseModel extends MagikeObject
 		$groupby = isset($args['groupby']) ? ' GROUP BY '.$args['groupby'] : '';
  		$where = self::praseWhereSentence($args);
 
- 		$resource = mysql_query($fields.$table.$where.$groupby) or die($this->_exception(E_DATABASE,mysql_error(),'errorDatabaseCallback'));
+ 		$resource = mysql_query($fields.$table.$where.$groupby) or die($this->throwException(E_DATABASE,mysql_error(),'errorDatabaseCallback'));
  		$result = mysql_fetch_array($resource,MYSQL_ASSOC);
  		return $result['number'];
  	}
