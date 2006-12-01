@@ -10,11 +10,7 @@ class Magike
 {
 	function __construct($args)
 	{
-		global $stack;
 
-		//初始化堆栈
-		$stack = array();
-		$this->loadStaticCache();
 	}
 }
 ?>
