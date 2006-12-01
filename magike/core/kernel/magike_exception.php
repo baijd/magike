@@ -6,7 +6,7 @@
  * License   : GNU General Public License 2.0
  *********************************/
 
-set_exception_handler(array('API','magikeExceptionHandler'));
+set_exception_handler(array('MagikeAPI','magikeExceptionHandler'));
 class MagikeException extends Exception
 {
    protected $data;
