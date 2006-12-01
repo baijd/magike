@@ -1,35 +1,12 @@
 <?php
 /**********************************
- * Created on: 2006-11-30
- * File Name : exception_model.php
+ * Created on: 2006-12-1
+ * File Name : magike_exception.php
  * Copyright : Magike Group
  * License   : GNU General Public License 2.0
  *********************************/
 
-class ExceptionModel extends MagikeObject
-{
-	function __construct()
-	{
-		set_exception_handler(array($this, 'exceptionHandler'));
-	}
-
-	public function exceptionHandler($exception)
-	{
-		if($exception->getCallback())
-		{
-			if(@function_exists($exception->getCallback()) || @method_exists($exception->getCallback()))
-			{
-				die(call_user_func($exception->getCallback(),$exception->getData()));
-			}
-			else
-			{
-				die($exception->__toString());
-			}
-		}
-	}
-}
-
-//扩展的异常处理类
+set_exception_handler(array('API','magikeExceptionHandler'));
 class MagikeException extends Exception
 {
    protected $data;
