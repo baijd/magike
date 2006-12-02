@@ -54,7 +54,7 @@ function __autoload($class_name)
    $fileName = __DIR__."/model/".(MagikeAPI::modelToFile($class_name)).'.php';
    if(!file_exists($fileName))
    {
-		throw new MagikeException(E_FILENOTEXISTS,$fileName);
+		MagikeObject::throwException(E_FILENOTEXISTS,$fileName);
    }
    require_once($fileName);
 }
