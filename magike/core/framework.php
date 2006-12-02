@@ -17,6 +17,7 @@ define('__UPLOAD__','./data/upload');			//定义上传目录
 define('__CONFIG__','./config.php');			//定义初始配置文件
 define('__DEBUG__',false);						//是否开启debug模式
 define('__GZIP__',false);						//是否开启gzip模式
+define('__LINK__',false);						//是否开启link模式
 
 //载入核心
 include(__CONFIG__);							//载入配制文件
