@@ -13,6 +13,7 @@ set_exception_handler(array('MagikeAPI','magikeExceptionHandler'));
 define('E_DATABASE','Database Exception');				//数据库异常
 define('E_INSTALL','Magike System Install Failed');		//安装异常
 define('E_OBJECTNOTEXISTS','Object Not Exists');		//对象不存在
+define('E_FILENOTEXISTS','File Not Exists');			//文件不存在
 
 class MagikeException extends Exception
 {

@@ -7,7 +7,7 @@
  *********************************/
 
 global $database;
-$dblink=@mysql_connect(__DBHOST__,__DBUSER__,__DBPASS__) or die(MagikeObject::throwException(E_DATABASE,mysql_error(),'errorDatabaseCallback'));
+$dblink=@mysql_connect(__DBHOST__,__DBUSER__,__DBPASS__) or die(MagikeObject::throwException(E_DATABASE,mysql_error(),array('errorDatabaseCallback')));
 @mysql_select_db(__DBNAME__,$dblink) or die(MagikeObject::throwException(E_DATABASE,mysql_error(),'errorDatabaseCallback'));
 
 class DatabaseModel extends MagikeObject

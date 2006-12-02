@@ -6,6 +6,7 @@
  * License   : GNU General Public License 2.0
  *********************************/
 
+global $static;
 class StaticModel extends MagikeObject
 {
 	function __construct()
@@ -42,4 +43,6 @@ class StaticModel extends MagikeObject
 		$this->stack->setStack('static',$val['st_name'],$val['st_value']);
 	}
 }
+
+$static = new StaticModel();
 ?>
