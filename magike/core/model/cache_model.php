@@ -30,14 +30,14 @@ class CacheModel extends MagikeObject
 			if(is_string($val['callback']))
 			{
 
-				if($result)
+				if(!$result)
 				{
 					call_user_func(array($this,$val['callback']));
 				}
 			}
 			else
 			{
-				if($result)
+				if(!$result)
 				{
 					call_user_func($val['callback']);
 				}
@@ -47,14 +47,14 @@ class CacheModel extends MagikeObject
 			{
 				if(is_string($val['else']))
 				{
-					if(!$result)
+					if($result)
 					{
 						call_user_func(array($this,$val['else']));
 					}
 				}
 				else
 				{
-					if(!$result)
+					if($result)
 					{
 						call_user_func($val['else']);
 					}
