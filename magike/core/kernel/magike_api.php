@@ -52,6 +52,28 @@ class MagikeAPI
 	{
 		file_put_contents($file,"<?php\n\$".$name." = ".var_export($array,true)."\n?>");
 	}
+
+	public function subStr($str,$start,$end,$trim = "...")
+	{
+		preg_match_all("/[\x01-\x7f]|[\xc2-\xdf][\x80-\xbf]|\xe0[\xa0-\xbf][\x80-\xbf]|[\xe1-\xef][\x80-\xbf][\x80-\xbf]|\xf0[\x90-\xbf][\x80-\xbf][\x80-\xbf]|[\xf1-\xf7][\x80-\xbf][\x80-\xbf][\x80-\xbf]/", $str, $info);
+		$str = join("",array_slice($info[0],$start,$end));
+		return ($end < (sizeof($info[0]) - $start)) ? $str.$trim : $str;
+	}
+
+	public function strLen($str)
+	{
+		preg_match_all("/[\x01-\x7f]|[\xc2-\xdf][\x80-\xbf]|\xe0[\xa0-\xbf][\x80-\xbf]|[\xe1-\xef][\x80-\xbf][\x80-\xbf]|\xf0[\x90-\xbf][\x80-\xbf][\x80-\xbf]|[\xf1-\xf7][\x80-\xbf][\x80-\xbf][\x80-\xbf]/", $str, $info);
+		return sizeof($info[0]);
+	}
+
+	public function stripTags($string)
+	{
+		$string=strip_tags($string);
+		$string=str_replace(" ","",$string);
+		$string=trim($string);
+
+		return $string;
+	}
 }
 
 function __autoload($class_name)
