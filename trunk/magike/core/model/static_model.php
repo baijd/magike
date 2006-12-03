@@ -29,12 +29,13 @@ class StaticModel extends MagikeObject
 	public function buildCache()
 	{
 		$this->initStaticValue();
-		MagikeAPI::exportArrayToFile($this->stack->data['static'],'static',__CACHE__.'/system/static.php');
+		MagikeAPI::exportArrayToFile(__CACHE__.'/system/static.php',$this->stack->data['static'],'static');
 	}
 
 	private function initStaticValue()
 	{
 		$this->initPublicObject(array('database'));
+		$this->stack->setStackByType('static',array());
 		$this->database->fectch(array('table' => 'table.static'),array($this,'pushStaticValue'));
 	}
 
