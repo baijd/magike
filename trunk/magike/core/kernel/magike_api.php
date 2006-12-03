@@ -43,9 +43,14 @@ class MagikeAPI
 		}
 		else
 		{
-			$modelName = ereg_replace('([A-Z]+)','_\\1',$modelName);
-			return substr($modelName,0,1);
+			$modelName = ereg_replace("([A-Z]+)","_\\1",$modelName);
+			return substr(strtolower($modelName),0,1);
 		}
+	}
+
+	public function exportArrayToFile($file,$array)
+	{
+		file_put_contents($file,"<?php\n".var_export($array,true)."\n?>");
 	}
 }
 
