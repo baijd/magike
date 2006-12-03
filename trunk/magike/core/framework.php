@@ -26,9 +26,5 @@ include(__DIR__.'/kernel/magike_exception.php');//载入异常处理
 include(__DIR__.'/kernel/magike_object.php');	//载入基类
 include(__DIR__.'/kernel/magike.php');			//载入系统
 
-//载入静态模型
-include(__DIR__.'/model/stack_model.php');		//载入堆栈模型
-include(__DIR__.'/model/static_model.php');		//载入静态变量模型
-
 new Magike();
 ?>

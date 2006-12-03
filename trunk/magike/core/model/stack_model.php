@@ -7,7 +7,6 @@
  *********************************/
 
 //初始化全局变量stack
-global $stack;
 class StackModel extends MagikeObject
 {
 	public $data;
@@ -41,6 +40,4 @@ class StackModel extends MagikeObject
 		unset($this->data[$stackType]);
 	}
 }
-
-$stack = new StackModel();
 ?>

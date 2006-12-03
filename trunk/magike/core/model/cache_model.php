@@ -8,15 +8,15 @@
 
 class CacheModel extends MagikeObject
 {
- 	function __construct($file)
+ 	function __construct()
  	{
-		$this->file = $file;
+		parent::__construct();
  	}
 
- 	private function checkCacheFile()
+ 	public function checkCacheFile($file)
  	{
  		//根据监听函数检查对象文件
- 		foreach($this->file as $key => $val)
+ 		foreach($file as $key => $val)
  		{
 			if(is_string($val['listener']))
 			{
