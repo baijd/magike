@@ -6,7 +6,6 @@
  * License   : GNU General Public License 2.0
  *********************************/
 
-global $database;
 $dblink=@mysql_connect(__DBHOST__,__DBUSER__,__DBPASS__) or die(MagikeObject::throwException(E_DATABASE,mysql_error(),array('errorDatabaseCallback')));
 @mysql_select_db(__DBNAME__,$dblink) or die(MagikeObject::throwException(E_DATABASE,mysql_error(),'errorDatabaseCallback'));
 
@@ -15,7 +14,7 @@ class DatabaseModel extends MagikeObject
  	function __construct()
  	{
  		//获取实例化的stack
-		parent::__construct(array('require' => array('stack')));
+		parent::__construct(array('public' => array('stack')));
  	}
 
 	private function praseWhereSentence($args)
@@ -157,5 +156,4 @@ class DatabaseModel extends MagikeObject
  		return $result['number'];
  	}
 }
-$database = new DatabaseModel();
 ?>

@@ -6,18 +6,17 @@
  * License   : GNU General Public License 2.0
  *********************************/
 
-global $static;
 class StaticModel extends MagikeObject
 {
 	function __construct()
 	{
- 		//获取实例化的stack和database
-		parent::__construct(array('require' => array('stack',
-													 'database')));
-		new CacheModel(array(__CACHE__.'/system/static.php' => array('listener' => 'fileExists',
+ 		//获取实例化的stack
+		parent::__construct(array('public'  => array('stack'),
+								  'private' => array('cache')));
+		$this->cache->checkCacheFile(array(__CACHE__.'/system/static.php' => array('listener' => 'fileExists',
 																	 'callback' => array($this,'buildCache'),
 																	 'else '	=> array($this,'loadCache')
-		)));
+																	 )));
 	}
 
 	public function loadCache()
@@ -35,6 +34,7 @@ class StaticModel extends MagikeObject
 
 	private function initStaticValue()
 	{
+		$this->initPublicObject(array('database'));
 		$this->database->fectch(array('table' => 'table.static'),array($this,'pushStaticValue'));
 	}
 
@@ -43,6 +43,4 @@ class StaticModel extends MagikeObject
 		$this->stack->setStack('static',$val['st_name'],$val['st_value']);
 	}
 }
-
-$static = new StaticModel();
 ?>

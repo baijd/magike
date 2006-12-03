@@ -6,11 +6,12 @@
  * License   : GNU General Public License 2.0
  *********************************/
 
-class Magike
+class Magike extends MagikeObject
 {
 	function __construct($args)
 	{
-
+		parent::__construct(array('public' => array('stack',
+													'static')));
 	}
 }
 ?>

@@ -10,26 +10,37 @@ class MagikeObject
 {
 	function __construct($args = array())
 	{
-		if(isset($args['require']))
+		//载入公用对象
+		if(isset($args['public']))
 		{
-			$this->initRequiredObject($args['require']);
+			$this->initPublicObject($args['public']);
+		}
+
+		//载入私有对象
+		if(isset($args['private']))
+		{
+			$this->initPrivateObject($args['private']);
 		}
 	}
 
-	private function initRequiredObject($require)
+	public function initPublicObject($public)
 	{
-		foreach($require as $objName)
+		foreach($public as $objName)
 		{
 			eval("global \${$objName};");
-			if(is_a((object) $objName,MagikeAPI::objectToModel($objName)))
+			if(!is_a((object) $objName,MagikeAPI::objectToModel($objName)))
 			{
-				eval("\$this->{$objName} = \${$objName}");
+				eval("\${$objName} = new ".MagikeAPI::objectToModel($objName)."();");
 			}
-			else
-			{
-				eval("unset(\${$objName})");
-				$this->throwException(E_OBJECTNOTEXISTS,$objName);
-			}
+			eval("\$this->{$objName} = \${$objName};");
+		}
+	}
+
+	public function initPrivateObject($private)
+	{
+		foreach($private as $objName)
+		{
+			eval("\$this->{$objName} = new ".MagikeAPI::objectToModel($objName)."();");
 		}
 	}
 
