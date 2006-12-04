@@ -8,7 +8,7 @@
 
 class MagikeAPI
 {
-	public function magikeExceptionHandler($exception)
+	public static function exceptionHandler($exception)
 	{
 		if($exception->getCallback())
 		{
@@ -23,7 +23,7 @@ class MagikeAPI
 		}
 	}
 
-	public function objectToModel($objName)
+	public static function objectToModel($objName)
 	{
 		if(NULL == $objName)
 		{
@@ -35,7 +35,7 @@ class MagikeAPI
 		}
 	}
 
-	public function modelToFile($modelName)
+	public static function modelToFile($modelName)
 	{
 		if(NULL == $modelName)
 		{
@@ -48,25 +48,25 @@ class MagikeAPI
 		}
 	}
 
-	public function exportArrayToFile($file,$array,$name)
+	public static function exportArrayToFile($file,$array,$name)
 	{
 		file_put_contents($file,"<?php\n\$".$name." = ".var_export($array,true)."\n?>");
 	}
 
-	public function subStr($str,$start,$end,$trim = "...")
+	public static function subStr($str,$start,$end,$trim = "...")
 	{
 		preg_match_all("/[\x01-\x7f]|[\xc2-\xdf][\x80-\xbf]|\xe0[\xa0-\xbf][\x80-\xbf]|[\xe1-\xef][\x80-\xbf][\x80-\xbf]|\xf0[\x90-\xbf][\x80-\xbf][\x80-\xbf]|[\xf1-\xf7][\x80-\xbf][\x80-\xbf][\x80-\xbf]/", $str, $info);
 		$str = join("",array_slice($info[0],$start,$end));
 		return ($end < (sizeof($info[0]) - $start)) ? $str.$trim : $str;
 	}
 
-	public function strLen($str)
+	public static function strLen($str)
 	{
 		preg_match_all("/[\x01-\x7f]|[\xc2-\xdf][\x80-\xbf]|\xe0[\xa0-\xbf][\x80-\xbf]|[\xe1-\xef][\x80-\xbf][\x80-\xbf]|\xf0[\x90-\xbf][\x80-\xbf][\x80-\xbf]|[\xf1-\xf7][\x80-\xbf][\x80-\xbf][\x80-\xbf]/", $str, $info);
 		return sizeof($info[0]);
 	}
 
-	public function stripTags($string)
+	public static function stripTags($string)
 	{
 		$string=strip_tags($string);
 		$string=str_replace(" ","",$string);
@@ -74,14 +74,38 @@ class MagikeAPI
 
 		return $string;
 	}
+
+	public static function errorHandler($errno, $errstr, $errfile, $errline)
+	{
+	 	switch ($errno)
+	 	{
+	 		case E_USER_ERROR:
+	  			echo "<b>My ERROR</b> [$errno] $errstr<br />\n";
+	   			echo "  Fatal error in line $errline of file $errfile";
+	   			echo ", PHP " . PHP_VERSION . " (" . PHP_OS . ")<br />\n";
+	   			echo "Aborting...<br />\n";
+	   			exit(1);
+	  	 		break;
+	 		case E_USER_WARNING:
+	   			echo "<b>My WARNING</b> [$errno] $errstr<br />\n";
+	   			break;
+	 		case E_USER_NOTICE:
+	   			echo "<b>My NOTICE</b> [$errno] $errstr<br />\n";
+	   			break;
+	 		default:
+	   			echo "Unkown error type: [$errno] $errstr<br />\n";
+	   			break;
+	 	}
+	}
 }
 
-function __autoload($class_name)
+function __autoload($className)
 {
-   $fileName = __DIR__."/model/".(MagikeAPI::modelToFile($class_name)).'.php';
+   $fileName = __DIR__."/model/".(MagikeAPI::modelToFile($className)).'.php';
    if(!file_exists($fileName))
    {
-		MagikeObject::throwException(E_FILENOTEXISTS,$fileName);
+		MagikeObject::throwException(E_FILENOTEXISTS,array('class_name' => $className,
+														   'file_name'  => $fileName));
    }
    require($fileName);
 }

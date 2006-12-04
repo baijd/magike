@@ -6,8 +6,10 @@
  * License   : GNU General Public License 2.0
  *********************************/
 
-//设定异常截获函数
-set_exception_handler(array('MagikeAPI','magikeExceptionHandler'));
+//设定异常截获函数以及错误截获函数
+set_exception_handler(array('MagikeAPI','exceptionHandler'));
+error_reporting(E_USER_ERROR | E_USER_WARNING | E_USER_NOTICE);
+set_error_handler(array('MagikeAPI','errorHandler'));
 
 //定义异常消息
 define('E_DATABASE','Database Exception');				//数据库异常
