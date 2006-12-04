@@ -28,9 +28,19 @@ class MagikeObject
 		foreach($public as $objName)
 		{
 			eval("global \${$objName};");
-			if(!is_a((object) $objName,MagikeAPI::objectToModel($objName)))
+			$isObject = false;
+			$className = NULL;
+
+			eval("\$className = get_class(\${$objName});");
+			eval("if(NULL != \$className)" .
+					"{" .
+					"if(\${$objName} instanceof \$className) " .
+					"{
+						\$isObject = true;
+					}}");
+			if(!$isObject)
 			{
-				eval("\${$objName} = new ".MagikeAPI::objectToModel($objName)."();");
+					eval("\${$objName} = new ".MagikeAPI::objectToModel($objName)."();");
 			}
 			eval("\$this->{$objName} = \${$objName};");
 		}
@@ -44,9 +54,14 @@ class MagikeObject
 		}
 	}
 
-	public function throwException($message,$data = NULL,$callback = NULL)
+	public static function throwException($message,$data = NULL,$callback = NULL)
 	{
 		throw new MagikeException($message,$data,$callback);
+	}
+
+	public static function throwError($message,$type = E_USER_ERROR)
+	{
+		trigger_error($message,$type);
 	}
 }
 ?>
