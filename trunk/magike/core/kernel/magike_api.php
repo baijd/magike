@@ -106,25 +106,27 @@ class MagikeAPI
 		return $string;
 	}
 
+	public static function ip2long($ip)
+	{
+		return sprintf("%u",ip2long($ip));
+	}
+
 	public static function errorHandler($errno, $errstr, $errfile, $errline)
 	{
 	 	switch ($errno)
 	 	{
 	 		case E_USER_ERROR:
-	  			echo "<b>My ERROR</b> [$errno] $errstr<br />\n";
-	   			echo "  Fatal error in line $errline of file $errfile";
-	   			echo ", PHP " . PHP_VERSION . " (" . PHP_OS . ")<br />\n";
-	   			echo "Aborting...<br />\n";
+	  			echo "Fatal Error type[$errno]: [$errfile][line:$errline] $errstr<br />\n";
 	   			exit(1);
 	  	 		break;
 	 		case E_USER_WARNING:
-	   			echo "<b>My WARNING</b> [$errno] $errstr<br />\n";
+	   			echo "Warning type[$errno]: [$errfile][line:$errline] $errstr<br />\n";
 	   			break;
 	 		case E_USER_NOTICE:
-	   			echo "<b>My NOTICE</b> [$errno] $errstr<br />\n";
+	   			echo "Notice type[$errno]: [$errfile][line:$errline] $errstr<br />\n";
 	   			break;
 	 		default:
-	   			echo "Unkown error type: [$errfile][line:$errline][$errno] $errstr<br />\n";
+	   			echo "Unkown error type[$errno]: [$errfile][line:$errline] $errstr<br />\n";
 	   			break;
 	 	}
 	}

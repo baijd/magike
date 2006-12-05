@@ -57,6 +57,7 @@ class PathModel extends MagikeObject
 			$this->stack->setStack('system','level',$this->pathConfig[$eregPath]['level']);
 			$this->stack->setStack('system','action',$this->pathConfig[$eregPath]['action']);
 			$this->stack->setStack('system','file',$this->pathConfig[$eregPath]['file']);
+			$this->stack->setStack('system','domain',$this->pathConfig[$eregPath]['domain']);
 			$found = true;
 		}
 		else
@@ -70,6 +71,7 @@ class PathModel extends MagikeObject
 					$this->stack->setStack('system','level',$this->pathConfig[$eregPath]['level']);
 					$this->stack->setStack('system','action',$this->pathConfig[$eregPath]['action']);
 					$this->stack->setStack('system','file',$this->pathConfig[$eregPath]['file']);
+					$this->stack->setStack('system','domain',$this->pathConfig[$eregPath]['domain']);
 					$found = true;
 					break;
 				}
@@ -156,6 +158,7 @@ class PathModel extends MagikeObject
 		$this->pathCache[$deep][$this->praseEregPath($val['pt_name'])] = array('level'  => $val['pt_level'],
 																			   'action' => $val['pt_action'],
 																			   'file'   => $val['pt_file'],
+																			   'domain'   => $val['pt_name'],
 																			   'value'  => $this->prasePathValue($val['pt_name'])
 																				);
 	}
