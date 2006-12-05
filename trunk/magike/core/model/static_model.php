@@ -15,7 +15,7 @@ class StaticModel extends MagikeObject
 								  'private' => array('cache')));
 		$this->cache->checkCacheFile(array(__CACHE__.'/system/static.php' => array('listener' => 'fileExists',
 																	 'callback' => array($this,'buildCache'),
-																	 'else '	=> array($this,'loadCache')
+																	 'else'	=> array($this,'loadCache')
 																	 )));
 	}
 

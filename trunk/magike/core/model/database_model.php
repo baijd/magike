@@ -87,6 +87,7 @@ class DatabaseModel extends MagikeObject
 		$where = self::praseWhereSentence($args);
 		$query = $fields.$table.$where.$groupby.$orderby.$limit.$offset;
 		$resource = mysql_query($query) or die($this->throwException(E_DATABASE,mysql_error(),'errorDatabaseCallback'));
+		$sum = mysql_num_rows($resource);
 		$result = array();
 		$num = 0;
 
@@ -96,7 +97,8 @@ class DatabaseModel extends MagikeObject
 			if(isset($callback['function']))
 			{
 				$callback['data'] = isset($callback['data']) ? $callback['data'] : NULL;
-				$rows = call_user_func($callback['function'],$rows,$num,$callback['data']);
+				$last = ($num == $sum - 1) ? true : false;
+				$rows = call_user_func($callback['function'],$rows,$num,$last,$callback['data']);
 			}
 
             $result[$num] = $rows;
