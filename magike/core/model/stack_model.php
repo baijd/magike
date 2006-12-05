@@ -30,6 +30,15 @@ class StackModel extends MagikeObject
 		$this->data[$stackType] = $typeValue;
 	}
 
+	public function pushStackByType($stackType,$typeValue)
+	{
+		if(!isset($this->data[$stackType]))
+		{
+			$this->data[$stackType] = array();
+		}
+		$this->data[$stackType] = array_merge($this->data[$stackType],$typeValue);
+	}
+
 	public function unsetStack($stackType,$stackName)
 	{
 		unset($this->data[$stackType][$stackName]);
