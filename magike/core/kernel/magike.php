@@ -14,6 +14,7 @@ class Magike extends MagikeObject
 													'static',
 													'path',
 													'access')));
+		print_r($this->stack->data);
 	}
 }
 ?>
