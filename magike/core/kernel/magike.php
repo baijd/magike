@@ -8,7 +8,7 @@
 
 class Magike extends MagikeObject
 {
-	function __construct($args = array())
+	function __construct()
 	{
 		parent::__construct(array('public' => array('stack',
 													'static',

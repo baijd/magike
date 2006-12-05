@@ -14,21 +14,21 @@ class PathModel extends MagikeObject
 	private $value;
 	private $pathCache;
 
-	function __construct($path = NULL)
+	function __construct()
 	{
 		parent::__construct(array('public' => array('stack'),
 								  'private'=> array('cache')));
 		$this->cache->checkCacheFile(array(__CACHE__.'/path' => array('listener' => 'dirExists',
 																	 'callback' => array($this,'buildCache')
 																	  )));
-		$this->loadCache($path);
+		$this->loadCache();
 		$this->analysisPath();
 		$this->getValue();
 	}
 
-	private function loadCache($path)
+	private function loadCache()
 	{
-		$this->path = $path ? $path : $this->getPath();
+		$this->path = isset($this->stack->data['system']['path']) ? $this->stack->data['system']['path'] : $this->getPath();
 		$this->pathConfig = array();
 		$pathConfig = array();
 		$pathFile = __CACHE__.'/path/'.count(explode('/',$this->path)).'.php';
