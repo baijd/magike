@@ -8,25 +8,58 @@
 
 class Template extends MagikeObject
 {
-	function __construct($args)
+	private $templateFile;
+	private $template;
+	private $templateName;
+	private $block;
+	private $data;
+	private $blank;
+
+	function __construct($templateFile,$template)
 	{
-		parent::__construct();
+		parent::__construct(array('public' => array('stack'),
+								  'private'=> array('cache')));
+		$this->templateFile = $templateFile;
+		$this->template = $template;
+		$this->templateName = str_replace('.tpl','',$template);
+		$this->block = array();
+		$this->data = array();
+
+		$this->cache->checkCacheFile(
+		array(__COMPILE__.'/'.$this->templateName.'@'.$this->template.'@'
+		.$this->stack->data['static']['language'].'.cnf.php' => array('listener' => 'fileDate',
+																	  'callback' => array($this,'buildCache'),
+																	  'else'	=> array($this,'loadCache'))));
+
+		$this->data['static'] = array_merge($this->data['static'],$this->stack->data['static']);
+		$this->data['system'] = array_merge($this->data['system'],$this->stack->data['system']);
 	}
 
-	function checkArgs($args)
+	private function buildCache()
 	{
-		//定义所需参数列表以共检验
-		$requireArgs = array('template_file','template_path','compile_path','language_path');
+		require(__DIR__.'/template/build.php');
+		new Build($this->templateFile,$this->template);
+	}
 
-		//校验参数是否定义
-		$defined = array_diff($requireArgs,array_keys($args)) == NULL ? true : false;
+	private function loadCache()
+	{
+		$module = array();
+		$data = array();
+		$block = array();
 
-		if($defined)
+		require(__COMPILE__.'/'.$this->templateName.'@'.$this->template.'@'.$this->stack->data['static']['language'].'.php');
+		$this->stack->setStackByType('module',$module);
+		$this->data = $data;
+		$this->blank = $data;
+		$this->block = $block;
+
+		if(!isset($this->data['static']))
 		{
-			if(!is_dir($args['template_path']))
-			{
-
-			}
+			$this->data['static'] = array();
+		}
+		if(!isset($this->data['system']))
+		{
+			$this->data['system'] = array();
 		}
 	}
 }
