@@ -9,16 +9,59 @@
 class AccessModel extends MagikeObject
 {
 	private $ipConfig;
+	private $levelConfig;
 
 	function __construct()
 	{
 		parent::__construct(array('public'  => array('stack'),
 								  'private' => array('cache')));
-		$this->cache->checkCacheFile(array(__CACHE__.'/system/ip.php' => array('listener' => 'fileExists',
-																	 'callback' => array($this,'buildIpCache'),
-																	 'else'	=> array($this,'loadIpCache')
-																	 )));
-		$this->validataIp();
+		$this->cache->checkCacheFile(array(__CACHE__.'/system/ip.php' 	 => array('listener' => 'fileExists',
+																	 	 		  'callback' => array($this,'buildIpCache'),
+																	 	 		  'else'	=> array($this,'loadIpCache')
+																	 	 ),
+										   __CACHE__.'/system/level.php' => array('listener' => 'fileExists',
+										   								 		  'callback' => array($this,'buildLevelCache'),
+										   								 		  'else' => array($this,'loadLevelCache')
+										   								 )));
+		$this->validateIp();
+		$this->validateLogin();
+		$this->validateLevel();
+	}
+
+	private function validateLogin()
+	{
+		if(!isset($this->stack->data['random']))
+		{
+			$_SESSION['random'] = MagikeAPI::createRandomString(7);
+		}
+		$this->stack->setStack('system','random',$_SESSION['random']);
+		$this->stack->setStack('system','user_level',99999);			//默认分配最低权限
+
+    	if(isset($_SESSION['login']) && isset($_COOKIE['auth_data']))
+    	{
+    		if($_SESSION['login'] == 'ok' && $_COOKIE['auth_data'] == $_SESSION['auth_data'])
+		    {
+		        $this->stack->setStack('system','user_level',$_SESSION['user_level']);
+		        $this->stack->setStack('system','user_name',$_SESSION['user_name']);
+		        $this->stack->setStack('system','user_id',$_SESSION['user_id']);
+		        $this->stack->setStack('system','login',true);
+
+		        //如果用户有活动,增加cookie时限
+		        setcookie('auth_data',$_SESSION['auth_data'],time() + 3600,"/");
+		    }
+		    else
+		    {
+		    	$this->stack->setStack('system','login',false);
+		    }
+    	}
+	}
+
+	private function validateLevel()
+	{
+		if($this->stack->data['system']['user_level'] > $this->stack->data['system']['level'])
+		{
+			$this->throwException(E_ACCESSDENIED,$this->stack->data['system']['path'],array('MagikeAPI','errorAccessCallback'));
+		}
 	}
 
 	private function isInDomain($idomain,$domain)
@@ -47,7 +90,6 @@ class AccessModel extends MagikeObject
 			return false;
 		}
 	}
-
 
 	private function checkAccess($ip,$action,$left,$right)
 	{
@@ -83,7 +125,7 @@ class AccessModel extends MagikeObject
 		}
 	}
 
-	private function validataIp()
+	private function validateIp()
 	{
 		$ip = MagikeAPI::ip2long($_SERVER["REMOTE_ADDR"]);
 		$this->stack->setStack('system','ip',$_SERVER["REMOTE_ADDR"]);
@@ -128,6 +170,26 @@ class AccessModel extends MagikeObject
 		$ipConfig = array();
 		require(__CACHE__.'/system/ip.php');
 		$this->ipConfig = $ipConfig;
+	}
+
+	public function buildLevelCache()
+	{
+		$this->levelConfig = array();
+		$this->initPublicObject(array('database'));
+		$this->database->fectch(array('table' => 'table.level'),array('function' => array($this,'pushLevelData')));
+		MagikeAPI::exportArrayToFile(__CACHE__.'/system/level.php',$this->levelConfig,'levelConfig');
+	}
+
+	public function pushLevelData($val)
+	{
+		$this->levelConfig[$val['lv_name']] = $val['lv_value'];
+	}
+
+	public function loadLevelCache()
+	{
+		$levelConfig = array();
+		require(__CACHE__.'/system/level.php');
+		$this->levelConfig = $levelConfig;
 	}
 }
 ?>

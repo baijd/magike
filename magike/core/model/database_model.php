@@ -62,7 +62,7 @@ class DatabaseModel extends MagikeObject
  		{
 			$this->stack->setStack('system','query_times',0);
  		}
- 		$this->stack->setStack('system','query_times',$this->stack->data['system']['query_times']);
+ 		$this->stack->setStack('system','query_times',$this->stack->data['system']['query_times'] + 1);
 
  		//处理table子句
  		$args['table'] = str_replace('table.',__DBPREFIX__,$args['table']);
