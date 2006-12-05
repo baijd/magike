@@ -12,12 +12,13 @@ class PathModel extends MagikeObject
 	private $path;
 	private $eregPath;
 	private $value;
+	private $pathCache;
 
 	function __construct($path = NULL)
 	{
 		parent::__construct(array('public' => array('stack'),
 								  'private'=> array('cache')));
-		$this->cache->checkCacheFile(array(__CACHE__.'/path/config.php' => array('listener' => 'fileExists',
+		$this->cache->checkCacheFile(array(__CACHE__.'/path' => array('listener' => 'dirExists',
 																	 'callback' => array($this,'buildCache')
 																	  )));
 		$this->loadCache($path);
@@ -30,7 +31,7 @@ class PathModel extends MagikeObject
 		$this->path = $path ? $path : $this->getPath();
 		$this->pathConfig = array();
 		$pathConfig = array();
-		$pathFile = __CACHE__.'/path/'.count(explode('/',$this->path)).'_path.php';
+		$pathFile = __CACHE__.'/path/'.count(explode('/',$this->path)).'.php';
 
 		if(file_exists($pathFile))
 		{
@@ -105,6 +106,58 @@ class PathModel extends MagikeObject
 				$this->stack->setStack('GET',$this->value[$key],$val);
 			}
 		}
+	}
+
+	private function praseEregPath($path)
+	{
+		$path = quotemeta($path);
+
+		//替换匹配变量
+		$path = preg_replace("/\[([_0-9a-zA-Z-]+)\=\%d\]/i","([0-9]+)",$path);
+		$path = preg_replace("/\[([_0-9a-zA-Z-]+)\=\%s\]/i","([_0-9a-zA-Z\\x80-\\xff-]+)",$path);
+		$path = preg_replace("/\[([_0-9a-zA-Z-]+)\=\%a\]/i","([_0-9a-zA-Z-]+)",$path);
+		$path = '^'.$path.'$';
+
+		return $path;
+	}
+
+	private function prasePathValue($path)
+	{
+		$value = array();
+
+		if(preg_match_all("/\[([_0-9a-zA-Z-]+)\=\%([d|s|a])\]/i",$path,$out))
+		{
+			if(isset($out[1]) && $out[1])
+			{
+				foreach($out[1] as $val)
+				{
+					array_push($value,$val);
+				}
+			}
+		}
+
+		return $value;
+	}
+
+	public function buildCache()
+	{
+		$this->pathCache = array();
+		$this->initPublicObject(array('database'));
+		$this->database->fectch(array('table' => 'table.path'),array('function' => array($this,'pushPathData')));
+		foreach($this->pathCache as $key => $val)
+		{
+			MagikeAPI::exportArrayToFile(__CACHE__.'/path/'.$key.'.php',$val,'pathConfig');
+		}
+	}
+
+	public function pushPathData($val)
+	{
+		$deep = count(explode("/",$val['pt_name']));
+		$this->pathCache[$deep][$this->praseEregPath($val['pt_name'])] = array('level'  => $val['pt_level'],
+																			   'action' => $val['pt_action'],
+																			   'file'   => $val['pt_file'],
+																			   'value'  => $this->prasePathValue($val['pt_name'])
+																				);
 	}
 }
 ?>

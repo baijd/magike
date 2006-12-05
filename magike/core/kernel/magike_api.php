@@ -12,14 +12,20 @@ class MagikeAPI
 	{
 		if($exception->getCallback())
 		{
-			if(@function_exists($exception->getCallback()) || @method_exists($exception->getCallback()))
+			$callback = $exception->getCallback();
+			$functionExists = is_array($callback) ? method_exists($callback[0],$callback[1]) : function_exists($callback);
+			if($functionExists)
 			{
-				die(call_user_func($exception->getCallback(),$exception->getData()));
+				die(call_user_func($callback,$exception->getData()));
 			}
 			else
 			{
 				die($exception->__toString());
 			}
+		}
+		else
+		{
+			die($exception->__toString());
 		}
 	}
 
@@ -33,6 +39,27 @@ class MagikeAPI
 		{
 			return ucfirst($objName).'Model';
 		}
+	}
+
+	public static function mkdir($inpath,$mode = 0777)
+	{
+		$inpath = str_replace('\\','/',$inpath);
+		$inpath = str_replace('//','/',$inpath);
+		$dir = explode('/',$inpath);
+		$dirs = array();
+
+		foreach($dir as $key => $val)
+		{
+			array_push($dirs,$val);
+			$path = implode('/',$dirs);
+
+			if(!is_dir($path))
+			{
+				if(mkdir($path,$mode) == false) return false;
+			}
+		}
+
+		return true;
 	}
 
 	public static function modelToFile($modelName)
@@ -50,7 +77,11 @@ class MagikeAPI
 
 	public static function exportArrayToFile($file,$array,$name)
 	{
-		file_put_contents($file,"<?php\n\$".$name." = ".var_export($array,true)."\n?>");
+		if(!is_dir(dirname($file)))
+		{
+			self::mkdir(dirname($file));
+		}
+		file_put_contents($file,"<?php\n\$".$name." = ".var_export($array,true).";\n?>");
 	}
 
 	public static function subStr($str,$start,$end,$trim = "...")
@@ -93,9 +124,14 @@ class MagikeAPI
 	   			echo "<b>My NOTICE</b> [$errno] $errstr<br />\n";
 	   			break;
 	 		default:
-	   			echo "Unkown error type: [$errno] $errstr<br />\n";
+	   			echo "Unkown error type: [$errfile][line:$errline][$errno] $errstr<br />\n";
 	   			break;
 	 	}
+	}
+
+	public static function error404Callback($path)
+	{
+		echo $path;
 	}
 }
 

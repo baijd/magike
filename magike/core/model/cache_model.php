@@ -68,6 +68,11 @@ class CacheModel extends MagikeObject
  		return file_exists($file);
  	}
 
+ 	private function dirExists($dir)
+ 	{
+ 		return is_dir($dir);
+ 	}
+
  	private function fileDate($file)
  	{
  		$files = array();
