@@ -8,7 +8,7 @@
 
 //设定异常截获函数以及错误截获函数
 set_exception_handler(array('MagikeAPI','exceptionHandler'));
-error_reporting(E_USER_ERROR | E_USER_WARNING | E_USER_NOTICE);
+error_reporting(E_ALL);
 set_error_handler(array('MagikeAPI','errorHandler'));
 
 //定义异常消息
@@ -17,6 +17,7 @@ define('E_INSTALL','Magike System Install Failed');		//安装异常
 define('E_OBJECTNOTEXISTS','Object Not Exists');		//对象不存在
 define('E_FILENOTEXISTS','File Not Exists');			//文件不存在
 define('E_PATHNOTEXISTS','Path Not Exists');			//路径不存在
+define('E_ACCESSDENIED','Access Denied');				//权限被禁止
 
 class MagikeException extends Exception
 {

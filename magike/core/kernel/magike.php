@@ -12,7 +12,8 @@ class Magike extends MagikeObject
 	{
 		parent::__construct(array('public' => array('stack',
 													'static',
-													'path')));
+													'path',
+													'access')));
 	}
 }
 ?>
