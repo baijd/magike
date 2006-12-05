@@ -30,7 +30,7 @@ class AccessModel extends MagikeObject
 
 	private function validateLogin()
 	{
-		if(!isset($this->stack->data['random']))
+		if(!isset($_SESSION['random']))
 		{
 			$_SESSION['random'] = MagikeAPI::createRandomString(7);
 		}
