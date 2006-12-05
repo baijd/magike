@@ -10,6 +10,8 @@
 set_exception_handler(array('MagikeAPI','exceptionHandler'));
 error_reporting(E_ALL);
 set_error_handler(array('MagikeAPI','errorHandler'));
+//打开会话
+session_start();
 
 //定义异常消息
 define('E_DATABASE','Database Exception');				//数据库异常

@@ -111,6 +111,17 @@ class MagikeAPI
 		return sprintf("%u",ip2long($ip));
 	}
 
+	public static function createRandomString($number)
+    {
+        $str = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890';
+        $result = '';
+        for($i=0;$i<$number;$i++)
+        {
+            $result .= $str[rand(0,52)];
+        }
+        return $result;
+    }
+
 	public static function errorHandler($errno, $errstr, $errfile, $errline)
 	{
 	 	switch ($errno)

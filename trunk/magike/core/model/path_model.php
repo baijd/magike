@@ -133,7 +133,7 @@ class PathModel extends MagikeObject
 			{
 				foreach($out[1] as $val)
 				{
-					array_push($value,$val);
+					$value[] = $val;
 				}
 			}
 		}
