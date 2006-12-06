@@ -248,10 +248,7 @@ class Build extends MagikeObject
 					$tmp = stripslashes($val);
             		$input_html = str_replace($val,$tmp,$input_html);
             		$val = $tmp;
-            		$val = str_replace("$","\\$",$val);
-            		$val = str_replace("|","\|",$val);
-            		$val = str_replace("&","\&",$val);
-            		$val = str_replace("+","\+",$val);
+            		$val = preg_quote($val);
             		array_push($if_tag,$val);
             		continue;
             	}

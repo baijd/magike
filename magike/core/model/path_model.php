@@ -48,7 +48,7 @@ class PathModel extends MagikeObject
 	{
 		$this->stack->setStack('system','path',$this->path);
 		$found = false;
-		$eregPath = '^'.quotemeta($this->path).'$';		//适合正则表达的路径
+		$eregPath = '^'.preg_quote($this->path).'$';		//适合正则表达的路径
 
 		if(isset($this->pathConfig[$eregPath]))
 		{
@@ -112,7 +112,7 @@ class PathModel extends MagikeObject
 
 	private function praseEregPath($path)
 	{
-		$path = quotemeta($path);
+		$path = preg_quote($path);
 
 		//替换匹配变量
 		$path = preg_replace("/\[([_0-9a-zA-Z-]+)\=\%d\]/i","([0-9]+)",$path);
