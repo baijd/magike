@@ -88,6 +88,16 @@ class MagikeAPI
 		}
 	}
 
+	public static function fileToModule($fileName)
+	{
+		return ucfirst(preg_replace_callback("/[\_]([a-z])/i",array('MagikeAPI','fileToModuleCallback'),$fileName)).'Module';
+	}
+
+	public static function fileToModuleCallback($matches)
+	{
+		return strtoupper($matches[1]);
+	}
+
 	public static function exportArrayToFile($file,$array,$name)
 	{
 		if(!is_dir(dirname($file)))
@@ -117,6 +127,38 @@ class MagikeAPI
 		$string=trim($string);
 
 		return $string;
+	}
+
+	public static function getFile($inpath,$trim = false,$stamp = NULL)
+	{
+        $file = array();
+
+		if(!is_dir($inpath))
+		{
+			return $file;
+		}
+
+		$handle=opendir($inpath);
+        if($stamp != NULL)
+        {
+        	$stamp = explode("|",$stamp);
+        }
+
+        while ($tmp = readdir($handle)) {
+            if(is_file($inpath."/".$tmp) && eregi("^([_@0-9a-zA-Z\x80-\xff\^\.\%-]{0,})[\.]([0-9a-zA-Z]{1,})$",$tmp,$file_name))
+            {
+            	if($stamp != NULL && in_array($file_name[2],$stamp))
+            	{
+            		$file[] = $trim ? $file_name[0] : $file_name[1];
+            	}
+            	else if($stamp == NULL)
+            	{
+            		$file[] = $trim ? $file_name[0] : $file_name[1];
+            	}
+            }
+        }
+        closedir($handle);
+        return $file;
 	}
 
 	public static function replaceArray($value,$before,$after)
