@@ -119,6 +119,15 @@ class MagikeAPI
 		return $string;
 	}
 
+	public static function replaceArray($value,$before,$after)
+	{
+        foreach($value as $key=>$val)
+        {
+              $value[$key] = $before.$val.$after;
+        }
+        return $value;
+	}
+
 	public static function ip2long($ip)
 	{
 		return sprintf("%u",ip2long($ip));
