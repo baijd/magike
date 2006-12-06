@@ -6,12 +6,12 @@
  * License   : GNU General Public License 2.0
  *********************************/
 
-class Build extends MagikeModel
+class Build extends MagikeObject
 {
 	private $tpl,$tpl_name,$cache,$lang;
 	private $include_file;
 	private $data;
-	private $stack;
+	private $istack;
 	private $mod;
 	private $block;
 	private $public_lang,$public_rlang;
@@ -23,7 +23,7 @@ class Build extends MagikeModel
 		$this->tpl_name = $template;
 		$this->tpl = str_replace('.tpl','',$templateFile);
 		$this->lang = $this->stack->data['static']['language'];
-		$this->stack = NULL;
+		$this->istack = NULL;
 		$this->include_file = array();
 		$this->data["block"] = array();
 		$this->data["static"] = array();
@@ -49,13 +49,19 @@ class Build extends MagikeModel
 	//连接函数
 	private function _link($input_tpl)
 	{
-		//检测是否存在死循环
 		$templateFile = __TEMPLATE__.'/'.$this->tpl_name.'/'.$input_tpl.'.tpl';
+		//检测文件是否存在
+		if(!file_exists($templateFile))
+		{
+			$this->throwException(E_FILENOTEXISTS,$templateFile);
+		}
+
+		//检测是否存在死循环
 		if(isset($this->include_file[$templateFile]))	return	NULL;
 
 		$this->include_file[$templateFile] = filemtime($templateFile);
 
-    	$f_array = @file($this->include_file[$templateFile]);        //打开脚本
+    	$f_array = @file($templateFile);        //打开脚本
         foreach($f_array as $key=>$val)
         {
             //搜索是否存在[include],若存在则递归
@@ -72,13 +78,13 @@ class Build extends MagikeModel
 	private function _make_cache()
 	{
 		$str  = "<?php\n";
-		$str .= '$module = '.var_export($this->mod).';';
-		$str .= '$data = '.var_export($this->data).';';
-		$str .= '$block = '.var_export($this->block).';';
+		$str .= '$module = '.var_export($this->mod,true).';';
+		$str .= '$data = '.var_export($this->data,true).';';
+		$str .= '$block = '.var_export($this->block,true).';';
 		$str .= "function load_template_".basename($this->tpl,".tpl")."(\$block_name,\$block,\$data)\n";
 		$str .= "{\n";
 		$str .= "switch (\$block_name) {";
-		$str .= $this->stack;
+		$str .= $this->istack;
 		$str .= "}\n";
 		$str .= "return \$block[\$block_name];";
 		$str .= "}\n";
@@ -143,7 +149,7 @@ class Build extends MagikeModel
 						{
 							if(isset($this->stack->data['module'][$val]))	$this->mod[$val] = $this->stack->data['module'][$val];
 							$mystack[1] = $this->_filter($mystack[1],$val);
-							$this->stack .= "case \"{$val}\":
+							$this->istack .= "case \"{$val}\":
 							\$block['{$val}'] = \"".$mystack[1]."\";
 							break;
 							";
@@ -151,7 +157,7 @@ class Build extends MagikeModel
 						}
 						else
 						{
-							$this->stack .= "case \"@\":
+							$this->istack .= "case \"@\":
 							\$block['@'] = \"".$mystack[1]."\";
 							break;
 							default:

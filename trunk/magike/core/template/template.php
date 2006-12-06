@@ -21,21 +21,20 @@ class Template extends MagikeObject
 								  'private'=> array('cache')));
 		$this->templateFile = $templateFile;
 		$this->template = $template;
-		$this->templateName = str_replace('.tpl','',$template);
+		$this->templateName = str_replace('.tpl','',$templateFile);
 		$this->block = array();
 		$this->data = array();
 
 		$this->cache->checkCacheFile(
-		array(__COMPILE__.'/'.$this->templateName.'@'.$this->template.'@'
-		.$this->stack->data['static']['language'].'.cnf.php' => array('listener' => 'fileDate',
-																	  'callback' => array($this,'buildCache'),
-																	  'else'	=> array($this,'loadCache'))));
+		array(__COMPILE__.'/'.$this->templateName.'@'.$this->template.'.cnf.php' => array('listener' => 'fileDate',
+																	  'callback' => array($this,'buildCache'))));
 
+		$this->loadCache();
 		$this->data['static'] = MagikeAPI::array_intersect_key($this->stack->data['static'],$this->data['static']);
 		$this->data['system'] = MagikeAPI::array_intersect_key($this->stack->data['system'],$this->data['system']);
 	}
 
-	private function buildCache()
+	public function buildCache()
 	{
 		require(__DIR__.'/template/build.php');
 		new Build($this->templateFile,$this->template);
