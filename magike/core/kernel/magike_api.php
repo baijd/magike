@@ -29,6 +29,19 @@ class MagikeAPI
 		}
 	}
 
+	public static function array_intersect_key($array1, $array2)
+	{
+		$result = array();
+		foreach($array1 as $key=>$val)
+		{
+			if(array_key_exists($key, $array2))
+			{
+				$result[$key] = $array1[$key];
+			}
+		}
+		return $result;
+	}
+
 	public static function objectToModel($objName)
 	{
 		if(NULL == $objName)

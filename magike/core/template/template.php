@@ -31,8 +31,8 @@ class Template extends MagikeObject
 																	  'callback' => array($this,'buildCache'),
 																	  'else'	=> array($this,'loadCache'))));
 
-		$this->data['static'] = array_merge($this->data['static'],$this->stack->data['static']);
-		$this->data['system'] = array_merge($this->data['system'],$this->stack->data['system']);
+		$this->data['static'] = MagikeAPI::array_intersect_key($this->stack->data['static'],$this->data['static']);
+		$this->data['system'] = MagikeAPI::array_intersect_key($this->stack->data['system'],$this->data['system']);
 	}
 
 	private function buildCache()
@@ -48,7 +48,7 @@ class Template extends MagikeObject
 		$block = array();
 
 		require(__COMPILE__.'/'.$this->templateName.'@'.$this->template.'@'.$this->stack->data['static']['language'].'.php');
-		$this->stack->setStackByType('module',$module);
+		$this->stack->setStackByType('module_to_run',$module);
 		$this->data = $data;
 		$this->blank = $data;
 		$this->block = $block;

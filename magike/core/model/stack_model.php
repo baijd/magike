@@ -18,7 +18,7 @@ class StackModel extends MagikeObject
 
 	public function setStack($stackType,$stackName,$stackValue)
 	{
-		if(!isset($this->data[$stackType]))
+		if(!array_key_exists($stackType,$this->data))
 		{
 			$this->data[$stackType] = array();
 		}
@@ -32,7 +32,7 @@ class StackModel extends MagikeObject
 
 	public function pushStackByType($stackType,$typeValue)
 	{
-		if(!isset($this->data[$stackType]))
+		if(!array_key_exists($stackType,$this->data))
 		{
 			$this->data[$stackType] = array();
 		}
