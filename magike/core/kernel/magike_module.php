@@ -15,6 +15,9 @@ class MagikeModule extends MagikeObject
 						  'stack'	=> 'public'
 						  );
 
+		$public = array();
+		$private = array();
+
 		//载入模型
 		foreach($require as $val)
 		{
@@ -22,19 +25,23 @@ class MagikeModule extends MagikeObject
 			{
 				if('public' == $modelMap[$val])
 				{
-					$this->initPublicObject($val);
+					$public[] = $val;
 				}
 				else
 				{
-					$this->initPrivateObject($val);
+					$private[] = $val;
 				}
 			}
 		}
-	}
+		$this->initPublicObject($public);
+		$this->initPrivateObject($private);
 
-	protected function block($blockName,$value,$clearBlock = NULL)
-	{
-		global $template;
+
+		if(in_array('template',$require))
+		{
+			global $template;
+			$this->template = $template;
+		}
 	}
 }
 ?>

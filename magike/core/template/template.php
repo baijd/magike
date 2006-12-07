@@ -11,9 +11,7 @@ class Template extends MagikeObject
 	private $templateFile;
 	private $template;
 	private $templateName;
-	private $block;
-	private $data;
-	private $blank;
+	public  $data;
 
 	function __construct($templateFile,$template)
 	{
@@ -22,16 +20,14 @@ class Template extends MagikeObject
 		$this->templateFile = $templateFile;
 		$this->template = $template;
 		$this->templateName = str_replace('.tpl','',$templateFile);
-		$this->block = array();
 		$this->data = array();
 
 		$this->cache->checkCacheFile(
 		array(__COMPILE__.'/'.$this->templateName.'@'.$this->template.'.cnf.php' => array('listener' => 'fileDate',
 																	  'callback' => array($this,'buildCache'))));
-
-		$this->loadCache();
-		$this->data['static'] = MagikeAPI::array_intersect_key($this->stack->data['static'],$this->data['static']);
-		$this->data['system'] = MagikeAPI::array_intersect_key($this->stack->data['system'],$this->data['system']);
+		$module = array();
+		require(__COMPILE__.'/'.$this->templateName.'@'.$this->template.'.inc.php');
+		$this->stack->setStackByType('module_to_run',$module);
 	}
 
 	public function buildCache()
@@ -40,26 +36,9 @@ class Template extends MagikeObject
 		new Build($this->templateFile,$this->template);
 	}
 
-	private function loadCache()
+	public function prase()
 	{
-		$module = array();
-		$data = array();
-		$block = array();
-
-		require(__COMPILE__.'/'.$this->templateName.'@'.$this->template.'@'.$this->stack->data['static']['language'].'.php');
-		$this->stack->setStackByType('module_to_run',$module);
-		$this->data = $data;
-		$this->blank = $data;
-		$this->block = $block;
-
-		if(!isset($this->data['static']))
-		{
-			$this->data['static'] = array();
-		}
-		if(!isset($this->data['system']))
-		{
-			$this->data['system'] = array();
-		}
+		require(__COMPILE__.'/'.$this->templateName.'@'.$this->template.'.php');
 	}
 }
 ?>

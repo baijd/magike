@@ -20,6 +20,8 @@ class ActionModel extends MagikeObject
 		{
 			case 'template':
 				$this->initTemplateObject($this->stack->data['system']['file'],$this->stack->data['static']['template']);
+				$this->runModule();
+				$this->template->prase();
 				break;
 			case 'xml_template':
 				$this->initTemplateObject($this->stack->data['system']['file'],$this->stack->data['static']['xml_template']);
@@ -38,6 +40,25 @@ class ActionModel extends MagikeObject
 		require(__DIR__.'/template/template.php');
 		$template = new Template($templateFile,$templatePath);
 		$this->template = $template;
+	}
+
+	private function runModule()
+	{
+		if(isset($this->stack->data['module_to_run']))
+		{
+			foreach($this->stack->data['module_to_run'] as $val)
+			{
+				if(class_exists($val))
+				{
+					$module = NULL;
+					eval("\$module = new $val();");
+					if(method_exists($module,'runModule'))
+					{
+						call_user_func(array($module,'runModule'));
+					}
+				}
+			}
+		}
 	}
 }
 ?>
