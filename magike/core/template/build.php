@@ -8,7 +8,7 @@
 
 class Build extends MagikeObject
 {
-	private $templateFile,$template,$cache;
+	private $templateFile,$template;
 	private $includeFile;
 	private $data;
 	private $istack;
@@ -60,17 +60,17 @@ class Build extends MagikeObject
 
 		$this->includeFile[$templateFile] = filemtime($templateFile);
 
-    	$f_array = @file($templateFile);        //打开脚本
-        foreach($f_array as $key=>$val)
+    	$fileArray = @file($templateFile);        //打开脚本
+        foreach($fileArray as $key=>$val)
         {
             //搜索是否存在[include],若存在则递归
             if(preg_match_all("/\[include:\s*(.+?)\]/is",$val,$out))
             {
-                $f_array[$key] = $this->_link($out[1][0]);
+                $fileArray[$key] = $this->_link($out[1][0]);
             }
         }
 
-        return implode("", $f_array);
+        return implode("", $fileArray);
 	}
 
 	//生成缓存
