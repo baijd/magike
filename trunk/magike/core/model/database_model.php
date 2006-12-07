@@ -15,6 +15,7 @@ class DatabaseModel extends MagikeObject
  	{
  		//获取实例化的stack
 		parent::__construct(array('public' => array('stack')));
+		$this->stack->setStack('system','query_times',0);
  	}
 
 	private function praseWhereSentence($args)
@@ -58,10 +59,6 @@ class DatabaseModel extends MagikeObject
  	public function fectch($args,$callback = NULL,$expection = false)
  	{
  		//设定查询次数
- 		if(!isset($this->stack->data['system']['query_times']))
- 		{
-			$this->stack->setStack('system','query_times',0);
- 		}
  		$this->stack->setStack('system','query_times',$this->stack->data['system']['query_times'] + 1);
 
  		//处理table子句

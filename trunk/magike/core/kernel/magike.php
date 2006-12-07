@@ -18,7 +18,6 @@ class Magike extends MagikeObject
 																	 )));
 
 		$this->initPublicObject(array('static','path','access','action'));
-		print_r($this->stack->data);
 	}
 
 	function buildCache()
@@ -28,13 +27,7 @@ class Magike extends MagikeObject
 
 		foreach($moduleFile as $fileName)
 		{
-			require(__MODULE__.'/'.$fileName.'.php');
-			$currentModule = MagikeAPI::fileToModule($fileName);
-
-			if(class_exists($currentModule))
-			{
 				$module[$fileName] = __MODULE__.'/'.$fileName.'.php';
-			}
 		}
 
 		$this->stack->setStackByType('module',$module);
