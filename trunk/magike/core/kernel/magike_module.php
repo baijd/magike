@@ -30,13 +30,11 @@ class MagikeModule extends MagikeObject
 				}
 			}
 		}
+	}
 
-		//载入模板
-		if(in_array('template',$require))
-		{
-			global $template;
-			$this->template = $template;
-		}
+	protected function block($blockName,$value,$clearBlock = NULL)
+	{
+		global $template;
 	}
 }
 ?>
