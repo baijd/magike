@@ -104,7 +104,9 @@ class MagikeAPI
 		{
 			self::mkdir(dirname($file));
 		}
+
 		file_put_contents($file,"<?php\n\$".$name." = ".var_export($array,true).";\n?>");
+		file_put_contents($file,php_strip_whitespace($file));
 	}
 
 	public static function subStr($str,$start,$end,$trim = "...")
