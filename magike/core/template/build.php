@@ -52,7 +52,7 @@ class Build extends MagikeObject
         {
             if(preg_match_all("/\[include:\s*(.+?)\]/is",$val,$out))
             {
-                $fileArray[$key] = $this->_link($out[1][0]);
+                $fileArray[$key] = $this->link($out[1][0]);
             }
         }
 
@@ -68,6 +68,7 @@ class Build extends MagikeObject
 	{
 		$input = preg_replace("/\\$([_0-9a-zA-Z-]+)\.([_0-9a-zA-Z-]+)\.([_0-9a-zA-Z-]+)/is","\$this->data['\\1']['\\2']['\\3']",$input);
 		$input = preg_replace("/\\$([_0-9a-zA-Z-]+)\[\\$([_0-9a-zA-Z-]+)\]\.([_0-9a-zA-Z-]+)\.([_0-9a-zA-Z-]+)/is","\$this->data['\\1'][\$\\2]['\\3']['\\4']",$input);
+		$input = preg_replace("/\\$([_0-9a-zA-Z-]+)\[\\$([_0-9a-zA-Z-]+)\]\.([_0-9a-zA-Z-]+)\[\\$([_0-9a-zA-Z-]+)\]/is","\$this->data['\\1'][\$\\2]['\\3'][\$\\4]",$input);
 		$input = preg_replace("/\\$([_0-9a-zA-Z-]+)\.([_0-9a-zA-Z-]+)/is","\$this->data['\\1']['\\2']",$input);
 		$input = preg_replace("/\\$([_0-9a-zA-Z-]+)\[\\$([_0-9a-zA-Z-]+)\]\.([_0-9a-zA-Z-]+)/is","\$this->data['\\1'][\$\\2]['\\3']",$input);
 		$input = preg_replace("/\\$([^this\-][_0-9a-zA-Z-]+)/is","\$this->data['\\1']",$input);
@@ -160,6 +161,7 @@ class Build extends MagikeObject
 			if(isset($this->stack->data['module'][$module]) && file_exists($this->stack->data['module'][$module]))
 			{
 				$str .= php_strip_whitespace($this->stack->data['module'][$module]);
+				$this->includeFile[$this->stack->data['module'][$module]] = filemtime($this->stack->data['module'][$module]);
 			}
 		}
 

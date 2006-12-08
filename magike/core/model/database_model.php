@@ -6,13 +6,13 @@
  * License   : GNU General Public License 2.0
  *********************************/
 
-$dblink=@mysql_connect(__DBHOST__,__DBUSER__,__DBPASS__) or die(MagikeObject::throwException(E_DATABASE,mysql_error(),array('errorDatabaseCallback')));
-@mysql_select_db(__DBNAME__,$dblink) or die(MagikeObject::throwException(E_DATABASE,mysql_error(),'errorDatabaseCallback'));
-
 class DatabaseModel extends MagikeObject
 {
  	function __construct()
  	{
+		$dblink=@mysql_connect(__DBHOST__,__DBUSER__,__DBPASS__) or die($this->throwException(E_DATABASE,mysql_error(),array('errorDatabaseCallback')));
+		@mysql_select_db(__DBNAME__,$dblink) or die($this->throwException(E_DATABASE,mysql_error(),'errorDatabaseCallback'));
+ 		mysql_query("SET NAMES 'utf8'");
  		//获取实例化的stack
 		parent::__construct(array('public' => array('stack')));
 		$this->stack->setStack('system','query_times',0);
@@ -25,7 +25,6 @@ class DatabaseModel extends MagikeObject
 		if(isset($args['where']['template']))
 		{
 			$where = $args['where']['template'];
-
 			if(isset($args['where']['value']))
 			{
 			$args['where']['value'] = self::filterQuotesSentence($args['where']['value']);
