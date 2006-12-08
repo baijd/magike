@@ -50,7 +50,7 @@ class Build extends MagikeObject
     	$fileArray = @file($templateFile);
         foreach($fileArray as $key=>$val)
         {
-            if(preg_match_all("/\[include:\s*(.+?)\]/is",$val,$out))
+            if(preg_match_all("/\[include:\s*(.+?)\s*\]/is",$val,$out))
             {
                 $fileArray[$key] = $this->link($out[1][0]);
             }
@@ -66,13 +66,14 @@ class Build extends MagikeObject
 
 	private function praseVar($input)
 	{
-		$input = preg_replace("/\\$([_0-9a-zA-Z-]+)\.([_0-9a-zA-Z-]+)\.([_0-9a-zA-Z-]+)/is","\$this->data['\\1']['\\2']['\\3']",$input);
-		$input = preg_replace("/\\$([_0-9a-zA-Z-]+)\[\\$([_0-9a-zA-Z-]+)\]\.([_0-9a-zA-Z-]+)\.([_0-9a-zA-Z-]+)/is","\$this->data['\\1'][\$\\2]['\\3']['\\4']",$input);
-		$input = preg_replace("/\\$([_0-9a-zA-Z-]+)\[\\$([_0-9a-zA-Z-]+)\]\.([_0-9a-zA-Z-]+)\[\\$([_0-9a-zA-Z-]+)\]/is","\$this->data['\\1'][\$\\2]['\\3'][\$\\4]",$input);
-		$input = preg_replace("/\\$([_0-9a-zA-Z-]+)\.([_0-9a-zA-Z-]+)/is","\$this->data['\\1']['\\2']",$input);
-		$input = preg_replace("/\\$([_0-9a-zA-Z-]+)\[\\$([_0-9a-zA-Z-]+)\]\.([_0-9a-zA-Z-]+)/is","\$this->data['\\1'][\$\\2]['\\3']",$input);
-		$input = preg_replace("/\\$([^this\-][_0-9a-zA-Z-]+)/is","\$this->data['\\1']",$input);
-		$input = preg_replace("/\\$([^this\-][_0-9a-zA-Z-]+)\[\\$([_0-9a-zA-Z-]+)\]/is","\$this->data['\\1'][\$\\2]",$input);
+		$input = preg_replace("/\\$(data)\.([_0-9a-zA-Z-]+)\.([_0-9a-zA-Z-]+)\.([_0-9a-zA-Z-]+)/is","\$this->data['\\2']['\\3']['\\4']",$input);
+		$input = preg_replace("/\\$(data)\.([_0-9a-zA-Z-]+)\[\\$([_0-9a-zA-Z-]+)\]\.([_0-9a-zA-Z-]+)\.([_0-9a-zA-Z-]+)/is","\$this->data['\\2'][\$\\3]['\\4']['\\5']",$input);
+		$input = preg_replace("/\\$(data)\.([_0-9a-zA-Z-]+)\[\\$([_0-9a-zA-Z-]+)\]\.([_0-9a-zA-Z-]+)\[\\$([_0-9a-zA-Z-]+)\]/is","\$this->data['\\2'][\$\\3]['\\4'][\$\\5]",$input);
+		$input = preg_replace("/\\$(data)\.([_0-9a-zA-Z-]+)\.([_0-9a-zA-Z-]+)/is","\$this->data['\\2']['\\3']",$input);
+		$input = preg_replace("/\\$(data)\.([_0-9a-zA-Z-]+)\[\\$([_0-9a-zA-Z-]+)\]\.([_0-9a-zA-Z-]+)/is","\$this->data['\\2'][\$\\3]['\\4']",$input);
+		$input = preg_replace("/\\$(data)\.([_0-9a-zA-Z-]+)/is","\$this->data['\\2']",$input);
+		$input = preg_replace("/\\$(data)\.([_0-9a-zA-Z-]+)\[\\$([_0-9a-zA-Z-]+)\]/is","\$this->data['\\2'][\$\\3]",$input);
+		$input = preg_replace("/\\$([_0-9a-zA-Z-]+)\.([_0-9a-zA-Z-]+)/is","\$\\1['\\2']",$input);
 		return $input;
 	}
 
@@ -91,7 +92,7 @@ class Build extends MagikeObject
 
 	private function filterIfSyntax($input)
 	{
-		$input = preg_replace_callback("/\[if \s*(.+?)\]/is",array($this,'filterIfSyntaxCallback'),$input);
+		$input = preg_replace_callback("/\[if \s*(.+?)\s*\]/is",array($this,'filterIfSyntaxCallback'),$input);
 		$input = str_replace("[/if]","<?php } ?>",$input);
 		$input = str_replace("[else]","<?php else{ ?>",$input);
 		$input = str_replace("[/else]","<?php } ?>",$input);
@@ -106,7 +107,7 @@ class Build extends MagikeObject
 
 	private function filterModuleSyntax($input)
 	{
-		$input = preg_replace_callback("/\[module:([_0-9a-zA-Z-]+)\]/is",array($this,'filterModuleSyntaxCallback'),$input);
+		$input = preg_replace_callback("/\[module:\s*([_0-9a-zA-Z-]+)\s*\]/is",array($this,'filterModuleSyntaxCallback'),$input);
 		return $input;
 	}
 
@@ -118,7 +119,7 @@ class Build extends MagikeObject
 
 	private function filterLoopSyntax($input)
 	{
-		$input = preg_replace_callback("/\[loop@\(([_0-9a-zA-Z-\.\[\]\\$]+),([_0-9a-zA-Z-\.\[\]\\$]+),([_0-9a-zA-Z-\.\[\]\\$]+)\)\]/is",
+		$input = preg_replace_callback("/\[loop@\(\s*([_0-9a-zA-Z-\.\[\]\\$]+)\s*,\s*([_0-9a-zA-Z-\.\[\]\\$]+)\s*,\s*([_0-9a-zA-Z-\.\[\]\\$]+)\s*\)\]/is",
 										array($this,'filterLoopSyntaxCallback'),$input);
 		$input = str_replace("[/loop]","<?php } ?>",$input);
 		return $input;
@@ -136,7 +137,7 @@ class Build extends MagikeObject
 
 	private function filterWhileSyntax($input)
 	{
-		$input = preg_replace_callback("/\[while@\(([_0-9a-zA-Z-\.\[\]\\$]+),([_0-9a-zA-Z-\.\[\]\\$]+)\)\]/is",
+		$input = preg_replace_callback("/\[while@\(\s*([_0-9a-zA-Z-\.\[\]\\$]+)\s*,\s*([_0-9a-zA-Z-\.\[\]\\$]+)\s*\)\]/is",
 										array($this,'filterWhileSyntaxCallback'),$input);
 		$input = str_replace("[/while]","<?php } ?>",$input);
 		return $input;
@@ -144,10 +145,8 @@ class Build extends MagikeObject
 
 	private function filterWhileSyntaxCallback($matches)
 	{
-		$matches[0] = "<?php for(".$this->praseVar($matches[2])." = 0;"
-					  .$this->praseVar($matches[2])." < "
-					  ."count(".$this->praseVar($matches[1]).");"
-					  .$this->praseVar($matches[2])."++) { ?>";
+		$matches[0] = "<?php foreach(".$this->praseVar($matches[1])." as "
+					  .$this->praseVar($matches[2]).") { ?>";
 		return $matches[0];
 	}
 
@@ -167,6 +166,22 @@ class Build extends MagikeObject
 
 		$str = "<?php\n\$module=".var_export($include,true)."; ?>".$str;
 		file_put_contents(__COMPILE__.'/'.$this->templateFile.'@'.$this->template.'.inc.php',$str);
+	}
+
+	private function linkModule($module)
+	{
+		$linkModule = array(MagikeAPI::fileToModule($module));
+
+		if(isset($this->stack->data['module'][$module]) && !isset($this->includeFile[$this->stack->data['module'][$module]]) && file_exists($this->stack->data['module'][$module]))
+		{
+			require($this->stack->data['module'][$module]);
+			$parent = get_parent_class(MagikeAPI::fileToModule($module));
+			if($parent != 'MagikeModule')
+			{
+				$linkModule = array_merge($linkModule,$this->linkModule(MagikeAPI::modelToFile($parent)));
+			}
+		}
+		return $linkModule;
 	}
 }
 ?>
