@@ -1,6 +1,11 @@
+[include:header]
 [module:archives]
 [module:static]
 [while@($archives,$i)]
-{$static.siteurl}dd{$archives[$i].title}
-{$lang.public.write_by}
+{$archives[$i].title}
+
+[while@($archives[$i].tags,$j)]
+{$archives[$i].tags[$j]}
+[/while]
+
 [/while]

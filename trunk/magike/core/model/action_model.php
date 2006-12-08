@@ -56,6 +56,10 @@ class ActionModel extends MagikeObject
 					{
 						call_user_func(array($module,'runModule'));
 					}
+					else
+					{
+						trigger_error('Class Not Exists: '.$val,E_USER_NOTICE);
+					}
 				}
 			}
 		}

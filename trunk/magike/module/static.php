@@ -10,6 +10,7 @@ class StaticModule extends MagikeModule
 {
 	public function runModule()
 	{
+		$this->stack->setStack('static','title',$this->stack->data['static']['blog_name']);
 		$this->template->data['static'] = $this->stack->data['static'];
 	}
 }
