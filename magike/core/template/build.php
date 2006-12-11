@@ -66,15 +66,14 @@ class Build extends MagikeObject
 
 	private function praseVar($input)
 	{
-		$input = preg_replace("/\\$(data)\.([_0-9a-zA-Z-]+)\.([_0-9a-zA-Z-]+)\.([_0-9a-zA-Z-]+)/is","\$this->data['\\2']['\\3']['\\4']",$input);
-		$input = preg_replace("/\\$(data)\.([_0-9a-zA-Z-]+)\[\\$([_0-9a-zA-Z-]+)\]\.([_0-9a-zA-Z-]+)\.([_0-9a-zA-Z-]+)/is","\$this->data['\\2'][\$\\3]['\\4']['\\5']",$input);
-		$input = preg_replace("/\\$(data)\.([_0-9a-zA-Z-]+)\[\\$([_0-9a-zA-Z-]+)\]\.([_0-9a-zA-Z-]+)\[\\$([_0-9a-zA-Z-]+)\]/is","\$this->data['\\2'][\$\\3]['\\4'][\$\\5]",$input);
-		$input = preg_replace("/\\$(data)\.([_0-9a-zA-Z-]+)\.([_0-9a-zA-Z-]+)/is","\$this->data['\\2']['\\3']",$input);
-		$input = preg_replace("/\\$(data)\.([_0-9a-zA-Z-]+)\[\\$([_0-9a-zA-Z-]+)\]\.([_0-9a-zA-Z-]+)/is","\$this->data['\\2'][\$\\3]['\\4']",$input);
-		$input = preg_replace("/\\$(data)\.([_0-9a-zA-Z-]+)/is","\$this->data['\\2']",$input);
-		$input = preg_replace("/\\$(data)\.([_0-9a-zA-Z-]+)\[\\$([_0-9a-zA-Z-]+)\]/is","\$this->data['\\2'][\$\\3]",$input);
-		$input = preg_replace("/\\$([_0-9a-zA-Z-]+)\.([_0-9a-zA-Z-]+)/is","\$\\1['\\2']",$input);
+		$input = preg_replace_callback("/\\$([_0-9a-zA-Z-\.]+)/is",array($this,'praseVarCallback'),$input);
 		return $input;
+	}
+
+	private function praseVarCallback($matches)
+	{
+		$keys = explode('.',$matches[1]);
+		return "\$this->data['".implode("']['",$keys)."']";
 	}
 
 	private function filterVarSyntax($input)
@@ -166,22 +165,6 @@ class Build extends MagikeObject
 
 		$str = "<?php\n\$module=".var_export($include,true)."; ?>".$str;
 		file_put_contents(__COMPILE__.'/'.$this->templateFile.'@'.$this->template.'.inc.php',$str);
-	}
-
-	private function linkModule($module)
-	{
-		$linkModule = array(MagikeAPI::fileToModule($module));
-
-		if(isset($this->stack->data['module'][$module]) && !isset($this->includeFile[$this->stack->data['module'][$module]]) && file_exists($this->stack->data['module'][$module]))
-		{
-			require($this->stack->data['module'][$module]);
-			$parent = get_parent_class(MagikeAPI::fileToModule($module));
-			if($parent != 'MagikeModule')
-			{
-				$linkModule = array_merge($linkModule,$this->linkModule(MagikeAPI::modelToFile($parent)));
-			}
-		}
-		return $linkModule;
 	}
 }
 ?>

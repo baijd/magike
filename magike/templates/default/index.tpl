@@ -1,8 +1,8 @@
 [include:header]
 [module:archives]
-[while@($data.archives,$archives)]
-{$archives.title}
-[while@($archives.tags,$tags)]
+[while@($archives,$archive)]
+{$archive.title}
+[while@($archive.tags,$tags)]
 {$tags}
 [/while]
 

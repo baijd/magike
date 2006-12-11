@@ -216,11 +216,25 @@ class MagikeAPI
 
 function __autoload($className)
 {
-   $fileName = __DIR__."/model/".(MagikeAPI::modelToFile($className)).'.php';
+   $fileName = __DIR__.'/model/'.(MagikeAPI::modelToFile($className)).'.php';
    if(!file_exists($fileName))
    {
+		$fileName = __MODULE__.'/'.(MagikeAPI::modelToFile($className)).'.php';
+		if(!file_exists($fileName))
+		{
 		MagikeObject::throwException(E_FILENOTEXISTS,array('class_name' => $className,
 														   'file_name'  => $fileName));
+		}
+		else
+		{
+			global $stack;
+			if(isset($stack->data['system']['template']))
+			{
+				$incStr  = file_get_contents(__COMPILE__.'/'.$stack->data['system']['template'].'.inc.php');
+				$incStr .= php_strip_whitespace($fileName);
+				file_put_contents(__COMPILE__.'/'.$stack->data['system']['template'].'.inc.php',$incStr);
+			}
+		}
    }
    require($fileName);
 }

@@ -12,7 +12,7 @@ class DatabaseModel extends MagikeObject
  	{
 		$dblink=@mysql_connect(__DBHOST__,__DBUSER__,__DBPASS__) or die($this->throwException(E_DATABASE,mysql_error(),array('errorDatabaseCallback')));
 		@mysql_select_db(__DBNAME__,$dblink) or die($this->throwException(E_DATABASE,mysql_error(),'errorDatabaseCallback'));
- 		mysql_query("SET NAMES 'utf8'");
+ 		mysql_query('SET NAMES "utf8"') or die($this->throwException(E_DATABASE,mysql_error(),'errorDatabaseCallback'));
  		//获取实例化的stack
 		parent::__construct(array('public' => array('stack')));
 		$this->stack->setStack('system','query_times',0);
