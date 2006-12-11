@@ -20,6 +20,7 @@ class Template extends MagikeObject
 		$this->templateFile = $templateFile;
 		$this->template = $template;
 		$this->templateName = str_replace('.tpl','',$templateFile);
+		$this->stack->setStack('system','template',$this->templateName.'@'.$this->template);
 		$this->data = array();
 
 		$this->cache->checkCacheFile(
@@ -38,7 +39,11 @@ class Template extends MagikeObject
 
 	public function prase()
 	{
+		ob_start();
 		require(__COMPILE__.'/'.$this->templateName.'@'.$this->template.'.php');
+		$contents = ob_get_contents();
+		ob_end_clean();
+		echo $contents;
 	}
 }
 ?>
