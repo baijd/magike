@@ -136,7 +136,7 @@ class AccessModel extends MagikeObject
 		{
 			if($this->isInDomain($this->stack->data['system']['domain'],$val['domain']))
 			{
-				$allow &= $this->checkAccess($ip,$val['action'],$val['left'],$val['right']);
+				$allow |= $this->checkAccess($ip,$val['action'],$val['left'],$val['right']);
 			}
 		}
 

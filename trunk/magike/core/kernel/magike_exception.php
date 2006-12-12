@@ -35,7 +35,19 @@ class MagikeException extends Exception
 
    public function __toString()
    {
-       	return __CLASS__ . ": [{$this->code}]: {$this->message}\n";
+       	$data = '';
+       	if(is_array($this->data))
+       	{
+       		foreach($this->data as $key => $val)
+       		{
+       			$data .= $key.':'.$val.'<br />\n';
+       		}
+       	}
+       	else
+       	{
+       		$data = $this->data;
+       	}
+       	return __CLASS__ . ": [{$this->code}]: {$this->message}<br />\n".$data;
    }
 
    final function getData()
