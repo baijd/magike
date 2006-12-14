@@ -25,9 +25,14 @@ class ActionModel extends MagikeObject
 				break;
 			case 'xml_template':
 				$this->initTemplateObject($this->stack->data['system']['file'],$this->stack->data['static']['xml_template']);
+				$this->stack->setStack('static','content_type','text/xml');
+				$this->runModule();
+				$this->template->prase();
 				break;
 			case 'admin_template':
 				$this->initTemplateObject($this->stack->data['system']['file'],$this->stack->data['static']['admin_template']);
+				$this->runModule();
+				$this->template->prase();
 				break;
 			default:
 				break;
