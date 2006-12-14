@@ -12,6 +12,7 @@ class Build extends MagikeObject
 	private $template;
 	private $includeFile;
 	private $module;
+	private $lang;
 
 	function __construct($templateFile,$template)
 	{
@@ -21,8 +22,10 @@ class Build extends MagikeObject
 		$this->templateFile = str_replace('.tpl','',$templateFile);
 		$this->includeFile = array();
 		$this->module = array();
+		$this->lang = array();
 
 		$html = $this->link($this->templateFile);
+		$html = $this->filterLang($html);
 		$html = $this->filterVarSyntax($html);
 		$html = $this->filterIfSyntax($html);
 		$html = $this->filterModuleSyntax($html);
@@ -78,7 +81,7 @@ class Build extends MagikeObject
 
 	private function filterVarSyntax($input)
 	{
-		$input = preg_replace_callback("/\{([_0-9a-zA-Z-\.\[\]\\$]+)\}/is",array($this,'filterVarSyntaxCallback'),$input);
+		$input = preg_replace_callback("/\{([_0-9a-zA-Z-\.\\$]+)\}/is",array($this,'filterVarSyntaxCallback'),$input);
 		return $input;
 	}
 
@@ -87,6 +90,48 @@ class Build extends MagikeObject
 		$matches[0] = substr($matches[0],1,-1);
 		$matches[0] = "<?php echo ".$matches[0]."; ?>";
 		return $this->praseVar($matches[0]);
+	}
+
+	private function filterLang($input)
+	{
+		$input = preg_replace_callback("/\{lang\.([_0-9a-zA-Z-]+)\.([_0-9a-zA-Z-]+)\}/is",array($this,'filterLangCallback'),$input);
+		return $input;
+	}
+
+	private function filterLangCallback($matches)
+	{
+		if(!isset($this->lang[$matches[1]]))
+		{
+			if(file_exists(__LANGUAGE__.'/'.$this->stack->data['static']['language'].'/'.$matches[1].'.php'))
+			{
+				$lang = array();
+				require(__LANGUAGE__.'/'.$this->stack->data['static']['language'].'/'.$matches[1].'.php');
+				$this->lang[$matches[1]] = $lang;
+				if(isset($this->lang[$matches[1]][$matches[2]]))
+				{
+					return $this->lang[$matches[1]][$matches[2]];
+				}
+				else
+				{
+					return NULL;
+				}
+			}
+			else
+			{
+				return NULL;
+			}
+		}
+		else
+		{
+			if(isset($this->lang[$matches[1]][$matches[2]]))
+			{
+				return $this->lang[$matches[1]][$matches[2]];
+			}
+			else
+			{
+				return NULL;
+			}
+		}
 	}
 
 	private function filterIfSyntax($input)
