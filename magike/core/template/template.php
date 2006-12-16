@@ -27,8 +27,10 @@ class Template extends MagikeObject
 		array(__COMPILE__.'/'.$this->templateName.'@'.$this->template.'.cnf.php' => array('listener' => 'fileDate',
 																	  'callback' => array($this,'buildCache'))));
 		$module = array();
+		$lang = array();
 		require(__COMPILE__.'/'.$this->templateName.'@'.$this->template.'.inc.php');
 		$this->stack->setStackByType('module_to_run',$module);
+		$this->stack->setStackByType('language',$lang);
 	}
 
 	public function buildCache()

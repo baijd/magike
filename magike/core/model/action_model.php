@@ -68,6 +68,16 @@ class ActionModel extends MagikeObject
 				}
 			}
 		}
+
+		if(isset($this->stack->data['require_language']) && $this->stack->data['require_language'] != NULL)
+		{
+			if(isset($this->stack->data['system']['template']))
+			{
+				$incStr  = file_get_contents(__COMPILE__.'/'.$this->stack->data['system']['template'].'.inc.php');
+				$incStr .= '<?php $lang = '.var_export($this->stack->data['require_language'],true).'; ?>';
+				file_put_contents(__COMPILE__.'/'.$this->stack->data['system']['template'].'.inc.php',$incStr);
+			}
+		}
 	}
 }
 ?>
