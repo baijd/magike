@@ -9,7 +9,6 @@
 class AccessModel extends MagikeObject
 {
 	private $ipConfig;
-	private $levelConfig;
 
 	function __construct()
 	{
@@ -174,22 +173,22 @@ class AccessModel extends MagikeObject
 
 	public function buildLevelCache()
 	{
-		$this->levelConfig = array();
+		$this->stack->setStackByType('level',array());
 		$this->initPublicObject(array('database'));
 		$this->database->fectch(array('table' => 'table.level'),array('function' => array($this,'pushLevelData')));
-		MagikeAPI::exportArrayToFile(__CACHE__.'/system/level.php',$this->levelConfig,'levelConfig');
+		MagikeAPI::exportArrayToFile(__CACHE__.'/system/level.php',$this->stack->data['level'],'levelConfig');
 	}
 
 	public function pushLevelData($val)
 	{
-		$this->levelConfig[$val['lv_name']] = $val['lv_value'];
+		$this->stack->setStack('level',$val['lv_name'],$val['lv_value']);
 	}
 
 	public function loadLevelCache()
 	{
 		$levelConfig = array();
 		require(__CACHE__.'/system/level.php');
-		$this->levelConfig = $levelConfig;
+		$this->stack->setStackByType('level',$levelConfig);
 	}
 }
 ?>

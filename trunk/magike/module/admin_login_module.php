@@ -31,6 +31,12 @@ class AdminLoginModule extends MagikeModule
 		}
 		else
 		{
+			$_SESSION['user_level'] = isset($this->stack->data['level'][$user[0]['u_level']]) ? $this->stack->data['level'][$user[0]['u_level']] : 99999;
+			$_SESSION['user_name'] = $user[0]['u_name'];
+			$_SESSION['user_id'] = $user[0]['id'];
+			$_SESSION['auth_data'] = MagikeAPI::createRandomString(128);
+			setcookie('auth_data',$_SESSION['auth_data'],time() + 3600,'/');
+			$_SESSION['login'] = 'ok';
 			header('location: '.$this->stack->data['static']['index'].'/admin');
 		}
 	}
