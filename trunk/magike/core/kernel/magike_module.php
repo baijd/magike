@@ -90,6 +90,8 @@ class MagikeModule extends MagikeObject
 				require(__LANGUAGE__.'/'.$this->stack->data['static']['language'].'/'.$moduleName.'.php');
 				$this->stack->setStack('language',$moduleName,$lang);
 			}
+			$this->stack->data['require_language'][$moduleName][$key] =
+			isset($this->stack->data['language'][$moduleName][$key]) ? $this->stack->data['language'][$moduleName][$key] : NULL;
 		}
 		return isset($this->stack->data['language'][$moduleName][$key]) ? $this->stack->data['language'][$moduleName][$key] : NULL;
 	}

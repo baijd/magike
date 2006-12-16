@@ -29,6 +29,10 @@ class AdminLoginModule extends MagikeModule
 			$this->template->data['admin_login']['message_open'] = true;
 			$this->template->data['admin_login']['message'] = $this->getLanguage('login','error');
 		}
+		else
+		{
+			header('location: '.$this->stack->data['static']['index'].'/admin');
+		}
 	}
 }
 ?>
