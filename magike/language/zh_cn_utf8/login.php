@@ -10,6 +10,8 @@ $lang = array(
 	'login_to' => '登录到',
 	'login'    => '登录',
 	'user_name'=> '用户名',
-	'password' => '密码'
+	'password' => '密码',
+	'foget_password' => '忘记密码',
+	'register' => '注册'
 )
 ?>
