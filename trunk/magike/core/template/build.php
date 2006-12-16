@@ -198,8 +198,10 @@ class Build extends MagikeObject
 	{
 		$include = array();
 		$str = "";
+
 		foreach($this->module as $module)
 		{
+			$module = $module.'_module';
 			$include[] = MagikeAPI::fileToModule($module);
 			if(isset($this->stack->data['module'][$module]) && file_exists($this->stack->data['module'][$module]))
 			{

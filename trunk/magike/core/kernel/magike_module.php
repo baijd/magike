@@ -43,5 +43,41 @@ class MagikeModule extends MagikeObject
 			$this->template = $template;
 		}
 	}
+
+	protected function onPost($key,$callback,$val = NULL)
+	{
+		if($val)
+		{
+			if(isset($_POST[$key]) && $_POST[$key] == $val)
+			{
+				call_user_func(array($this,$callback));
+			}
+		}
+		else
+		{
+			if(isset($_POST[$key]))
+			{
+				call_user_func(array($this,$callback));
+			}
+		}
+	}
+
+	protected function onGet($key,$callback,$val = NULL)
+	{
+		if($val)
+		{
+			if(isset($_GET[$key]) && $_GET[$key] == $val)
+			{
+				call_user_func(array($this,$callback));
+			}
+		}
+		else
+		{
+			if(isset($_GET[$key]))
+			{
+				call_user_func(array($this,$callback));
+			}
+		}
+	}
 }
 ?>

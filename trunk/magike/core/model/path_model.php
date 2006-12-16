@@ -105,9 +105,10 @@ class PathModel extends MagikeObject
 			array_shift($out);
 			foreach($out as $key => $val)
 			{
-				$this->stack->setStack('GET',$this->value[$key],$val);
+				$_GET[$this->value[$key]] = $val;
 			}
 		}
+		@reset($_GET);
 	}
 
 	private function praseEregPath($path)

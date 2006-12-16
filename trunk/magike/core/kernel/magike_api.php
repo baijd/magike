@@ -90,7 +90,7 @@ class MagikeAPI
 
 	public static function fileToModule($fileName)
 	{
-		return ucfirst(preg_replace_callback("/[\_]([a-z])/i",array('MagikeAPI','fileToModuleCallback'),$fileName)).'Module';
+		return ucfirst(preg_replace_callback("/[\_]([a-z])/i",array('MagikeAPI','fileToModuleCallback'),$fileName));
 	}
 
 	public static function fileToModuleCallback($matches)
