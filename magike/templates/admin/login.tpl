@@ -95,6 +95,16 @@ body
 	padding:0;
 	margin:0;
 }
+
+#message
+{
+	background:#990000;
+	padding:5px 10px;
+	color:#FFF;
+	height:24px;
+	line-height:24px;
+	font-weight:bold;
+}
 </style>
 </head>
 [module:static]
@@ -102,12 +112,17 @@ body
 <body>
 <div id="login">
 	<h1><img src="{$static.siteurl}/templates/{$static.admin_template}/images/logo.gif" alt="logo" />{lang.login.login_to}{$static.blog_name}</h1>
-	<h2><img src="{$static.siteurl}/templates/{$static.admin_template}/images/user.gif" alt="user" style="margin-bottom:-2px" /> {lang.login.user_name}</h2>
+	[if $admin_login.message_open == true]
+	<div id="message">
+		{$admin_login.message}
+	</div>
+	[/if]
 	<form method="post">
+	<h2><img src="{$static.siteurl}/templates/{$static.admin_template}/images/user.gif" alt="user" style="margin-bottom:-2px" /> {lang.login.user_name}</h2>
 	<p><input type="text" name="username" /></p>
 	<h2><img src="{$static.siteurl}/templates/{$static.admin_template}/images/textfield_key.gif" alt="user" style="margin-bottom:-2px" /> {lang.login.password}</h2>
 	<p><input type="password" name="password" /></p>
-	<p><input type="submit" value="{lang.login.login}" class="button" /><input type="hidden" name="do" value="login" /></p>
+	<p><input type="button" value="{lang.login.login}" onclick="submit();" class="button" /><input type="hidden" name="do" value="login" /></p>
 	<p><a href="#">{lang.login.foget_password}?</a> | <a href="#">{lang.login.register}</a></p>
 	</form>
 </div>
