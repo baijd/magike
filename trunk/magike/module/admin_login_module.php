@@ -19,7 +19,7 @@ class AdminLoginModule extends MagikeModule
 		$user = $this->database->fectch(array('table' => 'table.users',
 										 	  'where' => array('template' => 'u_name = ? AND u_password = ?',
 										  					  'value' => array($_POST['username'],
-										  					  				   $_POST['password']
+										  					  				   md5($_POST['password'])
 										  					  				  )
 										  					  ),
 										  	  'limit' => 1
@@ -27,6 +27,7 @@ class AdminLoginModule extends MagikeModule
 		if(NULL == $user)
 		{
 			$this->template->data['admin_login']['message_open'] = true;
+			$this->template->data['admin_login']['message'] = $this->getLanguage('login','error');
 		}
 	}
 }

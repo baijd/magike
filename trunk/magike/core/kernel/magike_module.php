@@ -79,5 +79,19 @@ class MagikeModule extends MagikeObject
 			}
 		}
 	}
+
+	protected function getLanguage($moduleName,$key)
+	{
+		if(!isset($this->stack->data['language'][$moduleName]))
+		{
+			if(file_exists(__LANGUAGE__.'/'.$this->stack->data['static']['language'].'/'.$moduleName.'.php'))
+			{
+				$lang = array();
+				require(__LANGUAGE__.'/'.$this->stack->data['static']['language'].'/'.$moduleName.'.php');
+				$this->stack->setStack('language',$moduleName,$lang);
+			}
+		}
+		return isset($this->stack->data['language'][$moduleName][$key]) ? $this->stack->data['language'][$moduleName][$key] : NULL;
+	}
 }
 ?>
