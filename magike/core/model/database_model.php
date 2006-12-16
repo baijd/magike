@@ -31,8 +31,9 @@ class DatabaseModel extends MagikeObject
 
 			while(($pos = strpos($where,'?')) != false)
 			{
-				if($value = array_shift($args['where']['value']))
+				if(isset($args['where']['value']) && $args['where']['value'] != NULL)
 				{
+					$value = array_shift($args['where']['value']);
 					$value = is_numeric($value) ? $value : "'".$value."'";
 					$where = substr_replace($where,$value,$pos,1);
 				}
