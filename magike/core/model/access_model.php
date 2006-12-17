@@ -35,6 +35,7 @@ class AccessModel extends MagikeObject
 		}
 		$this->stack->setStack('system','random',$_SESSION['random']);
 		$this->stack->setStack('system','user_level',99999);			//默认分配最低权限
+		$this->stack->setStack('system','login',false);
 
     	if(isset($_SESSION['login']) && isset($_COOKIE['auth_data']))
     	{
@@ -47,10 +48,6 @@ class AccessModel extends MagikeObject
 
 		        //如果用户有活动,增加cookie时限
 		        setcookie('auth_data',$_SESSION['auth_data'],time() + 3600,"/");
-		    }
-		    else
-		    {
-		    	$this->stack->setStack('system','login',false);
 		    }
     	}
 	}
