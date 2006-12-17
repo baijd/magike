@@ -8,8 +8,6 @@
 <meta name="description" content="{$static.describe}" />
 
 <link href="{$static.siteurl}/templates/{$static.template}/style.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="{$static.siteurl}/data/ajax/prototype.js"></script>
-<script type="text/javascript" src="{$static.siteurl}/templates/{$static.template}/script.js"></script>
 </head>
 [module:static]
 <body>
