@@ -20,7 +20,7 @@ class Magike extends MagikeObject
 		$this->initPublicObject(array('static','path','access','action'));
 	}
 
-	function buildCache()
+	public function buildCache()
 	{
 		$moduleFile = MagikeAPI::getFile(__MODULE__,false,'php');
 		$module = array();
@@ -34,7 +34,7 @@ class Magike extends MagikeObject
 		MagikeAPI::exportArrayToFile(__CACHE__.'/system/module.php',$module,'module');
 	}
 
-	function loadCache()
+	public function loadCache()
 	{
 		$module = array();
 		require(__CACHE__.'/system/module.php');

@@ -34,7 +34,6 @@ class DatabaseModel extends MagikeObject
 				if(isset($args['where']['value']) && $args['where']['value'] != NULL)
 				{
 					$value = array_shift($args['where']['value']);
-					$value = is_numeric($value) ? $value : "'".$value."'";
 					$where = substr_replace($where,$value,$pos,1);
 				}
 			}
@@ -51,6 +50,7 @@ class DatabaseModel extends MagikeObject
 		foreach($value as $key => $val)
 		{
 			$value[$key] = str_replace("'","''",$val);
+			$value[$key] = is_numeric($val) ? $val : "'".$val."'";
 		}
 
 		return $value;
@@ -62,8 +62,11 @@ class DatabaseModel extends MagikeObject
  		$this->stack->setStack('system','query_times',$this->stack->data['system']['query_times'] + 1);
 
  		//处理table子句
- 		$args['table'] = str_replace('table.',__DBPREFIX__,$args['table']);
-		$table = ' FROM '.$args['table'];
+ 		if(isset($args['table']))
+ 		{
+ 			$args['table'] = str_replace('table.',__DBPREFIX__,$args['table']);
+ 		}
+		$table = isset($args['table']) ? ' FROM '.$args['table'] : '';
 
 		//处理groupby子句
 		$groupby = isset($args['groupby']) ? ' GROUP BY '.$args['groupby'] : '';

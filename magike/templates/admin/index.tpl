@@ -30,6 +30,10 @@ Magike.Net后台管理
 				<td width=70%>{$admin_index.server_version}</td>
 			</tr>
 			<tr>
+				<td>{lang.admin_index.database_version}</td>
+				<td>{$admin_index.database_version}</td>
+			</tr>
+			<tr>
 				<td>{lang.admin_index.magike_version}</td>
 				<td>{$admin_index.magike_version}</td>
 			</tr>

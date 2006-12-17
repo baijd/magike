@@ -7,10 +7,11 @@
  *********************************/
 
 $lang = array(
-	'global_runtime' => '运行状态',
-	'server_version' => '系统环境',
-	'magike_version' => '软件版本',
-	'posts_num'		 => '文章总数',
-	'posts'			 => '篇',
+	'global_runtime'   => '运行状态',
+	'server_version'   => '系统环境',
+	'database_version' => '数据库版本',
+	'magike_version'   => '软件版本',
+	'posts_num'		   => '文章总数',
+	'posts'			   => '篇',
 );
 ?>

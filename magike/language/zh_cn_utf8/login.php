@@ -14,6 +14,6 @@ $lang = array(
 	'foget_password' => '忘记密码',
 	'register' => '注册',
 	'error'    => '用户名或密码错误',
-	'error_open' => '您已经登陆,请先登出'
+	'error_open' => '您已经登录,请先登出'
 )
 ?>
