@@ -103,7 +103,7 @@ class AccessModel extends MagikeObject
 				}
 				break;
 			}
-			case 'deny except':
+			case 'allow':
 			{
 				if($ip >= $left && $ip <= $right)
 				{
