@@ -11,7 +11,17 @@ class AdminLoginModule extends MagikeModule
 	public function runModule()
 	{
 		$this->template->data['admin_login']['message_open'] = false;
-		$this->onPost('do','loginAction','login');
+		if(!$this->stack->data['system']['login'])
+		{
+			$this->template->data['admin_login']['login_open'] = true;
+			$this->onPost('do','loginAction','login');
+		}
+		else
+		{
+			$this->template->data['admin_login']['login_open'] = false;
+			$this->template->data['admin_login']['message_open'] = true;
+			$this->template->data['admin_login']['message'] = $this->getLanguage('login','error_open');
+		}
 	}
 
 	public function loginAction()

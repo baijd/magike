@@ -109,6 +109,7 @@ class DatabaseModel extends MagikeObject
  	public function update($args)
  	{
  		$args['value'] = self::filterQuotesSentence($args['value']);
+ 		$args['table'] = str_replace('table.',__DBPREFIX__,$args['table']);
  		$table = 'UPDATE '.$args['table'];
  		$value = ' SET ';
  		$columns = array();
@@ -130,6 +131,7 @@ class DatabaseModel extends MagikeObject
  	public function insert($args)
  	{
  		$args['value'] = self::filterQuotesSentence($args['value']);
+ 		$args['table'] = str_replace('table.',__DBPREFIX__,$args['table']);
 		$query = 'INSERT INTO '.$args['table'].' ('.implode(',',array_keys($args['value'])).') VALUES('.implode(',',$args['value']).')';
 		mysql_query($query) or die($this->throwException(E_DATABASE,mysql_error(),'errorDatabaseCallback'));
 		return mysql_affected_rows();
@@ -137,6 +139,7 @@ class DatabaseModel extends MagikeObject
 
  	public function delete($args)
  	{
+ 		$args['table'] = str_replace('table.',__DBPREFIX__,$args['table']);
  		$table = 'DELETE FROM '.$args['table'];
 		$where = self::praseWhereSentence($args);
 		mysql_query($table.$where) or die($this->throwException(E_DATABASE,mysql_error(),'errorDatabaseCallback'));
@@ -146,6 +149,7 @@ class DatabaseModel extends MagikeObject
  	public function count($args)
  	{
  		$fields = 'SELECT COUNT('.$args['key'].') AS number';
+ 		$args['table'] = str_replace('table.',__DBPREFIX__,$args['table']);
  		$table = ' FROM '.$args['table'];
 		$groupby = isset($args['groupby']) ? ' GROUP BY '.$args['groupby'] : '';
  		$where = self::praseWhereSentence($args);

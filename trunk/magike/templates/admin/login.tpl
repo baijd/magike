@@ -81,13 +81,17 @@ body
 	font-size:11pt;
 	font-weight:bold;
 	background:#F4F4F4;
+	height:36px;
+	width:100px;
+	cursor: pointer;
 }
 
 #login a
 {
-	color:#007DED;
-	font-size:10pt;
+	color:#444;
+	font-size:11pt;
 	font-weight:bold;
+	font-family:Georgia, Helvetica, sans-serif;
 }
 
 #login form
@@ -117,6 +121,7 @@ body
 		{$admin_login.message}
 	</div>
 	[/if]
+	[if $admin_login.login_open == true]
 	<form method="post">
 	<h2><img src="{$static.siteurl}/templates/{$static.admin_template}/images/user.gif" alt="user" style="margin-bottom:-2px" /> {lang.login.user_name}</h2>
 	<p><input type="text" name="username" /></p>
@@ -125,6 +130,7 @@ body
 	<p><input type="button" value="{lang.login.login}" onclick="submit();" class="button" /><input type="hidden" name="do" value="login" /></p>
 	<p><a href="#">{lang.login.foget_password}?</a> | <a href="#">{lang.login.register}</a></p>
 	</form>
+	[/if]
 </div>
 </body>
 </html>

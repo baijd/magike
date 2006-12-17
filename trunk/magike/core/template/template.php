@@ -29,6 +29,10 @@ class Template extends MagikeObject
 		$module = array();
 		$lang = array();
 		require(__COMPILE__.'/'.$this->templateName.'@'.$this->template.'.inc.php');
+		if(file_exists(__COMPILE__.'/'.$this->templateName.'@'.$this->template.'.lng.php'))
+		{
+			require(__COMPILE__.'/'.$this->templateName.'@'.$this->template.'.lng.php');
+		}
 		$this->stack->setStackByType('module_to_run',$module);
 		$this->stack->setStackByType('language',$lang);
 	}

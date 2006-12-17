@@ -82,8 +82,12 @@ class MagikeModule extends MagikeObject
 
 	protected function getLanguage($moduleName,$key)
 	{
-		if(!isset($this->stack->data['language'][$moduleName]))
+		if(!isset($this->stack->data['language'][$moduleName][$key]))
 		{
+			if(!isset($this->stack->data['require_language']))
+			{
+				$this->stack->data['require_language'] = $this->stack->data['language'];
+			}
 			if(file_exists(__LANGUAGE__.'/'.$this->stack->data['static']['language'].'/'.$moduleName.'.php'))
 			{
 				$lang = array();
