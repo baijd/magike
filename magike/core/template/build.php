@@ -201,12 +201,11 @@ class Build extends MagikeObject
 
 		foreach($this->module as $module)
 		{
-			$module = $module.'_module';
 			$include[] = MagikeAPI::fileToModule($module);
-			if(isset($this->stack->data['module'][$module]) && file_exists($this->stack->data['module'][$module]))
+			if(file_exists(__MODULE__.'/'.$module.'.php'))
 			{
-				$str .= php_strip_whitespace($this->stack->data['module'][$module]);
-				$this->includeFile[$this->stack->data['module'][$module]] = filemtime($this->stack->data['module'][$module]);
+				$str .= php_strip_whitespace(__MODULE__.'/'.$module.'.php');
+				$this->includeFile[__MODULE__.'/'.$module.'.php'] = filemtime(__MODULE__.'/'.$module.'.php');
 			}
 		}
 
