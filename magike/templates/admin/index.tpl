@@ -20,6 +20,7 @@ Magike.Net后台管理
 		<li><a href="#">文件目录</a></li>
 	</ul>
 </div>
+<div id="menu_content"></div>
 [module:admin_index]
 <div id="content">
 	<div id="element">
