@@ -40,7 +40,7 @@ class MagikeException extends Exception
        	{
        		foreach($this->data as $key => $val)
        		{
-       			$data .= $key.':'.$val.'<br />\n';
+       			$data .= $key.':'.$val."<br />\n";
        		}
        	}
        	else

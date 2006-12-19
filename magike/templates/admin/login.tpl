@@ -111,8 +111,8 @@ body
 }
 </style>
 </head>
-[module:static]
-[module:admin_login]
+[module:static_module]
+[module:admin_login_module]
 <body>
 <div id="login">
 	<h1><img src="{$static.siteurl}/templates/{$static.admin_template}/images/logo.gif" alt="logo" />{lang.login.login_to}{$static.blog_name}</h1>

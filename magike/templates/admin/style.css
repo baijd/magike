@@ -42,6 +42,7 @@ body
 {
 	height:37px;
 	background:#3D434E url(images/separator.gif) bottom repeat-x;
+	border-bottom:1px solid #666;
 }
 
 #top_menu ul
@@ -95,7 +96,7 @@ body
 	height:28px;
 	line-height:28px;
 	font-size:10pt;
-	background:url(images/bg_menu_on.png);
+	background:#AAA;
 }
 
 #content
