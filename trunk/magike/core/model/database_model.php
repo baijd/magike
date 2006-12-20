@@ -49,8 +49,9 @@ class DatabaseModel extends MagikeObject
 	{
 		foreach($value as $key => $val)
 		{
-			$value[$key] = str_replace("'","''",$val);
-			$value[$key] = is_numeric($val) ? $val : "'".$val."'";
+			$val = str_replace("'","''",$val);
+			$val = (is_numeric($val) && (strlen(intval($val)) == strlen($val) || strlen(floatval($val)) == strlen($val))) ? $val : "'".$val."'";
+			$value[$key] = $val;
 		}
 
 		return $value;
@@ -62,13 +63,13 @@ class DatabaseModel extends MagikeObject
 		{
 			if(is_string($val))
 			{
-				$args[$key] = preg_replace("/([\ ,\(\)\=\>\<])table\./i","\\1".__DBPREFIX__,' '.$val);
+				$args[$key] = preg_replace("/([\ ,\(\)])table\./i","\\1".__DBPREFIX__,' '.$val);
 			}
 		}
 
 		if(isset($args['where']['template']))
 		{
-			$args['where']['template'] = preg_replace("/([\ ,\(\)\=\>\<])table\./i","\\1".__DBPREFIX__,' '.$args['where']['template']);
+			$args['where']['template'] = preg_replace("/([\ ,\(\)])table\./i","\\1".__DBPREFIX__,' '.$args['where']['template']);
 		}
 
 		return $args;
@@ -129,7 +130,8 @@ class DatabaseModel extends MagikeObject
  	public function update($args)
  	{
  		$args['value'] = self::filterQuotesSentence($args['value']);
- 		$args['table'] = str_replace('table.',__DBPREFIX__,$args['table']);
+ 		//替换查询前缀
+ 		$args = $this->filterTablePrefix($args);
  		$table = 'UPDATE '.$args['table'];
  		$value = ' SET ';
  		$columns = array();
@@ -138,20 +140,20 @@ class DatabaseModel extends MagikeObject
  		{
  			foreach($args['value'] as $key => $val)
  			{
-				array_push($columns,'$key = $val');
+				array_push($columns,"$key = $val");
  			}
  		}
- 		$value = $value.implode(' AND ',$columns);
+ 		$value = $value.implode(' , ',$columns);
 		$where = self::praseWhereSentence($args);
-
-		mysql_query($table.$value.$where) or die($this->throwException(E_DATABASE,mysql_error(),'errorDatabaseCallback'));
+		mysql_query($table.$value.$where) or die($this->throwException(E_DATABASE,$table.$value.$where,'errorDatabaseCallback'));
 		return mysql_affected_rows();
  	}
 
  	public function insert($args)
  	{
  		$args['value'] = self::filterQuotesSentence($args['value']);
- 		$args['table'] = str_replace('table.',__DBPREFIX__,$args['table']);
+ 		//替换查询前缀
+ 		$args = $this->filterTablePrefix($args);
 		$query = 'INSERT INTO '.$args['table'].' ('.implode(',',array_keys($args['value'])).') VALUES('.implode(',',$args['value']).')';
 		mysql_query($query) or die($this->throwException(E_DATABASE,mysql_error(),'errorDatabaseCallback'));
 		return mysql_affected_rows();
@@ -159,7 +161,8 @@ class DatabaseModel extends MagikeObject
 
  	public function delete($args)
  	{
- 		$args['table'] = str_replace('table.',__DBPREFIX__,$args['table']);
+ 		//替换查询前缀
+ 		$args = $this->filterTablePrefix($args);
  		$table = 'DELETE FROM '.$args['table'];
 		$where = self::praseWhereSentence($args);
 		mysql_query($table.$where) or die($this->throwException(E_DATABASE,mysql_error(),'errorDatabaseCallback'));
@@ -169,7 +172,8 @@ class DatabaseModel extends MagikeObject
  	public function count($args)
  	{
  		$fields = 'SELECT COUNT('.$args['key'].') AS number';
- 		$args['table'] = str_replace('table.',__DBPREFIX__,$args['table']);
+ 		//替换查询前缀
+ 		$args = $this->filterTablePrefix($args);
  		$table = ' FROM '.$args['table'];
 		$groupby = isset($args['groupby']) ? ' GROUP BY '.$args['groupby'] : '';
  		$where = self::praseWhereSentence($args);
