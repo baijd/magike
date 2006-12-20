@@ -39,6 +39,14 @@ class Template extends MagikeObject
 
 	public function buildCache()
 	{
+		if(file_exists(__COMPILE__.'/'.$this->templateName.'@'.$this->template.'.lng.php'))
+		{
+			@unlink(__COMPILE__.'/'.$this->templateName.'@'.$this->template.'.lng.php');
+		}
+		if(file_exists(__COMPILE__.'/'.$this->templateName.'@'.$this->template.'.rtm.php'))
+		{
+			@unlink(__COMPILE__.'/'.$this->templateName.'@'.$this->template.'.rtm.php');
+		}
 		require(__DIR__.'/template/build.php');
 		new Build($this->templateFile,$this->template);
 	}

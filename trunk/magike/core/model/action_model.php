@@ -49,22 +49,91 @@ class ActionModel extends MagikeObject
 
 	private function runModule()
 	{
+		$moduleObjects = array();
+		$moduleOrder = array();
+
 		if(isset($this->stack->data['module_to_run']))
 		{
 			foreach($this->stack->data['module_to_run'] as $val)
 			{
 				if(class_exists($val))
 				{
-					$module = NULL;
-					eval("\$module = new $val();");
-					if(method_exists($module,'runModule'))
+					$moduleObject = $val;
+					$moduleObject[0] = strtolower($moduleObject[0]);
+					$moduleObjects[] = MagikeAPI::modelToFile($val);
+
+					eval("\${$moduleObject} = new $val();");
+				}
+			}
+
+			//生成模块运行顺序
+			if(isset($this->stack->data['system']['template']) && $this->stack->data['module_to_run'])
+			{
+				if(!file_exists(__COMPILE__.'/'.$this->stack->data['system']['template'].'.rtm.php'))
+				{
+
+					while($moduleObjects)
 					{
-						call_user_func(array($module,'runModule'));
+						$module = array_shift($moduleObjects);
+						$moduleObject = MagikeAPI::fileToModule($module,false);
+						eval("\$moduleObject = \${$moduleObject};");
+						if(property_exists($moduleObject,'waitingModule'))
+						{
+							if(is_string($moduleObject->waitingModule))
+							{
+								if(in_array($moduleObject->waitingModule,$this->moduleObjects))
+								{
+									if(in_array($moduleObject->waitingModule,$this->moduleOrder))
+									{
+										$moduleOrder[] = $module;
+									}
+									else
+									{
+										array_push($moduleObjects,$module);
+									}
+								}
+							}
+							else if(is_array($moduleObject->waitingModule))
+							{
+								if(NULL == array_diff($moduleObject->waitingModule,$this->moduleObjects))
+								{
+									if(NULL == array_diff($moduleObject->waitingModule,$this->moduleOrder))
+									{
+										$moduleOrder[] = $module;
+									}
+									else
+									{
+										array_push($moduleObjects,$module);
+									}
+								}
+							}
+						}
+						else
+						{
+							$moduleOrder[] = $module;
+						}
 					}
-					else
-					{
-						trigger_error('Class Not Exists: '.$val,E_USER_NOTICE);
-					}
+
+					MagikeAPI::exportArrayToFile(__COMPILE__.'/'.$this->stack->data['system']['template'].'.rtm.php',$moduleOrder,'moduleOrder');
+				}
+				else
+				{
+					require(__COMPILE__.'/'.$this->stack->data['system']['template'].'.rtm.php');
+				}
+			}
+
+			//按顺序运行模块
+			foreach($moduleOrder as $val)
+			{
+				$moduleObject = MagikeAPI::fileToModule($val,false);
+				eval("\$moduleObject = \${$moduleObject};");
+				if(method_exists($moduleObject,'runModule'))
+				{
+					call_user_func(array($moduleObject,'runModule'));
+				}
+				else
+				{
+					trigger_error('Method runModule Not Exists: '.$moduleObject,E_USER_NOTICE);
 				}
 			}
 		}

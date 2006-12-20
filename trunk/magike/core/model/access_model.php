@@ -153,10 +153,10 @@ class AccessModel extends MagikeObject
 	public function pushIpData($val)
 	{
 		$currentIp = array();
-		$currentIp['left'] = MagikeAPI::ip2long($val['im_left']);
-		$currentIp['right'] = MagikeAPI::ip2long($val['im_right']);
-		$currentIp['action'] = $val['im_action'];
-		$currentIp['domain'] = $val['im_domain'];
+		$currentIp['left'] = MagikeAPI::ip2long($val['ip_map_left']);
+		$currentIp['right'] = MagikeAPI::ip2long($val['ip_map_right']);
+		$currentIp['action'] = $val['ip_map_action'];
+		$currentIp['domain'] = $val['ip_map_domain'];
 
 		$this->ipConfig[] = $currentIp;
 	}
@@ -172,13 +172,13 @@ class AccessModel extends MagikeObject
 	{
 		$this->stack->setStackByType('level',array());
 		$this->initPublicObject(array('database'));
-		$this->database->fectch(array('table' => 'table.level'),array('function' => array($this,'pushLevelData')));
+		$this->database->fectch(array('table' => 'table.levels'),array('function' => array($this,'pushLevelData')));
 		MagikeAPI::exportArrayToFile(__CACHE__.'/system/level.php',$this->stack->data['level'],'levelConfig');
 	}
 
 	public function pushLevelData($val)
 	{
-		$this->stack->setStack('level',$val['lv_name'],$val['lv_value']);
+		$this->stack->setStack('level',$val['level_name'],$val['level_value']);
 	}
 
 	public function loadLevelCache()

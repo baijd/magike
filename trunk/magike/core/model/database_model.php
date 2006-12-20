@@ -56,16 +56,33 @@ class DatabaseModel extends MagikeObject
 		return $value;
 	}
 
+	private function filterTablePrefix($args)
+	{
+		foreach($args as $key => $val)
+		{
+			if(is_string($val))
+			{
+				$args[$key] = preg_replace("/([\ ,\(\)\=\>\<])table\./i","\\1".__DBPREFIX__,' '.$val);
+			}
+		}
+
+		if(isset($args['where']['template']))
+		{
+			$args['where']['template'] = preg_replace("/([\ ,\(\)\=\>\<])table\./i","\\1".__DBPREFIX__,' '.$args['where']['template']);
+		}
+
+		return $args;
+	}
+
  	public function fectch($args,$callback = NULL,$expection = false)
  	{
  		//设定查询次数
  		$this->stack->setStack('system','query_times',$this->stack->data['system']['query_times'] + 1);
 
+ 		//替换查询前缀
+ 		$args = $this->filterTablePrefix($args);
+
  		//处理table子句
- 		if(isset($args['table']))
- 		{
- 			$args['table'] = str_replace('table.',__DBPREFIX__,$args['table']);
- 		}
 		$table = isset($args['table']) ? ' FROM '.$args['table'] : '';
 
 		//处理groupby子句
