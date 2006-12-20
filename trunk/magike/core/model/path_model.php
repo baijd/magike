@@ -48,7 +48,7 @@ class PathModel extends MagikeObject
 	{
 		$this->stack->setStack('system','path',$this->path);
 		$found = false;
-		$eregPath = '^'.preg_quote($this->path).'$';		//适合正则表达的路径
+		$eregPath = '^'.$this->path.'$';		//适合正则表达的路径
 
 		if(isset($this->pathConfig[$eregPath]))
 		{
@@ -67,11 +67,11 @@ class PathModel extends MagikeObject
 				if(ereg($key,$this->path,$out))
 				{
 					$this->eregPath = $key;
-					$this->value = $this->pathConfig[$eregPath]['value'];
-					$this->stack->setStack('system','level',$this->pathConfig[$eregPath]['level']);
-					$this->stack->setStack('system','action',$this->pathConfig[$eregPath]['action']);
-					$this->stack->setStack('system','file',$this->pathConfig[$eregPath]['file']);
-					$this->stack->setStack('system','domain',$this->pathConfig[$eregPath]['domain']);
+					$this->value = $val['value'];
+					$this->stack->setStack('system','level',$val['level']);
+					$this->stack->setStack('system','action',$val['action']);
+					$this->stack->setStack('system','file',$val['file']);
+					$this->stack->setStack('system','domain',$val['domain']);
 					$found = true;
 					break;
 				}
@@ -113,7 +113,10 @@ class PathModel extends MagikeObject
 
 	private function praseEregPath($path)
 	{
-		$path = preg_quote($path);
+		//替换常用转义字符串
+		$path = str_replace(".","\.",$path);
+		$path = str_replace("-","\-",$path);
+		$path = str_replace("_","\_",$path);
 
 		//替换匹配变量
 		$path = preg_replace("/\[([_0-9a-zA-Z-]+)\=\%d\]/i","([0-9]+)",$path);
@@ -146,7 +149,7 @@ class PathModel extends MagikeObject
 	{
 		$this->pathCache = array();
 		$this->initPublicObject(array('database'));
-		$this->database->fectch(array('table' => 'table.paths'),array('function' => array($this,'pushPathData')));
+		$this->database->fectch(array('table' => 'table.path'),array('function' => array($this,'pushPathData')));
 		foreach($this->pathCache as $key => $val)
 		{
 			MagikeAPI::exportArrayToFile(__CACHE__.'/path/'.$key.'.php',$val,'pathConfig');
@@ -155,13 +158,13 @@ class PathModel extends MagikeObject
 
 	public function pushPathData($val)
 	{
-		$deep = count(explode("/",$val['path_name']));
-		$this->pathCache[$deep][$this->praseEregPath($val['path_name'])] = array('level'  => $val['path_level'],
-																			   	 'action' => $val['path_action'],
-																			   	 'file'   => $val['path_file'],
-																			   	 'domain'   => $val['path_name'],
-																			   	 'value'  => $this->prasePathValue($val['path_name'])
-																				 );
+		$deep = count(explode("/",$val['pt_name']));
+		$this->pathCache[$deep][$this->praseEregPath($val['pt_name'])] = array('level'  => $val['pt_level'],
+																			   'action' => $val['pt_action'],
+																			   'file'   => $val['pt_file'],
+																			   'domain'   => $val['pt_name'],
+																			   'value'  => $this->prasePathValue($val['pt_name'])
+																				);
 	}
 }
 ?>

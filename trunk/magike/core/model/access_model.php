@@ -126,7 +126,7 @@ class AccessModel extends MagikeObject
 		$ip = MagikeAPI::ip2long($_SERVER["REMOTE_ADDR"]);
 		$this->stack->setStack('system','ip',$_SERVER["REMOTE_ADDR"]);
 		$this->stack->setStack('system','agent',$_SERVER["HTTP_USER_AGENT"]);
-		$allow = true;
+		$allow = false;
 
 		foreach($this->ipConfig as $val)
 		{
@@ -136,7 +136,7 @@ class AccessModel extends MagikeObject
 			}
 		}
 
-		if(!$allow)
+		if(!$allow && $this->ipConfig)
 		{
 			$this->throwException(E_ACCESSDENIED,$this->stack->data['system']['path'],array('MagikeAPI','errorAccessCallback'));
 		}
