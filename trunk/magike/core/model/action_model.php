@@ -50,6 +50,7 @@ class ActionModel extends MagikeObject
 	private function runModule()
 	{
 		$moduleObjects = array();
+		$allModuleObjects = array();
 		$moduleOrder = array();
 
 		if(isset($this->stack->data['module_to_run']))
@@ -66,6 +67,8 @@ class ActionModel extends MagikeObject
 				}
 			}
 
+			$allModuleObjects = $moduleObjects;
+
 			//生成模块运行顺序
 			if(isset($this->stack->data['system']['template']) && $this->stack->data['module_to_run'])
 			{
@@ -81,9 +84,9 @@ class ActionModel extends MagikeObject
 						{
 							if(is_string($moduleObject->waitingModule))
 							{
-								if(in_array($moduleObject->waitingModule,$this->moduleObjects))
+								if(in_array($moduleObject->waitingModule,$allModuleObjects))
 								{
-									if(in_array($moduleObject->waitingModule,$this->moduleOrder))
+									if(in_array($moduleObject->waitingModule,$moduleOrder))
 									{
 										$moduleOrder[] = $module;
 									}
@@ -95,9 +98,9 @@ class ActionModel extends MagikeObject
 							}
 							else if(is_array($moduleObject->waitingModule))
 							{
-								if(NULL == array_diff($moduleObject->waitingModule,$this->moduleObjects))
+								if(NULL == array_diff($moduleObject->waitingModule,$allModuleObjects))
 								{
-									if(NULL == array_diff($moduleObject->waitingModule,$this->moduleOrder))
+									if(NULL == array_diff($moduleObject->waitingModule,$moduleOrder))
 									{
 										$moduleOrder[] = $module;
 									}
