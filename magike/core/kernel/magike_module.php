@@ -88,16 +88,21 @@ class MagikeModule extends MagikeObject
 			{
 				$this->stack->data['require_language'] = $this->stack->data['language'];
 			}
-			if(file_exists(__LANGUAGE__.'/'.$this->stack->data['static']['language'].'/'.$moduleName.'.php'))
+			if(!isset($this->stack->data['init_language'][$moduleName]) &&
+			file_exists(__LANGUAGE__.'/'.$this->stack->data['static']['language'].'/'.$moduleName.'.php'))
 			{
 				$lang = array();
 				require(__LANGUAGE__.'/'.$this->stack->data['static']['language'].'/'.$moduleName.'.php');
-				$this->stack->setStack('language',$moduleName,$lang);
+				$this->stack->setStack('init_language',$moduleName,$lang);
 			}
 			$this->stack->data['require_language'][$moduleName][$key] =
-			isset($this->stack->data['language'][$moduleName][$key]) ? $this->stack->data['language'][$moduleName][$key] : NULL;
+			isset($this->stack->data['init_language'][$moduleName][$key]) ? $this->stack->data['init_language'][$moduleName][$key] : NULL;
+			return $this->stack->data['require_language'][$moduleName][$key];
 		}
-		return isset($this->stack->data['language'][$moduleName][$key]) ? $this->stack->data['language'][$moduleName][$key] : NULL;
+		else
+		{
+			return $this->stack->data['language'][$moduleName][$key];
+		}
 	}
 }
 ?>

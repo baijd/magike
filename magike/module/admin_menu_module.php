@@ -10,8 +10,8 @@ class AdminMenuModule extends MagikeModule
 {
 	public function runModule()
 	{
-		$this->template->data['admin_menu']['parent'] = $this->database->fectch(array('table' => 'table.menu',
-																		  			  'where' => array('template' => 'mn_parent = 0'
+		$this->template->data['admin_menu']['parent'] = $this->database->fectch(array('table' => 'table.menus',
+																		  			  'where' => array('template' => 'menu_parent = 0'
 																		  				)),
 																		  		array('function' => array($this,'pushMenu')));
 		$this->template->data['admin_menu']['parent'] = $this->praseFocus($this->template->data['admin_menu']['parent']);
@@ -19,8 +19,8 @@ class AdminMenuModule extends MagikeModule
 
 	public function pushMenu($val)
 	{
-		$lang = explode('.',$val['mn_name']);
-		$val['mn_name'] = ('lang' == $lang[0]) ? $this->getLanguage($lang[1],$lang[2]) : $val['mn_name'];
+		$lang = explode('.',$val['menu_name']);
+		$val['menu_name'] = ('lang' == $lang[0]) ? $this->getLanguage($lang[1],$lang[2]) : $val['menu_name'];
 		return $val;
 	}
 
@@ -31,7 +31,7 @@ class AdminMenuModule extends MagikeModule
 
 		foreach($array as $key => $val)
 		{
-			$diff = count(array_intersect_assoc(explode('/',$val['mn_path']),explode('/',$this->stack->data['system']['path'])));
+			$diff = count(array_intersect_assoc(explode('/',$val['menu_path']),explode('/',$this->stack->data['system']['path'])));
 			if($diff > $lastDifferent)
 			{
 				$focus = $key;

@@ -27,7 +27,7 @@ class AdminLoginModule extends MagikeModule
 	public function loginAction()
 	{
 		$user = $this->database->fectch(array('table' => 'table.users',
-										 	  'where' => array('template' => 'u_name = ? AND u_password = ?',
+										 	  'where' => array('template' => 'user_name = ? AND user_password = ?',
 										  					  'value' => array($_POST['username'],
 										  					  				   md5($_POST['password'])
 										  					  				  )
@@ -41,8 +41,8 @@ class AdminLoginModule extends MagikeModule
 		}
 		else
 		{
-			$_SESSION['user_level'] = isset($this->stack->data['level'][$user[0]['u_level']]) ? $this->stack->data['level'][$user[0]['u_level']] : 99999;
-			$_SESSION['user_name'] = $user[0]['u_name'];
+			$_SESSION['user_level'] = isset($this->stack->data['level'][$user[0]['user_level']]) ? $this->stack->data['level'][$user[0]['user_level']] : 99999;
+			$_SESSION['user_name'] = $user[0]['user_name'];
 			$_SESSION['user_id'] = $user[0]['id'];
 			$_SESSION['auth_data'] = MagikeAPI::createRandomString(128);
 			setcookie('auth_data',$_SESSION['auth_data'],time() + 3600,'/');

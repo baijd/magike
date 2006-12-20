@@ -36,12 +36,12 @@ class StaticModel extends MagikeObject
 	{
 		$this->initPublicObject(array('database'));
 		$this->stack->setStackByType('static',array());
-		$this->database->fectch(array('table' => 'table.static'),array('function' => array($this,'pushStaticValue')));
+		$this->database->fectch(array('table' => 'table.statics'),array('function' => array($this,'pushStaticValue')));
 	}
 
 	public function pushStaticValue($val)
 	{
-		$this->stack->setStack('static',$val['st_name'],$val['st_value']);
+		$this->stack->setStack('static',$val['static_name'],$val['static_value']);
 	}
 }
 ?>

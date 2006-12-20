@@ -29,19 +29,6 @@ class MagikeAPI
 		}
 	}
 
-	public static function array_intersect_key($array1, $array2)
-	{
-		$result = array();
-		foreach($array1 as $key=>$val)
-		{
-			if(array_key_exists($key, $array2))
-			{
-				$result[$key] = $array1[$key];
-			}
-		}
-		return $result;
-	}
-
 	public static function objectToModel($objName)
 	{
 		if(NULL == $objName)
@@ -88,9 +75,10 @@ class MagikeAPI
 		}
 	}
 
-	public static function fileToModule($fileName)
+	public static function fileToModule($fileName,$isObject = true)
 	{
-		return ucfirst(preg_replace_callback("/[\_]([a-z])/i",array('MagikeAPI','fileToModuleCallback'),$fileName));
+		return $isObject ? ucfirst(preg_replace_callback("/[\_]([a-z])/i",array('MagikeAPI','fileToModuleCallback'),$fileName))
+		: preg_replace_callback("/[\_]([a-z])/i",array('MagikeAPI','fileToModuleCallback'),$fileName);
 	}
 
 	public static function fileToModuleCallback($matches)
@@ -237,5 +225,33 @@ function __autoload($className)
 		}
    }
    require($fileName);
+}
+
+if (!function_exists('property_exists'))
+{
+	function property_exists($class, $property)
+	{
+		if (is_object($class))
+		{
+			$class = get_class($class);
+		}
+		return array_key_exists($property, get_class_vars($class));
+	}
+}
+
+if (!function_exists('array_intersect_key'))
+{
+	function array_intersect_key($array1, $array2)
+	{
+		$result = array();
+		foreach($array1 as $key=>$val)
+		{
+			if(array_key_exists($key, $array2))
+			{
+				$result[$key] = $array1[$key];
+			}
+		}
+		return $result;
+	}
 }
 ?>
