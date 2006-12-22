@@ -149,7 +149,7 @@ class PathModel extends MagikeObject
 	{
 		$this->pathCache = array();
 		$this->initPublicObject(array('database'));
-		$this->database->fectch(array('table' => 'table.path'),array('function' => array($this,'pushPathData')));
+		$this->database->fectch(array('table' => 'table.paths'),array('function' => array($this,'pushPathData')));
 		foreach($this->pathCache as $key => $val)
 		{
 			MagikeAPI::exportArrayToFile(__CACHE__.'/path/'.$key.'.php',$val,'pathConfig');
@@ -158,13 +158,13 @@ class PathModel extends MagikeObject
 
 	public function pushPathData($val)
 	{
-		$deep = count(explode("/",$val['pt_name']));
-		$this->pathCache[$deep][$this->praseEregPath($val['pt_name'])] = array('level'  => $val['pt_level'],
-																			   'action' => $val['pt_action'],
-																			   'file'   => $val['pt_file'],
-																			   'domain'   => $val['pt_name'],
-																			   'value'  => $this->prasePathValue($val['pt_name'])
-																				);
+		$deep = count(explode("/",$val['path_name']));
+		$this->pathCache[$deep][$this->praseEregPath($val['path_name'])] = array('level'  => $val['path_level'],
+																			   	 'action' => $val['path_action'],
+																			   	 'file'   => $val['path_file'],
+																			   	 'domain'   => $val['path_name'],
+																			   	 'value'  => $this->prasePathValue($val['path_name'])
+																				 );
 	}
 }
 ?>

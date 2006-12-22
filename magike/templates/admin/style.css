@@ -99,6 +99,48 @@ body
 	background:#AAA;
 }
 
+#menu_content ul
+{
+	width:760px;
+	margin:0 auto;
+	padding:0;
+}
+
+#menu_content ul li
+{
+	float:left;
+	margin:2px 1px 2px 0;
+	height:24px;
+	line-height:24px;
+	list-style:none;
+	font-size:10pt;
+	width:90px;
+}
+
+#menu_content ul li a
+{
+	height:22px;
+	color:#000;
+	text-decoration: none;
+	line-height:22px;
+	display:block;
+	text-align:center;
+	padding:1px;
+}
+
+#menu_content ul li a:hover,#menu_content ul li a.focus
+{
+	background:#777;
+	color:#FFF;
+	border:1px solid #000;
+	padding:0;
+}
+
+#menu_content ul li a.focus
+{
+	font-weight:bold;
+}
+
 #content
 {
 	margin:0;
