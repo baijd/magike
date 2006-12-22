@@ -11,6 +11,8 @@ $lang = array(
 	'posts' 	=> '我的文章',
 	'comments'	=> '所有评论',
 	'setting'	=> '站点设置',
-	'modules'	=> '模块浏览'
+	'modules'	=> '模块浏览',
+	'write'		=> '撰写文章',
+	'all_posts' => '所有文章',
 );
 ?>
