@@ -5,7 +5,7 @@
 <div id="content">
 	<div id="element">
 		<h2>{lang.admin_index.global_runtime}</h2>
-		<table width=100% width="100%" border="0" cellspacing="1" cellpadding="0">
+		<table width=100% width="100%" border="0" class="classic_table" cellspacing="1" cellpadding="0">
 			<tr>
 				<td width=30%>{lang.admin_index.server_version}</td>
 				<td width=70%>{$admin_index.server_version}</td>
