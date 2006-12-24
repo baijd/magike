@@ -28,7 +28,7 @@ function addEvent(object, name, handle)
 		object.attachEvent("on" + name, handle);
 	else
 		object.addEventListener(name, handle, false);
-};
+}
 
 //添加inlinePopup效果
 function inlinePopup()
