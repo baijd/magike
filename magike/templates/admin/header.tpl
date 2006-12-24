@@ -4,6 +4,7 @@
 	<meta http-equiv="content-type" content="{$static.content_type};charset={$static.charset}" />
 	<title>Magike后台页面</title>
 	<link href="{$static.siteurl}/templates/{$static.admin_template}/style.css" rel="stylesheet" type="text/css" />
+	<script language="javascript" type="text/javascript" src="{$static.siteurl}/templates/{$static.admin_template}/javascript/magike.js"></script>
 </head>
 [module:static_module]
 <body>
