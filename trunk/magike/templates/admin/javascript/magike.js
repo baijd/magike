@@ -22,7 +22,7 @@ function T(tagName,doc)
 }
 
 //为一个对象增加一个监听函数
-function addEvent(object, name, handle) 
+function addEvent(object, name, handle)
 {
 	if (object.attachEvent)
 		object.attachEvent("on" + name, handle);
@@ -79,7 +79,7 @@ function getPageSize(){
 	var de = document.documentElement;
 	var w = window.innerWidth || self.innerWidth || (de&&de.clientWidth) || document.body.clientWidth;
 	var h = window.innerHeight || self.innerHeight || (de&&de.clientHeight) || document.body.clientHeight
-	arrayPageSize = new Array(w,h) 
+	arrayPageSize = new Array(w,h)
 	return arrayPageSize;
 }
 
@@ -97,18 +97,18 @@ function initMenu(inputel) {
           	  {
           	  	   link = j;
           	  }
-          	  
+
           	  if(child.nodeName=="UL")
           	  {
           	  	   //Fix Firefox bug
           	  	    now = j;
           	  	    nowlink = link;
-		          	node.onmouseover = function() 
+		          	node.onmouseover = function()
 		          	{
 		          		  this.childNodes[nowlink].className = "hover";
 		              	  this.childNodes[now].className = "over";
 		          	}
-		          	node.onmouseout = function() 
+		          	node.onmouseout = function()
 		          	{
 		          		  this.childNodes[nowlink].className = "";
 		          	  	  this.childNodes[now].className = "";
