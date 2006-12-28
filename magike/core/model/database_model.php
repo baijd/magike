@@ -10,9 +10,9 @@ class DatabaseModel extends MagikeObject
 {
  	function __construct()
  	{
-		$dblink=@mysql_connect(__DBHOST__,__DBUSER__,__DBPASS__) or die($this->throwException(E_DATABASE,mysql_error(),array('errorDatabaseCallback')));
-		@mysql_select_db(__DBNAME__,$dblink) or die($this->throwException(E_DATABASE,mysql_error(),'errorDatabaseCallback'));
- 		mysql_query('SET NAMES "utf8"') or die($this->throwException(E_DATABASE,mysql_error(),'errorDatabaseCallback'));
+		$dblink=@mysql_connect(__DBHOST__,__DBUSER__,__DBPASS__) or $this->databaseException();
+		@mysql_select_db(__DBNAME__,$dblink) or $this->databaseException();
+ 		mysql_query('SET NAMES "utf8"') or $this->databaseException();
  		//获取实例化的stack
 		parent::__construct(array('public' => array('stack')));
 		$this->stack->setStack('system','query_times',0);
@@ -75,6 +75,11 @@ class DatabaseModel extends MagikeObject
 		return $args;
 	}
 
+	private function databaseException()
+	{
+		$this->throwException(E_DATABASE,mysql_error(),array('MagikeAPI','errorDatabaseCallback'));
+	}
+
  	public function fectch($args,$callback = NULL,$expection = false)
  	{
  		//设定查询次数
@@ -104,7 +109,7 @@ class DatabaseModel extends MagikeObject
 		//处理where子句
 		$where = self::praseWhereSentence($args);
 		$query = $fields.$table.$where.$groupby.$orderby.$limit.$offset;
-		$resource = mysql_query($query) or die($this->throwException(E_DATABASE,mysql_error(),'errorDatabaseCallback'));
+		$resource = mysql_query($query) or $this->databaseException();
 		$sum = mysql_num_rows($resource);
 		$result = array();
 		$num = 0;
@@ -123,7 +128,7 @@ class DatabaseModel extends MagikeObject
             $num++;
 		}
 
-		if($num == 0 && $expection) die($this->throwException(E_DATABASE,NULL,'error404Callback'));
+		if($num == 0 && $expection) $this->throwException(E_DATABASE,NULL,array('MagikeAPI','error404Callback'));
 		return $result;
  	}
 
@@ -145,7 +150,7 @@ class DatabaseModel extends MagikeObject
  		}
  		$value = $value.implode(' , ',$columns);
 		$where = self::praseWhereSentence($args);
-		mysql_query($table.$value.$where) or die($this->throwException(E_DATABASE,$table.$value.$where,'errorDatabaseCallback'));
+		mysql_query($table.$value.$where) or $this->databaseException();
 		return mysql_affected_rows();
  	}
 
@@ -155,7 +160,7 @@ class DatabaseModel extends MagikeObject
  		//替换查询前缀
  		$args = $this->filterTablePrefix($args);
 		$query = 'INSERT INTO '.$args['table'].' ('.implode(',',array_keys($args['value'])).') VALUES('.implode(',',$args['value']).')';
-		mysql_query($query) or die($this->throwException(E_DATABASE,mysql_error(),'errorDatabaseCallback'));
+		mysql_query($query) or $this->databaseException();
 		return mysql_affected_rows();
  	}
 
@@ -165,7 +170,7 @@ class DatabaseModel extends MagikeObject
  		$args = $this->filterTablePrefix($args);
  		$table = 'DELETE FROM '.$args['table'];
 		$where = self::praseWhereSentence($args);
-		mysql_query($table.$where) or die($this->throwException(E_DATABASE,mysql_error(),'errorDatabaseCallback'));
+		mysql_query($table.$where) or $this->databaseException();
 		return mysql_affected_rows();
  	}
 
@@ -178,7 +183,7 @@ class DatabaseModel extends MagikeObject
 		$groupby = isset($args['groupby']) ? ' GROUP BY '.$args['groupby'] : '';
  		$where = self::praseWhereSentence($args);
 
- 		$resource = mysql_query($fields.$table.$where.$groupby) or die($this->throwException(E_DATABASE,mysql_error(),'errorDatabaseCallback'));
+ 		$resource = mysql_query($fields.$table.$where.$groupby) or $this->databaseException();
  		$result = mysql_fetch_array($resource,MYSQL_ASSOC);
  		return $result['number'];
  	}
