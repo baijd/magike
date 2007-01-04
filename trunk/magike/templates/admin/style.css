@@ -47,8 +47,8 @@ body
 
 #top_menu ul
 {
-	width:760px;
 	margin:0 auto;
+	width:760px;
 	padding:0;
 	margin-bottom:6px;
 	background:#383D44;
@@ -122,20 +122,60 @@ body
 	height:28px;
 	color:#333;
 	text-decoration: none;
-	line-height:28px;
+	line-height:23px;
 	display:block;
 	text-align:center;
 }
 
 #menu_content ul li a:hover,#menu_content ul li a.focus
 {
-	background:#0066CC url(images/button.gif) bottom no-repeat;
 	color:#FFF;
+}
+
+#menu_content ul li a:hover .button_content,#menu_content ul li a.focus .button_content
+{
+	background:#0066CC;
+	margin:0;
+	display:block;
+	border-left:1px solid #333; 
+	border-right:1px solid #333;
 }
 
 #menu_content ul li a.focus
 {
 	font-weight:bold;
+}
+
+.xb1, .xb2, .xb3, .xb4 {
+display:block;
+/* \*/
+overflow: hidden;
+/* */
+}
+.xb1, .xb2, .xb3 {height:1px;}
+.xb2, .xb3, .xb4 {border-left:1px solid #FFF; border-right:1px solid #FFF;}
+.xb1 {margin:0 5px;}
+.xb2 {margin:0 3px;}
+.xb3 {margin:0 2px;}
+.xb4 {height:2px; margin:0 1px;}
+
+a:hover .xb2,a:hover .xb3,a:hover .xb4,a.focus .xb2,a.focus .xb3,a.focus .xb4
+{
+	background:#0066CC; 
+	border-left:1px solid #333;
+	border-right:1px solid #333;
+}
+
+a:hover .xb2,a.focus .xb2
+{
+	background:#0066CC; 
+	border-left:2px solid #333;
+	border-right:2px solid #333;
+}
+
+a:hover .xb1,a.focus .xb1
+{
+	 background:#333;
 }
 
 #content
