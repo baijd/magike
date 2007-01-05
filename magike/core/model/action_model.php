@@ -34,6 +34,9 @@ class ActionModel extends MagikeObject
 				$this->runModule();
 				$this->template->prase();
 				break;
+			case 'module':
+				$this->initModule($this->stack->data['system']['file']);
+				break;
 			default:
 				break;
 		}
@@ -45,6 +48,28 @@ class ActionModel extends MagikeObject
 		require(__DIR__.'/template/template.php');
 		$template = new Template($templateFile,$templatePath);
 		$this->template = $template;
+	}
+
+	private function initModule($moduleFile)
+	{
+		$moduleObject = MagikeAPI::fileToModule($moduleFile);
+		if(file_exists(__MODULE__.'/'.$moduleFile.'.php'))
+		{
+			require(__MODULE__.'/'.$moduleFile.'.php');
+			eval("\$moduleObject = new $moduleObject();");
+			if(method_exists($moduleObject,'runModule'))
+			{
+				call_user_func(array($moduleObject,'runModule'));
+			}
+			else
+			{
+				trigger_error('Method runModule Not Exists: '.$moduleObject,E_USER_NOTICE);
+			}
+		}
+		else
+		{
+			$this->throwException(E_FILENOTEXISTS,__MODULE__.'/'.$moduleFile.'.php');
+		}
 	}
 
 	private function runModule()

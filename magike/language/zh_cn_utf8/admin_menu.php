@@ -14,5 +14,6 @@ $lang = array(
 	'modules'	=> '模块浏览',
 	'write'		=> '撰写文章',
 	'all_posts' => '所有文章',
+	'all_categories' => '文章分类',
 );
 ?>

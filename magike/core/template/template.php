@@ -51,7 +51,7 @@ class Template extends MagikeObject
 		new Build($this->templateFile,$this->template);
 	}
 
-	public function prase($contenType = 'text/html')
+	public function prase()
 	{
 		ob_start();
 		header("content-Type: {$this->stack->data['static']['content_type']}; charset={$this->stack->data['static']['charset']}");

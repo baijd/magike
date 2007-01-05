@@ -132,13 +132,20 @@ body
 	color:#FFF;
 }
 
-#menu_content ul li a:hover .button_content,#menu_content ul li a.focus .button_content
+#menu_content ul li a .button_content
 {
-	background:#0066CC;
+	background:#EEE;
 	margin:0;
 	display:block;
-	border-left:1px solid #333; 
-	border-right:1px solid #333;
+	border-left:1px solid #CCC; 
+	border-right:1px solid #CCC;
+}
+
+#menu_content ul li a:hover .button_content,#menu_content ul li a.focus .button_content
+{
+	background:#999;
+	border-left:1px solid #444; 
+	border-right:1px solid #444;
 }
 
 #menu_content ul li a.focus
@@ -153,29 +160,29 @@ overflow: hidden;
 /* */
 }
 .xb1, .xb2, .xb3 {height:1px;}
-.xb2, .xb3, .xb4 {border-left:1px solid #FFF; border-right:1px solid #FFF;}
-.xb1 {margin:0 5px;}
-.xb2 {margin:0 3px;}
+.xb2, .xb3, .xb4 {border-left:1px solid #CCC; border-right:1px solid #CCC;background:#EEE;}
+.xb1 {margin:0 5px;background:#CCC;}
+.xb2 {margin:0 3px;	border-left:2px solid #CCC;border-right:2px solid #CCC;}
 .xb3 {margin:0 2px;}
 .xb4 {height:2px; margin:0 1px;}
 
 a:hover .xb2,a:hover .xb3,a:hover .xb4,a.focus .xb2,a.focus .xb3,a.focus .xb4
 {
-	background:#0066CC; 
-	border-left:1px solid #333;
-	border-right:1px solid #333;
+	background:#999; 
+	border-left:1px solid #444;
+	border-right:1px solid #444;
 }
 
 a:hover .xb2,a.focus .xb2
 {
-	background:#0066CC; 
-	border-left:2px solid #333;
-	border-right:2px solid #333;
+	background:#999; 
+	border-left:2px solid #444;
+	border-right:2px solid #444;
 }
 
 a:hover .xb1,a.focus .xb1
 {
-	 background:#333;
+	 background:#444;
 }
 
 #content

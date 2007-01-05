@@ -51,6 +51,7 @@ class MagikeModule extends MagikeObject
 			if(isset($_POST[$key]) && $_POST[$key] == $val)
 			{
 				call_user_func(array($this,$callback));
+				return true;
 			}
 		}
 		else
@@ -58,8 +59,10 @@ class MagikeModule extends MagikeObject
 			if(isset($_POST[$key]))
 			{
 				call_user_func(array($this,$callback));
+				return true;
 			}
 		}
+		return false;
 	}
 
 	protected function onGet($key,$callback,$val = NULL)
@@ -69,6 +72,7 @@ class MagikeModule extends MagikeObject
 			if(isset($_GET[$key]) && $_GET[$key] == $val)
 			{
 				call_user_func(array($this,$callback));
+				return true;
 			}
 		}
 		else
@@ -76,8 +80,10 @@ class MagikeModule extends MagikeObject
 			if(isset($_GET[$key]))
 			{
 				call_user_func(array($this,$callback));
+				return true;
 			}
 		}
+		return false;
 	}
 
 	protected function getLanguage($moduleName,$key)
