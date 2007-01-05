@@ -176,9 +176,9 @@ class DatabaseModel extends MagikeObject
 
  	public function count($args)
  	{
- 		$fields = 'SELECT COUNT('.$args['key'].') AS number';
  		//替换查询前缀
  		$args = $this->filterTablePrefix($args);
+		$fields = 'SELECT COUNT('.(isset($args['key']) ? $args['key'] : 'id').') AS number';
  		$table = ' FROM '.$args['table'];
 		$groupby = isset($args['groupby']) ? ' GROUP BY '.$args['groupby'] : '';
  		$where = self::praseWhereSentence($args);
