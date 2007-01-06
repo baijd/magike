@@ -178,19 +178,69 @@ function MagikeDbGrid()
 };
 
 MagikeDbGrid.prototype = {
-	init: function(getSourceURL,getPageURL,getTitle,parent){
+	init: function(getSourceURL,getPageURL,getTitle,parent,key,nav){
 		ajaxLoadingStart();
 		this.getSource(getSourceURL);
 		this.getPage(getPageURL);
 		this.title = getTitle;
-		this.data = new Array();
+		this.td = new Array();
+		this.tr = new Array();
 		this.parent = parent;
+		this.key = key;
+		this.nav = $("#"+nav);
+		this.nav.hide();
+		this.createButton();
 	},
 	
+	createButton: function(){
+		$("#magike_db_grid_select_all").click(
+			function()
+			{
+				for(var i in magikeDbGrid.td)
+				{
+					$("input",magikeDbGrid.td[i]["selector"]).attr("checked",true);
+					$("#db_gird_id_" + i).attr("className","db_grid_select");
+				}
+			}
+		);
+
+		$("#magike_db_grid_select_none").click(
+			function()
+			{
+				for(var i in magikeDbGrid.td)
+				{
+					$("input",magikeDbGrid.td[i]["selector"]).attr("checked",false);
+					$("#db_gird_id_" + i).attr("className","");
+				}
+			}
+		);
+
+		$("#magike_db_grid_select_other").click(
+			function()
+			{
+				for(var i in magikeDbGrid.td)
+				{
+					if($("input",magikeDbGrid.td[i]["selector"]).attr("checked"))
+					{
+						$("input",magikeDbGrid.td[i]["selector"]).attr("checked",false);
+						$("#db_gird_id_" + i).attr("className","");
+					}
+					else
+					{
+						$("input",magikeDbGrid.td[i]["selector"]).attr("checked",true);
+						$("#db_gird_id_" + i).attr("className","db_grid_select");
+					}
+				}
+			}
+		);
+	},
+
 	tableHandle: function(){
 		this.createDbTable();
 		$('#'+this.parent).append(this.table);
 		ajaxLoadingFinish();
+		this.nav.appendTo($('#'+this.parent));
+		this.nav.show();
 	},
 	
 	createDbTable: function(){
@@ -227,11 +277,49 @@ MagikeDbGrid.prototype = {
 		for(i=0;i < this.pageInfo["limit"];i++)
 		{
 			tr = $(document.createElement("tr"));
+			if(this.source[i])
+			{
+				tr.attr("id","db_gird_id_"+this.source[i][this.key]);
+				this.td[this.source[i][this.key]] = new Array();
+			}
 
 			for(var j in this.title)
 			{
 				td = $(document.createElement("td"));
-				td.html(this.source[i] ? this.source[i][j] : "&nbsp;");
+
+				if(j != "selector")
+				{
+					td.html(this.source[i] ? this.source[i][j] : "&nbsp;");
+				}
+				else
+				{
+					if(this.source[i])
+					{
+						check = $(document.createElement("input"));
+						check.attr("type","checkbox");
+						check.attr("className","checkbox");
+						check.attr("name","id[]");
+						check.attr("value",this.source[i][this.key]);
+						check.click(
+							function()
+							{
+								if($("#db_gird_id_" + $(this).attr("value")).attr("className") != "db_grid_select")
+								{
+									$("#db_gird_id_" + $(this).attr("value")).attr("className","db_grid_select");
+								}
+								else
+								{
+									$("#db_gird_id_" + $(this).attr("value")).attr("className","");
+								}
+							}
+						);
+						td.append(check);
+					}
+					else
+					{
+						td.html("&nbsp;");
+					}
+				}
 
 				if(this.title[j]["click"] && this.source[i])
 				{
@@ -242,11 +330,18 @@ MagikeDbGrid.prototype = {
 				{
 					td.attr("className",this.title[j]["class"]);
 				}
-				this.data[i] = new Array();
-				this.data[i][j] = td;
+
+				if(this.source[i])
+				{
+					this.td[this.source[i][this.key]][j] = td;
+				}
 				tr.append(td);
 			}
-
+			
+			if(this.source[i])
+			{
+				this.tr[this.source[i][this.key]] = tr;
+			}
 			this.table.append(tr);
 		}
 	},
