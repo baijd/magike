@@ -265,12 +265,32 @@ a:hover .xb1,a.focus .xb1
 	margin-top:5px;
 }
 
+#db_table_nav
+{
+	border:1px solid #AAA;
+	border-top:none;
+	font-size:9pt;
+	background:#DDD;
+	height:20px;
+	line-height:20px;
+	padding:4px 10px;
+}
+
+#db_table_nav span
+{
+	text-decoration:underline;
+	cursor:pointer;
+	font-weight:bold;
+	color:#555;
+}
+
 #magike_db_grid
 {
 	font-size:9pt;
 	border:none;
 	background:#FFF;
 	border:1px solid #AAA;
+	border-bottom:none;
 }
 
 #magike_db_grid .title
@@ -286,6 +306,26 @@ a:hover .xb1,a.focus .xb1
 	border-bottom:1px solid #CCC;
 	padding:2px 5px;
 	text-align:center;
+}
+
+#magike_db_grid .checkbox
+{
+	width:auto;
+	height:auto;
+	border:none;
+	padding:0;
+	margin:0;
+	background:none;
+}
+
+#magike_db_grid tr.db_grid_select td
+{
+	background:#FFFFAA;
+}
+
+#magike_db_grid tr.db_grid_select td.date,#magike_db_grid tr.db_grid_select td.post_title
+{
+	background:#FFFF77;
 }
 
 #magike_db_grid tr td.date
