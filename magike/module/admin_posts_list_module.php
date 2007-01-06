@@ -12,8 +12,17 @@ class AdminPostsListModule extends MagikeModule
 	{
 		parent::__construct(array('database','stack'));
 	}
-	
-	private function prasePage()
+
+	private function prasePageInformation()
+	{
+		$pageInfo = array();
+		$pageInfo['sum'] = $this->database->count(array('table' => 'table.posts'));
+		$pageInfo['limit'] = isset($this->stack->data['static']['admin_posts_limit']) ? $this->stack->data['static']['admin_posts_limit'] : 20;
+		header("content-Type: {$this->stack->data['static']['content_type']}; charset={$this->stack->data['static']['charset']}");
+		echo json_encode($pageInfo);
+	}
+
+	public function prasePage()
 	{
 		//初始化查询语句
 		$args = array('table'	=> 'table.posts JOIN table.categories ON table.posts.category_id = table.categories.id',
@@ -26,15 +35,6 @@ class AdminPostsListModule extends MagikeModule
 		$args['offset'] = $_GET['page'] - 1;
 		header("content-Type: {$this->stack->data['static']['content_type']}; charset={$this->stack->data['static']['charset']}");
 		echo json_encode($this->database->fectch($args));
-	}
-
-	private function prasePageInformation()
-	{
-		$pageInfo = array();
-		$pageInfo['sum'] = $this->database->count(array('table' => 'table.posts'));
-		$pageInfo['sub'] = isset($this->stack->data['static']['admin_posts_limit']) ? $this->stack->data['static']['admin_posts_limit'] : 20;
-		header("content-Type: {$this->stack->data['static']['content_type']}; charset={$this->stack->data['static']['charset']}");
-		echo json_encode($pageInfo);
 	}
 
 	public function runModule()

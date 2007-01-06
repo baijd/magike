@@ -101,14 +101,15 @@ class DatabaseModel extends MagikeObject
 		$orderby = isset($args['orderby']) ? ' ORDER BY '.$args['orderby'] : '';
 
 		//处理limit子句
-		$limit = isset($args['limit']) ? ' LIMIT '.$args['limit'] : '';
+		$limit = isset($args['limit']) ? $args['limit'] : '';
 
 		//处理offset子句
-		$offset = isset($args['limit']) && isset($args['offset']) ? ','.$args['offset'] : '';
+		$offset = isset($args['limit']) && isset($args['offset']) ? $args['offset'].',' : '';
+		$offset = isset($args['limit']) ? ' LIMIT '.$offset : '';
 
 		//处理where子句
 		$where = self::praseWhereSentence($args);
-		$query = $fields.$table.$where.$groupby.$orderby.$limit.$offset;
+		$query = $fields.$table.$where.$groupby.$orderby.$offset.$limit;
 		$resource = mysql_query($query) or $this->databaseException();
 		$sum = mysql_num_rows($resource);
 		$result = array();

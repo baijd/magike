@@ -1,4 +1,4 @@
-body
+﻿body
 {
 	background:#FFF;
 	font-family:verdana, Helvetica, sans-serif;
@@ -244,6 +244,66 @@ a:hover .xb1,a.focus .xb1
 {
 	padding:10px;
 	font-size:10pt;
+}
+
+#ajax_loading
+{
+	border:1px solid #444;
+	background:#FFF;
+	width:100px;
+	height:30px;
+	padding:10px;
+	font-size:9pt;
+	color:#AAA;
+	font-weight:bold;
+	text-align:center;
+	position: fixed;
+}
+
+#ajax_loading img
+{
+	margin-top:5px;
+}
+
+#magike_db_grid
+{
+	font-size:9pt;
+	border:none;
+	background:#FFF;
+	border:1px solid #AAA;
+}
+
+#magike_db_grid .title
+{
+	background:#DDD;
+	text-align:center;
+}
+
+#magike_db_grid tr td
+{
+	height:20px;
+	line-height:20px;
+	border-bottom:1px solid #CCC;
+	padding:2px 5px;
+	text-align:center;
+}
+
+#magike_db_grid tr td.date
+{
+	color:#AAA;
+	background:#F9F9F9;
+}
+
+#magike_db_grid tr td.post_title
+{
+	background:#F9F9F9;
+}
+
+#db_table
+{
+	border:1px solid #999;
+	background:#F3F1E9;
+	padding:10px;
 }
 
 #magike_editor
