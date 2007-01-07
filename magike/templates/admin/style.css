@@ -284,6 +284,45 @@ a:hover .xb1,a.focus .xb1
 	color:#555;
 }
 
+.select_box
+{
+	border-top:1px solid #CCC;
+	border-left:1px solid #CCC;
+	border-right:1px solid #333;
+	border-bottom:1px solid #333;
+	width: 182px;
+	height: 20px;
+	line-height: 20px; 
+	clip: rect( 0px, 181px, 20px, 0px );
+	overflow: hidden;
+	background:#FFF;
+}
+
+#db_table_category
+{
+	border:1px solid #000;
+	background:#FFF;
+	width:180px;
+	height:50px;
+	line-height:50px;
+	position: relative;
+	left:-7px;
+	bottom:80px;
+	text-align:center;
+}
+
+#db_table_category select
+{
+	font-family:verdana, Helvetica, sans-serif;
+	width: 120px;
+	height:20px;
+}
+
+#db_table_category span
+{
+	padding-top:-10px;
+}
+
 #magike_db_grid
 {
 	font-size:9pt;

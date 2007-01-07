@@ -178,7 +178,7 @@ function MagikeDbGrid()
 };
 
 MagikeDbGrid.prototype = {
-	init: function(getSourceURL,getPageURL,getTitle,parent,key,nav){
+	init: function(getSourceURL,getPageURL,getTitle,parent,key,nav,category){
 		ajaxLoadingStart();
 		this.getSource(getSourceURL);
 		this.getPage(getPageURL);
@@ -188,7 +188,9 @@ MagikeDbGrid.prototype = {
 		this.parent = parent;
 		this.key = key;
 		this.nav = $("#"+nav);
+		this.category = $("#"+category);
 		this.nav.hide();
+		this.category.hide();
 		this.createButton();
 	},
 	
@@ -230,6 +232,25 @@ MagikeDbGrid.prototype = {
 						$("input",magikeDbGrid.td[i]["selector"]).attr("checked",true);
 						$("#db_gird_id_" + i).attr("className","db_grid_select");
 					}
+				}
+			}
+		);
+		
+		if($("#db_table_category"))
+		{
+			$("#db_table_category").appendTo($(this.nav));
+		}
+
+		$("#magike_db_grid_select_category").click(
+			function()
+			{
+				if($("#db_table_category").css("display") == "none")
+				{
+					$("#db_table_category").fadeIn("fast");
+				}
+				else
+				{
+					$("#db_table_category").fadeOut("fast");
 				}
 			}
 		);
