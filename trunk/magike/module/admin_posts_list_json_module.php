@@ -1,16 +1,17 @@
 <?php
 /**********************************
  * Created on: 2006-12-16
- * File Name : admin_posts_list_module.php
+ * File Name : admin_posts_list_json_module.php
  * Copyright : Magike Group
  * License   : GNU General Public License 2.0
  *********************************/
  
-class AdminPostsListModule extends MagikeModule
+class AdminPostsListJsonModule extends MagikeModule
 {
 	function __construct()
 	{
 		parent::__construct(array('database','stack'));
+		header("content-Type: {$this->stack->data['static']['content_type']}; charset={$this->stack->data['static']['charset']}");
 	}
 
 	private function prasePageInformation()
@@ -18,7 +19,6 @@ class AdminPostsListModule extends MagikeModule
 		$pageInfo = array();
 		$pageInfo['sum'] = $this->database->count(array('table' => 'table.posts'));
 		$pageInfo['limit'] = isset($this->stack->data['static']['admin_posts_limit']) ? $this->stack->data['static']['admin_posts_limit'] : 20;
-		header("content-Type: {$this->stack->data['static']['content_type']}; charset={$this->stack->data['static']['charset']}");
 		echo json_encode($pageInfo);
 	}
 
@@ -33,7 +33,6 @@ class AdminPostsListModule extends MagikeModule
 
 		$args['limit']  = isset($this->stack->data['static']['admin_posts_limit']) ? $this->stack->data['static']['admin_posts_limit'] : 20;
 		$args['offset'] = $_GET['page'] - 1;
-		header("content-Type: {$this->stack->data['static']['content_type']}; charset={$this->stack->data['static']['charset']}");
 		echo json_encode($this->database->fectch($args));
 	}
 
