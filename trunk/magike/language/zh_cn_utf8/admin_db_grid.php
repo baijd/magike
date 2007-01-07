@@ -10,5 +10,6 @@ $lang = array(
 	'select_all' 	=> '全选',
 	'select_none' => '取消选择',
 	'select_other'	=> '反向选择',
+	'select_category'	=> '选择分类',
 );
 ?>

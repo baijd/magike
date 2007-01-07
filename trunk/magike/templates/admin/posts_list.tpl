@@ -10,7 +10,16 @@
 			<div id="db_table_nav">
 				<span id="magike_db_grid_select_all">{lang.admin_db_grid.select_all}</span> , 
 				<span id="magike_db_grid_select_none">{lang.admin_db_grid.select_none}</span> , 
-				<span id="magike_db_grid_select_other">{lang.admin_db_grid.select_other}</span>
+				<span id="magike_db_grid_select_other">{lang.admin_db_grid.select_other}</span> , 
+				<span id="magike_db_grid_select_category">{lang.admin_db_grid.select_category}</span>
+			</div>
+			<div id="db_table_category">
+				<select>
+					<option>程序设计</option>
+				</select>
+				<span>
+					选定
+				</span>
 			</div>
 			<script>
 					magikeDbGrid.init("{$static.index}/admin/posts/all/1",
@@ -18,12 +27,13 @@
 									 {
 									 "selector" : {"text" : "&nbsp;","width" : "5%"},
 									 "post_title" : {"text" : "标题","width" : "45%","click" : true,"class" : "post_title"},
-									 "category_name" : {"text" : "分类","width" : "30%"},
+									 "category_name" : {"text" : "分类","width" : "30%","select" : true},
 									 "post_time" : {"text" : "时间","width" : "20%","class" : "date"}
 									 },
 									 "db_table",
 									 "post_id",
-									 "db_table_nav"
+									 "db_table_nav",
+									 "db_table_category"
 									 );
 			</script>
 		</p>
