@@ -35,6 +35,7 @@
 									 },
 									 "db_table",
 									 "post_id",
+									 "post_content",
 									 "db_table_nav",
 									 "db_table_category"
 									 );
