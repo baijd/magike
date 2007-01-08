@@ -5,6 +5,7 @@
 	http://www.magike.net
 	powered by qining
 ********************************************/
+
 if (!Object.prototype.toJSONString) {
     (function (s) {
         var m = {
@@ -180,8 +181,8 @@ function MagikeDbGrid()
 MagikeDbGrid.prototype = {
 	init: function(getSourceURL,getPageURL,getTitle,parent,key,nav,category){
 		ajaxLoadingStart();
-		this.getSource(getSourceURL);
 		this.getPage(getPageURL);
+		this.getSourceURL = getSourceURL;
 		this.title = getTitle;
 		this.td = new Array();
 		this.tr = new Array();
@@ -254,6 +255,24 @@ MagikeDbGrid.prototype = {
 				}
 			}
 		);
+		
+		if($("#magike_db_grid_select_category_choose"))
+		{
+			$("#magike_db_grid_select_category_choose").click(
+				function()
+				{
+					val = $("#magike_db_grid_select_category_list").attr("value");
+					for(var i in magikeDbGrid.source)
+					{
+						if(magikeDbGrid.source[i][magikeDbGrid.select] == val)
+						{
+							$("input",magikeDbGrid.td[magikeDbGrid.source[i][magikeDbGrid.key]]["selector"]).attr("checked",true);
+							$("#db_gird_id_" + magikeDbGrid.source[i][magikeDbGrid.key]).attr("className","db_grid_select");
+						}
+					}
+				}
+			);
+		}
 	},
 
 	tableHandle: function(){
@@ -287,6 +306,11 @@ MagikeDbGrid.prototype = {
 			if(this.title[i]["width"])
 			{
 				td.attr("width",this.title[i]["width"]);
+			}
+
+			if(this.title[i]["select"])
+			{
+				this.select = i;
 			}
 			tr.append(td);
 		}
@@ -411,6 +435,8 @@ MagikeDbGrid.prototype = {
 			magikeDbGrid.pageFinish = false;
 			magikeDbGrid.pageSource = false;
 		}
+
+		magikeDbGrid.getSource(magikeDbGrid.getSourceURL);
 	},
 	
 	getSourceHandle: function(s){
