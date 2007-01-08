@@ -1,4 +1,4 @@
-﻿body
+body
 {
 	background:#FFF;
 	font-family:verdana, Helvetica, sans-serif;
@@ -154,6 +154,7 @@
 }
 
 .xb1, .xb2, .xb3, .xb4 {
+cursor:pointer;
 display:block;
 /* \*/
 overflow: hidden;
@@ -321,6 +322,21 @@ a:hover .xb1,a.focus .xb1
 #db_table_category span
 {
 	padding-top:-10px;
+}
+
+.magike_db_grid_popup
+{
+	width:160px;
+	position:absolute;
+	background:#FFF;
+	font-size:9pt;
+	padding:10px;
+	color:#FFF;
+	background:#333;
+	border:1px solid #000;
+	filter:alpha(opacity=80);
+	-moz-opacity:0.80;
+	opacity:0.80;
 }
 
 #magike_db_grid

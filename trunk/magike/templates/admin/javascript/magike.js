@@ -179,7 +179,7 @@ function MagikeDbGrid()
 };
 
 MagikeDbGrid.prototype = {
-	init: function(getSourceURL,getPageURL,getTitle,parent,key,nav,category){
+	init: function(getSourceURL,getPageURL,getTitle,parent,key,describe,nav,category){
 		ajaxLoadingStart();
 		this.getPage(getPageURL);
 		this.getSourceURL = getSourceURL;
@@ -188,6 +188,7 @@ MagikeDbGrid.prototype = {
 		this.tr = new Array();
 		this.parent = parent;
 		this.key = key;
+		this.describe = describe;
 		this.nav = $("#"+nav);
 		this.category = $("#"+category);
 		this.nav.hide();
@@ -272,7 +273,7 @@ MagikeDbGrid.prototype = {
 					}
 				}
 			);
-		}
+		};
 	},
 
 	tableHandle: function(){
@@ -319,6 +320,12 @@ MagikeDbGrid.prototype = {
 	},
 
 	createRows:function(){
+
+		this.popUp = $(document.createElement("div"));
+		this.popUp.attr("className","magike_db_grid_popup");
+		this.popUp.appendTo($(document.body));
+		this.popUp.hide();
+
 		for(i=0;i < this.pageInfo["limit"];i++)
 		{
 			tr = $(document.createElement("tr"));
@@ -386,6 +393,30 @@ MagikeDbGrid.prototype = {
 			if(this.source[i])
 			{
 				this.tr[this.source[i][this.key]] = tr;
+				tr.attr("index",i);
+				tr.mousemove(
+					function(e)
+					{
+						var e = e || window.event;
+						magikeDbGrid.popUp.css("top",e.clientY + 5 + "px");
+						magikeDbGrid.popUp.css("left",e.clientX + 10 + "px");
+					}
+				);
+
+				tr.mouseover(
+					function()
+					{
+						magikeDbGrid.popUp.show();
+						magikeDbGrid.popUp.html(magikeDbGrid.source[$(this).attr("index")][magikeDbGrid.describe]);
+					}
+				);
+
+				tr.mouseout(
+					function()
+					{
+							magikeDbGrid.popUp.hide();
+					}
+				);
 			}
 			this.table.append(tr);
 		}
