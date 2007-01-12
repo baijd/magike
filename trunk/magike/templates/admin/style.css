@@ -4,6 +4,9 @@ body
 	font-family:verdana, Helvetica, sans-serif;
 	padding:0;
 	margin:0;
+	border:0; 
+	height:100%; 
+	overflow:auto;
 }
 
 #logo
@@ -188,7 +191,7 @@ a:hover .xb1,a.focus .xb1
 
 #content
 {
-	margin:0;
+	margin:0 0 20px 0;
 	padding:10px;
 	background:#FFF;
 	overflow: hidden;
@@ -225,6 +228,11 @@ a:hover .xb1,a.focus .xb1
 	font-size:10pt;
 	border-bottom:1px solid #CCC;
 	color:#5B686F;
+}
+
+#element p
+{
+	margin-top:15px;
 }
 
 #element input
@@ -285,20 +293,6 @@ a:hover .xb1,a.focus .xb1
 	color:#555;
 }
 
-.select_box
-{
-	border-top:1px solid #CCC;
-	border-left:1px solid #CCC;
-	border-right:1px solid #333;
-	border-bottom:1px solid #333;
-	width: 182px;
-	height: 20px;
-	line-height: 20px; 
-	clip: rect( 0px, 181px, 20px, 0px );
-	overflow: hidden;
-	background:#FFF;
-}
-
 #db_table_category
 {
 	border:1px solid #000;
@@ -317,11 +311,6 @@ a:hover .xb1,a.focus .xb1
 	font-family:verdana, Helvetica, sans-serif;
 	width: 120px;
 	height:20px;
-}
-
-#db_table_category span
-{
-	padding-top:-10px;
 }
 
 .magike_db_grid_popup
@@ -445,17 +434,24 @@ a.magike_editor_element:hover
 
 #footer
 {
-	height:70px;
 	text-align:center;
-	color:#FFF;
+	color:#DDD;
 	font-size:9pt;
-	margin:0 auto;
-	width:760px;
-	border-top:1px solid #CCC;
+	padding:5px 0;
+	background:#333;
+	border-top:1px solid #000;
+	position:fixed;
+	bottom:0;
+	right:0;
+	left:0;
+	width:100%;
 }
 
 #footer img
 {
-	margin-bottom:-20px;
+	margin-bottom:-4px;
 	padding-right:5px;
 }
+
+* html #footer {position:absolute;}
+* html #ajax_loading {position:absolute;}

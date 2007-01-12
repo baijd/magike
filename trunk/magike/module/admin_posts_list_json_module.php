@@ -31,7 +31,6 @@ class AdminPostsListJsonModule extends MagikeModule
 					  'orderby' => 'table.posts.post_time DESC',
 					  );
 
-		$args['limit']  = isset($this->stack->data['static']['admin_posts_limit']) ? $this->stack->data['static']['admin_posts_limit'] : 20;
 		$args['offset'] = $_GET['page'] - 1;
 		echo json_encode($this->database->fectch($args));
 	}

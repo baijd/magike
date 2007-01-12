@@ -29,6 +29,12 @@ class MagikeAPI
 		}
 	}
 
+	public static function getmicrotime()
+	{ 
+		list($usec, $sec) = explode(" ",microtime()); 
+		return ((float)$usec + (float)$sec); 
+	}
+
 	public static function objectToModel($objName)
 	{
 		if(NULL == $objName)
