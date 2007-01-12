@@ -7,6 +7,10 @@
  *********************************/
 
 $lang = array(
-	'article' => '文章'
+	'article' => '文章',
+	'base_on' => '基于',
+	'created' => '构建',
+	'proceed_in' => '创建时间',
+	'second' => '秒',
 );
 ?>

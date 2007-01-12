@@ -33,8 +33,9 @@
 									 "category_name" : {"text" : "分类","width" : "30%","select" : true},
 									 "post_time" : {"text" : "时间","width" : "20%","class" : "date"}
 									 },
-									 "db_table",
 									 "post_id",
+									 20,
+									 "db_table",
 									 "post_content",
 									 "db_table_nav",
 									 "db_table_category"

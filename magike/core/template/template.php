@@ -11,6 +11,7 @@ class Template extends MagikeObject
 	private $templateFile;
 	private $template;
 	private $templateName;
+	private $praseTime;
 	public  $data;
 
 	function __construct($templateFile,$template)
@@ -35,6 +36,7 @@ class Template extends MagikeObject
 		}
 		$this->stack->setStackByType('module_to_run',$module);
 		$this->stack->setStackByType('language',$lang);
+		$this->praseTime = MagikeAPI::getmicrotime();
 	}
 
 	public function buildCache()
@@ -53,6 +55,7 @@ class Template extends MagikeObject
 
 	public function prase()
 	{
+		$this->data['static']['prase_time'] = substr(MagikeAPI::getmicrotime() - $this->praseTime,0,6);
 		ob_start();
 		header("content-Type: {$this->stack->data['static']['content_type']}; charset={$this->stack->data['static']['charset']}");
 		require(__COMPILE__.'/'.$this->templateName.'@'.$this->template.'.php');

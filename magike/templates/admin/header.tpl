@@ -8,7 +8,7 @@
 		var templateUrl = "{$static.siteurl}/templates/{$static.admin_template}";
 	</script>
 	<script language="javascript" type="text/javascript" src="{$static.siteurl}/templates/{$static.admin_template}/javascript/jquery.js"></script>
-	<script language="javascript" type="text/javascript" src="{$static.siteurl}/templates/{$static.admin_template}/javascript/magike.js"></script>
+	<script language="javascript" type="text/javascript" src="{$static.siteurl}/templates/{$static.admin_template}/javascript/magike_control.js"></script>
 </head>
 [module:static_module]
 <body>
