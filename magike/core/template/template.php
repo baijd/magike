@@ -56,6 +56,7 @@ class Template extends MagikeObject
 	public function prase()
 	{
 		$this->data['static']['prase_time'] = substr(MagikeAPI::getmicrotime() - $this->praseTime,0,6);
+		$this->data['static']['path'] = $this->stack->data['system']['path'];
 		ob_start();
 		header("content-Type: {$this->stack->data['static']['content_type']}; charset={$this->stack->data['static']['charset']}");
 		require(__COMPILE__.'/'.$this->templateName.'@'.$this->template.'.php');
