@@ -12,5 +12,7 @@ $lang = array(
 	'created' => '构建',
 	'proceed_in' => '创建时间',
 	'second' => '秒',
+	'report_bug' => '报告错误',
+	'support' => '官方支持',
 );
 ?>
