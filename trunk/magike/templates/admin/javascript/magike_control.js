@@ -121,7 +121,7 @@ function MagikeDbGrid()
 };
 
 MagikeDbGrid.prototype = {
-	init: function(getSourceURL,getPageURL,getTitle,keyName,rowNum,parentElement,describeElement,navElement,categoryElement)
+	init: function(getSourceURL,getPageURL,getTitle,keyName,rowNum,parentElement,describeElement,navElement,infoElement,categoryElement)
 	{
 		this.getSourceURL = getSourceURL;
 		this.getPageURL = getPageURL;
@@ -132,9 +132,9 @@ MagikeDbGrid.prototype = {
 		this.describe = describeElement;
 		this.nav = $("#"+navElement);
 		this.category = $("#"+categoryElement);
+		this.info = $("#"+infoElement);
 		this.nav.hide();
-		this.category.hide();
-		
+
 		this.createButton();
 		this.createTable(getTitle,rowNum);
 		this.getPage(getPageURL);
@@ -182,26 +182,29 @@ MagikeDbGrid.prototype = {
 				}
 			}
 		);
-		
-		if($("#db_table_category"))
+
+		if(this.category)
 		{
-			$("#db_table_category").appendTo($(this.nav));
+			this.info.append(this.category);
+			this.category.hide();
 		}
 
 		$("#magike_db_grid_select_category").click(
 			function()
 			{
-				if($("#db_table_category").css("display") == "none")
+				if(magikeDbGrid.info.is(":visible"))
 				{
-					$("#db_table_category").fadeIn("fast");
+					magikeDbGrid.info.slideUp();
+					magikeDbGrid.category.hide();
 				}
 				else
 				{
-					$("#db_table_category").fadeOut("fast");
+					magikeDbGrid.info.slideDown();
+					magikeDbGrid.category.show();
 				}
 			}
 		);
-		
+
 		if($("#magike_db_grid_select_category_choose"))
 		{
 			$("#magike_db_grid_select_category_choose").click(
@@ -232,10 +235,17 @@ MagikeDbGrid.prototype = {
 
 		this.createRows(getTitle,rowNum);
 		$('#'+this.parent).append(this.table);
+		if(jQuery.browser.msie)
+		{
+			this.nav.css("overflow","hidden");
+		}
+		
+		this.info.appendTo($('#'+this.parent));
+		this.info.hide();
 		this.nav.appendTo($('#'+this.parent));
 		this.nav.show();
 	},
-	
+
 	createRows: function(getTitle,rowNum)
 	{
 		//标题项目部分
@@ -341,18 +351,18 @@ MagikeDbGrid.prototype = {
 		ajaxLoadingStart();
 		$.get(getPageURL,null,this.getPageHandle);
 	},
-	
+
 	getSource: function(getSourceURL)
 	{
 		$.get(getSourceURL,null,this.getSourceHandle);
 	},
-	
+
 	getPageHandle: function(s)
 	{
 		magikeDbGrid.pageInfo = s.parseJSON();
 		magikeDbGrid.getSource(magikeDbGrid.getSourceURL);
 	},
-	
+
 	getSourceHandle: function(s)
 	{
 		magikeDbGrid.source = s.parseJSON();
