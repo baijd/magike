@@ -8,7 +8,7 @@
 
 define('__DBHOST__','localhost');
 define('__DBUSER__','root');
-define('__DBPASS__','6561041');
+define('__DBPASS__','');
 define('__DBNAME__','magike');
 define('__DBPREFIX__','mg_');
 ?>
