@@ -12,5 +12,6 @@ $lang = array(
 	'date'		=> '日期',
 	'list_title' => '文章列表',
 	'list_describe' => '(这里列出了您发表的所有文章)',
+	'select_category' => '请您选择一个分类',
 );
 ?>
