@@ -8,6 +8,8 @@
 		<p>
 			<div id="db_table">
 			</div>
+			<div id="db_info">
+			</div>
 			<div id="db_table_nav">
 				<span id="magike_db_grid_select_all">{lang.admin_db_grid.select_all}</span> , 
 				<span id="magike_db_grid_select_none">{lang.admin_db_grid.select_none}</span> , 
@@ -15,11 +17,14 @@
 				<span id="magike_db_grid_select_category">{lang.admin_db_grid.select_category}</span>
 			</div>
 			<div id="db_table_category">
+				<i>
+				{lang.admin_posts_list.select_category} 
+				</i>
 				<select id="magike_db_grid_select_category_list">
 				[while@($admin_categories_list,$admin_category)]
 					<option value="{$admin_category.category_name}">{$admin_category.category_name}</option>
 				[/while]
-				</select>
+				</select> 
 				<span id="magike_db_grid_select_category_choose">
 					选定
 				</span>
@@ -38,6 +43,7 @@
 									 "db_table",
 									 "post_content",
 									 "db_table_nav",
+									 "db_info",
 									 "db_table_category"
 									 );
 			</script>

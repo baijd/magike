@@ -4,9 +4,7 @@ body
 	font-family:verdana, Helvetica, sans-serif;
 	padding:0;
 	margin:0;
-	border:0; 
-	height:100%; 
-	overflow:auto;
+	border:0;
 }
 
 #logo
@@ -38,7 +36,7 @@ body
 #title img
 {
 	margin-bottom:-5px;
-	margin-top:25px;
+	margin-top:15px;
 }
 
 #top_menu
@@ -87,7 +85,7 @@ body
 	padding:0;
 }
 
-#top_menu ul li a.focus
+#top_menu ul li a.focus,#top_menu ul li a.focus:hover
 {
 	font-weight:bold;
 	padding:0;
@@ -140,14 +138,14 @@ body
 	background:#EEE;
 	margin:0;
 	display:block;
-	border-left:1px solid #CCC; 
+	border-left:1px solid #CCC;
 	border-right:1px solid #CCC;
 }
 
 #menu_content ul li a:hover .button_content,#menu_content ul li a.focus .button_content
 {
 	background:#999;
-	border-left:1px solid #444; 
+	border-left:1px solid #444;
 	border-right:1px solid #444;
 }
 
@@ -172,14 +170,14 @@ overflow: hidden;
 
 a:hover .xb2,a:hover .xb3,a:hover .xb4,a.focus .xb2,a.focus .xb3,a.focus .xb4
 {
-	background:#999; 
+	background:#999;
 	border-left:1px solid #444;
 	border-right:1px solid #444;
 }
 
 a:hover .xb2,a.focus .xb2
 {
-	background:#999; 
+	background:#999;
 	border-left:2px solid #444;
 	border-right:2px solid #444;
 }
@@ -194,7 +192,6 @@ a:hover .xb1,a.focus .xb1
 	margin:0 0 20px 0;
 	padding:10px;
 	background:#FFF;
-	overflow: hidden;
 }
 
 #element
@@ -203,12 +200,36 @@ a:hover .xb1,a.focus .xb1
 	margin:0 auto;
 }
 
+#element .option
+{
+	border:1px solid #999;
+	background:#F3F1E9;
+	font-size:10pt;
+	padding:10px;
+	margin-top:10px;
+	display:none;
+}
+
+#element .border
+{
+	border:1px solid #999;
+	background:#F3F1E9;
+	padding:10px;
+}
+
+#element .option p
+{
+	line-height:20px;
+	border-bottom:1px solid #CCC;
+	padding:5px;
+}
+
 #element .discribe
 {
 	font-style:italic;
 	color:#999;
 	font-size:8pt;
-	line-height:30px;
+	line-height:20px;
 	font-weight:normal;
 }
 
@@ -221,7 +242,7 @@ a:hover .xb1,a.focus .xb1
 
 #element h2
 {
-	margin:0;
+	margin:15px 0 10px 0;
 	padding:0 5px;
 	height:22px;
 	line-height:22px;
@@ -232,7 +253,8 @@ a:hover .xb1,a.focus .xb1
 
 #element p
 {
-	margin-top:15px;
+	margin:0;
+	padding:0;
 }
 
 #element input
@@ -247,6 +269,46 @@ a:hover .xb1,a.focus .xb1
 	font-size:10pt;
 	width:450px;
 	background:#FFF url(images/input_bg.gif) top repeat-x;
+}
+
+#element input.radio,#element input.checkbox
+{
+	border:none;
+	padding:0;
+	margin-bottom:-3px !important;
+	margin-bottom:-1px;
+	height:auto;
+	width:auto;
+	background:none;
+}
+
+#element input.checkbox
+{
+	margin:auto !important;
+}
+
+#element select
+{
+	margin-bottom:0 !important;
+	margin-bottom:-2px;
+}
+
+#element input.button
+{
+	background:#EDEEEE;
+	border-top:1px solid #CCC;
+	border-left:1px solid #CCC;
+	border-right:1px solid #999;
+	border-bottom:1px solid #999;
+	font-weight:bold;
+	font-size:11pt;
+	padding:0 10px !important;
+	padding:0;
+	color:#777;
+	height:28px;
+	line-height:24px;
+	cursor:pointer;
+	width:auto;
 }
 
 #element #post_content
@@ -274,6 +336,27 @@ a:hover .xb1,a.focus .xb1
 	margin-top:5px;
 }
 
+#db_info
+{
+	height:20px;
+	line-height:20px;
+	background:#EEE;
+	font-size:9pt;
+	padding:4px 10px;
+	border:1px solid #AAA;
+	border-top:none;
+}
+
+#db_info select
+{
+	height:18px;
+}
+
+#db_info i
+{
+	color:#777;
+}
+
 #db_table_nav
 {
 	border:1px solid #AAA;
@@ -285,32 +368,12 @@ a:hover .xb1,a.focus .xb1
 	padding:4px 10px;
 }
 
-#db_table_nav span
+#db_table_nav span,#db_info span
 {
 	text-decoration:underline;
 	cursor:pointer;
 	font-weight:bold;
 	color:#555;
-}
-
-#db_table_category
-{
-	border:1px solid #000;
-	background:#FFF;
-	width:180px;
-	height:50px;
-	line-height:50px;
-	position: relative;
-	left:-7px;
-	bottom:80px;
-	text-align:center;
-}
-
-#db_table_category select
-{
-	font-family:verdana, Helvetica, sans-serif;
-	width: 120px;
-	height:20px;
 }
 
 .magike_db_grid_popup
@@ -434,17 +497,20 @@ a.magike_editor_element:hover
 
 #footer
 {
-	text-align:center;
-	color:#DDD;
+	color:#777;
 	font-size:9pt;
-	padding:5px 0;
-	background:#333;
-	border-top:1px solid #000;
-	position:fixed;
-	bottom:0;
+	padding:3px;
+	border-top:1px solid #CCC;
+	margin:0 auto;
 	right:0;
 	left:0;
-	width:100%;
+	overflow:hidden;
+	text-align:center;
+	position:fixed;
+	background:#333;
+	border-top:1px solid #000;
+	bottom:0;
+	z-index:1000;
 }
 
 #footer img
@@ -453,5 +519,17 @@ a.magike_editor_element:hover
 	padding-right:5px;
 }
 
-* html #footer {position:absolute;}
+/* position: fixed For IE for Windows \*/
+* html
+{
+    height: 100%;
+    overflow: hidden;
+}
+* html body
+{
+    height: 100%;
+    overflow: auto;
+}
 * html #ajax_loading {position:absolute;}
+* html #footer {position:absolute;width:expression(document.body.clientWidth-4+"px");}
+/* */
