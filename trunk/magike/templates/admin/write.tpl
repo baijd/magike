@@ -18,16 +18,27 @@
 		<div class="option" id="write_option">
 			<p>
 			<strong>{lang.admin_write.write_type}:</strong> 
-			<input type="radio" name="post_type" value="archive" class="radio"/>{lang.admin_write.write_type_archive}
-			<input type="radio" name="post_type" value="page" class="radio"/>{lang.admin_write.write_type_page}
-			<input type="radio" name="post_type" value="announce" class="radio"/>{lang.admin_write.write_type_announce}
-			<input type="radio" name="post_type" value="side" class="radio"/>{lang.admin_write.write_type_side}
+			<input type="radio" name="post_type" value="archive" class="radio"/> {lang.admin_write.write_type_archive}
+			<input type="radio" name="post_type" value="page" class="radio"/> {lang.admin_write.write_type_page}
+			<input type="radio" name="post_type" value="announce" class="radio"/> {lang.admin_write.write_type_announce}
+			<input type="radio" name="post_type" value="side" class="radio"/> {lang.admin_write.write_type_side}
+			<span class="discribe">{lang.admin_write.write_type_describe}</span>
 			</p>
 			<p>
 			<strong>{lang.admin_write.write_access}:</strong> 
-			<input type="checkbox" name="comment" class="checkbox" value="check" checked = ture/>{lang.admin_write.write_allowcomment} 
-			<input type="checkbox" name="ping" class="checkbox" value="check" checked = ture/>{lang.admin_write.write_allowtrackback} 
-			<input type="checkbox" name="hidden" class="checkbox" value="check"/>{lang.admin_write.write_hidden} 
+			<input type="checkbox" name="comment" class="checkbox" value="check" checked = ture/> {lang.admin_write.write_allowcomment} 
+			<input type="checkbox" name="ping" class="checkbox" value="check" checked = ture/> {lang.admin_write.write_allowtrackback} 
+			<input type="checkbox" name="hidden" class="checkbox" value="check" checked = ture/> {lang.admin_write.write_allowfeed} 
+			<input type="checkbox" name="hidden" class="checkbox" value="check"/> {lang.admin_write.write_hidden} 
+			<span class="discribe">{lang.admin_write.write_access_describe}</span>
+			</p>
+			<p>
+			<strong>{lang.admin_write.post_name}:</strong> 
+			<input type="text" name="post_name" class="text" /> <span class="discribe">{lang.admin_write.post_name_describe}</span>
+			</p>
+			<p>
+			<strong>{lang.admin_write.post_password}:</strong> 
+			<input type="text" name="post_name" class="text" /> <span class="discribe">{lang.admin_write.post_password_describe}</span>
 			</p>
 		</div>
 		<p style="margin-top:10px;text-align:center">
