@@ -226,7 +226,6 @@ a:hover .xb1,a.focus .xb1
 
 #element .discribe
 {
-	font-style:italic;
 	color:#999;
 	font-size:8pt;
 	line-height:20px;
@@ -285,6 +284,12 @@ a:hover .xb1,a.focus .xb1
 #element input.checkbox
 {
 	margin:auto !important;
+}
+
+#element input.text
+{
+	padding:2px;
+	width:250px;
 }
 
 #element select
@@ -531,5 +536,5 @@ a.magike_editor_element:hover
     overflow: auto;
 }
 * html #ajax_loading {position:absolute;}
-* html #footer {position:absolute;width:expression(document.body.clientWidth-4+"px");}
+* html #footer {position:absolute;bottom:-1px;width:expression(document.body.clientWidth-6+"px");}
 /* */
