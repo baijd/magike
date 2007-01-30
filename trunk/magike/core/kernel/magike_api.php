@@ -116,7 +116,7 @@ class MagikeAPI
 		return sizeof($info[0]);
 	}
 
-	public static function utf162utf8($str)
+	public static function utf162utf8($utf16)
 	{
         if(function_exists('mb_convert_encoding')) {
             return mb_convert_encoding($utf16, 'UTF-8', 'UTF-16');
