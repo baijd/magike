@@ -10,4 +10,8 @@
 <link href="{$static.siteurl}/templates/{$static.template}/style.css" rel="stylesheet" type="text/css" />
 </head>
 [module:static]
+<section:module content="static" />
+<section:loop content="$static.names AS $static.name" />
+</section:loop>
+<section:if content="$static.comment_num > 0 AND $static.open == 1" />
 <body>
