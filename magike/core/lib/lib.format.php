@@ -1,10 +1,8 @@
 <?php
 /**********************************
- * Created on: 2006-12-3
- * File Name : index.php
+ * Created on: 2007-2-2
+ * File Name : lib.format.php
  * Copyright : Magike Group
  * License   : GNU General Public License 2.0
  *********************************/
-
-include('./core/core.php');
 ?>
