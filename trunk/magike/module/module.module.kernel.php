@@ -1,10 +1,13 @@
 <?php
 /**********************************
- * Created on: 2006-12-3
- * File Name : index.php
+ * Created on: 2007-2-5
+ * File Name : module.module.kernel.php
  * Copyright : Magike Group
  * License   : GNU General Public License 2.0
  *********************************/
 
-include('./core/core.php');
+class Module extends MagikeModule
+{
+	//do nothing
+}
 ?>

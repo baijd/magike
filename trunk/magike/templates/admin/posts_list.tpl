@@ -17,9 +17,7 @@
 				<span id="magike_db_grid_select_category">{lang.admin_db_grid.select_category}</span>
 			</div>
 			<div id="db_table_category">
-				<i>
 				{lang.admin_posts_list.select_category} 
-				</i>
 				<select id="magike_db_grid_select_category_list">
 				[while@($admin_categories_list,$admin_category)]
 					<option value="{$admin_category.category_name}">{$admin_category.category_name}</option>
