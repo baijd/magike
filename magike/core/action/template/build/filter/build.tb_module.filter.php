@@ -12,9 +12,18 @@ class TbModule extends TemplateBuild
 {
 	private $module;
 	private $moduleSource;
+	private $moduleFile;
 	private $args;
 	
-	private function addModule($matches)
+	private function addCacheListenFile()
+	{
+		$files = array();
+		require(__COMPILE__.'/'.mgPathToFileName($this->fileName).'.cnf.php');
+		$files = array_merge($files,$this->moduleFile);
+		mgExportArrayToFile(__COMPILE__.'/'.mgPathToFileName($this->fileName).'.cnf.php',$files,'files');
+	}
+	
+	public function addModule($matches)
 	{	
 		$query = explode('?',$matches[1]);
 		if(file_exists(__MODULE__.'/module.'.$query[0].'.php'))
@@ -24,6 +33,7 @@ class TbModule extends TemplateBuild
 			{
 				$this->args[mgFileNameToClassName($query[0])] = parse_str($query[1]);
 			}
+			$this->moduleFile[__MODULE__.'/module.'.$query[0].'.php'] = filemtime(__MODULE__.'/module.'.$query[0].'.php');
 			$this->moduleSource .= php_strip_whitespace(__MODULE__.'/module.'.$query[0].'.php');
 		}
 		else
@@ -38,11 +48,13 @@ class TbModule extends TemplateBuild
 		$this->module = array();
 		$this->args	  = array();
 		$this->moduleSource = '';
+		$this->moduleFile = array();
 		$this->findSection('module','addModule');
 		file_put_contents(__COMPILE__.'/'.mgPathToFileName($this->fileName).'.mod.php',
 		"<?php\n\$module = ".var_export($this->module,true).";\n".
 		"\$args = ".var_export($this->args,true).";\n?>"
 		.$this->moduleSource);
+		$this->addCacheListenFile();
 		return $this->str;
 	}
 }

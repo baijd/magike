@@ -9,12 +9,17 @@
 class MagikeModule extends MagikeObject
 {
 	protected $cacheDir;
+	protected $cacheFile;
+	protected $getLanguage;
+	protected $moduleName;
 	
 	function __construct($args = array())
 	{
 		parent::__construct($args);
-		$this->cacheDir = __CACHE__.'/'.mgClassNameToFileName(get_class($this));
-		$this->cacheFile = $this->cacheDir.'/'.mgClassNameToFileName(get_class($this)).'.php';
+		$this->moduleName = mgClassNameToFileName(get_class($this));
+		$this->cacheDir = __CACHE__.'/'.$this->moduleName;
+		$this->cacheFile = $this->cacheDir.'/'.$this->moduleName.'.php';
+		$this->getLanguage = array();
 	}
 
 	protected function onPost($key,$callback,$val = NULL)
@@ -57,6 +62,29 @@ class MagikeModule extends MagikeObject
 			}
 		}
 		return false;
+	}
+	
+	protected function getLanguage($moduleName,$key)
+	{
+		if(!isset($this->getLanguage[$moduleName]) && file_exists(__LANGUAGE__.'/'.$this->stack['static_var']['language'].'/'.$moduleName.'.php'))
+		{
+			$lang = array();
+			require(__LANGUAGE__.'/'.$this->stack['static_var']['language'].'/'.$moduleName.'.php');
+			$this->getLanguage[$moduleName] = $lang;
+		}
+		else
+		{
+			//do nothing
+		}
+
+		if(isset($this->getLanguage[$moduleName][$key]))
+		{
+			return $this->getLanguage[$moduleName][$key];
+		}
+		else
+		{
+			return NULL;
+		}
 	}
 	
 	//你可以自己重载这个函数作为模块的入口

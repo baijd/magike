@@ -9,7 +9,6 @@ define('__DIR__',dirname(__FILE__));			//框架绝对路径
 require(__DIR__.'/core.config.php');
 require(__DIR__.'/core.functions.php');
 require(__DIR__.'/core.hook.php');
-require('./config.php');
 
 //初始化全局堆栈
 global $stack;

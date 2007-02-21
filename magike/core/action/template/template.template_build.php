@@ -14,7 +14,7 @@ class TemplateBuild extends MagikeObject
 	public	$fileName;
 	public	$dirName;
 	
-	function __construct($str,$fileName = NULL)
+	function __construct($str,$fileName)
 	{
 		$this->str = $str;
 		$this->fileName = $fileName;
@@ -39,7 +39,7 @@ class TemplateBuild extends MagikeObject
 	
 	private function findSectionCallback($matches)
 	{
-		return preg_replace_callback("/\s*content\s*=\s*\"s*(.+?)\"/is",array($this,$this->callback),$matches[1]);
+		return preg_replace_callback("/\s*content\s*=\s*\"\s*(.+?)\"/is",array($this,$this->callback),$matches[1]);
 	}
 	
 	protected function praseVar($input)
@@ -51,7 +51,7 @@ class TemplateBuild extends MagikeObject
 	private function praseVarCallback($matches)
 	{
 		$keys = explode('.',$matches[1]);
-		return "\$this->stack['".implode("']['",$keys)."']";
+		return "\$data['".implode("']['",$keys)."']";
 	}
 	
 	public function prase()

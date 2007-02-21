@@ -1,7 +1,7 @@
-[include:header]
-[include:menu]
+<section:include content="header"/>
+<section:include content="menu"/>
 
-[module:admin_index_module]
+<section:module content="admin_index"/>
 <div id="content">
 	<div id="element">
 		<h2>{lang.admin_index.global_runtime}</h2>
@@ -26,4 +26,4 @@
 	</div>
 </div>
 
-[include:footer]
+<section:include content="footer"/>
