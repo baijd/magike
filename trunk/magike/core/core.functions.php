@@ -32,18 +32,35 @@ function mgPathToFileName($path)
 }
 
 //替换字符串中的变量
-function mgReplaceVar($str,$var)
+function mgReplaceVar($str,$var,$explode = '.')
 {
-	if(preg_match("/\\$([_0-9a-zA-Z-\.]+)/is",$str,$matches))
+	if(preg_match("/\{\\$([_0-9a-zA-Z-\.]+)\}/is",$str,$matches))
 	{
 		array_shift($matches);
 		foreach($matches as $match)
 		{
-			$str = str_replace('$'.$match,$var[$match],$str);
+			$str = str_replace('{$'.$match.'}',mgReplaceVarCallback(explode($explode,$match),$var),$str);
 		}
 	}
 	
 	return $str;
+}
+
+function mgReplaceVarCallback($partten,$replace)
+{
+	$current = array_shift($partten);
+	if(NULL != $partten && is_array($replace[$current]))
+	{
+		return mgReplaceVarCallback($partten,$replace[$current]);
+	}
+	else if(NULL == $partten && isset($replace[$current]))
+	{
+		return $replace[$current];
+	}
+	else
+	{
+		return NULL;
+	}
 }
 
 //一次创建一个目录树
@@ -149,5 +166,30 @@ function mgExportArrayToFile($file,$array,$name)
 	}
 
 	file_put_contents($file,"<?php\n\$".$name." = ".var_export($array,true).";\n?>");
+}
+
+//将ip转化为长整型字符串
+function mgIpToLong($ip)
+{
+	return sprintf("%u",ip2long($ip));
+}
+
+//创建一个任意长度的随机字符串
+function mgCreateRandomString($number)
+{
+    $str = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890';
+    $result = '';
+    for($i=0;$i<$number;$i++)
+    {
+        $result .= $str[rand(0,52)];
+    }
+    return $result;
+}
+
+//获取毫秒级时间
+function mgGetMicrotime()
+{ 
+	list($usec, $sec) = explode(" ",microtime()); 
+	return ((float)$usec + (float)$sec); 
 }
 ?>

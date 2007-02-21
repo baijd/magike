@@ -41,8 +41,8 @@ class Template extends MagikeObject
 	{
 		$str = file_get_contents($this->compileFile);
 		require(__DIR__.'/action/template/template.template_build.php');
-		$objects  = mgRequireObjects(__DIR__.'/action/template/build/core','/build\.([_a-zA-Z0-9-]+)\.core\.php/i');
-		$objects += mgRequireObjects(__DIR__.'/action/template/build/filter','/build\.([_a-zA-Z0-9-]+)\.filter\.php/i');
+		$objects = array_merge(mgRequireObjects(__DIR__.'/action/template/build/core','/build\.([_a-zA-Z0-9-]+)\.core\.php/i'),
+					mgRequireObjects(__DIR__.'/action/template/build/filter','/build\.([_a-zA-Z0-9-]+)\.filter\.php/i'));
 		foreach($objects as $object)
 		{
 			$tmp = null;
@@ -64,14 +64,7 @@ class Template extends MagikeObject
 			eval('$tmp = new '.$object.'();');
 			
 			//运行模块入口函数runModule并将运行结果保存到临时堆栈中
-			if(isset($args[$object]))
-			{
-				$stack = call_user_func(array($tmp,'runModule'),$args[$object]);
-			}
-			else
-			{
-				$stack = call_user_func(array($tmp,'runModule'));
-			}
+			$stack = call_user_func(array($tmp,'runModule'),isset($args[$object]) ? $args[$object] : array());
 			
 			//将临时堆栈中的数据转移到全局堆栈中
 			//将类名转化为模块名(文件名)
@@ -85,9 +78,11 @@ class Template extends MagikeObject
 				$this->stack[$moduleName] = $stack;
 			}
 		}
+		$this->stack['action']['prase_time'] = substr(mgGetMicrotime() - $this->stack['action']['prase_time'],0,6);
 
 		//定义头文件
 		header("content-Type: {$this->stack['static_var']['content_type']}; charset={$this->stack['static_var']['charset']}");
+		$data = $this->stack;
 		require(__COMPILE__.'/'.mgPathToFileName($this->compileFile).'.php');
 	}
 }

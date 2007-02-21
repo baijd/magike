@@ -8,7 +8,7 @@
 
 class TbIf extends TemplateBuild
 {
-	private function filterIfSyntaxCallback($matches)
+	public function filterIfSyntaxCallback($matches)
 	{
 		$matches[1] = $this->praseVar($matches[1]);
 		return "<?php if($matches[1]){ ?>";

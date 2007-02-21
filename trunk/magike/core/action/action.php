@@ -7,11 +7,13 @@
  *********************************/
 
 define('E_ACTION_ACTIONNOTEXISTS','Action Is Not Exists');
-class Action extends MagikeObject
+class Action extends Path
 {
 	function __construct()
 	{
 		parent::__construct();
+		$this->stack[$this->moduleName] = $this->runModule();
+		$this->stack[$this->moduleName]['prase_time'] = mgGetMicrotime();	//初始化解析时间
 		$this->runKernelModule();
 		$this->runAction();
 	}
@@ -46,16 +48,16 @@ class Action extends MagikeObject
 	private function runAction()
 	{
 		//分析path模块传递的数据
-		if(!is_dir(__DIR__.'/action/'.$this->stack['path']['action']))
+		if(!is_dir(__DIR__.'/action/'.$this->stack[$this->moduleName]['action']))
 		{
-			$this->throwException(E_ACTION_TEMPLATE_FILENOTEXISTS,$this->stack['path']['action']);
+			$this->throwException(E_ACTION_ACTIONNOTEXISTS,$this->stack[$this->moduleName]['action']);
 		}
 		else
 		{
 			$tmp = null;
-			require(__DIR__.'/action/'.$this->stack['path']['action'].'/action.'.$this->stack['path']['action'].'.php');
-			eval('$tmp = new '.mgFileNameToClassName($this->stack['path']['action'])
-			.'(mgReplaceVar($this->stack["path"]["file"],$this->stack["static_var"]));');
+			require(__DIR__.'/action/'.$this->stack[$this->moduleName]['action'].'/action.'.$this->stack[$this->moduleName]['action'].'.php');
+			eval('$tmp = new '.mgFileNameToClassName($this->stack[$this->moduleName]['action'])
+			.'(mgReplaceVar($this->stack[$this->moduleName]["file"],$this->stack));');
 			call_user_func(array($tmp,'runAction'));
 		}
 		

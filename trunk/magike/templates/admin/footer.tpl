@@ -1,6 +1,6 @@
 
 <div id="footer">
-	<img src="{$static.siteurl}/templates/{$static.admin_template}/images/magike.gif" alt="logo" /><small>{lang.public.base_on} <strong>{$static.version}</strong> {lang.public.created},{lang.public.proceed_in} <strong>{$static.prase_time}</strong> {lang.public.second} | {lang.public.report_bug} | {lang.public.support}</small>
+	{lang.public.base_on} {$static_var.version} {lang.public.created},{lang.public.proceed_in} {$action.prase_time} {lang.public.second} | <a href="#">{lang.public.report_bug}</a> | <a href="#">{lang.public.support}</a>
 </div>
 </body>
 </html>

@@ -72,35 +72,6 @@ function getPageSize(){
 	return arrayPageSize;
 }
 
-//ajax载入效果以及页面载入效果
-$(document).ready(
-	function()
-	{
-		scrollArray = getScrollTop();
-		pageArray = getPageSize();
-		ajaxLoading = $(document.createElement("div"));
-		ajaxLoading.attr("id","ajax_loading");
-		ajaxLoading.html("Loading...");
-		ajaxLoadingImg = $(document.createElement("img"));
-		ajaxLoadingImg.attr("src",templateUrl + "/images/loading.gif");
-		ajaxLoading.append(ajaxLoadingImg);
-
-		ajaxLoading.css("left",scrollArray[0] + pageArray[0]/2 - 60 + "px");
-		ajaxLoading.css("top",scrollArray[1] + pageArray[1]/2 - 25 + "px");
-		$(document.body).append(ajaxLoading);
-	}
-);
-
-$(document.body).ready(
-	function()
-	{
-		if(ajaxFinish)
-		{
-			ajaxLoadingFinish();
-		}
-	}
-)
-
 var ajaxFinish = true;
 function ajaxLoadingStart()
 {

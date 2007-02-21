@@ -10,7 +10,7 @@ define('E_ACTION_TEMPLATEBUILD_LOOPSYNTAXERROR','There Is An Template Error Near
 
 class TbLoop extends TemplateBuild
 {
-	private function filterLoopSyntax($matches)
+	public function filterLoopSyntax($matches)
 	{
 		$finish = strtolower(str_replace('  ',' ',trim($matches[1])));
 		$finish = explode(' as ',$finish);

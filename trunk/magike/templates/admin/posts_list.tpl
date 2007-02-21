@@ -1,7 +1,7 @@
-[include:header]
-[include:menu]
+<section:include content="header"/>
+<section:include content="menu"/>
 
-[module:admin_categories_list_module]
+<section:module content="categories_list"/>
 <div id="content">
 	<div id="element">
 		<h2>{lang.admin_posts_list.list_title} <span class="discribe">{lang.admin_posts_list.list_describe}</span></h2>
@@ -19,17 +19,17 @@
 			<div id="db_table_category">
 				{lang.admin_posts_list.select_category} 
 				<select id="magike_db_grid_select_category_list">
-				[while@($admin_categories_list,$admin_category)]
+				<section:loop content="$categories_list as $admin_category">
 					<option value="{$admin_category.category_name}">{$admin_category.category_name}</option>
-				[/while]
+				</section:loop>
 				</select> 
 				<span id="magike_db_grid_select_category_choose">
 					选定
 				</span>
 			</div>
 			<script>
-					magikeDbGrid.init("{$static.index}/admin/posts/all/1",
-									 "{$static.index}/admin/posts/all/info",
+					magikeDbGrid.init("{$static_var.index}/admin/posts/all/1",
+									 "{$static_var.index}/admin/posts/all/info",
 									 {
 									 "selector" : {"text" : "&nbsp;","width" : "5%"},
 									 "post_title" : {"text" : "标题","width" : "45%","click" : true,"class" : "post_title"},
@@ -49,4 +49,4 @@
 	</div>
 </div>
 
-[include:footer]
+<section:include content="footer"/>

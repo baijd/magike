@@ -1,20 +1,19 @@
-[module:admin_menu_module]
+<section:module content="admin_menu_list"/>
 <div id="top_menu">
 	<ul>
-	[while@($admin_menu.parents,$parent)]
-		<li><a href="{$static.index}{$parent.menu_path}" [if $parent.focus]class="focus"[/if]>{$parent.menu_name}</a></li>
-	[/while]
+	<section:loop content="$admin_menu_list.parents as $parent">
+		<li><a href="{$static_var.index}{$parent.menu_path}" <section:if content="$parent.focus">class="focus"</section:if>>{$parent.menu_name}</a></li>
+	</section:loop>
 	</ul>
 </div>
 <div id="menu_content">
 	<ul>
-	[while@($admin_menu.children,$child)]
+	<section:loop content="$admin_menu_list.children as $child">
 		<li>
-			<a href="{$static.index}{$child.menu_path}" [if $child.focus]class="focus"[/if]>
-			<span class="button_content">{$child.menu_name}</span>
-			<b class="xb4"></b><b class="xb3"></b><b class="xb2"></b><b class="xb1"></b>
+			<a href="{$static_var.index}{$child.menu_path}" <section:if content="$child.focus">class="focus"</section:if>>
+			{$child.menu_name}
 			</a>
 		</li>
-	[/while]
+	</section:loop>
 	</ul>
 </div>

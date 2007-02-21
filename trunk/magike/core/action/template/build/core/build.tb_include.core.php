@@ -25,7 +25,7 @@ class TbInclude extends TemplateBuild
 		}
 		else
 		{
-			$this->include[$includeFile] = 0;
+			$this->include[$includeFile] = filemtime($includeFile);
 			return file_get_contents($includeFile);
 		}
 	}
@@ -33,7 +33,7 @@ class TbInclude extends TemplateBuild
 	public function prase()
 	{
 		$this->include = array();
-		$this->include[$this->fileName] = 0;
+		$this->include[$this->fileName] = filemtime($this->fileName);
 		
 		//循环连接所有文件
 		do
@@ -41,12 +41,6 @@ class TbInclude extends TemplateBuild
 			$this->found = false;
 			$this->findSection('include','linkInclude');
 		}while($this->found);
-		
-		//获取所有文件最后修改时间
-		foreach($this->include as $key => $val)
-		{
-			$this->include[$key] = filemtime($key);
-		}
 		
 		//生成配置文件
 		mgExportArrayToFile(__COMPILE__.'/'.mgPathToFileName($this->fileName).'.cnf.php',$this->include,'files');
