@@ -13,17 +13,39 @@
 		body
 		{
 			border-top:4px solid #000;
-			background:#FFF url({$static_var.siteurl}/templates/{$static_var.admin_template}/images/top.gif) top repeat-x;
+			background:#3D434E url({$static_var.siteurl}/templates/{$static_var.admin_template}/images/login.gif) bottom repeat-x;
 		}
 		
 		#login
 		{
 			margin:0 auto;
-			width:300px;
-			background:#3D434E url({$static_var.siteurl}/templates/{$static_var.admin_template}/images/login.gif) bottom repeat-x;
-			bottom:0;
-			border:2px solid #BBB;
+			width:330px;
+			height:350px;
+		}
+		
+		#login_top
+		{
+			height:70px;
+		}
+		
+		#login_top_nav
+		{
+			margin:0 auto;
+			height:40px;
+			width:260px;
+			background:#000;
+			border:1px solid #596271;
 			border-top:none;
+			line-height:40px;
+			color:#EEE;
+			font-size:14pt;
+			text-align:center;
+		}
+		
+		#login_top_nav img
+		{
+			margin-top:4px;
+			margin-bottom:-6px;
 		}
 		
 		#element h2
@@ -37,8 +59,12 @@
 <body>
 <section:module content="admin_login"/>
 <div id="login">
+	<div id="login_top">
+		<div id="login_top_nav">
+			{lang.login.login_to}{$static_var.blog_name}
+		</div>
+	</div>
 	<div id="element" style="width:260px;padding:30px;padding-top:0;text-align:center">
-	<img src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/logo.gif" alt="logo" />
 	<section:if content="$admin_login.message_open">
 	<div id="message" style="color:#FFF;font-weight:bold;padding:5px;text-align:center;">
 		{$admin_login.message}

@@ -13,6 +13,6 @@
 <body>
 <div id="top">
 <div id="title">
-欢迎回来祁宁
+<img src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/magike.gif" alt="logo" />欢迎回来祁宁
 </div>
 </div>
