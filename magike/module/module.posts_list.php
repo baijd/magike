@@ -15,35 +15,17 @@ class PostsList extends MagikeModule
 		parent::__construct(array('public' => array('database')));
 	}
 
-	private function prasePageInformation()
+	public function runModule()
 	{
-		$pageInfo = array();
-		$pageInfo['sum'] = $this->database->count(array('table' => 'table.posts'));
-		$pageInfo['limit'] = isset($this->stack['static_var']['admin_posts_limit']) ? $this->stack['static_var']['admin_posts_limit'] : 20;
-		return $pageInfo;
-	}
-
-	public function prasePage()
-	{
-		//初始化查询语句
 		$args = array('table'	=> 'table.posts JOIN table.categories ON table.posts.category_id = table.categories.id',
 					  'groupby' => 'table.posts.id',
 					  'fields'	=> '*,table.posts.id AS post_id',
 					  'orderby' => 'table.posts.post_time DESC',
 					  );
 
-		$args['offset'] = $_GET['page'] - 1;
-		$this->result = $this->database->fectch($args);
-	}
-
-	public function runModule()
-	{
-		if(!$this->onGet('page','prasePage'))
-		{
-			$this->result = $this->prasePageInformation();
-		}
-		
-		return $this->result;
+		$page = isset($_GET['page']) ? $_GET['page'] : 1;
+		$args['offset'] = $page - 1;
+		return $this->database->fectch($args);
 	}
 }
 ?>

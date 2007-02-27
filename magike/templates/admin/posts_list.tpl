@@ -2,51 +2,56 @@
 <section:include content="menu"/>
 
 <section:module content="categories_list"/>
+<section:module content="posts_list"/>
 <div id="content">
 	<div id="element">
-		<h2>{lang.admin_posts_list.list_title} <span class="discribe">{lang.admin_posts_list.list_describe}</span></h2>
 		<p>
-			<div id="db_table">
+			<div class="tab_nav">
+				<ul>
+					<li>
+						<span class="focus" id="tab_first_button" onclick="tabShow('post_list_table','post_tab',this);">文章列表</span>
+					</li>
+					<li><span onclick="tabShow('post_search','post_tab',this)">高级搜索</span></li>
+					<li><span>更多操作</span></li>
+				</ul>
 			</div>
-			<div id="db_info">
+			<div class="tab_content" id="post_tab">
+				<div id="post_list_table" class="tab" style="display:block">
+				<h2>{lang.admin_posts_list.list_title} <span class="discribe">{lang.admin_posts_list.list_describe}</span></h2>
+				<table width="100%" cellpadding="0" cellspacing="0" id="post_list">
+					<tr class="heading">
+						<td width=5%>&nbsp;</td>
+						<td width=20%>标题</td>
+						<td width=40%>摘要</td>
+						<td width=20%>分类</td>
+						<td width=15%>发布日期</td>
+					</tr>
+					<section:loop content="$posts_list AS $post">
+					<tr>
+						<td width=5%><input type="checkbox" class="checkbox_element" name="post[{$post.post_id}]" value="1"/></td>
+						<td width=20%><a href="{$static_var.index}/admin/posts/write?p={$post.post_id}" title="{$post.post_title}">{$post.post_title}</a></td>
+						<td width=40%>摘要</td>
+						<td width=20%>{$post.category_name}</td>
+						<td width=15%>{$post.post_time}</td>
+					</tr>
+					</section:loop>
+				</table>
+				<div class="table_nav">
+					<input type="button" class="button" value="{lang.admin_db_grid.select_all}" onclick="selectTableAll('post_list','checkbox_element')"/>
+					<input type="button" class="button" value="{lang.admin_db_grid.select_none}" onclick="selectTableNone('post_list','checkbox_element')"/>
+					<input type="button" class="button" value="{lang.admin_db_grid.select_other}" onclick="selectTableOther('post_list','checkbox_element')"/>
+					<input type="button" class="button" value="{lang.admin_db_grid.select_delete}"/>
+				</div>
+				</div>
+				<div id="post_search" class="tab">
+					<input type="text" class="text" name="s" />
+				</div>
 			</div>
-			<div id="db_table_nav">
-				<span id="magike_db_grid_select_all">{lang.admin_db_grid.select_all}</span> , 
-				<span id="magike_db_grid_select_none">{lang.admin_db_grid.select_none}</span> , 
-				<span id="magike_db_grid_select_other">{lang.admin_db_grid.select_other}</span> , 
-				<span id="magike_db_grid_select_category">{lang.admin_db_grid.select_category}</span>
-			</div>
-			<div id="db_table_category">
-				{lang.admin_posts_list.select_category} 
-				<select id="magike_db_grid_select_category_list">
-				<section:loop content="$categories_list as $admin_category">
-					<option value="{$admin_category.category_name}">{$admin_category.category_name}</option>
-				</section:loop>
-				</select> 
-				<span id="magike_db_grid_select_category_choose">
-					选定
-				</span>
-			</div>
-			<script>
-					magikeDbGrid.init("{$static_var.index}/admin/posts/all/1",
-									 "{$static_var.index}/admin/posts/all/info",
-									 {
-									 "selector" : {"text" : "&nbsp;","width" : "5%"},
-									 "post_title" : {"text" : "标题","width" : "45%","click" : true,"class" : "post_title"},
-									 "category_name" : {"text" : "分类","width" : "30%","select" : true},
-									 "post_time" : {"text" : "时间","width" : "20%","class" : "date"}
-									 },
-									 "post_id",
-									 20,
-									 "db_table",
-									 "post_content",
-									 "db_table_nav",
-									 "db_info",
-									 "db_table_category"
-									 );
-			</script>
 		</p>
 	</div>
 </div>
-
+<script>
+	registerTableCheckbox("post_list","checkbox_element");
+	tabBtn = $("#tab_first_button");
+</script>
 <section:include content="footer"/>

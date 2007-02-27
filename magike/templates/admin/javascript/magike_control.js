@@ -85,6 +85,79 @@ function ajaxLoadingFinish()
 	$("#ajax_loading").fadeOut("slow");
 }
 
+function registerTableCheckbox(table,className)
+{
+	$("."+className,$("#"+table)).click
+	(
+		function()
+		{
+			if($(this.parentNode.parentNode).attr("className") == "select")
+			{
+				$(this.parentNode.parentNode).attr("className","");
+			}
+			else
+			{
+				$(this.parentNode.parentNode).attr("className","select");
+			}
+		}
+	);
+}
+
+function selectTableAll(table,className)
+{
+	$("."+className,$("#"+table)).each(
+		function()
+		{
+			$(this).attr("checked",true);
+			$(this.parentNode.parentNode).attr("className","select");
+		}
+	);
+}
+
+function selectTableNone(table,className)
+{
+	$("."+className,$("#"+table)).each(
+		function()
+		{
+			$(this).attr("checked",false);
+			$(this.parentNode.parentNode).attr("className","");
+		}
+	);
+}
+
+function selectTableOther(table,className)
+{
+	$("."+className,$("#"+table)).each(
+		function()
+		{
+			if($(this).attr("checked") == true)
+			{
+				$(this).attr("checked",false);
+				$(this.parentNode.parentNode).attr("className","");
+			}
+			else
+			{
+				$(this).attr("checked",true);
+				$(this.parentNode.parentNode).attr("className","select");
+			}
+		}
+	);
+}
+
+var tabBtn;
+
+function tabShow(ele,tab,btn)
+{
+	$(".tab",$("#"+tab)).hide();
+	$("#"+ele,$("#"+tab)).show();
+	if(tabBtn)
+	{
+		tabBtn.attr('className','');
+	}
+	$(btn).attr('className','focus');
+	tabBtn = $(btn);
+}
+
 //MagikeDbGrid控件
 function MagikeDbGrid()
 {
