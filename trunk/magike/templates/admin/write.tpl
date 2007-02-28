@@ -6,6 +6,7 @@
 		<div class="tab_nav">
 			<ul>
 				<li><span class="focus" id="tab_first_button" onclick="tabShow('write_content','write_tab',this);">{lang.admin_write.write}</span></li>
+				<li><span onclick="tabShow('write_tools','write_tab',this)">{lang.admin_write.tools}</span></li>
 				<li><span onclick="tabShow('write_option','write_tab',this)">{lang.admin_write.option}</span></li>
 				<li><span>{lang.admin_write.upload}</span></li>
 				<li><span>{lang.admin_write.publish}</span></li>
@@ -21,9 +22,21 @@
 				<div class="input">
 					<h2>{lang.admin_write.content}</h2>
 					<p>
-						<textarea name="post_content" id="post_content" rows="14" style="width:600px"></textarea>
+						<textarea name="post_content" id="post_content" rows="14" style="width:600px"></textarea><br />
 						<span class="discribe">{lang.admin_write.content_describe}</span>
 					</p>
+				</div>
+			</div>
+			<div class="tab" id="write_tools">
+				<div class="input">
+				<h2>{lang.admin_write.tag}</h2>
+				<p><input type="text" class="text" name="tags" size=60 /> <br />
+				<span class="discribe">{lang.admin_write.tag_describe}</span></p>
+				</div>
+				<div class="input">
+				<h2>{lang.admin_write.trackback}</h2>
+				<p><textarea type="text" class="text" name="trackback" cols=60 rows=5 ></textarea> <br />
+				<span class="discribe">{lang.admin_write.trackback_describe}</span></p>
 				</div>
 			</div>
 			<div class="tab" id="write_option">
@@ -77,7 +90,7 @@
 <script language="javascript" type="text/javascript" src="{$static_var.siteurl}/templates/{$static_var.admin_template}/javascript/tiny_mce/tiny_mce.js"></script>
 <script>
 tinyMCE.init({
-mode : "textareas",
+mode : "exact",
 theme : "advanced",
 elements : "post_content",
 language :"{$static_var.language}",

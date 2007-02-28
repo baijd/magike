@@ -6,15 +6,12 @@
  * License   : GNU General Public License 2.0
  *********************************/
 
+$dblink=@mysql_connect(__DBHOST__,__DBUSER__,__DBPASS__) or die('Database Connect Error');
+@mysql_select_db(__DBNAME__,$dblink) or die('Database Connect Error');
+mysql_query('SET NAMES "utf8"') or die('Database Connect Error');
+
 class Database extends MagikeObject
 {
- 	function __construct()
- 	{
-		$dblink=@mysql_connect(__DBHOST__,__DBUSER__,__DBPASS__) or $this->databaseException();
-		@mysql_select_db(__DBNAME__,$dblink) or $this->databaseException();
- 		mysql_query('SET NAMES "utf8"') or $this->databaseException();
- 	}
-
 	private function praseWhereSentence($args)
 	{
 		//处理where子句

@@ -28,7 +28,7 @@
 					</tr>
 					<section:loop content="$posts_list AS $post">
 					<tr>
-						<td width=5%><input type="checkbox" class="checkbox_element" name="post[{$post.post_id}]" value="1"/></td>
+						<td width=5%><input type="checkbox" class="checkbox_element" name="post[]" value="{$post.post_id}"/></td>
 						<td width=20%><a href="{$static_var.index}/admin/posts/write?p={$post.post_id}" title="{$post.post_title}">{$post.post_title}</a></td>
 						<td width=40%>摘要</td>
 						<td width=20%>{$post.category_name}</td>
