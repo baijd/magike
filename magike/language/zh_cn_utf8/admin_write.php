@@ -15,7 +15,7 @@ $lang = array(
 	'tag'		=> '标签',
 	'tag_describe' => '文章的标签,比如:汽车,编程,请用半角逗号隔开',
 	'trackback'	=> '引用通告',
-	'trackback_describe' => '您可以发布多个引用通告,请用半角逗号隔开',
+	'trackback_describe' => '当您发布多个引用通告时,请另起一行',
 	'write_type' => '发布形式',
 	'post_name' => '静态地址',
 	'post_password' => '发布密码',
@@ -37,5 +37,6 @@ $lang = array(
 	'option'	=> '高级选项',
 	'upload'	=> '上传文件',
 	'publish'	=> '发布',
+	'tools'		=> '工具',
 );
 ?>

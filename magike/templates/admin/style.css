@@ -327,7 +327,7 @@ body
 	color:#292D34;
 }
 
-#element input
+#element input,#element textarea
 {
 	font-family:verdana, Helvetica, sans-serif;
 }
@@ -353,6 +353,17 @@ body
 	line-height:20px;
 	height:20px;
 	font-size:10pt;
+	padding:2px;
+}
+
+#element textarea.text
+{
+	background:#FFF;
+	border:1px solid #DDD;
+	border-left:1px solid #777;
+	border-top:1px solid #777;
+	font-size:10pt;
+	padding:2px;
 }
 
 #element .tab_nav
