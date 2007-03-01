@@ -25,7 +25,7 @@ class AdminMenuList extends MagikeModule
 
 			foreach($array as $key => $val)
 			{
-				$diff = count(array_intersect_assoc(explode('/',$val['menu_path']),explode('/',$this->stack['action']['path'])));
+				$diff = count(array_intersect_assoc(explode('/',$val['path_name']),explode('/',$this->stack['action']['path'])));
 				if($diff > $lastDifferent)
 				{
 					$focus = $key;
@@ -36,7 +36,7 @@ class AdminMenuList extends MagikeModule
 
 			if($hasChild)
 			{
-				$this->praseFocusChild($array[$focus]['id']);
+				$this->praseFocusChild($array[$focus]['menu_id']);
 			}
 			$array[$focus]['focus'] = true;
 		}
@@ -45,7 +45,8 @@ class AdminMenuList extends MagikeModule
 
 	private function praseFocusChild($id)
 	{
-		$this->result['children'] = $this->database->fectch(array('table' => 'table.menus',
+		$this->result['children'] = $this->database->fectch(array('table' => 'table.menus JOIN table.paths ON table.menus.path_id = table.paths.id',
+																  'groupby' => 'table.menus.id',
 																  'where' => array('template' => 'menu_parent = ?','value' => array($id))
 																  ),
 																  array('function' => array($this,'pushMenu')));
@@ -54,7 +55,9 @@ class AdminMenuList extends MagikeModule
 
 	public function runModule()
 	{
-		$this->result['parents'] = $this->database->fectch(array('table' => 'table.menus',
+		$this->result['parents'] = $this->database->fectch(array('fields'=> '*,table.menus.id as menu_id',
+																 'table' => 'table.menus JOIN table.paths ON table.menus.path_id = table.paths.id',
+																 'groupby' => 'table.menus.id',
 																 'where' => array('template' => 'menu_parent = 0'
 																 )),
 																 array('function' => array($this,'pushMenu')));
