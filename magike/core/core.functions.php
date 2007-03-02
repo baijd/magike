@@ -63,6 +63,20 @@ function mgReplaceVarCallback($partten,$replace)
 	}
 }
 
+//适用于utf8的字符串函数
+function mgSubStr($str,$start,$end,$trim = "...")
+{
+	preg_match_all("/[\x01-\x7f]|[\xc2-\xdf][\x80-\xbf]|\xe0[\xa0-\xbf][\x80-\xbf]|[\xe1-\xef][\x80-\xbf][\x80-\xbf]|\xf0[\x90-\xbf][\x80-\xbf][\x80-\xbf]|[\xf1-\xf7][\x80-\xbf][\x80-\xbf][\x80-\xbf]/", $str, $info);
+	$str = join("",array_slice($info[0],$start,$end));
+	return ($end < (sizeof($info[0]) - $start)) ? $str.$trim : $str;
+}
+
+function mgStrLen($str)
+{
+	preg_match_all("/[\x01-\x7f]|[\xc2-\xdf][\x80-\xbf]|\xe0[\xa0-\xbf][\x80-\xbf]|[\xe1-\xef][\x80-\xbf][\x80-\xbf]|\xf0[\x90-\xbf][\x80-\xbf][\x80-\xbf]|[\xf1-\xf7][\x80-\xbf][\x80-\xbf][\x80-\xbf]/", $str, $info);
+	return sizeof($info[0]);
+}
+
 //一次创建一个目录树
 function mgMkdir($inpath,$mode = 0777)
 {
@@ -191,5 +205,24 @@ function mgGetMicrotime()
 { 
 	list($usec, $sec) = explode(" ",microtime()); 
 	return ((float)$usec + (float)$sec); 
+}
+
+//获取当前当地时间戳
+function mgTime($UTC)
+{
+	return time() + $UTC;
+}
+
+//将时间戳格式化
+function mgDate($fmt,$timestamp = NULL,$UTC = 0)
+{
+	if($timestamp)
+	{
+		return date($fmt,$timestamp + $UTC);
+	}
+	else
+	{
+		return date($fmt,mgTime($UTC));
+	}
 }
 ?>

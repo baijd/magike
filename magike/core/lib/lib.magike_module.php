@@ -21,6 +21,24 @@ class MagikeModule extends MagikeObject
 		$this->cacheFile = $this->cacheDir.'/'.$this->moduleName.'.php';
 		$this->getLanguage = array();
 	}
+	
+	protected function initArgs($args,$require)
+	{
+		$result = array();
+		foreach($require as $key => $val)
+		{
+			if(isset($args[$key]))
+			{
+				$result[$key] = $args[$key];
+			}
+			else
+			{
+				$result[$key] = $val;
+			}
+		}
+		
+		return $result;
+	}
 
 	protected function onPost($key,$callback,$val = NULL)
 	{

@@ -52,10 +52,9 @@ class Path extends MagikeModule
 		{
 			$this->eregPath = $eregPath;
 			$this->value = $this->pathConfig[$eregPath]['value'];
-			$result['level'] = $this->pathConfig[$eregPath]['level'];
+			$result['id'] = $this->pathConfig[$eregPath]['id'];
 			$result['action'] = $this->pathConfig[$eregPath]['action'];
 			$result['file'] = $this->pathConfig[$eregPath]['file'];
-			$result['domain'] = $this->pathConfig[$eregPath]['domain'];
 			$found = true;
 		}
 		else
@@ -66,10 +65,9 @@ class Path extends MagikeModule
 				{
 					$this->eregPath = $key;
 					$this->value = $val['value'];
-					$result['level'] = $val['level'];
+					$result['id'] = $val['id'];
 					$result['action'] = $val['action'];
 					$result['file'] = $val['file'];
-					$result['domain'] = $val['domain'];
 					$found = true;
 					break;
 				}
@@ -159,10 +157,9 @@ class Path extends MagikeModule
 	public function pushPathData($val)
 	{
 		$deep = count(explode("/",$val['path_name']));
-		$this->pathCache[$deep][$this->praseEregPath($val['path_name'])] = array('level'  => $val['path_level'],
+		$this->pathCache[$deep][$this->praseEregPath($val['path_name'])] = array('id'  => $val['id'],
 																			   	 'action' => $val['path_action'],
 																			   	 'file'   => $val['path_file'],
-																			   	 'domain'   => $val['path_name'],
 																			   	 'value'  => $this->prasePathValue($val['path_name'])
 																				 );
 	}
