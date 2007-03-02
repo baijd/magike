@@ -6,6 +6,7 @@
  * License   : GNU General Public License 2.0
  *********************************/
 
+define('E_DATABASE','Database Error');
 $dblink=@mysql_connect(__DBHOST__,__DBUSER__,__DBPASS__) or die('Database Connect Error');
 @mysql_select_db(__DBNAME__,$dblink) or die('Database Connect Error');
 mysql_query('SET NAMES "utf8"') or die('Database Connect Error');
@@ -90,6 +91,9 @@ class Database extends MagikeObject
 
 		//处理order子句
 		$orderby = isset($args['orderby']) ? ' ORDER BY '.$args['orderby'] : '';
+		
+		//处理sort子句
+		$orderby = isset($args['orderby']) && isset($args['sort']) ? $orderby.' '.$args['sort'] : '';
 
 		//处理limit子句
 		$limit = isset($args['limit']) ? $args['limit'] : '';

@@ -7,6 +7,7 @@
  *********************************/
 
 define('E_ACTION_ACTIONNOTEXISTS','Action Is Not Exists');
+define('E_ACTION_KERNELOBJECTSNOTEXISTS','Kerenl Objects Is Not Exists');
 class Action extends Path
 {
 	function __construct()
@@ -21,7 +22,19 @@ class Action extends Path
 	//运行核心模块
 	private function runKernelModule()
 	{
+		$requireObjects = array();
+		require(__DIR__.'/action/require_objects.php');
 		$objects = mgRequireObjects(__DIR__.'/kernel','/kernel\.([_a-zA-Z0-9-]+)\.php/i');
+		
+		if($diff = array_diff($requireObjects,$objects))
+		{
+			$this->throwException(E_ACTION_KERNELOBJECTSNOTEXISTS,$diff);
+		}
+		else
+		{
+			$objects = array_merge($requireObjects,array_diff($objects,$requireObjects));
+		}
+		
 		foreach($objects as $object)
 		{
 			//创建核心模块

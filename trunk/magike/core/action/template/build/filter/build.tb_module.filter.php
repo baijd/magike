@@ -31,7 +31,7 @@ class TbModule extends TemplateBuild
 			$this->module[] = mgFileNameToClassName($query[0]);
 			if(isset($query[1]))
 			{
-				$this->args[mgFileNameToClassName($query[0])] = parse_str($query[1]);
+				parse_str($query[1],$this->args[mgFileNameToClassName($query[0])]);
 			}
 			$this->moduleFile[__MODULE__.'/module.'.$query[0].'.php'] = filemtime(__MODULE__.'/module.'.$query[0].'.php');
 			$this->moduleSource .= php_strip_whitespace(__MODULE__.'/module.'.$query[0].'.php');

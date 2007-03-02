@@ -101,6 +101,28 @@ function registerTableCheckbox(table,className)
 			}
 		}
 	);
+	
+	$("tr",$("#"+table)).mouseover
+	(
+		function()
+		{
+			if($("."+className,$(this)).attr("checked") != true && $(this).attr("className") != "heading")
+			{
+				$(this).attr("className","hover");
+			}
+		}
+	);
+	
+	$("tr",$("#"+table)).mouseout
+	(
+		function()
+		{
+			if($("."+className,$(this)).attr("checked") != true && $(this).attr("className") != "heading")
+			{
+				$(this).attr("className","");
+			}
+		}
+	);
 }
 
 function selectTableAll(table,className)

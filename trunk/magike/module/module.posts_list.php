@@ -20,8 +20,9 @@ class PostsList extends MagikeModule
 		$args = array('table'	=> 'table.posts JOIN table.categories ON table.posts.category_id = table.categories.id',
 					  'groupby' => 'table.posts.id',
 					  'fields'	=> '*,table.posts.id AS post_id',
-					  'orderby' => 'table.posts.post_time DESC',
-					  );
+					  'orderby' => 'table.posts.post_time',
+					  'sort'	=> 'DESC',
+			  );
 
 		$page = isset($_GET['page']) ? $_GET['page'] : 1;
 		$args['offset'] = $page - 1;

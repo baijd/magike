@@ -37,10 +37,10 @@ class AdminLogin extends MagikeModule
 	{
 		$user = $this->database->fectch(array('table' => 'table.users',
 										 	  'where' => array('template' => 'user_name = ? AND user_password = ?',
-										  					  'value' => array($_POST['username'],
+										  					   'value' => array($_POST['username'],
 										  					  				   md5($_POST['password'])
 										  					  				  )
-										  					  ),
+										  					   ),
 										  	  'limit' => 1
 										  	  ));
 		if(NULL == $user)
@@ -50,12 +50,22 @@ class AdminLogin extends MagikeModule
 		}
 		else
 		{
-			$_SESSION['user_level'] = isset($this->stack['access']['level'][$user[0]['user_level']]) ? $this->stack['access']['level'][$user[0]['user_level']] : 99999;
+			$group = $this->database->fectch(array('table' => 'table.user_group_mapping',
+												   'where' => array('template' => 'user_id = ?',
+												   					'value'	   => array($user[0]['id']))
+													));
+			$userGroup = array();
+			foreach($group as $val)
+			{
+				$userGroup[] = $val['group_id'];
+			}
+			
 			$_SESSION['user_name'] = $user[0]['user_name'];
 			$_SESSION['user_id'] = $user[0]['id'];
+			$_SESSION['user_group'] = $userGroup;
 			$_SESSION['auth_data'] = mgCreateRandomString(128);
+			
 			setcookie('auth_data',$_SESSION['auth_data'],time() + 3600,'/');
-			$_SESSION['login'] = 'ok';
 			header('location: '.$this->stack['static_var']['index'].'/admin');
 		}
 	}

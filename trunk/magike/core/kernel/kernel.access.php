@@ -9,191 +9,69 @@
 define('E_ACCESSDENIED','Your Access Denied');
 class Access extends MagikeModule
 {
-	private $ipConfig;
 	private $result;
 
 	function __construct()
 	{
 		parent::__construct(array('private' => array('cache')));
 		$this->result = array();
-		$this->cache->checkCacheFile(array($this->cacheDir.'/ip.php' 	 => array('listener' => 'fileExists',
-																	 	 		  'callback' => array($this,'buildIpCache'),
-																	 	 		  'else'	=> array($this,'loadIpCache')
-																	 	 ),
-										   $this->cacheDir.'/level.php' => array('listener' => 'fileExists',
-										   								 		  'callback' => array($this,'buildLevelCache'),
-										   								 		  'else' => array($this,'loadLevelCache')
-										   								 )));
+		$this->cache->checkCacheFile(array($this->cacheFile => array('listener' => 'fileExists',
+																	 'callback' => array($this,'buildCache')
+																	 )));
 	}
-
-	private function validateLogin()
+	
+	private function initUserVar()
 	{
-		if(!isset($_SESSION['random']))
+		$this->result['login'] = (isset($_COOKIE['auth_data']) && isset($_SESSION['auth_data']) 
+								 && ($_COOKIE['auth_data'] == $_SESSION['auth_data'])) ? true : false;
+		$this->result['user_name'] = isset($_SESSION['user_name']) && $this->result['login'] ? $_SESSION['user_name'] : NULL;
+		$this->result['user_id'] = isset($_SESSION['user_id']) && $this->result['login'] ? $_SESSION['user_id'] : NULL;
+		$this->result['user_group'] = isset($_SESSION['user_group']) && $this->result['login'] ? $_SESSION['user_group'] : array($this->stack['static_var']['visitor_group']);
+		$this->result['auth_data'] = isset($_SESSION['auth_data']) && $this->result['login'] ? $_SESSION['auth_data'] : NULL;
+		if($this->result['login'])
 		{
-			$_SESSION['random'] = mgCreateRandomString(7);
+			setcookie('auth_data',$_SESSION['auth_data'],time() + 3600,'/');
 		}
+	}
+	
+	private function checkAccess()
+	{
+		$access = array();
+		require($this->cacheFile);
+		$currentGroup = isset($access[$this->stack['action']['id']]) ? $access[$this->stack['action']['id']] : array();
 		
-		$this->result['random'] = $_SESSION['random'];
-		$this->result['user_level'] = 99999;
-		$this->result['login'] = false;
-
-    	if(isset($_SESSION['login']) && isset($_COOKIE['auth_data']))
-    	{
-    		if($_SESSION['login'] == 'ok' && $_COOKIE['auth_data'] == $_SESSION['auth_data'])
-		    {
-				$this->result['user_level'] = $_SESSION['user_level'];
-				$this->result['user_name'] = $_SESSION['user_name'];
-				$this->result['user_id'] = $_SESSION['user_id'];
-				$this->result['login'] = true;
-
-		        //如果用户有活动,增加cookie时限
-		        setcookie('auth_data',$_SESSION['auth_data'],time() + 3600,"/");
-		    }
-    	}
-	}
-
-	private function validateLevel()
-	{
-		if($this->result['user_level'] > $this->stack['action']['level'])
+		if(array_intersect($currentGroup,$this->result['user_group']))
 		{
-			$this->throwException(E_ACCESSDENIED);
-		}
-	}
-
-	private function isInDomain($idomain,$domain)
-	{
-		if(0 === strpos($idomain,$domain))
-		{
-			$str = str_replace($idomain,'',$domain);
-			if(NULL == $str)
-			{
-				return true;
-			}
-			else
-			{
-				if('/' == $str[0])
-				{
-					return true;
-				}
-				else
-				{
-					return false;
-				}
-			}
+			return;
 		}
 		else
 		{
-			return false;
+			$this->throwException(E_ACCESSDENIED,$this->stack['action']['path']);
 		}
 	}
-
-	private function checkAccess($ip,$action,$left,$right)
+	
+	public function buildCache()
 	{
-		switch($action)
-		{
-			case 'deny':
-			{
-				if($ip >= $left && $ip <= $right)
-				{
-					return false;
-				}
-				else
-				{
-					return true;
-				}
-				break;
-			}
-			case 'allow':
-			{
-				if($ip >= $left && $ip <= $right)
-				{
-					return true;
-				}
-				else
-				{
-					return false;
-				}
-				break;
-			}
-			default:
-				return false;
-				break;
-		}
-	}
-
-	private function validateIp()
-	{
-		$ip = mgIpToLong($_SERVER["REMOTE_ADDR"]);
-		$this->result['ip'] = $_SERVER["REMOTE_ADDR"];
-		$this->result['agent'] = $_SERVER["HTTP_USER_AGENT"];
-		$allow = false;
-
-		foreach($this->ipConfig as $val)
-		{
-			if($this->isInDomain($this->result['domain'],$val['domain']))
-			{
-				$allow |= $this->checkAccess($ip,$val['action'],$val['left'],$val['right']);
-			}
-		}
-
-		if(!$allow && $this->ipConfig)
-		{
-			$this->throwException(E_ACCESSDENIED);
-		}
-	}
-
-	public function buildIpCache()
-	{
-		$this->ipConfig = array();
+		$access = array();
 		$this->initPublicObject(array('database'));
-		$this->database->fectch(array('table' => 'table.ip_map'),array('function' => array($this,'pushIpData')));
-		mgExportArrayToFile($this->cacheDir.'/ip.php',$this->ipConfig,'ipConfig');
-	}
-
-	public function pushIpData($val)
-	{
-		$currentIp = array();
-		$currentIp['left'] = mgIpToLong($val['ip_map_left']);
-		$currentIp['right'] = mgIpToLong($val['ip_map_right']);
-		$currentIp['action'] = $val['ip_map_action'];
-		$currentIp['domain'] = $val['ip_map_domain'];
-
-		$this->ipConfig[] = $currentIp;
-	}
-
-	public function loadIpCache()
-	{
-		$ipConfig = array();
-		require($this->cacheDir.'/ip.php');
-		$this->ipConfig = $ipConfig;
-	}
-
-	public function buildLevelCache()
-	{
-		$this->result['level'] = array();
-		$this->initPublicObject(array('database'));
-		$this->database->fectch(array('table' => 'table.levels'),array('function' => array($this,'pushLevelData')));
-		mgExportArrayToFile($this->cacheDir.'/level.php',$this->result['level'],'levelConfig');
-	}
-
-	public function pushLevelData($val)
-	{
-		$this->result['level'][$val['level_name']] = $val['level_value'];
-	}
-
-	public function loadLevelCache()
-	{
-		$levelConfig = array();
-		require($this->cacheDir.'/level.php');
-		$this->result['level'] = $levelConfig;
+		$result = $this->database->fectch(array('table' => 'table.path_group_mapping'));
+		
+		foreach($result as $val)
+		{
+			if(!isset($access[$val['path_id']]))
+			{
+				$access[$val['path_id']] = array();
+			}
+			$access[$val['path_id']][] = $val['group_id'];
+		}
+		
+		mgExportArrayToFile($this->cacheFile,$access,'access');
 	}
 	
 	public function runModule()
 	{
-		$this->validateIp();
-		$this->validateLogin();
-		$this->validateLevel();
-		
+		$this->initUserVar();
+		$this->checkAccess();
 		return $this->result;
 	}
 }
