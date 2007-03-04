@@ -12,15 +12,15 @@
 	<style>
 		body
 		{
-			border-top:4px solid #000;
-			background:#3D434E url({$static_var.siteurl}/templates/{$static_var.admin_template}/images/login.gif) bottom repeat-x;
+			border-top:4px solid #222;
+			background:#CCC url({$static_var.siteurl}/templates/{$static_var.admin_template}/images/login.gif) top repeat-x;
 		}
 		
 		#login
 		{
 			margin:0 auto;
 			width:330px;
-			height:350px;
+			padding-top:40px;
 		}
 		
 		#login_top
@@ -39,7 +39,6 @@
 			line-height:40px;
 			color:#EEE;
 			font-size:14pt;
-			text-align:center;
 		}
 		
 		#login_top_nav img
@@ -50,32 +49,30 @@
 		
 		#element h2
 		{
-			border-bottom:1px solid #DDD;
-			color:#DDD;
+			border-bottom:1px solid #999;
+			color:#222;
 			text-align:left;
+			padding:0 5px;
+			margin:10px 0;
 		}
 	</style>
 </head>
 <body>
 <section:module content="admin_login"/>
 <div id="login">
-	<div id="login_top">
-		<div id="login_top_nav">
-			{lang.login.login_to}{$static_var.blog_name}
-		</div>
-	</div>
-	<div id="element" style="width:260px;padding:30px;padding-top:0;text-align:center">
+	<div id="element" style="width:270px;padding:30px;padding-top:0;text-align:center;">
+	<img src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/logo.gif" alt="logo" />
 	<section:if content="$admin_login.message_open">
-	<div id="message" style="color:#FFF;font-weight:bold;padding:5px;text-align:center;">
+	<div id="message" style="color:#FFF;font-weight:bold;padding:5px;">
 		{$admin_login.message}
 	</div>
 	</section:if>
 	<section:if content="$admin_login.login_open">
 	<form method="post">
 	<h2>{lang.login.user_name}</h2>
-	<p><input type="text" name="username" style="width:250px" class="text" /></p>
+	<p><input type="text" name="username" style="width:260px" class="text" /></p>
 	<h2>{lang.login.password}</h2>
-	<p><input type="password" name="password" style="width:250px" class="text" /></p>
+	<p><input type="password" name="password" style="width:260px" class="text" /></p>
 	<p style="margin-top:10px;text-align:right">
 	<input type="button" value="{lang.login.login}" onclick="submit();" class="button" />
 	<input type="button" value="{lang.login.foget_password}&raquo;" class="button" />
@@ -84,5 +81,8 @@
 	</section:if>
 	</div>
 </div>
+<script>
+	registerInputFocus("#login");
+</script>
 </body>
 </html>

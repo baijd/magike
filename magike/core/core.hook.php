@@ -21,7 +21,7 @@ class MagikeException extends Exception
    protected $data;
    protected $callback;
 
-   public function __construct($message, $data = NULL, $callback = NULL, $code = 0)
+   public function __construct($message, $data = NULL, $code = 0,$callback = NULL)
    {
    		parent::__construct($message, $code);
    		$this->data = $data;
@@ -29,7 +29,7 @@ class MagikeException extends Exception
    }
 
    public function __toString()
-   {
+   {   	
        	$data = '';
        	if(is_array($this->data))
        	{
@@ -42,7 +42,15 @@ class MagikeException extends Exception
        	{
        		$data = $this->data;
        	}
-       	return __CLASS__ . ": [{$this->code}]: {$this->message}<br />\n".$data;
+
+       	if($this->code)
+       	{
+       		die(__CLASS__ . ": [{$this->code}]: {$this->message}<br />\n".$data);
+       	}
+       	else
+       	{
+       		die(new Action('/exception'));
+       	}
    }
 
    final function getData()
@@ -65,16 +73,16 @@ function exceptionHandler($exception)
 		$functionExists = is_array($callback) ? method_exists($callback[0],$callback[1]) : function_exists($callback);
 		if($functionExists)
 		{
-			die(call_user_func($callback,$exception->getData()));
+			call_user_func($callback,$exception->getData());
 		}
 		else
 		{
-			die($exception->__toString());
+			$exception->__toString();
 		}
 	}
 	else
 	{
-		die($exception->__toString());
+		$exception->__toString();
 	}
 }
 

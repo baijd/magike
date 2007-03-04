@@ -60,9 +60,10 @@ class MagikeObject
 		}
 	}
 
-	protected static function throwException($message,$data = NULL,$callback = NULL)
+	protected static function throwException($message,$data = NULL,$code = 0,$callback = NULL)
 	{
-		throw new MagikeException($message,$data,$callback);
+		//解决内存泄露的bug,不throw
+		exceptionHandler(new MagikeException($message,$data,$code,$callback));
 	}
 
 	protected static function throwError($message,$type = E_USER_ERROR)

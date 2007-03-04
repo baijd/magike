@@ -30,11 +30,21 @@ body
 	color:#AAA;
 }
 
+#title a
+{
+	color:#AAA;
+	text-decoration: underline;
+}
+
+#title a:hover
+{
+	color:#EEE;
+	text-decoration: none;
+}
+
 #title img
 {
-	margin-bottom:-2px;
-	margin-top:8px;
-	margin-right:7px;
+	margin:7px 3px -4px 3px;
 }
 
 #top_menu
@@ -237,7 +247,7 @@ body
 
 #element .input
 {
-	border-bottom:1px solid #CCC;
+	border-bottom:1px solid #DDD;
 	float:left;
 	width:100%;
 	height:auto;
@@ -312,12 +322,12 @@ body
 
 #element  table tr.select td
 {
-	background:#FFFFCC;
+	background:#FFFFAA;
 }
 
 #element  table tr.hover td
 {
-	background:#F7F8F9;
+	background:#F4F4F4;
 }
 
 #element .table_nav
@@ -365,6 +375,11 @@ body
 	border-top:1px solid #777;
 	font-size:10pt;
 	padding:2px;
+}
+
+#element input.focus,#element textarea.focus
+{
+	background:#FFFFAA;
 }
 
 #element .tab_nav
