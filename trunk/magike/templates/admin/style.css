@@ -338,7 +338,7 @@ body
 	color:#292D34;
 }
 
-#element input,#element textarea
+#element input,#element textarea,#element select
 {
 	font-family:verdana, Helvetica, sans-serif;
 }
@@ -357,10 +357,10 @@ body
 
 #element input.text
 {
-	background:#FFF;
-	border:1px solid #DDD;
-	border-left:1px solid #777;
-	border-top:1px solid #777;
+	background:#FFF url(images/input_bg.gif) left repeat-x;
+	border:1px solid #F4F4F4;
+	border-left:1px solid #ACA899;
+	border-top:1px solid #ACA899;
 	line-height:20px;
 	height:20px;
 	font-size:10pt;
@@ -370,11 +370,12 @@ body
 #element textarea.text
 {
 	background:#FFF;
-	border:1px solid #DDD;
-	border-left:1px solid #777;
-	border-top:1px solid #777;
+	border:1px solid #EBEBEB;
+	border-left:1px solid #ACA899;
+	border-top:1px solid #ACA899;
 	font-size:10pt;
 	padding:2px;
+	margin:0;
 }
 
 #element input.focus,#element textarea.focus

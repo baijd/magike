@@ -15,10 +15,12 @@ class LinksList extends MagikeModule
 	
 	public function runModule()
 	{
-		return $this->database->fectch(array('table' => 'table.links',
+		return $this->database->fectch(array('fields'=> '*,table.links.id AS link_id',
+											 'table' => 'table.links JOIN table.link_categories ON table.links.link_category_id = table.link_categories.id',
+											 'groupby' => 'table.links.id',
 											 'offset' => isset($_GET['page']) ? $_GET['page'] : 0,
 											 'limit' => 20,
-											 'orderby' => 'id',
+											 'orderby' => 'table.links.id',
 											 'sort' => 'DESC'));
 	}
 }

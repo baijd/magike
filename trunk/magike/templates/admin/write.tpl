@@ -1,15 +1,18 @@
 <section:include content="header"/>
 <section:include content="menu"/>
 
+<section:module content="categories_list"/>
+<section:module content="get_current_user"/>
+
 <div id="content">
 	<div id="element">
 		<div class="tab_nav">
 			<ul>
 				<li><span class="focus" id="tab_first_button" onclick="tabShow('write_content','write_tab',this);">{lang.admin_write.write}</span></li>
-				<li><span onclick="tabShow('write_tools','write_tab',this)">{lang.admin_write.tools}</span></li>
 				<li><span onclick="tabShow('write_option','write_tab',this)">{lang.admin_write.option}</span></li>
+				<li><span onclick="tabShow('write_tools','write_tab',this)">{lang.admin_write.publish}</span></li>
 				<li><span>{lang.admin_write.upload}</span></li>
-				<li><span>{lang.admin_write.publish}</span></li>
+				<li><span>{lang.admin_write.tools}</span></li>
 			</ul>
 		</div>
 		<div class="tab_content" id="write_tab">
@@ -29,6 +32,34 @@
 			</div>
 			<div class="tab" id="write_tools">
 				<div class="input">
+				<h2>文章分类</h2>
+				<p>
+					<select name="category_id">
+					<section:loop content="$categories_list AS $category">
+						<option value="{$category.id}">{$category.category_name}</option>
+					</section:loop>
+					</select> <br />
+					<span class="discribe">选择将您的文章发表在哪个分类</span>
+				</p>
+				</div>
+				<div class="input">
+				<h2>发布者</h2>
+				<p>
+					<select name="post_user_name">
+						<section:if content="$get_current_user.user_name">
+						<option value="{$get_current_user.user_name}">{$get_current_user.user_name}</option>
+						</section:if>
+						<section:if content="$get_current_user.user_nick">
+						<option value="{$get_current_user.user_nick}">{$get_current_user.user_nick}</option>
+						</section:if>
+						<section:if content="$get_current_user.user_realname">
+						<option value="{$get_current_user.user_realname}">{$get_current_user.user_realname}</option>
+						</section:if>
+					</select> <br />
+					<span class="discribe">请为您的一个名称作为文章发布者</span>
+				</p>
+				</div>
+				<div class="input">
 				<h2>{lang.admin_write.tag}</h2>
 				<p><input type="text" class="text" name="tags" size=60 /> <br />
 				<span class="discribe">{lang.admin_write.tag_describe}</span></p>
@@ -43,10 +74,7 @@
 				<div class="input">
 					<h2>{lang.admin_write.write_type}</h2> 
 					<p>
-					<input type="radio" name="post_type" value="archive" class="radio"/> {lang.admin_write.write_type_archive}
-					<input type="radio" name="post_type" value="page" class="radio"/> {lang.admin_write.write_type_page}
-					<input type="radio" name="post_type" value="announce" class="radio"/> {lang.admin_write.write_type_announce}
-					<input type="radio" name="post_type" value="side" class="radio"/> {lang.admin_write.write_type_side}
+					<input type="checkbox" name="post_type" value="1" class="checkbox"/> {lang.admin_write.write_type_page}
 					<br />
 					<span class="discribe">{lang.admin_write.write_type_describe}</span>
 					</p>
@@ -81,8 +109,8 @@
 			</div>
 		</div>
 		<div style="margin-top:6px;line-height:40px;">
-		<input type="button" class="button" value="{lang.admin_write.draft}" />
-		<input type="button" class="button" value="{lang.admin_write.publish}" />
+		<input type="button" class="button" style="padding:0;width:100px;height:30px;background:#FF9900;color:#FFF;border:2px solid #8A5300;font-size:11pt;font-weight:bold" value="{lang.admin_write.draft}" />
+		<input type="button" class="button" style="padding:0;width:100px;height:30px;background:#003399;color:#FFF;border:2px solid #001A4F;font-size:11pt;font-weight:bold" value="{lang.admin_write.publish}" />
 		</div>
 	</div>
 </div>

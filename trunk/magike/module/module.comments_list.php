@@ -51,7 +51,7 @@ class CommentsList extends MagikeModule
 		else
 		{
 			$query['fileds'] = '*,table.comments.id AS comment_id';
-			$query['table'] = 'table.comments JOIN table.posts';
+			$query['table'] = 'table.comments JOIN table.posts ON table.comments.post_id = table.posts.id';
 			$query['groupby'] = 'table.comments.id';
 			if(isset($_GET['post_id']))
 			{
