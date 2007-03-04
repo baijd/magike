@@ -77,6 +77,15 @@ function mgStrLen($str)
 	return sizeof($info[0]);
 }
 
+function mgStripTags($string)
+{
+	$string=strip_tags($string);
+	$string=str_replace(" ","",$string);
+	$string=trim($string);
+
+	return $string;
+}
+
 //一次创建一个目录树
 function mgMkdir($inpath,$mode = 0777)
 {

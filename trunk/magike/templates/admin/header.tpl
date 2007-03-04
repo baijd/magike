@@ -10,6 +10,13 @@
 <body>
 <div id="top">
 <div id="title">
-<img src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/magike.gif" alt="logo" />欢迎回来祁宁
+<span style="float:left">
+<img src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/user.gif" alt="user" />欢迎回来 <a href="#">{$access.user_name}</a> | <a href="#">登出</a>
+</span>
+<span style="float:right">
+<img src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/home.gif" alt="home" /><a href="#">返回主页</a>
+ | 
+<img src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/help.gif" alt="help" /><a href="#">获取帮助</a>
+</span>
 </div>
 </div>

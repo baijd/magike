@@ -68,7 +68,7 @@ class AdminMenuList extends MagikeModule
 	public function pushMenu($val)
 	{
 		$lang = explode('.',$val['menu_name']);
-		$val['menu_name'] = ('lang' == $lang[0]) ? $this->getLanguage($lang[1],$lang[2]) : $val['menu_name'];
+		$val['menu_name'] = ('lang' == $lang[0]) ? $this->getLanguage($lang[2],$lang[1]) : $val['menu_name'];
 		return $val;
 	}
 }

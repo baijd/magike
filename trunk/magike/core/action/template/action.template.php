@@ -19,7 +19,8 @@ class Template extends MagikeObject
 		$fileName = __TEMPLATE__.$fileName;
 		if(!file_exists($fileName))
 		{
-			$this->throwException(E_ACTION_TEMPLATE_FILENOTEXISTS,$fileName);
+			$this->throwException(E_ACTION_TEMPLATE_FILENOTEXISTS,$fileName,
+								  '/exception' == $this->stack['action']['path']);
 		}
 		else
 		{

@@ -166,6 +166,55 @@ function selectTableOther(table,className)
 	);
 }
 
+function registerInputFocus(element)
+{
+	$("input",element).focus
+	(
+		function()
+		{
+			e = $(this);
+			if(e.attr("type") == "text" || e.attr("type") == "password")
+			{
+				c = e.attr("className");
+				e.attr("className",c+" focus");
+			}
+		}
+	);
+	
+	$("textarea",element).focus
+	(
+		function()
+		{
+			e = $(this);
+			c = e.attr("className");
+			e.attr("className",c+" focus");
+		}
+	);
+	
+	$("input",element).blur
+	(
+		function()
+		{
+			e = $(this);
+			if(e.attr("type") == "text" || e.attr("type") == "password")
+			{
+				c = e.attr("className");
+				e.attr("className",c.replace(" focus",""));
+			}
+		}
+	);
+	
+	$("textarea",element).blur
+	(
+		function()
+		{
+			e = $(this);
+			c = e.attr("className");
+			e.attr("className",c.replace(" focus",""));
+		}
+	);
+}
+
 var tabBtn;
 
 function tabShow(ele,tab,btn)

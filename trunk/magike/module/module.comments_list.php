@@ -15,7 +15,7 @@ class CommentsList extends MagikeModule
 	
 	public function praseComment($val,$num,$last,$data)
 	{
-		$val['comment_text'] = $data['substr'] ? mgSubStr($val['comment_text'],0,$data['substr'],$data['trim']) : $val['comment_text'];
+		$val['comment_text'] = mgStripTags($data['substr'] ? mgSubStr($val['comment_text'],0,$data['substr'],$data['trim']) : $val['comment_text']);
 		$val['comment_date'] = mgDate($data['datefmt'],$val['comment_date'],$this->stack['static_var']['time_zone'] - $val['comment_gmt']);
 		return $val;
 	}

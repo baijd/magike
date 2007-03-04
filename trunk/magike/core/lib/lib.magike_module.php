@@ -82,8 +82,9 @@ class MagikeModule extends MagikeObject
 		return false;
 	}
 	
-	protected function getLanguage($moduleName,$key)
+	protected function getLanguage($key,$moduleName = null)
 	{
+		$moduleName = $moduleName ? $moduleName : $this->moduleName;
 		if(!isset($this->getLanguage[$moduleName]) && file_exists(__LANGUAGE__.'/'.$this->stack['static_var']['language'].'/'.$moduleName.'.php'))
 		{
 			$lang = array();

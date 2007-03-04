@@ -11,21 +11,23 @@ class Path extends MagikeModule
 {
 	private $pathConfig;
 	private $path;
+	private $location;
 	private $eregPath;
 	private $value;
 	private $pathCache;
 	
-	function __construct()
+	function __construct($location = NULL)
 	{
 		parent::__construct(array('private'=> array('cache')));
 		$this->cache->checkCacheFile(array($this->cacheDir  => array('listener' => 'dirExists',
 																	 'callback' => array($this,'buildCache')
 																	  )));
+		$this->location = $location;
 	}
 	
 	private function loadCache()
 	{
-		$this->path = $this->getPath();
+		$this->path = $this->location ? $this->location : $this->getPath();
 		$this->pathConfig = array();
 		$pathConfig = array();
 		$pathFile = $this->cacheDir.'/'.count(explode('/',$this->path)).'.php';
@@ -76,7 +78,7 @@ class Path extends MagikeModule
 
 		if(!$found)
 		{
-			$this->throwException(E_PATH_PATHNOTEXISTS,$this->path);
+			$this->throwException(E_PATH_PATHNOTEXISTS,$this->path,'/exception' == $this->path);
 		}
 		
 		return $result;

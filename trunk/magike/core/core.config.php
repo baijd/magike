@@ -17,13 +17,4 @@ define('__CONFIG__','./config.php');			//定义初始配置文件
 define('__LIB__',__DIR__.'/lib');				//定义库文件目录
 define('__DEBUG__',false);						//是否开启debug模式
 define('__GZIP__',false);						//是否开启gzip模式
-define('__LINK__',false);						//是否开启link模式
-
-//定义数据库
-define('__DBOBJECT__','magike_mysql');
-define('__DBHOST__','localhost');
-define('__DBUSER__','root');
-define('__DBPASS__','');
-define('__DBNAME__','magike');
-define('__DBPREFIX__','mg_');
 ?>

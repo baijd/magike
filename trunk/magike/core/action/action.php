@@ -10,9 +10,10 @@ define('E_ACTION_ACTIONNOTEXISTS','Action Is Not Exists');
 define('E_ACTION_KERNELOBJECTSNOTEXISTS','Kerenl Objects Is Not Exists');
 class Action extends Path
 {
-	function __construct()
+	function __construct($location = NULL)
 	{
-		parent::__construct();
+		parent::__construct($location);
+		$this->stack = array();
 		$this->stack[$this->moduleName] = $this->runModule();
 		$this->stack[$this->moduleName]['prase_time'] = mgGetMicrotime();	//初始化解析时间
 		$this->runKernelModule();

@@ -72,7 +72,7 @@ class Database extends MagikeObject
 
 	private function databaseException()
 	{
-		$this->throwException(E_DATABASE,mysql_error());
+		$this->throwException(E_DATABASE,__DEBUG__ ? mysql_error() : NULL);
 	}
 
  	public function fectch($args,$callback = NULL,$expection = false)
@@ -124,7 +124,7 @@ class Database extends MagikeObject
             $num++;
 		}
 
-		if($num == 0 && $expection) $this->throwException(E_DATABASE,NULL,array('MagikeAPI','error404Callback'));
+		if($num == 0 && $expection) $this->throwException(E_PATH_PATHNOTEXISTS,$this->stack['action']['path']);
 		return $result;
  	}
 
