@@ -109,7 +109,7 @@
 			</div>
 		</div>
 		<div style="margin-top:6px;line-height:40px;">
-		<input type="button" class="button" style="padding:0;width:100px;height:30px;background:#FF9900;color:#FFF;border:2px solid #8A5300;font-size:11pt;font-weight:bold" value="{lang.admin_write.draft}" />
+		<input type="button" class="button" style="padding:0;width:100px;height:30px;background:#FF9900;color:#FFF;border:2px solid #DB8400;font-size:11pt;font-weight:bold" value="{lang.admin_write.draft}" />
 		<input type="button" class="button" style="padding:0;width:100px;height:30px;background:#003399;color:#FFF;border:2px solid #001A4F;font-size:11pt;font-weight:bold" value="{lang.admin_write.publish}" />
 		</div>
 	</div>
