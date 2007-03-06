@@ -11,7 +11,7 @@
 	<section:loop content="$admin_menu_list.children as $child">
 		<li>
 			<a href="{$static_var.index}{$child.path_name}" <section:if content="$child.focus">class="focus"</section:if>>
-			{$child.menu_name}
+			<span>{$child.menu_name}</span>
 			</a>
 		</li>
 	</section:loop>
