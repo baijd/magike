@@ -8,9 +8,9 @@
 	<div id="element">
 		<div class="tab_nav">
 			<ul>
-				<li><span class="focus" id="tab_first_button" onclick="tabShow('write_content','write_tab',this);">{lang.admin_write.write}</span></li>
-				<li><span onclick="tabShow('write_option','write_tab',this)">{lang.admin_write.option}</span></li>
-				<li><span onclick="tabShow('write_tools','write_tab',this)">{lang.admin_write.publish}</span></li>
+				<li id="tab_first_button" onclick="tabShow('write_content','write_tab',this);" class="focus"><span>{lang.admin_write.write}</span></li>
+				<li onclick="tabShow('write_option','write_tab',this)"><span>{lang.admin_write.option}</span></li>
+				<li onclick="tabShow('write_tools','write_tab',this)"><span>{lang.admin_write.publish}</span></li>
 				<li><span>{lang.admin_write.upload}</span></li>
 				<li><span>{lang.admin_write.tools}</span></li>
 			</ul>
