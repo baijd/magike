@@ -6,6 +6,7 @@
 
 <div id="content">
 	<div id="element">
+	<form method="post" id="write" name="write">
 		<div class="tab_nav">
 			<ul>
 				<li id="tab_first_button" onclick="tabShow('write_content','write_tab',this);" class="focus"><span>{lang.admin_write.write}</span></li>
@@ -19,7 +20,7 @@
 			<div class="tab" id="write_content" style="display:block">
 				<div class="input">
 				<h2>{lang.admin_write.title}</h2>
-				<p><input type="text" class="text" name="title" size=60 /> <br />
+				<p><input type="text" class="text" name="post_title" size=60 /> <br />
 				<span class="discribe">{lang.admin_write.title_describe}</span></p>
 				</div>
 				<div class="input">
@@ -44,7 +45,7 @@
 				</div>
 				<div class="input">
 				<h2>发布者</h2>
-				<p>
+				<p><input type="hidden" name="user_id" value="{$get_current_user.id}" />
 					<select name="post_user_name">
 						<section:if content="$get_current_user.user_name">
 						<option value="{$get_current_user.user_name}">{$get_current_user.user_name}</option>
@@ -61,7 +62,7 @@
 				</div>
 				<div class="input">
 				<h2>{lang.admin_write.tag}</h2>
-				<p><input type="text" class="text" name="tags" size=60 /> <br />
+				<p><input type="text" class="text" name="post_tags" size=60 /> <br />
 				<span class="discribe">{lang.admin_write.tag_describe}</span></p>
 				</div>
 				<div class="input">
@@ -74,7 +75,7 @@
 				<div class="input">
 					<h2>{lang.admin_write.write_type}</h2> 
 					<p>
-					<input type="checkbox" name="post_type" value="1" class="checkbox"/> {lang.admin_write.write_type_page}
+					<input type="checkbox" name="post_is_page" value="1" class="checkbox"/> {lang.admin_write.write_type_page}
 					<br />
 					<span class="discribe">{lang.admin_write.write_type_describe}</span>
 					</p>
@@ -82,10 +83,10 @@
 				<div class="input">
 					<h2>{lang.admin_write.write_access}</h2> 
 					<p>
-					<input type="checkbox" name="comment" class="checkbox" value="check" checked = ture/> {lang.admin_write.write_allowcomment} 
-					<input type="checkbox" name="ping" class="checkbox" value="check" checked = ture/> {lang.admin_write.write_allowtrackback} 
-					<input type="checkbox" name="hidden" class="checkbox" value="check" checked = ture/> {lang.admin_write.write_allowfeed} 
-					<input type="checkbox" name="hidden" class="checkbox" value="check"/> {lang.admin_write.write_hidden} 
+					<input type="checkbox" name="post_allow_comment" class="checkbox" value="check" checked = ture/> {lang.admin_write.write_allowcomment} 
+					<input type="checkbox" name="post_allow_ping" class="checkbox" value="check" checked = ture/> {lang.admin_write.write_allowtrackback} 
+					<input type="checkbox" name="post_allow_feed" class="checkbox" value="check" checked = ture/> {lang.admin_write.write_allowfeed} 
+					<input type="checkbox" name="post_is_hidden" class="checkbox" value="check"/> {lang.admin_write.write_hidden} 
 					<br />
 					<span class="discribe">{lang.admin_write.write_access_describe}</span>
 					</p>
@@ -101,7 +102,7 @@
 				<div class="input">
 					<h2>{lang.admin_write.post_password}</h2> 
 					<p>
-					<input type="text" name="post_name" class="text" />
+					<input type="text" name="post_password" class="text" />
 					<br />
 					<span class="discribe">{lang.admin_write.post_password_describe}</span>
 					</p>
@@ -112,6 +113,7 @@
 		<input type="button" class="button" style="padding:0;width:100px;height:30px;background:#FF9900;color:#FFF;border:2px solid #DB8400;font-size:11pt;font-weight:bold" value="{lang.admin_write.draft}" />
 		<input type="button" class="button" style="padding:0;width:100px;height:30px;background:#003399;color:#FFF;border:2px solid #001A4F;font-size:11pt;font-weight:bold" value="{lang.admin_write.publish}" />
 		</div>
+	</form>
 	</div>
 </div>
 
