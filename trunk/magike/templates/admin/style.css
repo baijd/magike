@@ -407,11 +407,17 @@ body
 {
 	float:left;
 	list-style:none;
-	margin:0;
+	margin:0 1px;
 	padding:0;
 	font-size:10pt;
 	height:24px;
 	line-height:24px;
+	background:#DDD url(images/tab_lt.gif) top left no-repeat;
+}
+
+.tab_nav ul li.focus
+{
+	background:#9DA5AC url(images/tab_lt.gif) top left no-repeat;
 }
 
 .tab_nav ul li span
@@ -421,15 +427,14 @@ body
 	color:#464A52;
 	text-decoration: none;
 	border-right:1px solid #F2F3F4;
+	padding:0 10px;
 	cursor:pointer;
 	float:left;
-	padding:0 10px;
+	background:url(images/tab_rt.gif) top right no-repeat;
 }
 
-.tab_nav ul li span.focus
+.tab_nav ul li.focus span
 {
-	background:#9DA5AC;
-	border-right:1px solid #576168;
 	font-weight:bold;
 	color:#FFF;
 }
