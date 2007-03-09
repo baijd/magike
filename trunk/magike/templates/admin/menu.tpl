@@ -6,6 +6,7 @@
 	</section:loop>
 	</ul>
 </div>
+
 <div id="menu_content">
 	<ul>
 	<section:loop content="$admin_menu_list.children as $child">
