@@ -3,7 +3,6 @@
 
 <section:module content="categories_list"/>
 <section:module content="get_current_user"/>
-
 <div id="content">
 	<div id="element">
 	<form method="post" id="write" name="write">
