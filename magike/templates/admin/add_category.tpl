@@ -32,6 +32,9 @@
 				<span class="discribe">(描述您所建立的分类,如果没有必要,可以留空)</span>
 			</p>
 		</div>
+		<div class="submit">
+			<span class="button">提交信息</span>
+		</div>
 	</div>
 </div>
 
