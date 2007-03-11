@@ -7,16 +7,16 @@
 	<div id="element">
 	<form method="post" id="write" name="write">
 		<div class="tab_nav">
-			<ul>
-				<li id="tab_first_button" onclick="tabShow('write_content','write_tab',this);" class="focus"><span>{lang.admin_write.write}</span></li>
-				<li onclick="tabShow('write_option','write_tab',this)"><span>{lang.admin_write.option}</span></li>
-				<li onclick="tabShow('write_tools','write_tab',this)"><span>{lang.admin_write.publish}</span></li>
+			<ul id="tab">
+				<li id="first" rel="write_content"><span>{lang.admin_write.write}</span></li>
+				<li rel="write_option"><span>{lang.admin_write.option}</span></li>
+				<li rel="write_tools"><span>{lang.admin_write.publish}</span></li>
 				<li><span>{lang.admin_write.upload}</span></li>
 				<li><span>{lang.admin_write.tools}</span></li>
 			</ul>
 		</div>
 		<div class="tab_content" id="write_tab">
-			<div class="tab" id="write_content" style="display:block">
+			<div id="write_content">
 				<div class="input">
 				<h2>{lang.admin_write.title}</h2>
 				<p><input type="text" class="text" name="post_title" size=60 /> <br />
@@ -30,7 +30,7 @@
 					</p>
 				</div>
 			</div>
-			<div class="tab" id="write_tools">
+			<div id="write_tools">
 				<div class="input">
 				<h2>文章分类</h2>
 				<p>
@@ -70,7 +70,7 @@
 				<span class="discribe">{lang.admin_write.trackback_describe}</span></p>
 				</div>
 			</div>
-			<div class="tab" id="write_option">
+			<div id="write_option">
 				<div class="input">
 					<h2>{lang.admin_write.write_type}</h2> 
 					<p>
@@ -118,6 +118,7 @@
 
 <script language="javascript" type="text/javascript" src="{$static_var.siteurl}/templates/{$static_var.admin_template}/javascript/tiny_mce/tiny_mce.js"></script>
 <script>
+registerTab("#tab","#write_tab");
 tinyMCE.init({
 mode : "exact",
 theme : "advanced",
@@ -134,7 +135,6 @@ content_css : "{$static_var.siteurl}/templates/{$static_var.template}/editor.css
 relative_urls : false,
 remove_script_host : false
 });
-tabBtn = $("#tab_first_button");
 </script>
 
 <section:include content="footer"/>

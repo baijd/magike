@@ -213,6 +213,74 @@ function registerInputFocus(element)
 			e.attr("className",c.replace(" focus",""));
 		}
 	);
+	
+	$("span.button",element).mouseover
+	(
+		function()
+		{
+			e = $(this);
+			e.attr("className",e.attr("className") + " focus");
+		}
+	);
+	
+	$("span.button",element).mouseout
+	(
+		function()
+		{
+			e = $(this);
+			e.attr("className",e.attr("className").replace(" focus",""));
+			e.attr("className",e.attr("className").replace(" click",""));
+		}
+	);
+	
+	$("span.button",element).mousedown
+	(
+		function()
+		{
+			e = $(this);
+			e.attr("className",e.attr("className") + " click");
+		}
+	);
+	
+	$("span.button",element).mouseup
+	(
+		function()
+		{
+			e = $(this);
+			e.attr("className",e.attr("className").replace(" click",""));
+		}
+	);
+}
+
+var focusTab;
+function registerTab(btn,tab)
+{
+	$(btn).children("#first").attr("className","focus");
+	focusTab = $(btn).children("#first");
+	
+	$(tab).children().each(
+		function()
+		{
+			$(this).hide();
+		}
+	);
+
+	$("#"+$(btn).children("#first").attr("rel")).show();
+	$(btn).children().each(
+		function()
+		{
+			$(this).click(
+				function()
+				{
+					focusTab.attr("className","");
+					$(this).attr("className","focus");
+					$("#"+focusTab.attr("rel")).hide();
+					$("#"+$(this).attr("rel")).show();
+					focusTab = $(this);
+				}
+			);
+		}
+	);
 }
 
 var tabBtn;
@@ -221,6 +289,7 @@ function tabShow(ele,tab,btn)
 {
 	$(".tab",$("#"+tab)).hide();
 	$("#"+ele,$("#"+tab)).show();
+
 	if(tabBtn)
 	{
 		tabBtn.attr('className','');

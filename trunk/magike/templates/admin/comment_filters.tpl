@@ -22,10 +22,10 @@
 			</section:loop>
 		</table>
 		<div class="table_nav">
-			<input type="button" class="button" value="{lang.admin_db_grid.select_all}" onclick="selectTableAll('filter_list','checkbox_element')"/>
-			<input type="button" class="button" value="{lang.admin_db_grid.select_none}" onclick="selectTableNone('filter_list','checkbox_element')"/>
-			<input type="button" class="button" value="{lang.admin_db_grid.select_other}" onclick="selectTableOther('filter_list','checkbox_element')"/>
-			<input type="button" class="button" value="{lang.admin_db_grid.select_delete}"/>
+			<span onclick="selectTableAll('filter_list','checkbox_element')">{lang.admin_db_grid.select_all}</span>,
+			<span onclick="selectTableNone('filter_list','checkbox_element')">{lang.admin_db_grid.select_none}</span>,
+			<span onclick="selectTableOther('filter_list','checkbox_element')">{lang.admin_db_grid.select_other}</span>,
+			<span>{lang.admin_db_grid.select_delete}</span>
 		</div>
 	</div>
 </div>
