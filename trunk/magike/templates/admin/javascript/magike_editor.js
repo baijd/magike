@@ -24,7 +24,7 @@ function MagikeEditor(style)
 //初始化对象
 MagikeEditor.prototype.initialize = function()
 {
-   	window.setTimeout("magikeEditor.onloaded();",0);
+   	window.setTimeout("magikeEditor.onloaded();",100);
 }
 
 MagikeEditor.prototype.onloaded = function()
