@@ -6,17 +6,17 @@
  * License   : GNU General Public License 2.0
  *********************************/
 
-class FormatModel
+class Format
 {
 	private $object;
 	
-	function __construct($object = NULL)
+	function __construct()
 	{
-		$this->object = $object ? $object : $this;
+		parent::__construct();
 	}
 
 	//检验用户提交数据格式
-    public function checkFormat($fmt,$data,$callback = NULL)
+    public function checkFormat($fmt,$data,$object = NULL)
     {
     	$error = array();
     	if($data == NULL) return false;
@@ -133,7 +133,7 @@ class FormatModel
     						}
     						else if(ereg("^func\(([_a-z0-9A-Z-]+)\)$",$inval,$reg))
     						{
-    							if(method_exists($this->object,$reg[1]))	$func = array($this->object,$reg[1]);
+    							if(method_exists($object,$reg[1]))	$func = array($object,$reg[1]);
     							else if(function_exists($reg[1]))	$func = $reg[1];
 
     							$result = call_user_func($func,$val);
