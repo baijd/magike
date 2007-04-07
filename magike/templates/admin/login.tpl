@@ -13,7 +13,7 @@
 		body
 		{
 			border-top:4px solid #222;
-			background:#CCC url({$static_var.siteurl}/templates/{$static_var.admin_template}/images/login.gif) top repeat-x;
+			background:#DDD;
 		}
 		
 		#login
@@ -47,6 +47,12 @@
 			margin-bottom:-6px;
 		}
 		
+		#element h1
+		{
+			font-weight:normal;
+			font-size:30pt;
+		}
+		
 		#element h2
 		{
 			border-bottom:1px solid #999;
@@ -61,7 +67,7 @@
 <section:module content="admin_login"/>
 <div id="login">
 	<div id="element" style="width:270px;padding:30px;padding-top:0;text-align:center;">
-	<img src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/logo.gif" alt="logo" />
+	<h1>Magike</h1>
 	<section:if content="$admin_login.message_open">
 	<div id="message" style="color:#FFF;font-weight:bold;padding:5px;">
 		{$admin_login.message}

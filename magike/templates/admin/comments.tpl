@@ -17,14 +17,15 @@
 				<td width=15%>状态</td>
 			</tr>
 			<section:loop content="$comments_list AS $comment">
-			<tr>
+			<tr id="drag-{$comment.id}">
 				<td><input type="checkbox" class="checkbox_element" name="comment[]" value="{$comment.id}"/></td>
 				<td>{$comment.comment_user}</td>
 				<td>{$comment.comment_ip}</td>
 				<td>{$comment.comment_text}</td>
 				<td></td>
 				<td>{$comment.comment_date}</td>
-				<td></td>
+				<td>
+				</td>
 			</tr>
 			</section:loop>
 		</table>
