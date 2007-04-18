@@ -11,7 +11,7 @@ class TbVariable extends TemplateBuild
 	private function filterVarSyntaxCallback($matches)
 	{
 		$matches[0] = substr($matches[0],1,-1);
-		$matches[0] = "<?php echo ".$matches[0]."; ?>";
+		$matches[0] = "<?php echo isset(".$matches[0].") ? ".$matches[0]." : NULL; ?>";
 		return $this->praseVar($matches[0]);
 	}
 	

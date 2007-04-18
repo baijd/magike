@@ -324,6 +324,17 @@ body
 	text-decoration: underline;
 }
 
+#element .message
+{
+	background:#FFFFAA url(images/information.gif) left center no-repeat;
+	border:1px solid #CCC;
+	padding:5px 5px 5px 32px;
+	font-size:10pt;
+	color:#666;
+	display:none;
+	cursor:pointer;
+}
+
 #element input,#element textarea,#element select
 {
 	font-family:verdana, Helvetica, sans-serif;
@@ -383,6 +394,26 @@ body
 	border-bottom:2px solid #75818A;
 	height:24px;
 	margin-bottom:10px;
+}
+
+#element a.img img
+{
+	border:none;
+	float:left;
+}
+
+#element a.img
+{
+	border:none;
+	padding:2px;
+	float:left;
+}
+
+#element a.img:hover
+{
+	padding:1px;
+	border:1px solid #75818A;
+	background:#DDD;
 }
 
 .tab_nav ul
