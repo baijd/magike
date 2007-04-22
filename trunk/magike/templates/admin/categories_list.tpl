@@ -1,7 +1,7 @@
-<section:include content="header"/>
-<section:include content="menu"/>
+<[include:header]>
+<[include:menu]>
 
-<section:module content="categories_list"/>
+<[module:categories_list]>
 <div id="content">
 	<div id="element">
 		<div class="message">
@@ -16,7 +16,7 @@
 				<td width=20%>URL名称</td>
 				<td width=20%>操作</td>
 			</tr>
-			<section:loop content="$categories_list AS $category">
+			<[loop:$categories_list AS $category]>
 			<tr>
 				<td><input type="checkbox" class="checkbox_element" name="category[]" value="{$category.id}"/></td>
 				<td><a href="{$static_var.index}/admin/posts/category?c={$category.id}" title="{$category.category_name}">{$category.category_name}</td>
@@ -29,7 +29,7 @@
 					<a class="img" title="向下" href="{$static_var.index}/admin/posts/categories_list?c={$category.id}&act=down"><img src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/arrow_down.gif" alt="向下"/></a>
 				</td>
 			</tr>
-			</section:loop>
+			<[/loop]>
 		</table>
 		<div class="table_nav">
 			<span onclick="selectTableAll('category_list','checkbox_element')">{lang.admin_db_grid.select_all}</span>,
@@ -43,4 +43,4 @@
 <script>
 	registerTableCheckbox("category_list","checkbox_element");
 </script>
-<section:include content="footer"/>
+<[include:footer]>

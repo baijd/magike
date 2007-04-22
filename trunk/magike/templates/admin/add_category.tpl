@@ -1,10 +1,10 @@
-<section:include content="header"/>
-<section:include content="menu"/>
+<[include:header]>
+<[include:menu]>
 
-<section:module content="insert_category"/>
+<[module:insert_category]>
 <div id="content">
 	<div id="element">
-	<form method="post" name="insert_category" id="insert_category" action="{$static_var.index}/admin/posts/categories_list?<section:if content="$insert_category">c={$insert_category.id}&act=update</section:if><section:if content="!$insert_category">act=insert</section:if>">
+	<form method="post" name="insert_category" id="insert_category" action="{$static_var.index}/admin/posts/categories_list?<[if:$insert_category]>c={$insert_category.id}&act=update<[/if]><[if:!$insert_category]>act=insert<[/if]>">
 		<h2>增加或编辑分类 <span class="discribe">(您可以在这里操作文章分类)</span></h2>
 		<div class="input">
 			<h2>分类名称</h2>
@@ -34,4 +34,4 @@
 	</div>
 </div>
 
-<section:include content="footer"/>
+<[include:footer]>

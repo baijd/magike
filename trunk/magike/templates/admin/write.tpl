@@ -1,8 +1,8 @@
-<section:include content="header"/>
-<section:include content="menu"/>
+<[include:header]>
+<[include:menu]>
 
-<section:module content="categories_list"/>
-<section:module content="get_current_user"/>
+<[module:categories_list]>
+<[module:get_current_user]>
 <div id="content">
 	<div id="element">
 	<form method="post" id="write" name="write">
@@ -35,9 +35,9 @@
 				<h2>文章分类</h2>
 				<p>
 					<select name="category_id">
-					<section:loop content="$categories_list AS $category">
+					<[loop:$categories_list AS $category]>
 						<option value="{$category.id}">{$category.category_name}</option>
-					</section:loop>
+					<[/loop]>
 					</select> <br />
 					<span class="discribe">选择将您的文章发表在哪个分类</span>
 				</p>
@@ -46,15 +46,15 @@
 				<h2>发布者</h2>
 				<p><input type="hidden" name="user_id" value="{$get_current_user.id}" />
 					<select name="post_user_name">
-						<section:if content="$get_current_user.user_name">
+						<[if:$get_current_user.user_name]>
 						<option value="{$get_current_user.user_name}">{$get_current_user.user_name}</option>
-						</section:if>
-						<section:if content="$get_current_user.user_nick">
+						<[/if]>
+						<[if:$get_current_user.user_nick]>
 						<option value="{$get_current_user.user_nick}">{$get_current_user.user_nick}</option>
-						</section:if>
-						<section:if content="$get_current_user.user_realname">
+						<[/if]>
+						<[if:$get_current_user.user_realname]>
 						<option value="{$get_current_user.user_realname}">{$get_current_user.user_realname}</option>
-						</section:if>
+						<[/if]>
 					</select> <br />
 					<span class="discribe">请为您的一个名称作为文章发布者</span>
 				</p>
@@ -137,4 +137,4 @@ remove_script_host : false
 });
 </script>
 
-<section:include content="footer"/>
+<[include:footer]>

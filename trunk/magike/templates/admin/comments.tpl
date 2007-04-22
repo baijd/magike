@@ -1,7 +1,7 @@
-<section:include content="header"/>
-<section:include content="menu"/>
+<[include:header]>
+<[include:menu]>
 
-<section:module content="comments_list?limit=20&list=1&substr=20"/>
+<[module:comments_list?limit=20&list=1&substr=20]>
 <div id="content">
 	<div id="element">
 		<h2>{lang.admin_comment.comment_list} <span class="discribe">{lang.admin_comment.comment_list_describe}</span></h2>
@@ -16,7 +16,7 @@
 				<td width=10%>发表日期</td>
 				<td width=15%>状态</td>
 			</tr>
-			<section:loop content="$comments_list AS $comment">
+			<[loop:$comments_list AS $comment]>
 			<tr id="drag-{$comment.id}">
 				<td><input type="checkbox" class="checkbox_element" name="comment[]" value="{$comment.id}"/></td>
 				<td>{$comment.comment_user}</td>
@@ -27,7 +27,7 @@
 				<td>
 				</td>
 			</tr>
-			</section:loop>
+			<[/loop]>
 		</table>
 		<div class="table_nav">
 			<span onclick="selectTableAll('comment_list','checkbox_element')">{lang.admin_db_grid.select_all}</span>,
@@ -43,4 +43,4 @@
 	registerTableCheckbox("comment_list","checkbox_element");
 	tabBtn = $("#tab_first_button");
 </script>
-<section:include content="footer"/>
+<[include:footer]>

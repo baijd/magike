@@ -1,8 +1,8 @@
-<section:include content="header"/>
-<section:include content="menu"/>
+<[include:header]>
+<[include:menu]>
 
-<section:module content="categories_list"/>
-<section:module content="posts_list"/>
+<[module:categories_list]>
+<[module:posts_list]>
 <div id="content">
 	<div id="element">
 		<h2>{lang.admin_posts_list.list_title} <span class="discribe">{lang.admin_posts_list.list_describe}</span></h2>
@@ -14,7 +14,7 @@
 				<td width=20%>分类</td>
 				<td width=15%>发布日期</td>
 			</tr>
-			<section:loop content="$posts_list AS $post">
+			<[loop:$posts_list AS $post]>
 			<tr>
 				<td width=5%><input type="checkbox" class="checkbox_element" name="post[]" value="{$post.post_id}"/></td>
 				<td width=20%><a href="{$static_var.index}/admin/posts/write?post_id={$post.post_id}" title="{$post.post_title}">{$post.post_title}</a></td>
@@ -22,7 +22,7 @@
 				<td width=20%>{$post.category_name}</td>
 				<td width=15%>{$post.post_time}</td>
 			</tr>
-			</section:loop>
+			<[/loop]>
 		</table>
 		<div class="table_nav">
 			<span onclick="selectTableAll('post_list','checkbox_element')">{lang.admin_db_grid.select_all}</span>,
@@ -35,4 +35,4 @@
 <script>
 	registerTableCheckbox("post_list","checkbox_element");
 </script>
-<section:include content="footer"/>
+<[include:footer]>

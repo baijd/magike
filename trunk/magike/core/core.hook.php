@@ -43,7 +43,7 @@ class MagikeException extends Exception
        		$data = $this->data;
        	}
 
-       	if($this->code)
+       	if(1)
        	{
        		die(__CLASS__ . ": [{$this->code}]: {$this->message}<br />\n".$data);
        	}

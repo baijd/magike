@@ -1,7 +1,7 @@
-<section:include content="header"/>
-<section:include content="menu"/>
+<[include:header]>
+<[include:menu]>
 
-<section:module content="links_list"/>
+<[module:links_list]>
 <div id="content">
 	<div id="element">
 		<h2>{lang.admin_links.links_title} <span class="discribe">{lang.admin_links.links_describe}</span></h2>
@@ -13,7 +13,7 @@
 				<td width=20%>描述</td>
 				<td width=15%>所属分类</td>
 			</tr>
-			<section:loop content="$links_list AS $link">
+			<[loop:$links_list AS $link]>
 			<tr>
 				<td width=5%><input type="checkbox" class="checkbox_element" name="link[]" value="{$link.link_id}"/</td>
 				<td width=20%><a href="#">{$link.link_name}</a></td>
@@ -21,7 +21,7 @@
 				<td width=20%>{$link.link_describe}</td>
 				<td width=15%>{$link.link_category_name}</td>
 			</tr>
-			</section:loop>
+			<[/loop]>
 		</table>
 		<div class="table_nav">
 			<span onclick="selectTableAll('link_list','checkbox_element')">{lang.admin_db_grid.select_all}</span>,
@@ -35,4 +35,4 @@
 <script>
 	registerTableCheckbox("link_list","checkbox_element");
 </script>
-<section:include content="footer"/>
+<[include:footer]>
