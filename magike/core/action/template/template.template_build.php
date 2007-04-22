@@ -28,18 +28,18 @@ class TemplateBuild extends MagikeObject
 		$this->callback = $callback;
 		if(!$closeTag)
 		{
-			$this->str = preg_replace_callback("/\<section:{$sectionName}\s*(.+?)\s*\/\>/is",array($this,'findSectionCallback'),$this->str);
+			$this->str = preg_replace_callback("/\<\[{$sectionName}:\s*(.+?)\s*\]\>/is",array($this,'findSectionCallback'),$this->str);
 		}
 		else
 		{
-			$this->str = preg_replace_callback("/\<section:{$sectionName}\s*(.+?)\s*\>/is",array($this,'findSectionCallback'),$this->str);
-			$this->str = str_replace("</section:{$sectionName}>",$closeTag,$this->str);		
+			$this->str = preg_replace_callback("/\<\[{$sectionName}:\s*(.+?)\s*\]\>/is",array($this,'findSectionCallback'),$this->str);
+			$this->str = str_replace("<[/{$sectionName}]>",$closeTag,$this->str);		
 		}
 	}
 	
 	private function findSectionCallback($matches)
 	{
-		return preg_replace_callback("/\s*content\s*=\s*\"\s*(.+?)\"/is",array($this,$this->callback),$matches[1]);
+		return preg_replace_callback("/\s*(.+)/is",array($this,$this->callback),$matches[1]);
 	}
 	
 	protected function praseVar($input)

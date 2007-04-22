@@ -1,4 +1,4 @@
-<section:include content="header"/>
-<section:include content="menu"/>
+<[include:header]>
+<[include:menu]>
 
-<section:include content="footer"/>
+<[include:footer]>

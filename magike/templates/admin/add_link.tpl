@@ -1,5 +1,5 @@
-﻿<section:include content="header"/>
-<section:include content="menu"/>
+﻿<[include:header]>
+<[include:menu]>
 
 <div id="content">
 	<div id="element">
@@ -28,4 +28,4 @@
 	</div>
 </div>
 
-<section:include content="footer"/>
+<[include:footer]>
