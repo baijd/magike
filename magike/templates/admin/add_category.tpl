@@ -31,7 +31,7 @@
 			</p>
 		</div>
 		<div class="submit">
-			<span class="button" onclick="magikeValidator('http://www.magike.local/index.php/helper/validator','add_category');">提交信息</span>
+			<span class="button" onclick="magikeValidator('{$static_var.index}/helper/validator','add_category');">提交信息</span>
 			<script>
 				function validateSuccess()
 				{

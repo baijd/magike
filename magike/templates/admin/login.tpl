@@ -64,16 +64,16 @@
 	</style>
 </head>
 <body>
-<section:module content="admin_login"/>
+<[module:admin_login]>
 <div id="login">
 	<div id="element" style="width:270px;padding:30px;padding-top:0;text-align:center;">
 	<img src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/logo.gif" alt="logo"/>
-	<section:if content="$admin_login.message_open">
+	<[if:$admin_login.message_open]>
 	<div id="message" style="color:#FFF;font-weight:bold;padding:5px;">
 		{$admin_login.message}
 	</div>
-	</section:if>
-	<section:if content="$admin_login.login_open">
+	<[/if]>
+	<[if:$admin_login.login_open]>
 	<form method="post">
 	<h2>{lang.login.user_name}</h2>
 	<p><input type="text" name="username" style="width:260px" class="text" /></p>
@@ -84,7 +84,7 @@
 	<input type="button" value="{lang.login.foget_password}&raquo;" class="button" />
 	<input type="hidden" name="do" value="login" /></p>
 	</form>
-	</section:if>
+	<[/if]>
 	</div>
 </div>
 <script>
