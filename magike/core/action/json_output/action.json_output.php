@@ -28,7 +28,7 @@ class JsonOutput extends MagikeObject
 		$tmp = null;
 		eval('$tmp = new '.mgFileNameToClassName($this->objName).'();');
 		$output = call_user_func(array($tmp,'runModule'));
-		header("charset={$this->stack['static_var']['charset']}");
+		header("content-Type: {$this->stack['static_var']['content_type']}; charset={$this->stack['static_var']['charset']}");
 		echo Json::json_encode($output);
 	}
 }
