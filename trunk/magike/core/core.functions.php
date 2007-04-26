@@ -222,8 +222,14 @@ function mgTime($UTC)
 	return time() + $UTC;
 }
 
+//获取当前时区时间差
+function mgGetTimeZoneDiff()
+{
+	return time() - strtotime(gmdate('Y-m-d H:i:s'));
+}
+
 //将时间戳格式化
-function mgDate($fmt,$timestamp = NULL,$UTC = 0)
+function mgDate($fmt,$UTC = 0,$timestamp = NULL)
 {
 	if($timestamp)
 	{

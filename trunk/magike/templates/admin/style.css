@@ -251,6 +251,15 @@ body
 	float:left;
 }
 
+#element .validate-word
+{
+	background:url(images/exclamation.gif) left center no-repeat;
+	margin-left:10px;
+	padding-left:20px;
+	font-weight:bold;
+	color:#990000;
+}
+
 #element form
 {
 	margin:0;
@@ -333,6 +342,15 @@ body
 	color:#666;
 	display:none;
 	cursor:pointer;
+}
+
+#element .proc
+{
+	background:#EEE url(images/proc.gif) left center no-repeat;
+	border:1px solid #CCC;
+	padding:5px 5px 5px 32px;
+	font-size:10pt;
+	color:#666;
 }
 
 #element input,#element textarea,#element select

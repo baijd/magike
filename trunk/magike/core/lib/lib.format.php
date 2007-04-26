@@ -6,7 +6,7 @@
  * License   : GNU General Public License 2.0
  *********************************/
 
-class Format
+class Format extends MagikeObject
 {
 	private $object;
 	
@@ -19,16 +19,14 @@ class Format
     public function checkFormat($fmt,$data,$object = NULL)
     {
     	$error = array();
-    	if($data == NULL) return false;
     	if(($diff = array_diff(array_keys($fmt),array_keys($data))) != NULL)
     	{
     		foreach($diff as $val)
     		{
     			if(!isset($error[$val]))
     			{
-    				$error[$val] = array();
+    				$error[$val] = 'null';
     			}
-    			$error[$val][] = 'require';
     		}
     	}
 
@@ -48,9 +46,8 @@ class Format
     						{
     							if(!isset($error[$key]))
     							{
-    								$error[$key] = array();
+    								$error[$key] = 'null';
     							}
-    							$error[$key][] = 'null';
     						}
     						break;
     					}
@@ -60,9 +57,9 @@ class Format
     						{
     							if(!isset($error[$key]))
     							{
-    								$error[$key] = array();
+    								$error[$key] = 'mail';
     							}
-    							$error[$key][] = 'mail';
+
     						}
     						break;
     					}
@@ -72,9 +69,8 @@ class Format
     						{
     							if(!isset($error[$key]))
     							{
-    								$error[$key] = array();
+    								$error[$key] = 'num';
     							}
-    							$error[$key][] = 'num';
     						}
     						break;
     					}
@@ -84,9 +80,8 @@ class Format
     						{
     							if(!isset($error[$key]))
     							{
-    								$error[$key] = array();
+    								$error[$key] = 'url';
     							}
-    							$error[$key][] = 'url';
     						}
     						break;
     					}
@@ -103,9 +98,8 @@ class Format
     							{
 	    							if(!isset($error[$key]))
 	    							{
-	    								$error[$key] = array();
+	    								$error[$key] = 'length';
 	    							}
-	    							$error[$key][] = 'length';
     							}
     						}
     						else if(ereg("^confrm\(([_0-9a-zA-Z-]+)\)$",$inval,$reg))
@@ -114,9 +108,8 @@ class Format
     							{
 	    							if(!isset($error[$key]))
 	    							{
-	    								$error[$key] = array();
+	    								$error[$key] = 'confrm';
 	    							}
-	    							$error[$key][] = 'confrm';
     							}
     						}
     						else if(ereg("^enum\(([,_0-9a-zA-Z-]+)\)$",$inval,$reg))
@@ -126,9 +119,8 @@ class Format
     							{
 	    							if(!isset($error[$key]))
 	    							{
-	    								$error[$key] = array();
+	    								$error[$key] = 'enum';
 	    							}
-	    							$error[$key][] = 'enum';
     							}
     						}
     						else if(ereg("^func\(([_a-z0-9A-Z-]+)\)$",$inval,$reg))
@@ -141,9 +133,8 @@ class Format
     							{
 	    							if(!isset($error[$key]))
 	    							{
-	    								$error[$key] = array();
+	    								$error[$key] = $reg[1];
 	    							}
-	    							$error[$key][] = $reg[1];
     							}
     						}
     						break;
