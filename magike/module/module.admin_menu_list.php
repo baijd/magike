@@ -1,7 +1,7 @@
 <?php
 /**********************************
  * Created on: 2006-12-19
- * File Name : admin_menu_module.php
+ * File Name : module.admin_menu_list.php
  * Copyright : Magike Group
  * License   : GNU General Public License 2.0
  *********************************/

@@ -13,6 +13,11 @@ class Post extends MagikeModule
 		parent::__construct(array('public' => array('database')));
 	}
 	
+	public function prasePost($val)
+	{
+		return $val;
+	}
+	
 	public function runModule()
 	{
 		$args = array('fields'=> '*,table.posts.id AS post_id',
@@ -25,13 +30,18 @@ class Post extends MagikeModule
 			$args['where']['template'] = 'table.posts.id = ?';
 			$args['where']['value'] = array($_GET['post_id']);
 		}
-		if(isset($_GET['post_name']))
+		else if(isset($_GET['post_name']))
 		{
 			$args['where']['template'] = 'table.posts.post_name = ?';
 			$args['where']['value'] = array($_GET['post_name']);
 		}
+		else
+		{
+			return array();
+		}
 		
-		return $this->database->fectch($args,array('function' => array($this,'prasePost')));
+		$result = $this->database->fectch($args,array('function' => array($this,'prasePost')));
+		return $result[0];
 	}
 }
 ?>

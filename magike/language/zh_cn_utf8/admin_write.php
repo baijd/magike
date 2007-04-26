@@ -34,6 +34,7 @@ $lang = array(
 	'draft'	=> '保存为草稿',
 	'option'	=> '选项',
 	'upload'	=> '上传文件',
+	'media'	=> '媒体文件',
 	'publish'	=> '发布',
 	'tools'		=> '工具',
 );

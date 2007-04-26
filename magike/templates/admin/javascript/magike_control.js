@@ -298,11 +298,13 @@ function tabShow(ele,tab,btn)
 	tabBtn = $(btn);
 }
 
+var confirmElement;
 function magikeConfirm(el)
 {
+	confirmElement = el;
 	if(confirm($(el).attr("msg")))
 	{
-		
+		setTimeout("window.location.href = $(confirmElement).rel(); ",0);
 	}
 }
 
@@ -321,4 +323,48 @@ function fixCssHack()
 	
 	$(".message").fadeIn(1000);
 	$(".message").click(function(){$(this).hide();});
+	$(".proc").hide();
+	$(".validate-word").hide();
 }
+
+var validateElements;
+function magikeValidator(url,mod)
+{
+	validateElements = null;
+	$(".validate-word").hide();
+	s = $('.validate-me').serialize();
+	$.ajax({
+		type: 'POST',
+		url: url + '?mod=' + mod,
+		data: s,
+		success: function(data){
+			js = data.parseJSON();
+			if(js != 0)
+			{
+				for(var i in js)
+				{
+					$("#" + i + "-word").show();
+					$("#" + i + "-word").html(js[i]);
+				}
+			}
+			else
+			{
+				validateSuccess.apply(this);
+			}
+		}
+	});
+}
+
+$(document).ajaxStart(
+	function()
+	{
+		$(".proc").show();
+	}
+);
+
+$(document).ajaxStop(
+	function()
+	{
+		$(".proc").fadeOut();
+	}
+);

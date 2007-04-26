@@ -23,6 +23,13 @@ class InsertCategory extends MagikeModule
 																 'value'	=> array($_GET['c'])
 										)));
 		$this->result = $item[0];
+		
+		//修改菜单的内容
+		if(isset($this->stack['admin_menu_list']['children']))
+		{
+			$this->stack['admin_menu_list']['children'][3]['menu_name'] = '修改分类 "'.$item[0]['category_name'].'"';
+			$this->stack['admin_menu_list']['children'][3]['path_name'] = '/admin/posts/category?c='.$item[0]['id'];
+		}
 	}
 	
 	public function runModule()
