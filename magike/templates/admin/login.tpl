@@ -21,7 +21,7 @@
 			margin:0 auto;
 			width:330px;
 			background:#EEE;
-			border:1px solid #DDD;
+			border:1px solid #CCC;
 		}
 		
 		#login_top
@@ -66,11 +66,10 @@
 	<div id="element" style="width:270px;padding:30px;padding-top:0;text-align:center;">
 	<h1>{lang.login.login_to}{$static_var.blog_name}</h1>
 	<[if:$admin_login.message_open]>
-	<div id="message" style="color:#FFF;font-weight:bold;padding:5px;">
+	<div id="message" style="color:#FFF;background:#990000;font-weight:bold;padding:5px;">
 		{$admin_login.message}
 	</div>
 	<[/if]>
-	<[if:$admin_login.login_open]>
 	<form method="post">
 	<h2>{lang.login.user_name}</h2>
 	<p><input type="text" name="username" style="width:260px" class="text" /></p>
@@ -81,7 +80,6 @@
 	<input type="button" value="{lang.login.foget_password}&raquo;" class="button" />
 	<input type="hidden" name="do" value="login" /></p>
 	</form>
-	<[/if]>
 	</div>
 </div>
 <script>
