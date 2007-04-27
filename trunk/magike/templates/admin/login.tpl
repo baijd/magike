@@ -13,32 +13,20 @@
 		body
 		{
 			border-top:4px solid #222;
-			background:#DDD;
+			background:#FFF url({$static_var.siteurl}/templates/{$static_var.admin_template}/images/top.gif) top repeat-x;
 		}
 		
 		#login
 		{
 			margin:0 auto;
 			width:330px;
-			padding-top:40px;
+			background:#EEE;
+			border:1px solid #DDD;
 		}
 		
 		#login_top
 		{
 			height:70px;
-		}
-		
-		#login_top_nav
-		{
-			margin:0 auto;
-			height:40px;
-			width:260px;
-			background:#000;
-			border:1px solid #596271;
-			border-top:none;
-			line-height:40px;
-			color:#EEE;
-			font-size:14pt;
 		}
 		
 		#login_top_nav img
@@ -50,24 +38,33 @@
 		#element h1
 		{
 			font-weight:normal;
-			font-size:30pt;
+			font-size:20pt;
+			margin-top:20px;
 		}
 		
 		#element h2
 		{
-			border-bottom:1px solid #999;
 			color:#222;
 			text-align:left;
 			padding:0 5px;
 			margin:10px 0;
 		}
+		#banner
+		{
+			margin:10px;
+			padding:10px 10px 0 10px;
+			text-align:center;
+		}
 	</style>
 </head>
 <body>
 <[module:admin_login]>
+<div id="banner">
+	<img width="200" src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/logo.jpg" alt="logo" />
+</div>
 <div id="login">
 	<div id="element" style="width:270px;padding:30px;padding-top:0;text-align:center;">
-	<img src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/logo.gif" alt="logo"/>
+	<h1>{lang.login.login_to}{$static_var.blog_name}</h1>
 	<[if:$admin_login.message_open]>
 	<div id="message" style="color:#FFF;font-weight:bold;padding:5px;">
 		{$admin_login.message}
