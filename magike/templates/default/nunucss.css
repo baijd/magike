@@ -1,4 +1,4 @@
-*{
+ï»¿*{
 	margin:0px; 
 	padding:0px;
 }
@@ -6,7 +6,7 @@
 body{
 	margin:0px; 
 	padding:0px;
-	font-family: Microsoft YaHei,Verdana;
+	font-family:å¾®è½¯é›…é»‘;
 	font-size:12px;
 	color:#333333;
 	background:#242428;
@@ -67,7 +67,7 @@ h1 {
 	background:#171817;
 }
 
-	#hlogo{/*ÍøÕ¾logo*/
+	#hlogo{/*ç½‘ç«™logo*/
 		width:171px;
 		height:49px;
 		background:url(images/bgv2.jpg) top left no-repeat;
@@ -90,7 +90,7 @@ h1 {
 		height:100px;
 	}
 
-		#hnav ul{/*µ¼º½*/
+		#hnav ul{/*å¯¼èˆª*/
 			width:100%;
 			margin-top:20px;
 			list-style:none;
