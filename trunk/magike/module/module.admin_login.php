@@ -21,12 +21,10 @@ class AdminLogin extends MagikeModule
 		$this->result['message_open'] = false;
 		if(!$this->stack['access']['login'])
 		{
-			$this->result['login_open'] = true;
 			$this->onPost('do','loginAction','login');
 		}
 		else
 		{
-			$this->result['login_open'] = false;
 			$this->result['message_open'] = true;
 			$this->result['message'] = $this->getLanguage('login','error_open');
 		}
@@ -46,7 +44,7 @@ class AdminLogin extends MagikeModule
 		if(NULL == $user)
 		{
 			$this->result['message_open'] = true;
-			$this->result['message'] = $this->getLanguage('login','error');
+			$this->result['message'] = $this->getLanguage('error','login');
 		}
 		else
 		{
