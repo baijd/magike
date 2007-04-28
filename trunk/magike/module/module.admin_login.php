@@ -33,7 +33,7 @@ class AdminLogin extends MagikeModule
 
 	public function loginAction()
 	{
-		$user = $this->database->fectch(array('table' => 'table.users',
+		$user = $this->database->fectchOne(array('table' => 'table.users',
 										 	  'where' => array('template' => 'user_name = ? AND user_password = ?',
 										  					   'value' => array($_POST['username'],
 										  					  				   md5($_POST['password'])
@@ -50,7 +50,7 @@ class AdminLogin extends MagikeModule
 		{
 			$group = $this->database->fectch(array('table' => 'table.user_group_mapping',
 												   'where' => array('template' => 'user_id = ?',
-												   					'value'	   => array($user[0]['id']))
+												   					'value'	   => array($user['id']))
 													));
 			$userGroup = array();
 			foreach($group as $val)
@@ -58,8 +58,8 @@ class AdminLogin extends MagikeModule
 				$userGroup[] = $val['group_id'];
 			}
 			
-			$_SESSION['user_name'] = $user[0]['user_name'];
-			$_SESSION['user_id'] = $user[0]['id'];
+			$_SESSION['user_name'] = $user['user_name'];
+			$_SESSION['user_id'] = $user['id'];
 			$_SESSION['user_group'] = $userGroup;
 			$_SESSION['auth_data'] = mgCreateRandomString(128);
 			

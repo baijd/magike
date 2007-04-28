@@ -17,13 +17,11 @@ class GetCurrentUser extends MagikeModule
 	{
 		if(NULL != $this->stack['access']['user_id'])
 		{
-			$now = $this->database->fectch(array('table' => 'table.users',
-												 'where' => array(
+			return $this->database->fectchOne(array('table' => 'table.users',
+												 	'where' => array(
 												 		 'template' => 'id = ?',
 												 		 'value'	=> array($this->stack['access']['user_id'])
 												 )));
-												 
-			return $now ? $now[0] : array();
 		}
 		else
 		{
