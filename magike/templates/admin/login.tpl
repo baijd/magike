@@ -20,7 +20,8 @@
 		{
 			margin:0 auto;
 			padding:10px 0;
-			width:330px;
+			width:333px;
+			height:333px;
 			background:url({$static_var.siteurl}/templates/{$static_var.admin_template}/images/loginbg.gif) top no-repeat;
 		}
 		
@@ -38,16 +39,18 @@
 		#element h1
 		{
 			font-weight:normal;
-			font-size:20pt;
+			font-size:18pt;
+			color:#fff;
+			font-weight:bold;
 		}
 		
 		#element h2
 		{
-			color:#00445E;
+			color:#fff;
 			text-align:left;
 			padding:0 5px;
 			margin:10px 0;
-			border-bottom:1px solid #00AAEA;
+			border-bottom:1px solid #fff;
 		}
 		#banner
 		{
@@ -69,12 +72,15 @@
 	<div id="message" style="color:#FFF;background:#990000;font-weight:bold;padding:5px;">
 		{$admin_login.message}
 	</div>
+	<br/>
 	<[/if]>
 	<form method="post">
 	<h2>{lang.login.user_name}</h2>
 	<p><input type="text" name="username" style="width:260px" class="text" /></p>
+	<br/>
 	<h2>{lang.login.password}</h2>
 	<p><input type="password" name="password" style="width:260px" class="text" /></p>
+	<br/>
 	<p style="margin-top:10px;text-align:right">
 	<input type="button" value="{lang.login.login}" onclick="submit();" class="button" />
 	<input type="button" value="{lang.login.foget_password}&raquo;" class="button" />
