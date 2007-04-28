@@ -127,6 +127,12 @@ class Database extends MagikeObject
 		if($num == 0 && $expection) $this->throwException(E_PATH_PATHNOTEXISTS,$this->stack['action']['path']);
 		return $result;
  	}
+ 	
+ 	public function fectchOne($args,$callback = NULL,$expection = false)
+ 	{
+ 		$result = $this->fectch($args,$callback,$expection);
+ 		return $result ? $result[0] : array();
+ 	}
 
  	public function update($args)
  	{

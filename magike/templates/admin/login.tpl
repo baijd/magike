@@ -19,9 +19,9 @@
 		#login
 		{
 			margin:0 auto;
+			padding:10px 0;
 			width:330px;
-			background:#EEE;
-			border:1px solid #CCC;
+			background:url({$static_var.siteurl}/templates/{$static_var.admin_template}/images/loginbg.gif) top no-repeat;
 		}
 		
 		#login_top
@@ -39,15 +39,15 @@
 		{
 			font-weight:normal;
 			font-size:20pt;
-			margin-top:20px;
 		}
 		
 		#element h2
 		{
-			color:#222;
+			color:#00445E;
 			text-align:left;
 			padding:0 5px;
 			margin:10px 0;
+			border-bottom:1px solid #00AAEA;
 		}
 		#banner
 		{

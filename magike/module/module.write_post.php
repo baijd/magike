@@ -28,15 +28,15 @@ class WritePost extends MagikeModule
 						  );
 			$args['where']['template'] = 'table.posts.id = ?';
 			$args['where']['value'] = array($_GET['post_id']);
-			$result = $this->database->fectch($args,array('function' => array($this,'prasePost')));
+			$result = $this->database->fectchOne($args,array('function' => array($this,'prasePost')));
 
 			//修改菜单的内容
 			if(isset($this->stack['admin_menu_list']['children']))
 			{
-				$this->stack['admin_menu_list']['children'][0]['menu_name'] = '编辑 "'.$result[0]['post_title'].'"';
-				$this->stack['admin_menu_list']['children'][0]['path_name'] = '/admin/posts/write?post_id='.$result[0]['post_id'];
+				$this->stack['admin_menu_list']['children'][0]['menu_name'] = '编辑 "'.$result['post_title'].'"';
+				$this->stack['admin_menu_list']['children'][0]['path_name'] = '/admin/posts/write?post_id='.$result['post_id'];
 			}
-			return $result[0];
+			return $result;
 		}
 		else
 		{
