@@ -39,9 +39,10 @@
 		#element h1
 		{
 			font-weight:normal;
-			font-size:18pt;
+			font-size:19pt;
+			font-family:'trebuchet ms',helvetica,sans-serif;
 			color:#fff;
-			font-weight:bold;
+			font-weight:normal;
 		}
 		
 		#element h2
