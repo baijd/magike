@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset={$static_var.charset}" />
 <title>monster nunu 2007</title>
-<link href="{$static_var.siteurl}/templates/{$static_var.template}/nunucss.css" rev="stylesheet" rel="stylesheet"/>
+<link href="{$static_var.siteurl}/templates/{$static_var.template}/mcss.css" rev="stylesheet" rel="stylesheet"/>
 </head>
 
 <body>
