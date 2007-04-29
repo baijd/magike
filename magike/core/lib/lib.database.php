@@ -6,13 +6,19 @@
  * License   : GNU General Public License 2.0
  *********************************/
 
-define('E_DATABASE','Database Error');
-$dblink=@mysql_connect(__DBHOST__,__DBUSER__,__DBPASS__) or die('Database Connect Error');
-@mysql_select_db(__DBNAME__,$dblink) or die('Database Connect Error');
-mysql_query('SET NAMES "utf8"') or die('Database Connect Error');
-
 class Database extends MagikeObject
 {
+	private $usedTable;
+	
+	function __construct()
+	{
+		define('E_DATABASE','Database Error');
+		$dblink=@mysql_connect(__DBHOST__,__DBUSER__,__DBPASS__) or die('Database Connect Error');
+		@mysql_select_db(__DBNAME__,$dblink) or die('Database Connect Error');
+		mysql_query('SET NAMES "utf8"') or die('Database Connect Error');
+		$this->usedTable = array();
+	}
+	
 	private function praseWhereSentence($args)
 	{
 		//处理where子句
@@ -54,20 +60,27 @@ class Database extends MagikeObject
 
 	private function filterTablePrefix($args)
 	{
+		$this->usedTable = array();
 		foreach($args as $key => $val)
 		{
 			if(is_string($val))
 			{
-				$args[$key] = preg_replace("/([\ ,\(\)])table\./i","\\1".__DBPREFIX__,' '.$val);
+				$args[$key] = preg_replace_callback("/([\ ,\(\)])table\.([0-9a-zA-Z]+)/i",array($this,'praseTablePrefix'),' '.$val);
 			}
 		}
 
 		if(isset($args['where']['template']))
 		{
-			$args['where']['template'] = preg_replace("/([\ ,\(\)])table\./i","\\1".__DBPREFIX__,' '.$args['where']['template']);
+			$args['where']['template'] = preg_replace_callback("/([\ ,\(\)])table\.([_0-9a-zA-Z-]+)/i",array($this,'praseTablePrefix'),' '.$args['where']['template']);
 		}
-
+		
 		return $args;
+	}
+	
+	private function praseTablePrefix($matches)
+	{
+		$this->usedTable[] = __DBPREFIX__.$matches[2];
+		return $matches[1].__DBPREFIX__.$matches[2];
 	}
 
 	private function databaseException()
