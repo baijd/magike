@@ -368,6 +368,7 @@ function magikeValidator(url,mod)
 $(document).ajaxStart(
 	function()
 	{
+		$(".proc").hide();
 		if(showLoading)
 		{
 			$(".proc").show();
