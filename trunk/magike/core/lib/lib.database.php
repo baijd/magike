@@ -65,7 +65,7 @@ class Database extends MagikeObject
 		{
 			if(is_string($val))
 			{
-				$args[$key] = preg_replace_callback("/([\ ,\(\)])table\.([0-9a-zA-Z]+)/i",array($this,'praseTablePrefix'),' '.$val);
+				$args[$key] = preg_replace_callback("/([\ ,\(\)])table\.([0-9a-zA-Z-]+)/i",array($this,'praseTablePrefix'),' '.$val);
 			}
 		}
 
@@ -168,6 +168,26 @@ class Database extends MagikeObject
 		mysql_query($table.$value.$where) or $this->databaseException();
 		return mysql_affected_rows();
  	}
+ 	
+ 	public function increaseField($args,$field,$num = 1)
+ 	{
+ 		$args = $this->filterTablePrefix($args);
+ 		$table = 'UPDATE '.$args['table'];
+ 		$increase = " SET {$field} = {$field} + {$num}";
+ 		$where = self::praseWhereSentence($args);
+ 		mysql_query($table.$increase.$where) or $this->databaseException();
+ 		return mysql_affected_rows();
+ 	}
+ 		
+ 	public function decreaseField($args,$field,$num = 1)
+ 	{
+ 		$args = $this->filterTablePrefix($args);
+ 		$table = 'UPDATE '.$args['table'];
+ 		$increase = " SET {$field} = {$field} - {$num}";
+ 		$where = self::praseWhereSentence($args);
+ 		mysql_query($table.$increase.$where) or $this->databaseException();
+ 		return mysql_affected_rows();
+ 	}
 
  	public function insert($args)
  	{
@@ -176,7 +196,7 @@ class Database extends MagikeObject
  		$args = $this->filterTablePrefix($args);
 		$query = 'INSERT INTO '.$args['table'].' ('.implode(',',array_keys($args['value'])).') VALUES('.implode(',',$args['value']).')';
 		mysql_query($query) or $this->databaseException();
-		return mysql_affected_rows();
+		return mysql_insert_id();
  	}
 
  	public function delete($args)

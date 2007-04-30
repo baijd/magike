@@ -283,6 +283,7 @@ body
 	height:24px;
 	line-height:24px;
 	border-bottom:1px solid #CCC;
+	overflow:hidden;
 }
 
 #element table tr td a
@@ -294,6 +295,11 @@ body
 #element table tr td a:hover
 {
 	text-decoration: none;
+}
+
+#element table tr td.describe
+{
+	color:#AAA;
 }
 
 #element table tr.heading

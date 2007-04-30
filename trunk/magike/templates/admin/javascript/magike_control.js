@@ -328,10 +328,12 @@ function fixCssHack()
 }
 
 var validateElements;
+var showLoading;
 function magikeValidator(url,mod)
 {
 	validateElements = null;
 	$(".validate-word").hide();
+	showLoading = true;
 	
 	if(typeof(tinyMCE) != "undefined")
 	{
@@ -352,11 +354,13 @@ function magikeValidator(url,mod)
 					$("#" + i + "-word").show();
 					$("#" + i + "-word").html(js[i]);
 				}
+				$(".proc").fadeOut();
 			}
 			else
 			{
 				validateSuccess.apply(this);
 			}
+			showLoading = false;
 		}
 	});
 }
@@ -364,13 +368,9 @@ function magikeValidator(url,mod)
 $(document).ajaxStart(
 	function()
 	{
-		$(".proc").show();
-	}
-);
-
-$(document).ajaxStop(
-	function()
-	{
-		$(".proc").fadeOut();
+		if(showLoading)
+		{
+			$(".proc").show();
+		}
 	}
 );
