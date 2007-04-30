@@ -14,6 +14,7 @@ class PostInput extends MagikeModule
 	{
 		$this->result = array();
 		parent::__construct(array('public' => array('database')));
+		$this->result['open'] = false;
 	}
 	
 	private function getTags($tags)
@@ -70,16 +71,47 @@ class PostInput extends MagikeModule
 		}
 	}
 	
+	public function insertPost()
+	{
+		$input = $_POST;
+		unset($input["post_trackback"]);
+		$input['post_allow_ping'] = isset($_POST['post_allow_ping']) ? $_POST['post_allow_ping'] : 0;
+		$input['post_allow_comment'] = isset($_POST['post_allow_comment']) ? $_POST['post_allow_comment'] : 0;
+		$input['post_allow_feed'] = isset($_POST['post_allow_feed']) ? $_POST['post_allow_feed'] : 0;
+		$input['post_is_draft'] = isset($_POST['post_is_draft']) ? $_POST['post_is_draft'] : 0;
+		$input['post_is_hidden'] = isset($_POST['post_is_hidden']) ? $_POST['post_is_hidden'] : 0;
+		$input['post_is_page'] = isset($_POST['post_is_page']) ? $_POST['post_is_page'] : 0;
+		$input['post_edit_time'] = time();
+		$input['post_time'] = time();
+		$input['post_gmt'] = mgGetTimeZoneDiff();
+		
+		$insertId = $this->database->insert(array('table' => 'table.posts',
+									  			  'value' => $input));
+		$this->database->increaseField(array('table' => 'table.categories',
+											 'where' => array('template' => 'id = ?',
+															  'value'	 => array($input['category_id']))),
+									  'category_count'
+									  );
+		if($input['post_tags'])
+		{
+			$tags = $this->getTags($input['post_tags']);
+			$this->insertTags($insertId,$tags);
+		}
+		
+		$this->result['open'] = true;
+		$this->result['word'] = '文章 "'.$input['post_title'].'" 已经成功提交';
+	}
+	
 	public function updatePost()
 	{
 		$input = $_POST;
 		unset($input["post_trackback"]);
-		$input['post_allow_ping'] = isset($input['post_allow_ping']) ? $input['post_allow_ping'] : 0;
-		$input['post_allow_comment'] = isset($input['post_allow_comment']) ? $input['post_allow_comment'] : 0;
-		$input['post_allow_feed'] = isset($input['post_allow_feed']) ? $input['post_allow_feed'] : 0;
-		$input['post_is_draft'] = isset($input['post_is_draft']) ? $input['post_is_draft'] : 0;
-		$input['post_is_hidden'] = isset($input['post_is_hidden']) ? $input['post_is_hidden'] : 0;
-		$input['post_is_page'] = isset($input['post_is_page']) ? $input['post_is_page'] : 0;
+		$input['post_allow_ping'] = isset($_POST['post_allow_ping']) ? $_POST['post_allow_ping'] : 0;
+		$input['post_allow_comment'] = isset($_POST['post_allow_comment']) ? $_POST['post_allow_comment'] : 0;
+		$input['post_allow_feed'] = isset($_POST['post_allow_feed']) ? $_POST['post_allow_feed'] : 0;
+		$input['post_is_draft'] = isset($_POST['post_is_draft']) ? $_POST['post_is_draft'] : 0;
+		$input['post_is_hidden'] = isset($_POST['post_is_hidden']) ? $_POST['post_is_hidden'] : 0;
+		$input['post_is_page'] = isset($_POST['post_is_page']) ? $_POST['post_is_page'] : 0;
 		$input['post_edit_time'] = time();
 		
 		$post = $this->database->fectchOne(array('table' => 'table.posts',
@@ -110,11 +142,36 @@ class PostInput extends MagikeModule
 			$this->deleteTags($_GET['post_id']);
 			$this->insertTags($_GET['post_id'],$tags);
 		}
+		
+		$this->result['open'] = true;
+		$this->result['word'] = '文章 "'.$post['post_title'].'" 已经被更新';
+	}
+	
+	public function deletePost()
+	{
+		$post = $this->database->fectchOne(array('table' => 'table.posts',
+										 		 'where' => array('template' => 'id = ?',
+														  		  'value'	 => array($_GET['post_id']))
+											));
+		$this->database->delete(array('table' => 'table.posts',
+									  'where' => array('template' => 'id = ?',
+													   'value'	  => array($_GET['post_id'])
+								)));
+		$this->database->decreaseField(array('table' => 'table.categories',
+											 'where' => array('template' => 'id = ?',
+												  			  'value'	 => array($post['category_id']))),
+									  'category_count'
+									  );
+		$this->deleteTags($_GET['post_id']);
+		$this->result['open'] = true;
+		$this->result['word'] = '文章 "'.$post['post_title'].'" 已经被删除';
 	}
 	
 	public function runModule()
 	{
 		$this->onGet("do","updatePost","update");
+		$this->onGet("do","insertPost","insert");
+		$this->onGet("do","deletePost","del");
 		return $this->result;
 	}
 }

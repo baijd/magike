@@ -2,6 +2,7 @@
 <[include:menu]>
 
 <[module:admin_index]>
+<[module:posts_list?type=1&sub=20&striptags=1&limit=5]>
 <style>
 	#element
 	{
@@ -123,11 +124,9 @@
 		<div id="element-center">
 						<h2>我最近发表的文章</h2>
 			<ul class="info">
-				<li><a href="#">Magike 1.0发布了!</a> 发布在<a class="close" href="#">程序发布</a>  2天前</li>
-				<li><a href="#">郁闷的生活</a> 发布在<a class="close" href="#">生活杂谈</a> 2天前</li>
-				<li><a href="#">我搜集的一些小图标</a> 发布在<a class="close" href="#">网络天下</a> 3天前</li>
-				<li><a href="#">一个有趣的站点</a> 发布在<a class="close" href="#">网络天下</a> 4天前</li>
-				<li><a href="#">我搜集的一些小图标</a> 发布在<a class="close" href="#">网络天下</a> 3天前</li>
+			<[loop:$posts_list AS $post]>
+				<li><a href="{$static_var.index}/admin/posts/write?post_id={$post.post_id}" title="{$post.post_title}">{$post.post_title}</a> 发布在<a class="close" href="{$static_var.index}/admin/posts/category?c={$post.category_id}">{$post.category_name}</a>  <span class="describe">{$post.post_time}</span></li>
+			<[/loop]>
 			</ul>
 			<h2>最新评论</h2>
 			<ul class="info">
