@@ -1,6 +1,7 @@
 <[include:header]>
 <[include:menu]>
 
+<[module:post_input]>
 <[module:posts_list?type=2&sub=20]>
 <div id="content">
 	<div id="element">
@@ -18,7 +19,7 @@
 			<tr>
 				<td><input type="checkbox" class="checkbox_element" name="post[]" value="{$post.post_id}"/></td>
 				<td><a href="{$static_var.index}/admin/posts/write?post_id={$post.post_id}" title="{$post.post_title}">{$post.post_title}</a></td>
-				<td>{$post.post_content}</td>
+				<td class="describe">{$post.post_content}</td>
 				<td>{$post.category_name}</td>
 				<td>{$post.post_time}</td>
 				<td>

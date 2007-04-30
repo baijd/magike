@@ -9,7 +9,7 @@
 		<div class="proc">
 			正在处理您的请求
 		</div>
-	<form method="post" id="write">
+	<form method="post" id="write" action="{$static_var.index}/admin/posts/all?do={$write_post.do}<[if:$write_post.do == "update"]>&post_id={$write_post.post_id}<[/if]>">
 		<div class="tab_nav">
 			<ul id="tab">
 				<li id="first" rel="write_content"><span>{lang.admin_write.write}</span></li>
@@ -72,7 +72,7 @@
 				<div class="input">
 				<h2>{lang.admin_write.trackback}</h2>
 				<p>
-				<textarea type="text" class="text" name="trackback" cols=60 rows=5 ></textarea> <br />
+				<textarea type="text" class="text" name="post_trackback" cols=60 rows=5 ></textarea> <br />
 				<span class="discribe">{lang.admin_write.trackback_describe}</span></p>
 				</div>
 			</div>
@@ -88,10 +88,10 @@
 				<div class="input">
 					<h2>{lang.admin_write.write_access}</h2> 
 					<p>
-					<input type="checkbox" name="post_allow_comment" class="checkbox" value="check" <[if:$write_post.post_allow_comment]>checked=true<[/if]>/> {lang.admin_write.write_allowcomment} 
-					<input type="checkbox" name="post_allow_ping" class="checkbox" value="check" <[if:$write_post.post_allow_ping]>checked=true<[/if]>/> {lang.admin_write.write_allowtrackback} 
-					<input type="checkbox" name="post_allow_feed" class="checkbox" value="check" <[if:$write_post.post_allow_feed]>checked=true<[/if]>/> {lang.admin_write.write_allowfeed} 
-					<input type="checkbox" name="post_is_hidden" class="checkbox" value="check" <[if:$write_post.post_is_hidden]>checked=true<[/if]>/> {lang.admin_write.write_hidden} 
+					<input type="checkbox" name="post_allow_comment" class="checkbox" value="1" <[if:$write_post.post_allow_comment]>checked=true<[/if]>/> {lang.admin_write.write_allowcomment} 
+					<input type="checkbox" name="post_allow_ping" class="checkbox" value="1" <[if:$write_post.post_allow_ping]>checked=true<[/if]>/> {lang.admin_write.write_allowtrackback} 
+					<input type="checkbox" name="post_allow_feed" class="checkbox" value="1" <[if:$write_post.post_allow_feed]>checked=true<[/if]>/> {lang.admin_write.write_allowfeed} 
+					<input type="checkbox" name="post_is_hidden" class="checkbox" value="1" <[if:$write_post.post_is_hidden]>checked=true<[/if]>/> {lang.admin_write.write_hidden} 
 					<br />
 					<span class="discribe">{lang.admin_write.write_access_describe}</span>
 					</p>
@@ -117,6 +117,7 @@
 		<div style="margin-top:6px;line-height:40px;">
 		<input type="button" class="button" onclick="magikeValidator('{$static_var.index}/helper/validator','write_post');" style="padding:0;width:100px;height:30px;background:#FF9900;color:#FFF;border:2px solid #DB8400;font-size:11pt;font-weight:bold" value="{lang.admin_write.draft}" />
 		<input type="button" class="button" style="padding:0;width:100px;height:30px;background:#003399;color:#FFF;border:2px solid #001A4F;font-size:11pt;font-weight:bold" value="{lang.admin_write.publish}" />
+		<input type="hidden" name="post_is_draft" value="0" />
 		</div>
 	</form>
 	</div>
