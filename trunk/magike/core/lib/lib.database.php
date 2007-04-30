@@ -114,7 +114,7 @@ class Database extends MagikeObject
 		//处理offset子句
 		$offset = isset($args['limit']) && isset($args['offset']) ? $args['offset'].',' : '';
 		$offset = isset($args['limit']) ? ' LIMIT '.$offset : '';
-
+		
 		//处理where子句
 		$where = self::praseWhereSentence($args);
 		$query = $fields.$table.$where.$groupby.$orderby.$offset.$limit;

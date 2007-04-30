@@ -349,6 +349,7 @@ body
 	background:#EEE url(images/proc.gif) left center no-repeat;
 	border:1px solid #CCC;
 	padding:5px 5px 5px 32px;
+	margin-bottom:10px;
 	font-size:10pt;
 	color:#666;
 }
