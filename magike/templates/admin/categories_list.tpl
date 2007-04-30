@@ -23,7 +23,7 @@
 			<tr>
 				<td><input type="checkbox" class="checkbox_element" name="category[]" value="{$category.id}"/></td>
 				<td><a href="{$static_var.index}/admin/posts/category?c={$category.id}" title="{$category.category_name}">{$category.category_name}</td>
-				<td>{$category.category_describe}</td>
+				<td class="describe">{$category.category_describe}</td>
 				<td>{$category.category_postname}</td>
 				<td>
 					<a class="img" title="编辑" href="{$static_var.index}/admin/posts/category?c={$category.id}"><img src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/edit.gif" alt="编辑"/></a> 

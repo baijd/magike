@@ -344,6 +344,7 @@ body
 	background:#FFFFAA url(images/information.gif) left center no-repeat;
 	border:1px solid #CCC;
 	padding:5px 5px 5px 32px;
+	margin-bottom:10px;
 	font-size:10pt;
 	color:#666;
 	display:none;
@@ -386,6 +387,11 @@ body
 	border:2px groove #AAA;
 	padding:2px 10px;
 	background:#FFF url(images/btn_bg.gif) bottom repeat-x;
+}
+
+#element span.describe
+{
+	color:#AAA;
 }
 
 #element span.focus

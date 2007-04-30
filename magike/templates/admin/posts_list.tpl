@@ -2,9 +2,14 @@
 <[include:menu]>
 
 <[module:post_input]>
-<[module:posts_list?type=2&sub=20]>
+<[module:posts_list?type=2&sub=20&striptags=1&limit=20]>
 <div id="content">
 	<div id="element">
+	<[if:$post_input.open]>
+		<div class="message">
+			{$post_input.word}
+		</div>
+	<[/if]>
 		<h2>{lang.admin_posts_list.list_title} <span class="discribe">{lang.admin_posts_list.list_describe}</span></h2>
 		<table width="100%" cellpadding="0" cellspacing="0" id="post_list">
 			<tr class="heading">
