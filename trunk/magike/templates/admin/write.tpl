@@ -29,7 +29,8 @@
 				<div class="input">
 					<h2>{lang.admin_write.content}</h2>
 					<p>
-						<textarea name="post_content" id="post_content" rows="14" style="width:600px">{$write_post.post_content}</textarea><br />
+						<textarea name="post_content" rows="14" class="validate-me" style="background:url({$static_var.siteurl}/templates/{$static_var.admin_template}/images/editor_loading.gif) center no-repeat;width:600px">{$write_post.post_content}</textarea><br />
+						<span class="validate-word" id="post_content-word"></span>&nbsp;
 						<span class="discribe">{lang.admin_write.content_describe}</span>
 					</p>
 				</div>
@@ -70,7 +71,8 @@
 				</div>
 				<div class="input">
 				<h2>{lang.admin_write.trackback}</h2>
-				<p><textarea type="text" class="text" name="trackback" cols=60 rows=5 ></textarea> <br />
+				<p>
+				<textarea type="text" class="text" name="trackback" cols=60 rows=5 ></textarea> <br />
 				<span class="discribe">{lang.admin_write.trackback_describe}</span></p>
 				</div>
 			</div>
@@ -114,8 +116,7 @@
 		</div>
 		<div style="margin-top:6px;line-height:40px;">
 		<input type="button" class="button" onclick="magikeValidator('{$static_var.index}/helper/validator','write_post');" style="padding:0;width:100px;height:30px;background:#FF9900;color:#FFF;border:2px solid #DB8400;font-size:11pt;font-weight:bold" value="{lang.admin_write.draft}" />
-		<input type="button" class="button" onclick="shows();" style="padding:0;width:100px;height:30px;background:#003399;color:#FFF;border:2px solid #001A4F;font-size:11pt;font-weight:bold" value="{lang.admin_write.publish}" />
-		<input type="button" onclick="showd()" value="test" />
+		<input type="button" class="button" style="padding:0;width:100px;height:30px;background:#003399;color:#FFF;border:2px solid #001A4F;font-size:11pt;font-weight:bold" value="{lang.admin_write.publish}" />
 		</div>
 	</form>
 	</div>
@@ -127,10 +128,10 @@ function validateSuccess()
 {
 	document.getElementById('write').submit();
 }
-function shows()
-{
-$.getScript("{$static_var.siteurl}/templates/{$static_var.admin_template}/javascript/tiny_mce/tiny_mce_src.js", function(){
-   tinyMCE.init({
+
+$.getScript("{$static_var.siteurl}/templates/{$static_var.admin_template}/javascript/tiny_mce/tiny_mce.js", function(){
+ tinyMCE.scriptUrl = "{$static_var.siteurl}/templates/{$static_var.admin_template}/javascript/tiny_mce/tiny_mce.js";
+ tinyMCE.init({
 	mode : "exact",
 	theme : "advanced",
 	elements : "post_content",
@@ -142,18 +143,20 @@ $.getScript("{$static_var.siteurl}/templates/{$static_var.admin_template}/javasc
 	theme_advanced_buttons3 : "",
 	theme_advanced_toolbar_location : "top",
 	theme_advanced_toolbar_align : "left",
-	content_css : "{$static_var.siteurl}/templates/{$static_var.template}/editor.css",
+	content_css : "{$static_var.siteurl}/templates/{$static_var.admin_template}/editor.css",
 	relative_urls : false,
-	remove_script_host : false,
-	cleanup_on_startup : true,
-	cleanup: true
+	remove_script_host : false
 	});
+	
+ window.setTimeout("showEditor();",0);
  });
-}
 
-function showd()
+function showEditor()
 {
-	tinyMCE.execCommand('mceAddControl', false, 'post_content');
+	if(!$(".mceEditor").parent().is(".mceEditorContainer"))
+	{
+		tinyMCE.execCommand('mceAddControl', false, 'post_content');
+	}
 }
 </script>
 

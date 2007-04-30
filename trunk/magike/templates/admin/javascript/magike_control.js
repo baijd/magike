@@ -332,6 +332,12 @@ function magikeValidator(url,mod)
 {
 	validateElements = null;
 	$(".validate-word").hide();
+	
+	if(typeof(tinyMCE) != "undefined")
+	{
+		tinyMCE.triggerSave();
+	}
+	
 	s = $('.validate-me').serialize();
 	$.ajax({
 		type: 'POST',
