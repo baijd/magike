@@ -1,8 +1,7 @@
 <[include:header]>
 <[include:menu]>
 
-<[module:categories_list]>
-<[module:posts_list]>
+<[module:posts_list?type=2&sub=20]>
 <div id="content">
 	<div id="element">
 		<h2>{lang.admin_posts_list.list_title} <span class="discribe">{lang.admin_posts_list.list_describe}</span></h2>
@@ -18,7 +17,7 @@
 			<tr>
 				<td width=5%><input type="checkbox" class="checkbox_element" name="post[]" value="{$post.post_id}"/></td>
 				<td width=20%><a href="{$static_var.index}/admin/posts/write?post_id={$post.post_id}" title="{$post.post_title}">{$post.post_title}</a></td>
-				<td width=40%>摘要</td>
+				<td width=40%>{$post.post_content}</td>
 				<td width=20%>{$post.category_name}</td>
 				<td width=15%>{$post.post_time}</td>
 			</tr>

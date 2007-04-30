@@ -6,6 +6,9 @@
 <[module:write_post]>
 <div id="content">
 	<div id="element">
+		<div class="proc">
+			正在处理您的请求
+		</div>
 	<form method="post" id="write">
 		<div class="tab_nav">
 			<ul id="tab">
@@ -20,7 +23,7 @@
 			<div id="write_content">
 				<div class="input">
 				<h2>{lang.admin_write.title}</h2>
-				<p><input type="text" class="text" name="post_title" size=60 value="{$write_post.post_title}" /> <br />
+				<p><input type="text" class="text validate-me" name="post_title" size=60 value="{$write_post.post_title}" /><span class="validate-word" id="post_title-word"></span> <br />
 				<span class="discribe">{lang.admin_write.title_describe}</span></p>
 				</div>
 				<div class="input">
@@ -110,32 +113,48 @@
 			</div>
 		</div>
 		<div style="margin-top:6px;line-height:40px;">
-		<input type="button" class="button" style="padding:0;width:100px;height:30px;background:#FF9900;color:#FFF;border:2px solid #DB8400;font-size:11pt;font-weight:bold" value="{lang.admin_write.draft}" />
-		<input type="button" class="button" style="padding:0;width:100px;height:30px;background:#003399;color:#FFF;border:2px solid #001A4F;font-size:11pt;font-weight:bold" value="{lang.admin_write.publish}" />
+		<input type="button" class="button" onclick="magikeValidator('{$static_var.index}/helper/validator','write_post');" style="padding:0;width:100px;height:30px;background:#FF9900;color:#FFF;border:2px solid #DB8400;font-size:11pt;font-weight:bold" value="{lang.admin_write.draft}" />
+		<input type="button" class="button" onclick="shows();" style="padding:0;width:100px;height:30px;background:#003399;color:#FFF;border:2px solid #001A4F;font-size:11pt;font-weight:bold" value="{lang.admin_write.publish}" />
+		<input type="button" onclick="showd()" value="test" />
 		</div>
 	</form>
 	</div>
 </div>
 
-<script language="javascript" type="text/javascript" src="{$static_var.siteurl}/templates/{$static_var.admin_template}/javascript/tiny_mce/tiny_mce.js"></script>
 <script>
 registerTab("#tab","#write_tab");
-tinyMCE.init({
-mode : "exact",
-theme : "advanced",
-elements : "post_content",
-language :"{$static_var.language}",
-plugins : "flash,magike,inlinepopups",
-theme_advanced_buttons1 : "bold,italic,underline,strikethrough, separator, forecolor ,magike_more,magike_page",
-theme_advanced_buttons1_add_before: "undo,redo,code,separator,hr,link,unlink,image,flash,separator,bullist,numlist,outdent,indent,justifyleft,justifycenter,justifyright",
-theme_advanced_buttons2 :"",
-theme_advanced_buttons3 : "",
-theme_advanced_toolbar_location : "top",
-theme_advanced_toolbar_align : "left",
-content_css : "{$static_var.siteurl}/templates/{$static_var.template}/editor.css",
-relative_urls : false,
-remove_script_host : false
-});
+function validateSuccess()
+{
+	document.getElementById('write').submit();
+}
+function shows()
+{
+$.getScript("{$static_var.siteurl}/templates/{$static_var.admin_template}/javascript/tiny_mce/tiny_mce_src.js", function(){
+   tinyMCE.init({
+	mode : "exact",
+	theme : "advanced",
+	elements : "post_content",
+	language :"{$static_var.language}",
+	plugins : "flash,magike,inlinepopups",
+	theme_advanced_buttons1 : "bold,italic,underline,strikethrough, separator, forecolor ,magike_more,magike_page",
+	theme_advanced_buttons1_add_before: "undo,redo,code,separator,hr,link,unlink,image,flash,separator,bullist,numlist,outdent,indent,justifyleft,justifycenter,justifyright",
+	theme_advanced_buttons2 :"",
+	theme_advanced_buttons3 : "",
+	theme_advanced_toolbar_location : "top",
+	theme_advanced_toolbar_align : "left",
+	content_css : "{$static_var.siteurl}/templates/{$static_var.template}/editor.css",
+	relative_urls : false,
+	remove_script_host : false,
+	cleanup_on_startup : true,
+	cleanup: true
+	});
+ });
+}
+
+function showd()
+{
+	tinyMCE.execCommand('mceAddControl', false, 'post_content');
+}
 </script>
 
 <[include:footer]>

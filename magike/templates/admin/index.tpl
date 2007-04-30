@@ -129,7 +129,7 @@
 				<li><a href="#">一个有趣的站点</a> 发布在<a class="close" href="#">网络天下</a> 4天前</li>
 				<li><a href="#">我搜集的一些小图标</a> 发布在<a class="close" href="#">网络天下</a> 3天前</li>
 			</ul>
-			<h2>快速链接&raquo;</h2>
+			<h2>最新评论</h2>
 			<ul class="info">
 				<li><a href="{$static_var.index}/admin/posts/write">撰写一篇文章</a></li>
 				<li><a href="#">更改我的博客皮肤</a></li>
