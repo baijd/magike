@@ -184,6 +184,7 @@ if (get_magic_quotes_gpc())
 //设定系统默认时区
 if(function_exists('date_default_timezone_get') && function_exists('date_default_timezone_set'))
 {
+	date_default_timezone_get();
 	date_default_timezone_set(date_default_timezone_get());
 }
 ?>

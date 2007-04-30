@@ -8,5 +8,6 @@
 
 $elements = array(
 	"post_title" => array("null" => "标题必须填写"),
+	"post_content" => array("null" => "内容不能为空")
 );
 ?>
