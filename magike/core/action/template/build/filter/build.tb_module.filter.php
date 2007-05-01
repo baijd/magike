@@ -34,7 +34,8 @@ class TbModule extends TemplateBuild
 				parse_str($query[1],$this->args[mgFileNameToClassName($query[0])]);
 			}
 			$this->moduleFile[__MODULE__.'/module.'.$query[0].'.php'] = filemtime(__MODULE__.'/module.'.$query[0].'.php');
-			$this->moduleSource .= php_strip_whitespace(__MODULE__.'/module.'.$query[0].'.php');
+			$this->moduleSource .= __DEBUG__ ? file_get_contents(__MODULE__.'/module.'.$query[0].'.php') : 
+			php_strip_whitespace(__MODULE__.'/module.'.$query[0].'.php');
 		}
 		else
 		{

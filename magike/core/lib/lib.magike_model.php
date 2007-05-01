@@ -6,30 +6,30 @@
  * License   : GNU General Public License 2.0
  *********************************/
  
- class MagikeModel extends Database
- {
+class MagikeModel extends Database
+{
  	 private $table;
  	 protected $key;
  	 
  	 function __construct($table = NULL)
  	 {
  	 	 parent::__construct();
- 	 	 if(!$this->table)
+ 	 	 if(!$table)
  	 	 {
- 	 	 	 $this->table = str_replace('_model','',mgClassNameToFileName(get_class($this)));
+ 	 	 	 $table = 'table.'.str_replace('_model','',mgClassNameToFileName(get_class($this)));
  	 	 }
  	 	 $this->table = str_replace('table.',__DBPREFIX__,$table);
  	 	 $this->key = $this->findPrimaryKey();
  	 }
  	 
- 	 private findPrimaryKey()
+ 	 private function findPrimaryKey()
  	 {
  	 	 $res = mysql_query("SHOW INDEX FROM {$this->table} WHERE Key_name = 'PRIMARY'") or $this->databaseException();
  	 	 $row = mysql_fetch_array($res);
  	 	 return $row ? $row['Column_name'] : NULL;
  	 }
  	 
- 	 protected deleteByKeys($keys)
+ 	 public function deleteByKeys($keys)
  	 {
  	 	 $sum = 0;
  	 	 if(is_string($keys))
@@ -52,14 +52,14 @@
  	 	 return $sum;
  	 }
  	 
- 	 protected fectchByKey($key)
+ 	 public function fectchByKey($key)
  	 {
  	 	 return $this->fectchOne(array('table' => $this->table,
  	 	 							   'where' => array('template' => "{$this->key} = ?",
  	 	 												'value' => array($key))));
  	 }
  	 
- 	 protected increaseFieldByKey($key,$field,$num = 1)
+ 	 public function increaseFieldByKey($key,$field,$num = 1)
  	 {
  	 	 return $this->increaseField(array('table' => $this->table,
  	 	 								   'where' => array('template' => "{$this->key} = ?",
@@ -67,13 +67,27 @@
  	 	 							$field,$num);
  	 }
  	 
- 	 protected decreaseFieldByKey($key,$field,$num = 1)
+ 	 public function decreaseFieldByKey($key,$field,$num = 1)
  	 {
  	 	 return $this->decreaseField(array('table' => $this->table,
  	 	 								   'where' => array('template' => "{$this->key} = ?",
  	 	 													'value' => array($key))),
  	 	 							$field,$num);
  	 }
- }
- ?>
+ 	 
+ 	 public function insertTable($value)
+ 	 {
+ 	 	 return $this->insert(array('table' => $this->table,
+									'value' => $value));
+ 	 }
+ 	 
+ 	 public function updateByKey($key,$value)
+ 	 {
+ 	 	 return $this->update(array('table' => $this->table,
+						 	 	 	'where' => array('template' => "{$this->key} = ?",
+						 	 	 					 'value' => array($key)),
+									'value' => $value));
+ 	 }
+}
+?>
  
