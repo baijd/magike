@@ -286,6 +286,11 @@ body
 	overflow:hidden;
 }
 
+#element table tr td img.describe
+{
+	margin-bottom:-4px;
+}
+
 #element table tr td a
 {
 	text-decoration: underline;
@@ -336,6 +341,25 @@ body
 #element .table_nav span
 {
 	cursor:pointer;
+	text-decoration: underline;
+	float:left;
+}
+
+#element .table_nav b
+{
+	float:left;
+}
+
+#element .table_nav u
+{
+	float:right;
+	text-decoration: none;
+}
+
+#element .table_nav a
+{
+	float:right;
+	color:#464A52;
 	text-decoration: underline;
 }
 

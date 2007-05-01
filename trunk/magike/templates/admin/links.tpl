@@ -24,9 +24,9 @@
 			<[/loop]>
 		</table>
 		<div class="table_nav">
-			<span onclick="selectTableAll('link_list','checkbox_element')">{lang.admin_db_grid.select_all}</span>,
-			<span onclick="selectTableNone('link_list','checkbox_element')">{lang.admin_db_grid.select_none}</span>,
-			<span onclick="selectTableOther('link_list','checkbox_element')">{lang.admin_db_grid.select_other}</span>,
+			<span onclick="selectTableAll('link_list','checkbox_element')">{lang.admin_db_grid.select_all}</span><b>,</b>
+			<span onclick="selectTableNone('link_list','checkbox_element')">{lang.admin_db_grid.select_none}</span><b>,</b>
+			<span onclick="selectTableOther('link_list','checkbox_element')">{lang.admin_db_grid.select_other}</span><b>,</b>
 			<span>{lang.admin_db_grid.select_delete}</span>
 		</div>
 	</div>

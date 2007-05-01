@@ -149,22 +149,33 @@ class PostInput extends MagikeModule
 	
 	public function deletePost()
 	{
-		$post = $this->database->fectchOne(array('table' => 'table.posts',
-										 		 'where' => array('template' => 'id = ?',
-														  		  'value'	 => array($_GET['post_id']))
-											));
-		$this->database->delete(array('table' => 'table.posts',
-									  'where' => array('template' => 'id = ?',
-													   'value'	  => array($_GET['post_id'])
-								)));
-		$this->database->decreaseField(array('table' => 'table.categories',
-											 'where' => array('template' => 'id = ?',
-												  			  'value'	 => array($post['category_id']))),
-									  'category_count'
-									  );
-		$this->deleteTags($_GET['post_id']);
+		$select = is_array($_GET['post_id']) ? $_GET['post_id'] : array($_GET['post_id']);
+		foreach($select as $id)
+		{
+			$post = $this->database->fectchOne(array('table' => 'table.posts',
+											 		 'where' => array('template' => 'id = ?',
+															  		  'value'	 => array($id))
+												));
+			$this->database->delete(array('table' => 'table.posts',
+										  'where' => array('template' => 'id = ?',
+														   'value'	  => array($id)
+									)));
+			$this->database->delete(array('table' => 'table.comments',
+										  'where' => array('template' => 'post_id = ?',
+														   'value'	  => array($id)
+									)));
+			$this->database->decreaseField(array('table' => 'table.categories',
+												 'where' => array('template' => 'id = ?',
+													  			  'value'	 => array($post['category_id']))),
+										  'category_count'
+										  );
+			if($post['post_tags'])
+			{
+				$this->deleteTags($id);
+			}
+		}
 		$this->result['open'] = true;
-		$this->result['word'] = '文章 "'.$post['post_title'].'" 已经被删除';
+		$this->result['word'] = (count($select) > 1 ? '您的多篇文章' : '文章 "'.$post['post_title'].'" ').'已经被删除';
 	}
 	
 	public function runModule()

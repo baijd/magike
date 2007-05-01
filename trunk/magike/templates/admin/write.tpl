@@ -149,7 +149,7 @@ $.getScript("{$static_var.siteurl}/templates/{$static_var.admin_template}/javasc
 	remove_script_host : false
 	});
 	
- window.setTimeout("showEditor();",0);
+ window.setTimeout("showEditor();",500);
  });
 
 function showEditor()

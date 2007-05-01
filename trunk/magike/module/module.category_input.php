@@ -116,14 +116,55 @@ class CategoryInput extends MagikeModule
 	
 	public function deleteCategory()
 	{
-		$this->database->delete(array('table' => 'table.categories',
+		$select = is_array($_GET['c']) ? $_GET['c'] : array($_GET['c']);
+		foreach($select as $id)
+		{
+			$categoryPosts = $this->database->fectch(array('table' => 'table.posts',
+														   'where' => array('template' => 'category_id = ?',
+																			'value' => array($id))));
+			
+			$posts = array();
+			foreach($categoryPosts as $val)
+			{
+				$posts[] = $val['id'];
+			}
+			
+			$this->database->delete(array('table' => 'table.categories',
+												  'where' => array('template' => 'id = ?',
+																	'value'	  => array($id))
+												  ));
+			$this->database->delete(array('table' => 'table.posts',
+												  'where' => array('template' => 'category_id = ?',
+																	'value'	  => array($id))
+												  ));
+			
+			
+			foreach($posts as $id)
+			{
+				$post = $this->database->fectchOne(array('table' => 'table.posts',
+												 		 'where' => array('template' => 'id = ?',
+																  		  'value'	 => array($id))
+													));
+				$this->database->delete(array('table' => 'table.posts',
 											  'where' => array('template' => 'id = ?',
-																'value'	  => array($_GET['c']))
-											  ));
-		$this->database->delete(array('table' => 'table.posts',
-											  'where' => array('template' => 'category_id = ?',
-																'value'	  => array($_GET['c']))
-											  ));
+															   'value'	  => array($id)
+										)));
+				$this->database->delete(array('table' => 'table.comments',
+											  'where' => array('template' => 'post_id = ?',
+															   'value'	  => array($id)
+										)));
+				$this->database->decreaseField(array('table' => 'table.categories',
+													 'where' => array('template' => 'id = ?',
+														  			  'value'	 => array($post['category_id']))),
+											  'category_count'
+											  );
+				if($post['post_tags'])
+				{
+					$this->deleteTags($id);
+				}
+			}
+		}
+		
 		$this->result['open'] = true;
 		$this->result['word'] = '您删除的分类已经生效';
 	}
