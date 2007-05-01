@@ -10,7 +10,8 @@ class WritePost extends MagikeModule
 {
 	function __construct()
 	{
-		parent::__construct(array('public' => array('database')));
+		parent::__construct();
+		$this->post = $this->loadModel('Posts');
 	}
 	
 	public function prasePost($val)
@@ -22,14 +23,7 @@ class WritePost extends MagikeModule
 	{
 		if(isset($_GET['post_id']))
 		{
-			$args = array('fields'=> '*,table.posts.id AS post_id',
-						  'table' => 'table.posts JOIN table.categories ON table.posts.category_id = table.categories.id',
-						  'groupby' => 'table.posts.id',
-						  );
-			$args['where']['template'] = 'table.posts.id = ?';
-			$args['where']['value'] = array($_GET['post_id']);
-			$result = $this->database->fectchOne($args,array('function' => array($this,'prasePost')));
-
+			$result = $this->post->fectchPostById($_GET['post_id']);
 			//修改菜单的内容
 			if(isset($this->stack['admin_menu_list']['children']))
 			{

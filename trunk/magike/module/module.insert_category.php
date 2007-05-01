@@ -9,19 +9,18 @@
 class InsertCategory extends MagikeModule
 {
 	private $result;
+	private $category;
 	
 	function __construct()
 	{
 		$this->result = array();
-		parent::__construct(array('public' => array('database')));
+		parent::__construct();
+		$this->category = $this->loadModel('categories');
 	}
 	
 	public function displayCategory()
 	{
-		$this->result = $this->database->fectchOne(array('table' => 'table.categories',
-											  'where'	=> array('template' => 'id = ?',
-																 'value'	=> array($_GET['c'])
-										)));
+		$this->result = $this->category->fectchByKey($_GET['c']);
 		
 		//修改菜单的内容
 		if(isset($this->stack['admin_menu_list']['children']))

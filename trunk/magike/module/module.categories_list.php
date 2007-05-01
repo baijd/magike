@@ -11,12 +11,13 @@ class CategoriesList extends MagikeModule
 
 	function __construct()
 	{
-		parent::__construct(array('public' => array('database')));
+		parent::__construct();
+		$this->model = $this->loadModel('categories');
 	}
 	
 	public function runModule()
 	{
-		return $this->database->fectch(array('table' => 'table.categories','orderby' => 'category_sort','sort' => 'ASC'));
+		return $this->model->listCategory();
 	}
 }
 ?>

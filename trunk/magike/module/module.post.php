@@ -8,9 +8,12 @@
 
 class Post extends MagikeModule
 {
+	private $post;
+	
 	function __construct()
 	{
-		parent::__construct(array('public' => array('database')));
+		parent::__construct();
+		$this->post = $this->loadModel('Posts');
 	}
 	
 	public function prasePost($val)
@@ -20,28 +23,18 @@ class Post extends MagikeModule
 	
 	public function runModule()
 	{
-		$args = array('fields'=> '*,table.posts.id AS post_id',
-					  'table' => 'table.posts JOIN table.categories ON table.posts.category_id = table.categories.id',
-					  'groupby' => 'table.posts.id',
-					  );
-
 		if(isset($_GET['post_id']))
 		{
-			$args['where']['template'] = 'table.posts.id = ?';
-			$args['where']['value'] = array($_GET['post_id']);
+			return $this->post->fectchPostById($_GET['post_id'],array('function' => array($this,'prasePost')));
 		}
 		else if(isset($_GET['post_name']))
 		{
-			$args['where']['template'] = 'table.posts.post_name = ?';
-			$args['where']['value'] = array($_GET['post_name']);
+			return $this->post->fectchPostByName($_GET['post_name'],array('function' => array($this,'prasePost')));
 		}
 		else
 		{
 			return array();
 		}
-		
-		$result = $this->database->fectch($args,array('function' => array($this,'prasePost')));
-		return $result[0];
 	}
 }
 ?>

@@ -86,7 +86,7 @@ class Database extends MagikeObject
 		return $matches[1].__DBPREFIX__.$matches[2];
 	}
 
-	private function databaseException()
+	protected function databaseException()
 	{
 		$this->throwException(E_DATABASE,__DEBUG__ ? mysql_error() : NULL);
 	}
