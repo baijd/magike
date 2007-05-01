@@ -9,8 +9,8 @@
 //初始化服务器参数及状态
 //设定异常截获函数以及错误截获函数
 set_exception_handler('exceptionHandler');
-error_reporting(E_ALL);
-set_error_handler('errorHandler');
+error_reporting(__DEBUG__ ? E_ALL : E_ERROR);
+if(__DEBUG__) set_error_handler('errorHandler');
 
 //打开会话
 session_start();

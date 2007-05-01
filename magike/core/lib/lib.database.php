@@ -5,6 +5,12 @@
  * Copyright : Magike Group
  * License   : GNU General Public License 2.0
  *********************************/
+ 
+//连接数据库
+define('E_DATABASE','Database Error');
+$dblink=@mysql_connect(__DBHOST__,__DBUSER__,__DBPASS__) or die('Database Connect Error');
+@mysql_select_db(__DBNAME__,$dblink) or die('Database Connect Error');
+mysql_query('SET NAMES "utf8"') or die('Database Connect Error');
 
 class Database extends MagikeObject
 {
@@ -12,10 +18,7 @@ class Database extends MagikeObject
 	
 	function __construct()
 	{
-		define('E_DATABASE','Database Error');
-		$dblink=@mysql_connect(__DBHOST__,__DBUSER__,__DBPASS__) or die('Database Connect Error');
-		@mysql_select_db(__DBNAME__,$dblink) or die('Database Connect Error');
-		mysql_query('SET NAMES "utf8"') or die('Database Connect Error');
+		parent::__construct();
 		$this->usedTable = array();
 	}
 	

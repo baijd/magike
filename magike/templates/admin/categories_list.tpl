@@ -11,6 +11,7 @@
 		</div>
 	<[/if]>
 		<h2>{lang.admin_categories_list.categories_title} <span class="discribe">{lang.admin_categories_list.categories_describe}</span></h2>
+		<form method="get" id="all_categories">
 		<table width="100%" cellpadding="0" cellspacing="0" id="category_list">
 			<tr class="heading">
 				<td width=5%></td>
@@ -21,7 +22,7 @@
 			</tr>
 			<[loop:$categories_list AS $category]>
 			<tr>
-				<td><input type="checkbox" class="checkbox_element" name="category[]" value="{$category.id}"/></td>
+				<td><input type="checkbox" class="checkbox_element" name="c[]" value="{$category.id}"/></td>
 				<td><a href="{$static_var.index}/admin/posts/category?c={$category.id}" title="{$category.category_name}">{$category.category_name}</td>
 				<td class="describe">{$category.category_describe}</td>
 				<td>{$category.category_postname}</td>
@@ -34,11 +35,13 @@
 			</tr>
 			<[/loop]>
 		</table>
+		<input type="hidden" name="act" value="del"/>
+		</form>
 		<div class="table_nav">
-			<span onclick="selectTableAll('category_list','checkbox_element')">{lang.admin_db_grid.select_all}</span>,
-			<span onclick="selectTableNone('category_list','checkbox_element')">{lang.admin_db_grid.select_none}</span>,
-			<span onclick="selectTableOther('category_list','checkbox_element')">{lang.admin_db_grid.select_other}</span>,
-			<span>{lang.admin_db_grid.select_delete}</span>
+			<span onclick="selectTableAll('category_list','checkbox_element')">{lang.admin_db_grid.select_all}</span><b>,</b>
+			<span onclick="selectTableNone('category_list','checkbox_element')">{lang.admin_db_grid.select_none}</span><b>,</b>
+			<span onclick="selectTableOther('category_list','checkbox_element')">{lang.admin_db_grid.select_other}</span><b>,</b>
+			<span onclick="if(confirm('您确定删除这些分类吗')) document.getElementById('all_categories').submit();">{lang.admin_db_grid.select_delete}</span>
 		</div>
 	</div>
 </div>

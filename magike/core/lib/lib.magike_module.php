@@ -6,12 +6,14 @@
  * License   : GNU General Public License 2.0
  *********************************/
 
+define('E_MODELFILENOTEXISTS','Model File Not Exists');
 class MagikeModule extends MagikeObject
 {
 	protected $cacheDir;
 	protected $cacheFile;
 	protected $getLanguage;
 	protected $moduleName;
+	protected $model;
 	
 	function __construct($args = array())
 	{
@@ -19,7 +21,31 @@ class MagikeModule extends MagikeObject
 		$this->moduleName = mgClassNameToFileName(get_class($this));
 		$this->cacheDir = __CACHE__.'/'.$this->moduleName;
 		$this->cacheFile = $this->cacheDir.'/'.$this->moduleName.'.php';
+		$this->model = $this->loadModel($this->moduleName,false);
 		$this->getLanguage = array();
+	}
+	
+	protected function loadModel($model,$triggerException = true)
+	{
+		$modelFile = __MODEL__.'/model.'.$model.'.php';
+		if(file_exists($modelFile))
+		{
+			require_once($modelFile);
+			$object = mgFileNameToClassName($model);
+			eval('$tmp = new '.$object.'Model();');
+			return $tmp;
+		}
+		else
+		{
+			if($triggerException)
+			{
+				$this->throwException(E_MODELFILENOTEXISTS,$modelFile);
+			}
+			else
+			{
+				return NULL;
+			}
+		}
 	}
 	
 	protected function initArgs($args,$require)
