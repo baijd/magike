@@ -70,7 +70,7 @@ class Action extends Path
 		else
 		{
 			$tmp = null;
-			require(__DIR__.'/action/'.$this->stack[$this->moduleName]['action'].'/action.'.$this->stack[$this->moduleName]['action'].'.php');
+			require_once(__DIR__.'/action/'.$this->stack[$this->moduleName]['action'].'/action.'.$this->stack[$this->moduleName]['action'].'.php');
 			eval('$tmp = new '.mgFileNameToClassName($this->stack[$this->moduleName]['action'])
 			.'(mgReplaceVar($this->stack[$this->moduleName]["file"],$this->stack));');
 			call_user_func(array($tmp,'runAction'));
