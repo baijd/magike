@@ -40,7 +40,7 @@ class Access extends MagikeModule
 		require($this->cacheFile);
 		$currentGroup = isset($access[$this->stack['action']['id']]) ? $access[$this->stack['action']['id']] : array();
 		
-		if(array_intersect($currentGroup,$this->result['user_group']))
+		if(array_intersect($currentGroup,$this->result['user_group']) || '/exception' == $this->stack['action']['path'])
 		{
 			return;
 		}
