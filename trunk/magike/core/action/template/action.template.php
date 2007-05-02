@@ -57,6 +57,7 @@ class Template extends MagikeObject
 	{
 		$module = array();	//初始化module数组
 		$args	= array();	//初始化args数组
+
 		require(__COMPILE__.'/'.mgPathToFileName($this->compileFile).'.mod.php');
 		foreach($module as $object)
 		{

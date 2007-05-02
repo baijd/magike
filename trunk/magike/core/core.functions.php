@@ -118,7 +118,7 @@ function mgRequireObjects($dir,$template)
 	{
 		if(preg_match($template,$file,$matches))
 		{
-			require($dir.'/'.$file);
+			require_once($dir.'/'.$file);
 			$objects[] = mgFileNameToClassName($matches[1]);
 		}
 	}

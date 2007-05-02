@@ -84,29 +84,21 @@ class PostInput extends MagikeModule
 	
 	public function deletePost()
 	{
+		$postModel = $this->loadModel('posts');
+		$commentsModel = $this->loadModel('comments');
+		$categoriesModel = $this->loadModel('categories');
+		
 		$select = is_array($_GET['post_id']) ? $_GET['post_id'] : array($_GET['post_id']);
 		foreach($select as $id)
 		{
-			$post = $this->database->fectchOne(array('table' => 'table.posts',
-											 		 'where' => array('template' => 'id = ?',
-															  		  'value'	 => array($id))
-												));
-			$this->database->delete(array('table' => 'table.posts',
-										  'where' => array('template' => 'id = ?',
-														   'value'	  => array($id)
-									)));
-			$this->database->delete(array('table' => 'table.comments',
-										  'where' => array('template' => 'post_id = ?',
-														   'value'	  => array($id)
-									)));
-			$this->database->decreaseField(array('table' => 'table.categories',
-												 'where' => array('template' => 'id = ?',
-													  			  'value'	 => array($post['category_id']))),
-										  'category_count'
-										  );
+			$post = $postModel->fectchByKey($id);
+			$postModel->deleteByKeys($id);
+			$commentsModel->deleteByFieldEqual('post_id',$id);
+			$categoriesModel->decreaseFieldByKey($post['category_id'],'category_count');
 			if($post['post_tags'])
 			{
-				$this->deleteTags($id);
+				$tagsModel = $this->loadModel('tags');
+				$tagsModel->deleteTagsByPostId($id);
 			}
 		}
 		$this->result['open'] = true;

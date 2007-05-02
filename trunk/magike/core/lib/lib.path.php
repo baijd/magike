@@ -15,6 +15,7 @@ class Path extends MagikeModule
 	private $eregPath;
 	private $value;
 	private $pathCache;
+	private $last;
 	
 	function __construct($location = NULL)
 	{
@@ -30,12 +31,29 @@ class Path extends MagikeModule
 		$this->path = $this->location ? $this->location : $this->getPath();
 		$this->pathConfig = array();
 		$pathConfig = array();
-		$pathFile = $this->cacheDir.'/'.count(explode('/',$this->path)).'.php';
+		$pathDeep = count(explode('/',$this->path));
+		$pathFile = $this->cacheDir.'/'.$pathDeep.'.php';
+		$pathFileUp = $this->cacheDir.'/'.($pathDeep - 1).'.php';
+		$pathFileExists = file_exists($pathFile);
+		$pathFileUpExists = file_exists($pathFileUp) & $this->last;
 
-		if(file_exists($pathFile))
+		if($pathFileExists || $pathFileUpExists)
 		{
-			require($pathFile);
-			$this->pathConfig = $pathConfig;
+			$ipathConfig = array();
+			$ipathUpConfig = array();
+			
+			if($pathFileExists)
+			{
+				require($pathFile);
+				$ipathConfig = $pathConfig;
+			}
+			if($pathFileUpExists)
+			{
+				require($pathFileUp);
+				$ipathUpConfig = $pathConfig;
+			}
+			
+			$this->pathConfig = array_merge($ipathConfig,$ipathUpConfig);
 		}
 		else
 		{
@@ -94,7 +112,8 @@ class Path extends MagikeModule
 		{
 			$path = '/';
 		}
-
+		
+		$this->doRedirect($path);
 		return $path;
 	}
 
@@ -110,6 +129,33 @@ class Path extends MagikeModule
 		}
 		@reset($_GET);
 	}
+	
+	private function doRedirect($path)
+	{
+		$this->last = $path[strlen($path) - 1] == '/';
+		$path = $this->last ? substr($path,0,strlen($path) - 1) : $path;
+		$isFile = strrpos($path,'.') === false ? false : strrpos($path,'/') < strrpos($path,'.');
+
+		if(!$isFile & !$this->last)
+		{
+			$request = array_shift(explode('?',$_SERVER['REQUEST_URI'])).'/';
+			if(isset($_SERVER['QUERY_STRING']) && NULL != $_SERVER['QUERY_STRING'])
+			{
+				$request .= '?'.$_SERVER['QUERY_STRING'];
+			}
+			header("location: {$request}");
+		}
+		if($isFile & $this->last)
+		{
+			$request = array_shift(explode('?',$_SERVER['REQUEST_URI']));
+			$request = substr($request,0,strlen($request) - 1);
+			if(isset($_SERVER['QUERY_STRING']) && NULL != $_SERVER['QUERY_STRING'])
+			{
+				$request .= '?'.$_SERVER['QUERY_STRING'];
+			}
+			header("location: {$request}");
+		}
+	}
 
 	private function praseEregPath($path)
 	{
@@ -122,7 +168,7 @@ class Path extends MagikeModule
 		$path = preg_replace("/\[([_0-9a-zA-Z-]+)\=\%d\]/i","([0-9]+)",$path);
 		$path = preg_replace("/\[([_0-9a-zA-Z-]+)\=\%s\]/i","([_0-9a-zA-Z\\x80-\\xff-]+)",$path);
 		$path = preg_replace("/\[([_0-9a-zA-Z-]+)\=\%a\]/i","([_0-9a-zA-Z-]+)",$path);
-		$path = '^'.$path.'$';
+		$path = '^'.$path.'[/]?$';
 
 		return $path;
 	}
