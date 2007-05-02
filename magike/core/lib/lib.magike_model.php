@@ -59,6 +59,20 @@ class MagikeModel extends Database
  	 	 												'value' => array($key))));
  	 }
  	 
+ 	 public function fectchByFieldEqual($field,$value)
+ 	 {
+ 	 	 return $this->fectchOne(array('table' => $this->table,
+ 	 	 							   'where' => array('template' => "{$field} = ?",
+ 	 	 												'value' => array($value))));
+ 	 }
+ 	 
+ 	 public function fectchByFieldLike($field,$value)
+ 	 {
+ 	 	 return $this->fectchOne(array('table' => $this->table,
+ 	 	 							   'where' => array('template' => "{$field} LIKE ?",
+ 	 	 												'value' => array($value))));
+ 	 }
+ 	 
  	 public function increaseFieldByKey($key,$field,$num = 1)
  	 {
  	 	 return $this->increaseField(array('table' => $this->table,
