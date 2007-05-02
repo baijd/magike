@@ -17,7 +17,7 @@ class CategoriesList extends MagikeModule
 	
 	public function runModule()
 	{
-		return $this->model->listCategory();
+		return $this->model->listCategories();
 	}
 }
 ?>
