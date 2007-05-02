@@ -79,6 +79,7 @@ class Template extends MagikeObject
 				$this->stack[$moduleName] = $stack;
 			}
 		}
+		
 		$this->stack['action']['prase_time'] = substr(mgGetMicrotime() - $this->stack['action']['prase_time'],0,6);
 
 		//定义头文件

@@ -211,9 +211,8 @@ function mgCreateRandomString($number)
 
 //获取毫秒级时间
 function mgGetMicrotime()
-{ 
-	list($usec, $sec) = explode(" ",microtime()); 
-	return ((float)$usec + (float)$sec); 
+{
+	return microtime(true); 
 }
 
 //获取当前当地时间戳

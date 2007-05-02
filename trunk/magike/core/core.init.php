@@ -49,7 +49,8 @@ class MagikeException extends Exception
        	}
        	else
        	{
-       		die(new Action('/exception'));
+       		new Action('/exception',$this->data);
+       		die();
        	}
    }
 
