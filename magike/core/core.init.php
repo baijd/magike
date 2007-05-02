@@ -29,7 +29,7 @@ class MagikeException extends Exception
    }
 
    public function __toString()
-   {   	
+   {
        	$data = '';
        	if(is_array($this->data))
        	{
@@ -43,7 +43,7 @@ class MagikeException extends Exception
        		$data = $this->data;
        	}
 
-       	if(1)
+       	if(__DEBUG__ || $this->code)
        	{
        		die(__CLASS__ . ": [{$this->code}]: {$this->message}<br />\n".$data);
        	}
