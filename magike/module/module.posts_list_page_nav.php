@@ -9,11 +9,6 @@
 class PostsListPageNav extends MagikeModule
 {
 	private $getArgs;
-	
-	function __construct()
-	{
-		parent::__construct(array('public' => array('database')));
-	}
 
 	public function runModule($args)
 	{
@@ -21,27 +16,22 @@ class PostsListPageNav extends MagikeModule
 						 'type'				=> 0
 						);
 		$this->getArgs = $this->initArgs($args,$require);
-		$args = array('table'	=> 'table.posts');
+		$postModel = $this->loadModel('posts');
 
 		switch ($this->getArgs['type'])
 		{
 			case 0:
-				$args['where'] = array('where'	=> array(
-										'template'	=> 'post_is_draft = 0 AND post_is_hidden = 0 AND post_is_page = 0'
-								 ));
+				$total = $postModel->countAllEntriesIncludeHidden();
 				break;
 			case 1:
-				$args['where'] = array('where'	=> array(
-										'template'	=> 'post_is_draft = 0 AND post_is_page = 0'
-								 ));
+				$total = $postModel->countAllEntries();
 				break;
 			case 2:
-				break;
 			default:
+				$total = $postModel->countAllPosts();
 				break;
 		}
 		
-		$total = $this->database->count($args);
 		$page = isset($_GET['page']) ? $_GET['page'] : 1;
 		$result['next'] = $total > $page*$this->getArgs['limit'] ? $page + 1 : 0;
 		$result['prev'] = $page > 1 ? $page - 1 : 0;

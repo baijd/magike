@@ -11,11 +11,6 @@ class PostsList extends MagikeModule
 	private $result;
 	private $getArgs;
 	
-	function __construct()
-	{
-		parent::__construct(array('public' => array('database')));
-	}
-	
 	public function prasePost($val,$num)
 	{
 		$val["post_content"] = $this->getArgs["striptags"] ? mgStripTags($val["post_content"]) : $val["post_content"];
@@ -32,40 +27,29 @@ class PostsList extends MagikeModule
 	{
 		$require = array('sub' 	  			=> $this->stack['static_var']['post_sub'],	//摘要字数
 						 'limit'  			=> $this->stack['static_var']['post_page_num'],	//每页篇数
-						 'sort'				=> 'DESC',	//排序方式
 						 'type'				=> 0,
 						 'striptags'		=> 0
 						);
 		$this->getArgs = $this->initArgs($args,$require);
-		$args = array('table'	=> 'table.posts JOIN table.categories ON table.posts.category_id = table.categories.id',
-					  'groupby' => 'table.posts.id',
-					  'fields'	=> '*,table.posts.id AS post_id',
-					  'orderby' => 'table.posts.post_time',
-					  'limit'	=> $this->getArgs['limit'],
-					  'sort'	=> 'DESC'
-			  );
+		$postModel = $this->loadModel('posts');
+
+		$page = isset($_GET['page']) ? $_GET['page'] : 1;
+		$offset = ($page - 1)*$this->getArgs['limit'];
 
 		switch ($this->getArgs['type'])
 		{
 			case 0:
-				$args['where'] = array('where'	=> array(
-										'template'	=> 'post_is_draft = 0 AND post_is_hidden = 0 AND post_is_page = 0'
-								 ));
+				
+				return $postModel->listAllEntriesIncludeHidden($this->getArgs['limit'],$offset,array('function' => array($this,'prasePost')));
 				break;
 			case 1:
-				$args['where'] = array('where'	=> array(
-										'template'	=> 'post_is_draft = 0 AND post_is_page = 0'
-								 ));
+				return $postModel->listAllEntries($this->getArgs['limit'],$offset,array('function' => array($this,'prasePost')));
 				break;
 			case 2:
-				break;
 			default:
+				return $postModel->listAllPosts($this->getArgs['limit'],$offset,array('function' => array($this,'prasePost')));
 				break;
 		}
-
-		$page = isset($_GET['page']) ? $_GET['page'] : 1;
-		$args['offset'] = ($page - 1)*$this->getArgs['limit'];
-		return $this->database->fectch($args,array('function' => array($this,'prasePost')));
 	}
 }
 ?>

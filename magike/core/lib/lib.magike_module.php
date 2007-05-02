@@ -7,6 +7,8 @@
  *********************************/
 
 define('E_MODELFILENOTEXISTS','Model File Not Exists');
+define('E_FORMISOUTOFDATE','Form Is Out Of Date');
+
 class MagikeModule extends MagikeObject
 {
 	protected $cacheDir;
@@ -27,7 +29,7 @@ class MagikeModule extends MagikeObject
 	
 	protected function loadModel($model,$triggerException = true)
 	{
-		$modelFile = __MODEL__.'/model.'.$model.'.php';
+		$modelFile = strtolower(__MODEL__.'/model.'.$model.'.php');
 		if(file_exists($modelFile))
 		{
 			require_once($modelFile);
@@ -85,6 +87,14 @@ class MagikeModule extends MagikeObject
 			}
 		}
 		return false;
+	}
+	
+	protected function requirePost()
+	{
+		if(!isset($_POST) || NULL == $_POST)
+		{
+			$this->throwException(E_FORMISOUTOFDATE);
+		}
 	}
 
 	protected function onGet($key,$callback,$val = NULL)

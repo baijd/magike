@@ -8,7 +8,7 @@
 
 class CategoriesModel extends MagikeModel
 {
-	public function listCategory()
+	public function listCategories()
 	{
 		return $this->fectch(array('table' => 'table.categories','orderby' => 'category_sort','sort' => 'ASC'));
 	}

@@ -26,7 +26,7 @@ class MagikeModel extends Database
  	 {
  	 	 $res = mysql_query("SHOW INDEX FROM {$this->table} WHERE Key_name = 'PRIMARY'") or $this->databaseException();
  	 	 $row = mysql_fetch_array($res);
- 	 	 return $row ? $row['Column_name'] : NULL;
+ 	 	 return $row ? $this->table.".".$row['Column_name'] : NULL;
  	 }
  	 
  	 public function deleteByKeys($keys)
@@ -50,6 +50,14 @@ class MagikeModel extends Database
  	 	 	}
  	 	 }
  	 	 return $sum;
+ 	 }
+ 	 
+ 	 public function deleteByFieldEqual($field,$value)
+ 	 {
+ 			return  $this->delete(array('table' => $this->table,
+ 										'where' => array('template' => "{$field} = ?",
+ 										 'value' => array($value)
+ 					)));
  	 }
  	 
  	 public function fectchByKey($key)
@@ -101,6 +109,13 @@ class MagikeModel extends Database
 						 	 	 	'where' => array('template' => "{$this->key} = ?",
 						 	 	 					 'value' => array($key)),
 									'value' => $value));
+ 	 }
+ 	 
+ 	 public function countTable($args)
+ 	 {
+ 	 	 $args['key'] = isset($args['key']) ? $args['key'] : $this->key;
+ 	 	 $args['table'] = isset($args['table']) ? $args['table'] : $this->table;
+ 	 	 return $this->count($args);
  	 }
 }
 ?>

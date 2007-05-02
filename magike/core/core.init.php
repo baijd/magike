@@ -109,9 +109,10 @@ function errorHandler($errno, $errstr, $errfile, $errline)
 //自定义自动加载函数
 function __autoload($className)
 {
-	if(__LIB__.'/lib.'.mgClassNameToFileName($className).'.php')
+	$fileName = strtolower(__LIB__.'/lib.'.mgClassNameToFileName($className).'.php');
+	if(file_exists($fileName))
 	{
-		require_once(__LIB__.'/lib.'.mgClassNameToFileName($className).'.php');
+		require_once($fileName);
     }
 }
 

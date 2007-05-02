@@ -37,6 +37,7 @@ class CategoryInput extends MagikeModule
 	
 	public function updateCategory()
 	{
+		$this->requirePost();
 		$this->category->updateByKey($_GET['c'], array('category_name' 		=> $_POST['category_name'],
 													   'category_postname'	=> urldecode($_POST['category_postname']),
 													   'category_describe'	=> $_POST['category_describe'])
@@ -48,6 +49,7 @@ class CategoryInput extends MagikeModule
 	
 	public function insertCategory()
 	{
+		$this->requirePost();
 		$item = $this->category->fectchOne(array('fields'=> 'MAX(category_sort) AS max_sort',
 											  'table' => 'table.categories'));
 		$this->category->insertTable(array('category_name' 		=> $_POST['category_name'],
@@ -63,11 +65,13 @@ class CategoryInput extends MagikeModule
 	public function deleteCategory()
 	{
 		$select = is_array($_GET['c']) ? $_GET['c'] : array($_GET['c']);
+		$postModel = $this->loadModel('posts');
+		$tagsModel = $this->loadModel('tags');
+		$commentsModel = $this->loadModel('comments');
+		
 		foreach($select as $id)
 		{
-			$categoryPosts = $this->database->fectch(array('table' => 'table.posts',
-														   'where' => array('template' => 'category_id = ?',
-																			'value' => array($id))));
+			$categoryPosts = $postModel->fectchByFieldEqual('category_id',$id);
 			
 			$posts = array();
 			foreach($categoryPosts as $val)
@@ -75,38 +79,16 @@ class CategoryInput extends MagikeModule
 				$posts[] = $val['id'];
 			}
 			
-			$this->database->delete(array('table' => 'table.categories',
-												  'where' => array('template' => 'id = ?',
-																	'value'	  => array($id))
-												  ));
-			$this->database->delete(array('table' => 'table.posts',
-												  'where' => array('template' => 'category_id = ?',
-																	'value'	  => array($id))
-												  ));
-			
+			$this->category->deleteByKeys($id);
 			
 			foreach($posts as $id)
 			{
-				$post = $this->database->fectchOne(array('table' => 'table.posts',
-												 		 'where' => array('template' => 'id = ?',
-																  		  'value'	 => array($id))
-													));
-				$this->database->delete(array('table' => 'table.posts',
-											  'where' => array('template' => 'id = ?',
-															   'value'	  => array($id)
-										)));
-				$this->database->delete(array('table' => 'table.comments',
-											  'where' => array('template' => 'post_id = ?',
-															   'value'	  => array($id)
-										)));
-				$this->database->decreaseField(array('table' => 'table.categories',
-													 'where' => array('template' => 'id = ?',
-														  			  'value'	 => array($post['category_id']))),
-											  'category_count'
-											  );
+				$post = $postModel->fectchByKey($id);
+				$postModel->deleteByKeys($id);
+				$commentsModel->deleteByFieldEqual('post_id',$id);
 				if($post['post_tags'])
 				{
-					$this->deleteTags($id);
+					$tagsModel->deleteTagsByPostId($id);
 				}
 			}
 		}

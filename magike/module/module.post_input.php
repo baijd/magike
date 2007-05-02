@@ -12,67 +12,14 @@ class PostInput extends MagikeModule
 	
 	function __construct()
 	{
+		parent::__construct();
 		$this->result = array();
-		parent::__construct(array('public' => array('database')));
 		$this->result['open'] = false;
-	}
-	
-	private function getTags($tags)
-	{
-		str_replace("，",",",$tags);
-		str_replace(" ",",",$tags);
-		$tags = explode(",",$tags);
-
-		$where = array_fill(0,count($tags),'tag_name = ?');
-		if($tags)
-		{
-			$value = array();
-			$result = 
-			$this->database->fectch(array('table' => 'table.tags',
-										  'where' => array('template' => implode(" OR ",$where),
-														   'value'	  => $tags
-									)
-									));
-			foreach($result as $val)
-			{
-				$value[$val['id']] = $val['tag_name'];
-			}
-			foreach($tags as $val)
-			{
-				if(!in_array($val,$value))
-				{
-					$insertId = 
-					$this->database->insert(array('table' => 'table.tags',
-												  'value' => array('tag_name' => $val)
-											));
-					$value[$insertId] = $val;
-				}
-			}
-		}
-		return $value;
-	}
-	
-	private function deleteTags($id)
-	{
-		$this->database->delete(array('table' => 'table.post_tag_mapping',
-									  'where' => array('template' => 'post_id = ?',
-													   'value'	  => array($id)
-								)
-								));
-	}
-	
-	private function insertTags($id,$tags)
-	{
-		foreach($tags as $key => $val)
-		{
-			$this->database->insert(array('table' => 'table.post_tag_mapping',
-										  'value' => array('post_id' => $id,'tag_id' => $key)
-									));
-		}
 	}
 	
 	public function insertPost()
 	{
+		$this->requirePost();
 		$input = $_POST;
 		unset($input["post_trackback"]);
 		$input['post_allow_ping'] = isset($_POST['post_allow_ping']) ? $_POST['post_allow_ping'] : 0;
@@ -85,17 +32,15 @@ class PostInput extends MagikeModule
 		$input['post_time'] = time();
 		$input['post_gmt'] = mgGetTimeZoneDiff();
 		
-		$insertId = $this->database->insert(array('table' => 'table.posts',
-									  			  'value' => $input));
-		$this->database->increaseField(array('table' => 'table.categories',
-											 'where' => array('template' => 'id = ?',
-															  'value'	 => array($input['category_id']))),
-									  'category_count'
-									  );
+		$postModel = $this->loadModel('posts');
+		$insertId = $this->database->insertTable($input);
+		$categoriesModel = $this->loadModel('categories');
+		$categoriesModel->increaseFieldByKey($input['category_id'],'category_count');
+		
 		if($input['post_tags'])
 		{
-			$tags = $this->getTags($input['post_tags']);
-			$this->insertTags($insertId,$tags);
+			$tagsModel = $this->loadModel('tags');
+			$tagsModel->insertTags($insertId,$input['post_tags']);
 		}
 		
 		$this->result['open'] = true;
@@ -104,6 +49,7 @@ class PostInput extends MagikeModule
 	
 	public function updatePost()
 	{
+		$this->requirePost();
 		$input = $_POST;
 		unset($input["post_trackback"]);
 		$input['post_allow_ping'] = isset($_POST['post_allow_ping']) ? $_POST['post_allow_ping'] : 0;
@@ -114,33 +60,22 @@ class PostInput extends MagikeModule
 		$input['post_is_page'] = isset($_POST['post_is_page']) ? $_POST['post_is_page'] : 0;
 		$input['post_edit_time'] = time();
 		
-		$post = $this->database->fectchOne(array('table' => 'table.posts',
-										 		 'where' => array('template' => 'id = ?',
-														  		  'value'	 => array($_GET['post_id']))
-											));
+		$postModel = $this->loadModel('posts');
+		$post = $postModel->fectchByKey($_GET['post_id']);
+		
 		if($post['category_id'] != $input['category_id'])
 		{
-			$this->database->increaseField(array('table' => 'table.categories',
-												 'where' => array('template' => 'id = ?',
-																  'value'	 => array($input['category_id']))),
-										  'category_count'
-										  );
-			$this->database->decreaseField(array('table' => 'table.categories',
-												 'where' => array('template' => 'id = ?',
-													  			  'value'	 => array($post['category_id']))),
-										  'category_count'
-										  );
+			$categoriesModel = $this->loadModel('categories');
+			$categoriesModel->increaseFieldByKey($input['category_id'],'category_count');
+			$categoriesModel->decreaseFieldByKey($post['category_id'],'category_count');
 		}
-		$this->database->update(array('table' => 'table.posts',
-									  'value' => $input,
-									  'where' => array('template' => 'id = ?',
-													   'value'	  => array($_GET['post_id'])
-								)));
+		$postModel->updateByKey($_GET['post_id'],$input);
+		
 		if($input['post_tags'])
 		{
-			$tags = $this->getTags($input['post_tags']);
-			$this->deleteTags($_GET['post_id']);
-			$this->insertTags($_GET['post_id'],$tags);
+			$tagsModel = $this->loadModel('tags');
+			$tagsModel->deleteTagsByPostId($_GET['post_id']);
+			$tagsModel->insertTags($input['post_tags']);
 		}
 		
 		$this->result['open'] = true;
