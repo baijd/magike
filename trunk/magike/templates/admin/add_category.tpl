@@ -7,7 +7,7 @@
 		<div class="proc">
 			正在处理您的请求
 		</div>
-	<form method="post" name="insert_category" id="insert_category" action="{$static_var.index}/admin/posts/categories_list?<[if:$insert_category]>c={$insert_category.id}&act=update<[/if]><[if:!$insert_category]>act=insert<[/if]>">
+	<form method="post" name="insert_category" id="insert_category" action="{$static_var.index}/admin/posts/categories_list/?<[if:$insert_category]>c={$insert_category.id}&act=update<[/if]><[if:!$insert_category]>act=insert<[/if]>">
 		<h2>增加或编辑分类 <span class="discribe">(您可以在这里操作文章分类)</span></h2>
 		<div class="input">
 			<h2>分类名称</h2>
@@ -31,7 +31,7 @@
 			</p>
 		</div>
 		<div class="submit">
-			<span class="button" onclick="magikeValidator('{$static_var.index}/helper/validator','add_category');">提交信息</span>
+			<span class="button" onclick="magikeValidator('{$static_var.index}/helper/validator/','add_category');">提交信息</span>
 			<script>
 				function validateSuccess()
 				{

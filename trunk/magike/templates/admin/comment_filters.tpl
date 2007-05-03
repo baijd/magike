@@ -15,7 +15,7 @@
 			<[loop:$comment_filters_list AS $filter]>
 			<tr>
 				<td><input type="checkbox" class="checkbox_element" name="filter[]" value="{$filter.id}"/></td>
-				<td><a href="{$static_var.index}/admin/comments/filter?id={$filter.id}" title="{$filter.comment_filter_name}">{$filter.comment_filter_name}</td>
+				<td><a href="{$static_var.index}/admin/comments/filter/?id={$filter.id}" title="{$filter.comment_filter_name}">{$filter.comment_filter_name}</td>
 				<td>{$filter.comment_filter_value}</td>
 				<td>{$filter.comment_filter_type}</td>
 			</tr>

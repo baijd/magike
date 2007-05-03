@@ -8,5 +8,10 @@
 
 class CommentsModel extends MagikeModel
 {
+	function __construct()
+	{
+		parent::__construct();
+		$this->table = 
+	}
 }
 ?>
