@@ -98,7 +98,7 @@
 			</ul>
 			<h2>快速链接&raquo;</h2>
 			<ul class="info">
-				<li><a href="{$static_var.index}/admin/posts/write">撰写一篇文章</a></li>
+				<li><a href="{$static_var.index}/admin/posts/write/">撰写一篇文章</a></li>
 				<li><a href="#">更改我的博客皮肤</a></li>
 				<li><a href="#">编辑我的档案</a></li>
 				<li><a href="#">配置我的网站</a></li>
@@ -125,7 +125,7 @@
 						<h2>我最近发表的文章</h2>
 			<ul class="info">
 			<[loop:$posts_list AS $post]>
-				<li><a href="{$static_var.index}/admin/posts/write?post_id={$post.post_id}" title="{$post.post_title}">{$post.post_title}</a> 发布在<a class="close" href="{$static_var.index}/admin/posts/category?c={$post.category_id}">{$post.category_name}</a>  <span class="describe">{$post.post_time}</span></li>
+				<li><a href="{$static_var.index}/admin/posts/write/?post_id={$post.post_id}" title="{$post.post_title}">{$post.post_title}</a> 发布在<a class="close" href="{$static_var.index}/admin/posts/category?c={$post.category_id}">{$post.category_name}</a>  <span class="describe">{$post.post_time}</span></li>
 			<[/loop]>
 			</ul>
 			<h2>最新评论</h2>

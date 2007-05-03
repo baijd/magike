@@ -25,7 +25,7 @@
 			<[loop:$posts_list AS $post]>
 			<tr>
 				<td><input type="checkbox" class="checkbox_element" name="post_id[]" value="{$post.post_id}"/></td>
-				<td><a href="{$static_var.index}/admin/posts/write?post_id={$post.post_id}" title="{$post.post_title}">{$post.post_title}</a>
+				<td><a href="{$static_var.index}/admin/posts/write/?post_id={$post.post_id}" title="{$post.post_title}">{$post.post_title}</a>
 				<[if:$post.post_is_page]><img class="describe" src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/page.gif" title="这是一个页面" alt="这是一个页面"/><[/if]>
 				<[if:$post.post_is_draft]><img class="describe" src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/draft.gif" title="这是一篇草稿" alt="这是一篇草稿"/><[/if]>
 				</td>
@@ -33,8 +33,8 @@
 				<td>{$post.category_name}</td>
 				<td>{$post.post_time}</td>
 				<td>
-					<a class="img" title="编辑" href="{$static_var.index}/admin/posts/write?post_id={$post.post_id}"><img src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/edit.gif" alt="编辑"/></a> 
-					<a class="img" title="删除" href="javascript:;" onclick="magikeConfirm(this);" msg="您确定删除 '{$post.post_title}' 吗?" rel="{$static_var.index}/admin/posts/all?post_id={$post.post_id}&do=del"><img src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/delete.gif" alt="删除"/></a> 
+					<a class="img" title="编辑" href="{$static_var.index}/admin/posts/write/?post_id={$post.post_id}"><img src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/edit.gif" alt="编辑"/></a> 
+					<a class="img" title="删除" href="javascript:;" onclick="magikeConfirm(this);" msg="您确定删除 '{$post.post_title}' 吗?" rel="{$static_var.index}/admin/posts/all/?post_id={$post.post_id}&do=del"><img src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/delete.gif" alt="删除"/></a> 
 				</td>
 			</tr>
 			<[/loop]>
@@ -46,9 +46,9 @@
 			<span onclick="selectTableNone('post_list','checkbox_element')">{lang.admin_db_grid.select_none}</span><b>,</b>
 			<span onclick="selectTableOther('post_list','checkbox_element')">{lang.admin_db_grid.select_other}</span><b>,</b>
 			<span onclick="if(confirm('您确定删除这些文章吗')) document.getElementById('all_posts').submit();">{lang.admin_db_grid.select_delete}</span>
-			<[if:$posts_list_page_nav.next]><a href="{$static_var.index}/admin/posts/all?page={$posts_list_page_nav.next}">下一页</a><[/if]>
+			<[if:$posts_list_page_nav.next]><a href="{$static_var.index}/admin/posts/all/?page={$posts_list_page_nav.next}">下一页</a><[/if]>
 			<[if:$posts_list_page_nav.next and $posts_list_page_nav.prev]><u>,</u><[/if]>
-			<[if:$posts_list_page_nav.prev]><a href="{$static_var.index}/admin/posts/all?page={$posts_list_page_nav.prev}">上一页</a><[/if]>
+			<[if:$posts_list_page_nav.prev]><a href="{$static_var.index}/admin/posts/all/?page={$posts_list_page_nav.prev}">上一页</a><[/if]>
 	</div>
 </div>
 <script>

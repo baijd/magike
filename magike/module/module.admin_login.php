@@ -64,7 +64,7 @@ class AdminLogin extends MagikeModule
 			$_SESSION['auth_data'] = mgCreateRandomString(128);
 			
 			setcookie('auth_data',$_SESSION['auth_data'],time() + 3600,'/');
-			header('location: '.$this->stack['static_var']['index'].'/admin');
+			header('location: '.$this->stack['static_var']['index'].'/admin/');
 		}
 	}
 }
