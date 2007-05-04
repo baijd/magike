@@ -21,7 +21,7 @@ class CommentFiltersList extends MagikeModule
 		}
 		
 		$val['comment_filter_type'] = $this->getLanguage('filter_'.$val['comment_filter_type'],'comment_filter');
-		$val['comment_filter_value'] = mgStripTags(mgSubStr($val['comment_filter_value'],0,15));
+		$val['comment_filter_value'] = mgStripTags(mgSubStr($val['comment_filter_value'],0,30));
 		return $val;
 	}
 	

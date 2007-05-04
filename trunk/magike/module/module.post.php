@@ -13,7 +13,7 @@ class Post extends MagikeModule
 	function __construct()
 	{
 		parent::__construct();
-		$this->post = $this->loadModel('Posts');
+		$this->post = $this->loadModel('posts');
 	}
 	
 	public function prasePost($val)

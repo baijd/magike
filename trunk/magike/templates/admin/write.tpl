@@ -72,7 +72,7 @@
 				<div class="input">
 				<h2>{lang.admin_write.trackback}</h2>
 				<p>
-				<textarea type="text" class="text" name="post_trackback" cols=60 rows=5 ></textarea> <br />
+				<textarea class="text" name="post_trackback" cols=60 rows=5 ></textarea> <br />
 				<span class="discribe">{lang.admin_write.trackback_describe}</span></p>
 				</div>
 			</div>

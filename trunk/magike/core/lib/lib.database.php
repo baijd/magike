@@ -97,26 +97,26 @@ class Database extends MagikeObject
  		$args = $this->filterTablePrefix($args);
 
  		//处理table子句
-		$table = isset($args['table']) ? ' FROM '.$args['table'] : '';
+		$table = isset($args['table']) && NULL !== $args['table'] ? ' FROM '.$args['table'] : '';
 
 		//处理groupby子句
-		$groupby = isset($args['groupby']) ? ' GROUP BY '.$args['groupby'] : '';
+		$groupby = isset($args['groupby']) && NULL !== $args['groupby'] ? ' GROUP BY '.$args['groupby'] : '';
 
 		//处理fields子句
-		$fields = isset($args['fields']) ? 'SELECT '.$args['fields'] : 'SELECT *';
+		$fields = isset($args['fields']) && NULL !== $args['fields'] ? 'SELECT '.$args['fields'] : 'SELECT *';
 
 		//处理order子句
-		$orderby = isset($args['orderby']) ? ' ORDER BY '.$args['orderby'] : '';
+		$orderby = isset($args['orderby']) && NULL !== $args['orderby'] ? ' ORDER BY '.$args['orderby'] : '';
 		
 		//处理sort子句
-		$orderby = isset($args['orderby']) && isset($args['sort']) ? $orderby.' '.$args['sort'] : '';
+		$orderby = isset($args['orderby']) && isset($args['sort']) && NULL !== $args['orderby'] && NULL !== $args['sort'] ? $orderby.' '.$args['sort'] : '';
 
 		//处理limit子句
-		$limit = isset($args['limit']) ? $args['limit'] : '';
+		$limit = isset($args['limit']) && NULL !== $args['limit'] ? $args['limit'] : '';
 
 		//处理offset子句
-		$offset = isset($args['limit']) && isset($args['offset']) ? $args['offset'].',' : '';
-		$offset = isset($args['limit']) ? ' LIMIT '.$offset : '';
+		$offset = isset($args['limit']) && isset($args['offset']) && NULL !== $args['limit'] && NULL !== $args['offset'] ? $args['offset'].',' : '';
+		$offset = isset($args['limit']) && NULL !== $args['limit'] ? ' LIMIT '.$offset : '';
 		
 		//处理where子句
 		$where = self::praseWhereSentence($args);

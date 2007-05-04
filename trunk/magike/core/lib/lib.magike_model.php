@@ -8,8 +8,9 @@
  
 class MagikeModel extends Database
 {
- 	 private $table;
+ 	 protected $table;
  	 protected $key;
+ 	 protected $group;
  	 
  	 function __construct($table = NULL)
  	 {
@@ -19,6 +20,7 @@ class MagikeModel extends Database
  	 	 	 $table = 'table.'.str_replace('_model','',mgClassNameToFileName(get_class($this)));
  	 	 }
  	 	 $this->table = str_replace('table.',__DBPREFIX__,$table);
+ 	 	 $this->group = NULL;
  	 	 $this->key = $this->findPrimaryKey();
  	 }
  	 
@@ -63,6 +65,7 @@ class MagikeModel extends Database
  	 public function fectchByKey($key)
  	 {
  	 	 return $this->fectchOne(array('table' => $this->table,
+ 	 	 	 						   'groupby' => $this->group,
  	 	 							   'where' => array('template' => "{$this->key} = ?",
  	 	 												'value' => array($key))));
  	 }
@@ -70,13 +73,15 @@ class MagikeModel extends Database
  	 public function fectchByFieldEqual($field,$value)
  	 {
  	 	 return $this->fectchOne(array('table' => $this->table,
+ 	 	 	 						   'groupby' => $this->group,
  	 	 							   'where' => array('template' => "{$field} = ?",
  	 	 												'value' => array($value))));
  	 }
  	 
  	 public function fectchByFieldLike($field,$value)
  	 {
- 	 	 return $this->fectchOne(array('table' => $this->table,
+ 	 	 return $this->fectch(array('table' => $this->table,
+ 	 	 	 						   'groupby' => $this->group,
  	 	 							   'where' => array('template' => "{$field} LIKE ?",
  	 	 												'value' => array($value))));
  	 }
