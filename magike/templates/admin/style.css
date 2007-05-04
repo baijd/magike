@@ -471,6 +471,14 @@ body
 	background:#DDD;
 }
 
+#element i.img
+{
+	float:left;
+	padding:1px;
+	border:1px solid #75818A;
+	background:#DDD;
+}
+
 .tab_nav ul
 {
 	margin:0;
