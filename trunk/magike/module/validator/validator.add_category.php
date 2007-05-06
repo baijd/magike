@@ -1,7 +1,7 @@
 <?php
 /**********************************
  * Created on: 2007-2-2
- * File Name : lib.format.php
+ * File Name : validator.add_category.php
  * Copyright : Magike Group
  * License   : GNU General Public License 2.0
  *********************************/

@@ -28,7 +28,7 @@ class WritePost extends MagikeModule
 			if(isset($this->stack['admin_menu_list']['children']))
 			{
 				$this->stack['admin_menu_list']['children'][0]['menu_name'] = '编辑 "'.$result['post_title'].'"';
-				$this->stack['admin_menu_list']['children'][0]['path_name'] = '/admin/posts/write?post_id='.$result['post_id'];
+				$this->stack['admin_menu_list']['children'][0]['path_name'] = '/admin/posts/write/?post_id='.$result['post_id'];
 			}
 			
 			$result['do'] = 'update';

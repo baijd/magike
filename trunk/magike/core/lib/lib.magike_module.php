@@ -89,11 +89,65 @@ class MagikeModule extends MagikeObject
 		return false;
 	}
 	
-	protected function requirePost()
+	protected function requirePost($value = NULL)
 	{
-		if(!isset($_POST) || NULL == $_POST)
+		if(NULL == $value)
 		{
-			$this->throwException(E_FORMISOUTOFDATE);
+			if(!isset($_POST) || NULL == $_POST)
+			{
+				$this->throwException(E_FORMISOUTOFDATE);
+			}
+		}
+		else
+		{
+			if(is_string($value))
+			{
+				if(!isset($_POST[$value]) || NULL == $_POST[$value])
+				{
+					$this->throwException(E_FORMISOUTOFDATE);
+				}
+			}
+			else if(is_array($value))
+			{
+				foreach($value as $val)
+				{
+					if(!isset($_POST[$val]) || NULL == $_POST[$val])
+					{
+						$this->throwException(E_FORMISOUTOFDATE);
+					}
+				}
+			}
+		}
+	}
+	
+	protected function requireGet($value = NULL)
+	{
+		if(NULL == $value)
+		{
+			if(!isset($_GET) || NULL == $_GET)
+			{
+				$this->throwException(E_FORMISOUTOFDATE);
+			}
+		}
+		else
+		{
+			if(is_string($value))
+			{
+				if(!isset($_GET[$value]) || NULL == $_GET[$value])
+				{
+					$this->throwException(E_FORMISOUTOFDATE);
+				}
+			}
+			else if(is_array($value))
+			{
+				foreach($value as $val)
+				{
+					if(!isset($_GET[$val]) || NULL == $_GET[$val])
+					{
+						$this->throwException(E_FORMISOUTOFDATE);
+					}
+				}
+			}
 		}
 	}
 
@@ -138,7 +192,7 @@ class MagikeModule extends MagikeObject
 		}
 		else
 		{
-			return NULL;
+			return $key;
 		}
 	}
 	

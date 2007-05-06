@@ -50,6 +50,7 @@ class PostInput extends MagikeModule
 	public function updatePost()
 	{
 		$this->requirePost();
+		$this->requireGet('post_id');
 		$input = $_POST;
 		unset($input["post_trackback"]);
 		$input['post_allow_ping'] = isset($_POST['post_allow_ping']) ? $_POST['post_allow_ping'] : 0;
@@ -84,6 +85,7 @@ class PostInput extends MagikeModule
 	
 	public function deletePost()
 	{
+		$this->requireGet('post_id');
 		$postModel = $this->loadModel('posts');
 		$commentsModel = $this->loadModel('comments');
 		$categoriesModel = $this->loadModel('categories');
