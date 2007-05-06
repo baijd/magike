@@ -21,6 +21,7 @@ class CategoryInput extends MagikeModule
 
 	public function moveUpCategory()
 	{
+		$this->requireGet('c');
 		$title = $this->category->moveUpCategory($_GET['c']);
 		
 		$this->result['open'] = true;
@@ -29,6 +30,7 @@ class CategoryInput extends MagikeModule
 	
 	public function moveDownCategory()
 	{
+		$this->requireGet('c');
 		$title = $this->category->moveDownCategory($_GET['c']);
 		
 		$this->result['open'] = true;
@@ -38,6 +40,7 @@ class CategoryInput extends MagikeModule
 	public function updateCategory()
 	{
 		$this->requirePost();
+		$this->requireGet('c');
 		$this->category->updateByKey($_GET['c'], array('category_name' 		=> $_POST['category_name'],
 													   'category_postname'	=> urlencode($_POST['category_postname']),
 													   'category_describe'	=> $_POST['category_describe'])
@@ -64,6 +67,7 @@ class CategoryInput extends MagikeModule
 	
 	public function deleteCategory()
 	{
+		$this->requireGet('c');
 		$select = is_array($_GET['c']) ? $_GET['c'] : array($_GET['c']);
 		$postModel = $this->loadModel('posts');
 		$tagsModel = $this->loadModel('tags');
@@ -99,11 +103,11 @@ class CategoryInput extends MagikeModule
 	
 	public function runModule()
 	{
-		$this->onGet("act","moveUpCategory","up");
-		$this->onGet("act","moveDownCategory","down");
-		$this->onGet("act","updateCategory","update");
-		$this->onGet("act","insertCategory","insert");
-		$this->onGet("act","deleteCategory","del");
+		$this->onGet("do","moveUpCategory","up");
+		$this->onGet("do","moveDownCategory","down");
+		$this->onGet("do","updateCategory","update");
+		$this->onGet("do","insertCategory","insert");
+		$this->onGet("do","deleteCategory","del");
 		return $this->result;
 	}
 }
