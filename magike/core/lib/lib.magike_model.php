@@ -116,7 +116,7 @@ class MagikeModel extends Database
 									'value' => $value));
  	 }
  	 
- 	 public function countTable($args)
+ 	 public function countTable($args = array())
  	 {
  	 	 $args['key'] = isset($args['key']) ? $args['key'] : $this->key;
  	 	 $args['table'] = isset($args['table']) ? $args['table'] : $this->table;
