@@ -29,6 +29,7 @@ class WritePost extends MagikeModule
 			{
 				$this->stack['admin_menu_list']['children'][0]['menu_name'] = '编辑 "'.$result['post_title'].'"';
 				$this->stack['admin_menu_list']['children'][0]['path_name'] = '/admin/posts/write/?post_id='.$result['post_id'];
+				$this->stack['static_var']['admin_title'] = '编辑 "'.$result['post_title'].'"';
 			}
 			
 			$result['do'] = 'update';

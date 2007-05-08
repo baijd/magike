@@ -80,7 +80,23 @@ class MagikeModel extends Database
  	 
  	 public function fectchByFieldLike($field,$value)
  	 {
- 	 	 return $this->fectch(array('table' => $this->table,
+ 	 	 return $this->fectchOne(array('table' => $this->table,
+ 	 	 	 						   'groupby' => $this->group,
+ 	 	 							   'where' => array('template' => "{$field} LIKE ?",
+ 	 	 												'value' => array($value))));
+ 	 }
+ 	 
+ 	 public function fectchAllByFieldEqual($field,$value)
+ 	 {
+ 	 	 return    $this->fectch(array('table' => $this->table,
+ 	 	 	 						   'groupby' => $this->group,
+ 	 	 							   'where' => array('template' => "{$field} = ?",
+ 	 	 												'value' => array($value))));
+ 	 }
+ 	 
+ 	 public function fectchAllByFieldLike($field,$value)
+ 	 {
+ 	 	 return    $this->fectch(array('table' => $this->table,
  	 	 	 						   'groupby' => $this->group,
  	 	 							   'where' => array('template' => "{$field} LIKE ?",
  	 	 												'value' => array($value))));

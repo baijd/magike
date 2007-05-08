@@ -45,7 +45,7 @@
 			<span onclick="selectTableAll('post_list','checkbox_element')">{lang.admin_db_grid.select_all}</span><b>,</b>
 			<span onclick="selectTableNone('post_list','checkbox_element')">{lang.admin_db_grid.select_none}</span><b>,</b>
 			<span onclick="selectTableOther('post_list','checkbox_element')">{lang.admin_db_grid.select_other}</span><b>,</b>
-			<span onclick="if(confirm('您确定删除这些文章吗')) document.getElementById('all_posts').submit();">{lang.admin_db_grid.select_delete}</span>
+			<span onclick="if(confirm('您确定删除这些文章吗?')) document.getElementById('all_posts').submit();">{lang.admin_db_grid.select_delete}</span>
 			<[if:$posts_list_page_nav.next]><a href="{$static_var.index}/admin/posts/all/?page={$posts_list_page_nav.next}">下一页</a><[/if]>
 			<[if:$posts_list_page_nav.next and $posts_list_page_nav.prev]><u>,</u><[/if]>
 			<[if:$posts_list_page_nav.prev]><a href="{$static_var.index}/admin/posts/all/?page={$posts_list_page_nav.prev}">上一页</a><[/if]>

@@ -52,10 +52,10 @@
 			<span onclick="selectTableAll('comment_list','checkbox_element')">{lang.admin_db_grid.select_all}</span><b>,</b>
 			<span onclick="selectTableNone('comment_list','checkbox_element')">{lang.admin_db_grid.select_none}</span><b>,</b>
 			<span onclick="selectTableOther('comment_list','checkbox_element')">{lang.admin_db_grid.select_other}</span><b>,</b>
-			<span onclick="if(confirm('您确定删除这些评论吗')) {$('#do').val('del'); document.getElementById('all_comments').submit();}">{lang.admin_db_grid.select_delete}</span><b>,</b>
-			<span onclick="if(confirm('您确定将这些评论展现吗')) {$('#do').val('approved'); document.getElementById('all_comments').submit();}">展现</span><b>,</b>
-			<span onclick="if(confirm('您确定将这些评论标记为待审核吗')) {$('#do').val('waitting'); document.getElementById('all_comments').submit();}">待审核</span><b>,</b>
-			<span onclick="if(confirm('您确定将这些评论标记为垃圾吗')) {$('#do').val('spam'); document.getElementById('all_comments').submit();}">垃圾评论</span>
+			<span onclick="if(confirm('您确定删除这些评论吗?')) {$('#do').val('del'); document.getElementById('all_comments').submit();}">{lang.admin_db_grid.select_delete}</span><b>,</b>
+			<span onclick="if(confirm('您确定将这些评论展现吗?')) {$('#do').val('approved'); document.getElementById('all_comments').submit();}">展现</span><b>,</b>
+			<span onclick="if(confirm('您确定将这些评论标记为待审核吗?')) {$('#do').val('waitting'); document.getElementById('all_comments').submit();}">待审核</span><b>,</b>
+			<span onclick="if(confirm('您确定将这些评论标记为垃圾吗?')) {$('#do').val('spam'); document.getElementById('all_comments').submit();}">垃圾评论</span>
 			<[if:$comments_list_all_page_nav.next]><a href="{$static_var.index}/admin/comments/all/?comment_page={$comments_list_all_page_nav.next}">下一页</a><[/if]>
 			<[if:$comments_list_all_page_nav.next and $comments_list_all_page_nav.prev]><u>,</u><[/if]>
 			<[if:$comments_list_all_page_nav.prev]><a href="{$static_var.index}/admin/comments/all/?comment_page={$comments_list_all_page_nav.prev}">上一页</a><[/if]>

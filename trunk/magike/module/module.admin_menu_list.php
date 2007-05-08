@@ -38,6 +38,10 @@ class AdminMenuList extends MagikeModule
 			{
 				$this->praseFocusChild($array[$focus]['menu_id']);
 			}
+			else
+			{
+				$this->stack['static_var']['admin_title'] = $array[$focus]['menu_name'];
+			}
 			$array[$focus]['focus'] = true;
 		}
 		return $array;
@@ -52,6 +56,13 @@ class AdminMenuList extends MagikeModule
 																  array('function' => array($this,'pushMenu')));
 		$this->result['children'] = $this->praseFocus($this->result['children'],false);
 	}
+	
+	public function pushMenu($val)
+	{
+		$lang = explode('.',$val['menu_name']);
+		$val['menu_name'] = ('lang' == $lang[0]) ? $this->getLanguage($lang[2],$lang[1]) : $val['menu_name'];
+		return $val;
+	}
 
 	public function runModule()
 	{
@@ -63,13 +74,6 @@ class AdminMenuList extends MagikeModule
 																 array('function' => array($this,'pushMenu')));
 		$this->result['parents'] = $this->praseFocus($this->result['parents']);
 		return $this->result;
-	}
-
-	public function pushMenu($val)
-	{
-		$lang = explode('.',$val['menu_name']);
-		$val['menu_name'] = ('lang' == $lang[0]) ? $this->getLanguage($lang[2],$lang[1]) : $val['menu_name'];
-		return $val;
 	}
 }
 ?>

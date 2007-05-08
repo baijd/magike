@@ -8,20 +8,12 @@
 
 class GetCurrentUser extends MagikeModule
 {
-	function __construct()
-	{
-		parent::__construct(array('public' => array('database')));
-	}
-	
 	public function runModule()
 	{
 		if(NULL != $this->stack['access']['user_id'])
 		{
-			return $this->database->fectchOne(array('table' => 'table.users',
-												 	'where' => array(
-												 		 'template' => 'id = ?',
-												 		 'value'	=> array($this->stack['access']['user_id'])
-												 )));
+			$userModel = $this->loadModel('users');
+			return $userModel->fectchByKey($this->stack['access']['user_id']);
 		}
 		else
 		{

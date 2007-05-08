@@ -27,6 +27,7 @@ class InsertCategory extends MagikeModule
 		{
 			$this->stack['admin_menu_list']['children'][3]['menu_name'] = '编辑分类 "'.$this->result['category_name'].'"';
 			$this->stack['admin_menu_list']['children'][3]['path_name'] = '/admin/posts/category/?c='.$this->result['id'];
+			$this->stack['static_var']['admin_title'] = '编辑分类 "'.$this->result['category_name'].'"';
 		}
 	}
 	

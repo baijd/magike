@@ -8,11 +8,6 @@
 
 class LinksList extends MagikeModule
 {
-	function __construct()
-	{
-		parent::__construct(array('public' => array('database')));
-	}
-	
 	public function runModule()
 	{
 		$linkModel = $this->loadModel('links');
