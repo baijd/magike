@@ -1,9 +1,15 @@
 <[include:header]>
 <[include:menu]>
 
+<[module:group_input]>
 <[module:groups_list]>
 <div id="content">
 	<div id="element">
+	<[if:$group_input.open]>
+		<div class="message">
+			{$group_input.word}
+		</div>
+	<[/if]>
 		<h2>用户组列表 <span class="discribe">(这里列出了本网站所有的用户组)</span></h2>
 		<form method="get" id="all_groups">
 		<table width="100%" cellpadding="0" cellspacing="0" id="groups_list">
@@ -15,7 +21,7 @@
 			</tr>
 			<[loop:$groups_list AS $group]>
 			<tr>
-				<td><input type="checkbox" class="checkbox_element" name="group_id[]" value="{$group.id}"/</td>
+				<td><input type="checkbox" class="checkbox_element" name="group_id[]" value="{$group.id}"/></td>
 				<td><a href="{$static_var.index}/admin/users/group/?group_id={$group.id}">{$group.group_name}</a></td>
 				<td class="describe">{$group.group_describe}</td>
 				<td>
@@ -31,7 +37,7 @@
 			<span onclick="selectTableAll('groups_list','checkbox_element')">{lang.admin_db_grid.select_all}</span><b>,</b>
 			<span onclick="selectTableNone('groups_list','checkbox_element')">{lang.admin_db_grid.select_none}</span><b>,</b>
 			<span onclick="selectTableOther('groups_list','checkbox_element')">{lang.admin_db_grid.select_other}</span><b>,</b>
-			<span onclick="if(confirm('您确定删除这些用户吗?')) document.getElementById('all_groups').submit();">{lang.admin_db_grid.select_delete}</span>
+			<span onclick="if(confirm('您确定删除这些用户组吗?')) document.getElementById('all_groups').submit();">{lang.admin_db_grid.select_delete}</span>
 	</div>
 </div>
 

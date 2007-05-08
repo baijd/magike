@@ -1,9 +1,15 @@
 <[include:header]>
 <[include:menu]>
 
+<[module:link_category_input]>
 <[module:link_categories]>
 <div id="content">
 	<div id="element">
+	<[if:$link_category_input.open]>
+		<div class="message">
+			{$link_category_input.word}
+		</div>
+	<[/if]>
 		<h2>链接分类列表 <span class="discribe">(这里列出了您所有的链接分类)</span></h2>
 		<form method="get" id="all_link_categories">
 		<table width="100%" cellpadding="0" cellspacing="0" id="link_category_list">
@@ -19,7 +25,7 @@
 				<td><input type="checkbox" class="checkbox_element" name="lc_id[]" value="{$link_category.id}"/></td>
 				<td><a href="{$static_var.index}/admin/links/link_category/?lc_id={$link_category.id}" title="{$link_category.link_category_name}">{$link_category.link_category_name}</td>
 				<td class="describe">{$link_category.link_category_describe}</td>
-				<td>{$link_category.link_category_linksort}</td>
+				<td><[if:$link_category.link_category_linksort == "asc"]>升序<[/if]><[if:$link_category.link_category_linksort == "desc"]>降序<[/if]><[if:$link_category.link_category_linksort == "rand"]>随机排序<[/if]></td>
 				<td>
 					<a class="img" title="编辑" href="{$static_var.index}/admin/links/link_category/?lc_id={$link_category.id}"><img src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/edit.gif" alt="编辑"/></a> 
 					<a class="img" title="删除" href="javascript:;" onclick="magikeConfirm(this);" msg="您确定删除链接分类 '{$link_category.link_category_name}' 吗?" rel="{$static_var.index}/admin/links/link_categories_list/?lc_id={$link_category.id}&do=del"><img src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/delete.gif" alt="删除"/></a> 
