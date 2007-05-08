@@ -98,17 +98,17 @@ class Format extends MagikeObject
     							{
 	    							if(!isset($error[$key]))
 	    							{
-	    								$error[$key] = 'length';
+	    								$error[$key] = $inval;
 	    							}
     							}
     						}
     						else if(ereg("^confrm\(([_0-9a-zA-Z-]+)\)$",$inval,$reg))
     						{
-    							if(!$this->checkConfrm($data[$key],$data[$reg[1]]))
+    							if($this->checkNull($data[$reg[1]]) && !$this->checkConfrm($data[$key],$data[$reg[1]]))
     							{
 	    							if(!isset($error[$key]))
 	    							{
-	    								$error[$key] = 'confrm';
+	    								$error[$key] = $inval;
 	    							}
     							}
     						}
@@ -119,7 +119,7 @@ class Format extends MagikeObject
     							{
 	    							if(!isset($error[$key]))
 	    							{
-	    								$error[$key] = 'enum';
+	    								$error[$key] = $inval;
 	    							}
     							}
     						}
@@ -133,7 +133,7 @@ class Format extends MagikeObject
     							{
 	    							if(!isset($error[$key]))
 	    							{
-	    								$error[$key] = $reg[1];
+	    								$error[$key] = $inval;
 	    							}
     							}
     						}

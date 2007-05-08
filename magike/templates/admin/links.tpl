@@ -42,7 +42,7 @@
 			<span onclick="selectTableAll('link_list','checkbox_element')">{lang.admin_db_grid.select_all}</span><b>,</b>
 			<span onclick="selectTableNone('link_list','checkbox_element')">{lang.admin_db_grid.select_none}</span><b>,</b>
 			<span onclick="selectTableOther('link_list','checkbox_element')">{lang.admin_db_grid.select_other}</span><b>,</b>
-			<span onclick="if(confirm('您确定删除这些链接吗')) document.getElementById('all_links').submit();">{lang.admin_db_grid.select_delete}</span>
+			<span onclick="if(confirm('您确定删除这些链接吗?')) document.getElementById('all_links').submit();">{lang.admin_db_grid.select_delete}</span>
 			<[if:$links_page_nav.next]><a href="{$static_var.index}/admin/comments/all/?comment_page={$links_page_nav.next}">下一页</a><[/if]>
 			<[if:$links_page_nav.next and $links_page_nav.prev]><u>,</u><[/if]>
 			<[if:$links_page_nav.prev]><a href="{$static_var.index}/admin/comments/all/?comment_page={$links_page_nav.prev}">上一页</a><[/if]>

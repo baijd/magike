@@ -17,6 +17,7 @@ class InsertLink extends MagikeModule
 			$result['do'] = 'update';
 			$this->stack['admin_menu_list']['children'][1]['menu_name'] = '编辑链接 "'.$result['link_name'].'"';
 			$this->stack['admin_menu_list']['children'][1]['path_name'] = '/admin/posts/category/?c='.$result['id'];
+			$this->stack['static_var']['admin_title'] = '编辑链接 "'.$result['link_name'].'"';
 			return $result;
 		}
 		else

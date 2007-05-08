@@ -3,6 +3,7 @@
 
 <[module:admin_index]>
 <[module:posts_list?type=1&sub=20&striptags=1&limit=5]>
+<[module:comments_list_all?limit=5&striptags=1&substr=20]>
 <style>
 	#element
 	{
@@ -130,11 +131,9 @@
 			</ul>
 			<h2>最新评论</h2>
 			<ul class="info">
-				<li><a href="{$static_var.index}/admin/posts/write">撰写一篇文章</a></li>
-				<li><a href="#">更改我的博客皮肤</a></li>
-				<li><a href="#">编辑我的档案</a></li>
-				<li><a href="#">配置我的网站</a></li>
-				<li><a href="#">增加一个友情链接</a></li>
+			<[loop:$comments_list_all AS $comment]>
+				<li>{$comment.comment_user} 在 <a href="#">{$comment.post_title}</a> <span class="describe">{$comment.comment_text}</span></li>
+			<[/loop]>
 			</ul>
 		</div>
 	</div>

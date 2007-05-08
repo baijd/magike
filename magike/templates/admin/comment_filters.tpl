@@ -39,7 +39,7 @@
 			<span onclick="selectTableAll('filter_list','checkbox_element')">{lang.admin_db_grid.select_all}</span><b>,</b>
 			<span onclick="selectTableNone('filter_list','checkbox_element')">{lang.admin_db_grid.select_none}</span><b>,</b>
 			<span onclick="selectTableOther('filter_list','checkbox_element')">{lang.admin_db_grid.select_other}</span><b>,</b>
-			<span onclick="if(confirm('您确定删除这些过滤器吗')) document.getElementById('comment_filters').submit();">{lang.admin_db_grid.select_delete}</span>
+			<span onclick="if(confirm('您确定删除这些过滤器吗?')) document.getElementById('comment_filters').submit();">{lang.admin_db_grid.select_delete}</span>
 		</div>
 	</div>
 </div>
