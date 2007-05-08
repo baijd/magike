@@ -46,5 +46,21 @@ class GroupsModel extends MagikeModel
 								)
 								));
 	}
+	
+	public function insertPathGroup($pid,$gid)
+	{
+		$this->insert(array('table' => 'table.path_group_mapping',
+									  'value' => array('path_id' => $pid,'group_id' => $gid)
+								));
+	}
+	
+	public function deletePathGroup($id)
+	{
+		$this->delete(array('table' => 'table.path_group_mapping',
+									  'where' => array('template' => 'group_id = ?',
+													   'value'	  => array($id)
+								)
+								));
+	}
 }
 ?>

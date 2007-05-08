@@ -24,7 +24,7 @@
 			</tr>
 			<[loop:$links_list AS $link]>
 			<tr>
-				<td><input type="checkbox" class="checkbox_element" name="link_id[]" value="{$link.link_id}"/</td>
+				<td><input type="checkbox" class="checkbox_element" name="link_id[]" value="{$link.link_id}"/></td>
 				<td><a href="{$static_var.index}/admin/links/link/?link_id={$link.link_id}" title="{$link.link_name}">{$link.link_name}</a></td>
 				<td><a href="{$link.link_url}" title="{$link.link_name}">{$link.link_url}</a></td>
 				<td class="describe">{$link.link_describe}</td>

@@ -1,13 +1,13 @@
 <?php
 /**********************************
  * Created on: 2007-2-2
- * File Name : validator.add_link_category.php
+ * File Name : validator.add_user.php
  * Copyright : Magike Group
  * License   : GNU General Public License 2.0
  *********************************/
 
 $elements = array(
-	"link_category_name" => array("null" => "您提交的链接分类名称不能为空"),
+	"group_name" => array("null" => "用户组名称不能为空")
 );
 ?>
  
