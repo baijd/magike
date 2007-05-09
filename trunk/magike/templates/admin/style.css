@@ -1,10 +1,14 @@
+html
+{
+	min-height: 100%;
+}
+
 body
 {
-	background:#FFF;
+	background:#FFF url(images/powered.gif) bottom right no-repeat;
 	font-family:verdana, Helvetica, sans-serif;
 	padding:0;
 	margin:0;
-	border:0;
 }
 
 #logo
@@ -163,7 +167,15 @@ body
 
 #content
 {
-	padding:20px;
+	width:100%;
+	float:left;
+	margin-bottom:40px !important;
+	margin-bottom:30px;
+}
+
+#element
+{
+	margin:20px;
 }
 
 #element .option

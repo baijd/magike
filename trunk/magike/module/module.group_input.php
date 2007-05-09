@@ -80,6 +80,7 @@ class GroupInput extends MagikeModule
 		foreach($select as $id)
 		{
 			$groupModel->deletePathGroup($id);
+			$groupModel->deleteGroupUser($id);
 		}
 		
 		$this->updateCache();
