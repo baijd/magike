@@ -24,15 +24,13 @@
 			</p>
 		</div>
 		<div class="input">
-			<h2>路径权限</h2>
-				<ul style="margin:10px 5px;padding:0;float:left;width:600px;font-size:9pt;color:#999">
-				<[loop:$paths_list AS $path]>
-					<li style="margin:0;list-style:none;float:left;width:200px;height:22px;"><input type="checkbox" class="checkbox validate-me" name="group_path[]" value="{$path.id}" <[if:in_array($path.id,$insert_group.group_path)]>checked=true<[/if]> /> {$path.path_describe}</li>
+			<h2>所属群组</h2>
+			<p>
+				<[loop:$groups_list AS $group]>
+					<input type="checkbox" name="user_group[]" class="checkbox validate-me" value="{$group.id}" <[if:in_array($group.id,$insert_user.user_group)]>checked=true<[/if]> /> {$group.group_name} <span class="discribe">{$group.group_describe}</span><br />
 				<[/loop]>
-					<li style="margin:0;list-style:none;float:left;width:600px;height:26px;"><input type="button" value="全选" onclick="$('input.checkbox').attr('checked','true');" /> <input type="button" onclick="$('input.checkbox').removeAttr('checked');" value="全不选" /></li>
-					<li style="margin:0;list-style:none;float:left;width:600px;height:22px;">(描述这个用户组,如果没有必要,可以留空)</li>
-				</ul>
-				
+				<span class="validate-word" id="user_group-word"></span><span class="discribe">(为这个用户分配一个用户组)</span>
+			</p>
 		</div>
 		<div class="submit">
 			<span class="button" onclick="magikeValidator('{$static_var.index}/helper/validator/','add_group');">提交信息</span>

@@ -36,6 +36,11 @@
 			margin-bottom:-6px;
 		}
 		
+		#element
+		{
+			margin:0;
+		}
+
 		#element h1
 		{
 			font-weight:normal;

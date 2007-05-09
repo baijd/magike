@@ -284,7 +284,23 @@ body
 	font-size:10pt;
 }
 
-#element table
+#element #search
+{
+	background:#FFFFAA;
+	padding:10px;
+	border-bottom:1px solid #CCC;
+	color:#666;
+	display:none;
+}
+
+#element #search input
+{
+	border:1px solid #666;
+	background:#FFF;
+	font-size:9pt;
+}
+
+#element table,#element #search
 {
 	font-size:9pt;
 }
