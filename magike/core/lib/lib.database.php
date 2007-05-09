@@ -163,7 +163,7 @@ class Database extends MagikeObject
  		{
  			foreach($args['value'] as $key => $val)
  			{
-				array_push($columns,"$key = $val");
+				$columns[] = "$key = $val";
  			}
  		}
  		$value = $value.implode(' , ',$columns);

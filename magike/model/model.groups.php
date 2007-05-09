@@ -47,6 +47,15 @@ class GroupsModel extends MagikeModel
 								));
 	}
 	
+	public function deleteGroupUser($id)
+	{
+		$this->delete(array('table' => 'table.user_group_mapping',
+									  'where' => array('template' => 'group_id = ?',
+													   'value'	  => array($id)
+								)
+								));
+	}
+	
 	public function insertPathGroup($pid,$gid)
 	{
 		$this->insert(array('table' => 'table.path_group_mapping',
@@ -57,7 +66,16 @@ class GroupsModel extends MagikeModel
 	public function deletePathGroup($id)
 	{
 		$this->delete(array('table' => 'table.path_group_mapping',
-									  'where' => array('template' => 'group_id = ?',
+									   'where' => array('template' => 'group_id = ?',
+													   'value'	  => array($id)
+								)
+								));
+	}
+	
+	public function deleteGroupPath($id)
+	{
+		$this->delete(array('table' => 'table.path_group_mapping',
+									   'where' => array('template' => 'path_id = ?',
 													   'value'	  => array($id)
 								)
 								));
