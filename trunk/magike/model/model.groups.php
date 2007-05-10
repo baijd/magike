@@ -31,6 +31,15 @@ class GroupsModel extends MagikeModel
 							);
 	}
 	
+	public function getPathGroups($id)
+	{
+		return $this->fectch(array('table' => 'table.groups JOIN table.path_group_mapping ON table.groups.id = table.path_group_mapping.group_id',
+								   'where' => array('template' => 'table.path_group_mapping.path_id = ?','value' => array($id)),
+								   'groupby' => 'table.path_group_mapping.group_id'
+									)
+							);
+	}
+	
 	public function insertUserGroup($uid,$gid)
 	{
 		$this->insert(array('table' => 'table.user_group_mapping',

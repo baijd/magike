@@ -1,9 +1,15 @@
 <[include:header]>
 <[include:menu]>
 
+<[module:path_input]>
 <[module:paths_list]>
 <div id="content">
 	<div id="element">
+	<[if:$path_input.open]>
+		<div class="message">
+			{$path_input.word}
+		</div>
+	<[/if]>
 		<h2>路径列表 <span class="discribe">(这里列出了本网站所有虚拟路径,请谨慎操作)</span></h2>
 		<form method="get" id="all_paths">
 		<table width="100%" cellpadding="0" cellspacing="0" id="paths_list">

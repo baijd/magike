@@ -62,44 +62,44 @@ class MagikeModel extends Database
  					)));
  	 }
  	 
- 	 public function fectchByKey($key)
+ 	 public function fectchByKey($key,$callback = NULL,$expection = false)
  	 {
  	 	 return $this->fectchOne(array('table' => $this->table,
  	 	 	 						   'groupby' => $this->group,
  	 	 							   'where' => array('template' => "{$this->key} = ?",
- 	 	 												'value' => array($key))));
+ 	 	 												'value' => array($key))),$callback,$expection);
  	 }
  	 
- 	 public function fectchByFieldEqual($field,$value)
+ 	 public function fectchByFieldEqual($field,$value,$callback = NULL,$expection = false)
  	 {
  	 	 return $this->fectchOne(array('table' => $this->table,
  	 	 	 						   'groupby' => $this->group,
  	 	 							   'where' => array('template' => "{$field} = ?",
- 	 	 												'value' => array($value))));
+ 	 	 												'value' => array($value))),$callback,$expection);
  	 }
  	 
- 	 public function fectchByFieldLike($field,$value)
+ 	 public function fectchByFieldLike($field,$value,$callback = NULL,$expection = false)
  	 {
  	 	 return $this->fectchOne(array('table' => $this->table,
  	 	 	 						   'groupby' => $this->group,
  	 	 							   'where' => array('template' => "{$field} LIKE ?",
- 	 	 												'value' => array($value))));
+ 	 	 												'value' => array($value))),$callback,$expection);
  	 }
  	 
- 	 public function fectchAllByFieldEqual($field,$value)
+ 	 public function fectchAllByFieldEqual($field,$value,$callback = NULL,$expection = false)
  	 {
  	 	 return    $this->fectch(array('table' => $this->table,
  	 	 	 						   'groupby' => $this->group,
  	 	 							   'where' => array('template' => "{$field} = ?",
- 	 	 												'value' => array($value))));
+ 	 	 												'value' => array($value))),$callback,$expection);
  	 }
  	 
- 	 public function fectchAllByFieldLike($field,$value)
+ 	 public function fectchAllByFieldLike($field,$value,$callback = NULL,$expection = false)
  	 {
  	 	 return    $this->fectch(array('table' => $this->table,
  	 	 	 						   'groupby' => $this->group,
  	 	 							   'where' => array('template' => "{$field} LIKE ?",
- 	 	 												'value' => array($value))));
+ 	 	 												'value' => array($value))),$callback,$expection);
  	 }
  	 
  	 public function increaseFieldByKey($key,$field,$num = 1)

@@ -45,7 +45,7 @@ class GroupInput extends MagikeModule
 		
 		$this->updateCache();
 		$this->result['open'] = true;
-		$this->result['word'] = '您的用户组"'.$_POST['group_name'].'" 已经更新成功';
+		$this->result['word'] = '您的用户组 "'.$_POST['group_name'].'" 已经更新成功';
 	}
 	
 	public function insertGroup()

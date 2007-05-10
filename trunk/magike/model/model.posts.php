@@ -26,6 +26,41 @@ class PostsModel extends MagikeModel
 		return $args;
 	}
 	
+	public function fectchPostsByKeywords($keywords,$limit,$offset,$func = NULL)
+	{
+		$whereTpl = array();
+		$value = array();
+		$where = array();
+		
+		foreach($keywords as $key => $val)
+		{
+			$whereTpl[] = "{$key} LIKE ?";
+			$value[] = '%'.$val.'%';
+		}
+		
+		$where['template'] = implode(' OR ',$whereTpl);
+		$where['value'] = $value;
+		return $this->fectch($this->fixPostWhere($limit,$offset,$where),$func);
+	}
+	
+	public function countPostsByKeywords($keywords)
+	{
+		$args = $this->fixPostWhere();
+		
+		$whereTpl = array();
+		$value = array();
+		foreach($keywords as $key => $val)
+		{
+			$whereTpl[] = "{$key} LIKE ?";
+			$value[] = '%'.$val.'%';
+		}
+		
+		$args['where']['template'] = implode(' OR ',$whereTpl);
+		$args['where']['value'] = $value;
+		unset($args['groupby']);
+		return $this->countTable($args);
+	}
+	
 	public function fectchPostById($id,$func = NULL)
 	{
 		$args = array('fields'=> '*,table.posts.id AS post_id',
