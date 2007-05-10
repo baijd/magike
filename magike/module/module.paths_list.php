@@ -8,10 +8,16 @@
 
 class PathsList extends MagikeModule
 {
+	public function prasePath($val)
+	{
+		$val['path_action'] = $this->getLanguage($val['path_action'],'path_action');
+		return $val;
+	}
+	
 	public function runModule()
 	{
 		$pathModel = $this->loadModel('paths');
-		return $pathModel->listPaths();
+		return $pathModel->listPaths(array('function' => array($this,'prasePath')));
 	}
 }
 ?>

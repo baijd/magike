@@ -10,8 +10,21 @@ class TbIf extends TemplateBuild
 {
 	public function filterIfSyntaxCallback($matches)
 	{
-		$matches[1] = $this->praseVar($matches[1]);
-		return "<?php if($matches[1]){ ?>";
+		$found = array();
+		$matches[1] = $this->praseVar($matches[1],$found);
+		
+		foreach($found as $key => $val)
+		{
+			$found[$key] = "isset({$val})";
+		}
+		
+		$setVar = implode(" && ",$found);
+		if($found)
+		{
+			$setVar .= " && ";
+		}
+		
+		return "<?php if({$setVar}{$matches[1]}){ ?>";
 	}
 	
 	public function prase()

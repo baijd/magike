@@ -375,3 +375,56 @@ $(document).ajaxStart(
 		}
 	}
 );
+
+function sidebarInt()
+{
+	$("#sidebar").toggle(
+		function(){
+				$("#sidebar").animate({left:0},"slow");
+		},
+		function(){
+				$("#sidebar").animate({left:-90},"slow");
+		}
+	);
+	
+	$("#sidebar").mousedown(
+		function(){
+			$("#sidebar").css("background","#999");
+		}
+	);
+	
+	$("#sidebar").mouseup(
+		function(){
+			$("#sidebar").css("background","#333");
+		}
+	);
+}
+
+var sidebarHover = new Array();
+function sidebarInsert(src)
+{
+	img = $(document.createElement('img'));
+	img.attr('src',src);
+	img.attr('width',70);
+	
+	img.mouseover(
+		function()
+		{
+			if(typeof(sidebarHover[this]) == 'undefined' || !sidebarHover[this])
+			{
+				$(this).animate({width:250},"fast",function(){sidebarHover[this] = true});
+			}
+		}
+	);
+	img.mouseout(
+		function()
+		{
+			if(sidebarHover[this])
+			{
+				$(this).animate({width:70},"fast",function(){sidebarHover[this] = false});
+			}
+		}
+	);
+	
+	$("#sidebar").append(img);
+}

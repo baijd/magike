@@ -108,6 +108,52 @@ function mgMkdir($inpath,$mode = 0777)
 	return true;
 }
 
+function mgRmDir($inpath)
+{
+	str_replace("//","/",$inpath);
+	$dir = explode("/",$inpath);
+	
+	foreach($dir as $key => $val)
+	{
+		$path = implode("/",$dir);
+		if(mgUnLink($path) == false) return false;
+		if(($dirs = mgGetDir($path)) != NULL)
+		{
+			foreach($dirs as $inkey => $inval)
+			{
+				if(mgRmDir($path."/".$inval) == false) return false;
+			}
+		}
+		if(@rmdir($path) == false)
+		{
+			return false;
+		}
+		if($inpath != $path)
+		{
+		array_pop($dir);
+		}
+		else break;
+	}
+	
+	return true;
+}
+
+function mgUnLink($inpath)
+{
+	str_replace("//","/",$inpath);
+	$files = mgGetFile($inpath,true);
+	
+	if($files != NULL)
+	{
+		foreach($files as $key => $val)
+		{
+		if(@unlink($inpath."/".$val) == false) return false;
+		}
+	}
+	
+	return true;
+}
+
 //一次包含多个类库
 function mgRequireObjects($dir,$template)
 {
@@ -178,6 +224,19 @@ function mgGetFile($inpath,$trim = false,$stamp = NULL)
     }
     closedir($handle);
     return $file;
+}
+
+//获取一个目录下的目录
+function mgGetDir($inpath)
+{
+	$handle=opendir($inpath);
+    $dir = array();
+    while ($tmp = readdir($handle))
+    {
+    	if(is_dir($inpath."/".$tmp) && $tmp != ".." && $tmp != "." && 0 !== stripos($tmp,'.')) array_push($dir,$tmp);
+    }
+    closedir($handle);
+    return $dir;
 }
 
 //将数组输出到一个文件中

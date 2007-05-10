@@ -10,6 +10,7 @@
 class TemplateBuild extends MagikeObject
 {
 	private $callback;
+	private $foundVar;
 	public	$str;
 	public	$fileName;
 	public	$dirName;
@@ -19,6 +20,7 @@ class TemplateBuild extends MagikeObject
 		$this->str = $str;
 		$this->fileName = $fileName;
 		$this->dirName = dirname($fileName);
+		$this->foundVar = array();
 		parent::__construct();
 	}
 	
@@ -42,16 +44,20 @@ class TemplateBuild extends MagikeObject
 		return preg_replace_callback("/\s*(.+)/is",array($this,$this->callback),$matches[1]);
 	}
 	
-	protected function praseVar($input)
+	protected function praseVar($input,&$var = array())
 	{
+		$this->foundVar = array();
 		$input = preg_replace_callback("/\\$([_0-9a-zA-Z-\.]+)/is",array($this,'praseVarCallback'),$input);
+		$var = $this->foundVar;
 		return $input;
 	}
 
 	private function praseVarCallback($matches)
 	{
 		$keys = explode('.',$matches[1]);
-		return "\$data['".implode("']['",$keys)."']";
+		$var = "\$data['".implode("']['",$keys)."']";
+		$this->foundVar[] = $var;
+		return $var;
 	}
 	
 	public function prase()

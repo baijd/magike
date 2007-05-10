@@ -10,6 +10,7 @@
 			正在处理您的请求
 		</div>
 	<form method="post" id="write" action="{$static_var.index}/admin/posts/all/?do={$write_post.do}<[if:$write_post.do == "update"]>&post_id={$write_post.post_id}<[/if]>">
+		<div id="sidebar"></div>
 		<div class="tab_nav">
 			<ul id="tab">
 				<li id="first" rel="write_content"><span>{lang.admin_write.write}</span></li>
@@ -159,6 +160,10 @@ function showEditor()
 		tinyMCE.execCommand('mceAddControl', false, 'post_content');
 	}
 }
+
+sidebarInt();
+sidebarInsert("http://www.magike.net/data/upload/2007/04/28/logo.jpg");
+sidebarInsert("http://www.magike.net/data/upload/2007/04/05/screen.gif");
 </script>
 
 <[include:footer]>

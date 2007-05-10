@@ -14,10 +14,10 @@ class TbLang extends TemplateBuild
 	{
 		if(!isset($this->lang[$matches[1]]))
 		{
-			if(file_exists(__LANGUAGE__.'/'.$this->stack['static_var']['language'].'/'.$matches[1].'.php'))
+			if(file_exists(__LANGUAGE__.'/'.$this->stack['static_var']['language'].'/lang.'.$matches[1].'.php'))
 			{
 				$lang = array();
-				require(__LANGUAGE__.'/'.$this->stack['static_var']['language'].'/'.$matches[1].'.php');
+				require(__LANGUAGE__.'/'.$this->stack['static_var']['language'].'/lang.'.$matches[1].'.php');
 				$this->lang[$matches[1]] = $lang;
 				if(isset($this->lang[$matches[1]][$matches[2]]))
 				{

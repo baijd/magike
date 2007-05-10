@@ -31,7 +31,7 @@
 					<li style="margin:0;list-style:none;float:left;width:200px;height:22px;"><input type="checkbox" class="checkbox validate-me" name="group_path[]" value="{$path.id}" <[if:in_array($path.id,$insert_group.group_path)]>checked=true<[/if]> /> {$path.path_describe}</li>
 				<[/loop]>
 					<li style="margin:0;list-style:none;float:left;width:600px;height:26px;"><input type="button" value="全选" onclick="$('input.checkbox').attr('checked','true');" /> <input type="button" onclick="$('input.checkbox').removeAttr('checked');" value="全不选" /></li>
-					<li style="margin:0;list-style:none;float:left;width:600px;height:22px;">(描述这个用户组,如果没有必要,可以留空)</li>
+					<li style="margin:0;list-style:none;float:left;width:600px;height:22px;">(为这个用户组分配访问权限)</li>
 				</ul>
 				
 		</div>
