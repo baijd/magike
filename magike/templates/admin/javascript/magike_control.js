@@ -376,6 +376,7 @@ $(document).ajaxStart(
 	}
 );
 
+var sidebarHover = new Array();
 function sidebarInt()
 {
 	$("#sidebar").toggle(
@@ -386,45 +387,26 @@ function sidebarInt()
 				$("#sidebar").animate({left:-90},"slow");
 		}
 	);
-	
-	$("#sidebar").mousedown(
-		function(){
-			$("#sidebar").css("background","#999");
-		}
-	);
-	
-	$("#sidebar").mouseup(
-		function(){
-			$("#sidebar").css("background","#333");
-		}
-	);
 }
 
-var sidebarHover = new Array();
 function sidebarInsert(src)
 {
 	img = $(document.createElement('img'));
 	img.attr('src',src);
 	img.attr('width',70);
+	img.attr('height',70);
 	
-	img.mouseover(
+	img.hover(
 		function()
 		{
-			if(typeof(sidebarHover[this]) == 'undefined' || !sidebarHover[this])
-			{
-				$(this).animate({width:250},"fast",function(){sidebarHover[this] = true});
-			}
-		}
-	);
-	img.mouseout(
+			$(this).animate({width:120,height:120},"fast",function(){sidebarHover[this] = true;});
+		},
 		function()
 		{
-			if(sidebarHover[this])
-			{
-				$(this).animate({width:70},"fast",function(){sidebarHover[this] = false});
-			}
+			$(this).animate({width:70,height:70},"fast",function(){sidebarHover[this] = false;});
 		}
 	);
 	
 	$("#sidebar").append(img);
 }
+

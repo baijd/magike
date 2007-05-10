@@ -185,14 +185,10 @@ body
 	width:80px;
 	padding:10px;
 	height:420px;
-	background:#333;
-	border:1px solid #000;
-	border-left:none;
+	background:url(images/sidebar.png) left top no-repeat;
 	z-index:1000;
 	float:left;
 	cursor:pointer;
-	filter:alpha(opacity=70);
-	-moz-opacity:0.7;
 }
 
 #element #sidebar img
@@ -201,7 +197,9 @@ body
 	border:1px solid #000;
 	background:#222;
 	margin-bottom:5px;
+	float:left;
 	position:relative;
+	z-index:2000;
 }
 
 #element .option
