@@ -155,15 +155,18 @@ $.getScript("{$static_var.siteurl}/templates/{$static_var.admin_template}/javasc
 
 function showEditor()
 {
-	if(!$(".mceEditor").parent().is(".mceEditorContainer"))
+	if(!$(".mceEditor").html())
 	{
 		tinyMCE.execCommand('mceAddControl', false, 'post_content');
 	}
 }
 
 sidebarInt();
-sidebarInsert("http://www.magike.net/data/upload/2007/04/28/logo.jpg");
-sidebarInsert("http://www.magike.net/data/upload/2007/04/05/screen.gif");
+sidebarInsert("http://www.blizzard.com/images/misc/fanart/4-25-07-2.jpg");
+sidebarInsert("http://www.blizzard.com/images/misc/fanart/5-09-07-1.jpg");
+sidebarInsert("http://www.blizzard.com/images/misc/fanart/5-09-07-2.jpg");
+sidebarInsert("http://www.wowchina.com/support/images_wow/logo_blizzard.jpg");
+sidebarInsert("http://www.blizzard.com/images/misc/fanart/4-25-07-1.jpg");
 </script>
 
 <[include:footer]>
