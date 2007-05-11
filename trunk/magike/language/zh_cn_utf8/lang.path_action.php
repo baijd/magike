@@ -9,5 +9,6 @@
 $lang = array(
 	'template'		=> '模板输出',
 	'json_output' 	=> 'JSON串输出',
+	'module_output' => '模块直接输出'
 );
 ?>

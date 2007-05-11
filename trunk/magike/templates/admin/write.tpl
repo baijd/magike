@@ -6,17 +6,17 @@
 <[module:write_post]>
 <div id="content">
 	<div id="element">
+	<div id="sidebar"></div>
 		<div class="proc">
 			正在处理您的请求
 		</div>
 	<form method="post" id="write" action="{$static_var.index}/admin/posts/all/?do={$write_post.do}<[if:$write_post.do == "update"]>&post_id={$write_post.post_id}<[/if]>">
-		<div id="sidebar"></div>
 		<div class="tab_nav">
 			<ul id="tab">
 				<li id="first" rel="write_content"><span>{lang.admin_write.write}</span></li>
 				<li rel="write_option"><span>{lang.admin_write.option}</span></li>
 				<li rel="write_tools"><span>{lang.admin_write.publish}</span></li>
-				<li><span>{lang.admin_write.upload}</span></li>
+				<li rel="write_upload"><span>{lang.admin_write.upload}</span></li>
 				<li><span>{lang.admin_write.tools}</span></li>
 			</ul>
 		</div>
@@ -76,6 +76,9 @@
 				<textarea class="text" name="post_trackback" cols=60 rows=5 ></textarea> <br />
 				<span class="discribe">{lang.admin_write.trackback_describe}</span></p>
 				</div>
+			</div>
+			<div id="write_upload">
+				<iframe frameborder=0 width=100% height=200 src="{$static_var.index}/admin/posts/upload/"></iframe>
 			</div>
 			<div id="write_option">
 				<div class="input">
@@ -160,13 +163,6 @@ function showEditor()
 		tinyMCE.execCommand('mceAddControl', false, 'post_content');
 	}
 }
-
-sidebarInt();
-sidebarInsert("http://www.blizzard.com/images/misc/fanart/4-25-07-2.jpg");
-sidebarInsert("http://www.blizzard.com/images/misc/fanart/5-09-07-1.jpg");
-sidebarInsert("http://www.blizzard.com/images/misc/fanart/5-09-07-2.jpg");
-sidebarInsert("http://www.wowchina.com/support/images_wow/logo_blizzard.jpg");
-sidebarInsert("http://www.blizzard.com/images/misc/fanart/4-25-07-1.jpg");
 </script>
 
 <[include:footer]>

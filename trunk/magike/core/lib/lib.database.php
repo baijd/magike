@@ -146,6 +146,7 @@ class Database extends MagikeObject
  	
  	public function fectchOne($args,$callback = NULL,$expection = false)
  	{
+ 		$args['limit'] = 1;
  		$result = $this->fectch($args,$callback,$expection);
  		return $result ? $result[0] : array();
  	}

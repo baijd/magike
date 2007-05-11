@@ -530,13 +530,16 @@ TinyMCE_Engine.prototype = {
 	},
 
 	addMCEControl : function(replace_element, form_element_name, target_document) {
-		var id = "mce_editor_" + tinyMCE.idCounter++;
-		var inst = new TinyMCE_Control(tinyMCE.settings);
+		if(document.getElementById('mce_editor_0') == null)
+		{
+			var id = "mce_editor_" + tinyMCE.idCounter++;
+			var inst = new TinyMCE_Control(tinyMCE.settings);
 
-		inst.editorId = id;
-		this.instances[id] = inst;
+			inst.editorId = id;
+			this.instances[id] = inst;
 
-		inst._onAdd(replace_element, form_element_name, target_document);
+			inst._onAdd(replace_element, form_element_name, target_document);
+		}
 	},
 
 	removeInstance : function(ti) {

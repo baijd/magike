@@ -165,9 +165,10 @@ class Path extends MagikeModule
 		$path = str_replace("_","\_",$path);
 
 		//替换匹配变量
-		$path = preg_replace("/\[([_0-9a-zA-Z-]+)\=\%d\]/i","([0-9]+)",$path);
-		$path = preg_replace("/\[([_0-9a-zA-Z-]+)\=\%s\]/i","([_0-9a-zA-Z\\x80-\\xff-]+)",$path);
-		$path = preg_replace("/\[([_0-9a-zA-Z-]+)\=\%a\]/i","([_0-9a-zA-Z-]+)",$path);
+		$path = preg_replace("/\[([_0-9a-zA-Z-\\\]+)\=\%d\]/i","([0-9]+)",$path);
+		$path = preg_replace("/\[([_0-9a-zA-Z-\\\]+)\=\%s\]/i","([_0-9a-zA-Z\\x80-\\xff-]+)",$path);
+		$path = preg_replace("/\[([_0-9a-zA-Z-\\\]+)\=\%p\]/i","([_\\.0-9a-zA-Z\\x80-\\xff-]+)",$path);
+		$path = preg_replace("/\[([_0-9a-zA-Z-\\\]+)\=\%a\]/i","([_0-9a-zA-Z-]+)",$path);
 		$path = '^'.$path.'[/]?$';
 
 		return $path;
@@ -177,13 +178,13 @@ class Path extends MagikeModule
 	{
 		$value = array();
 
-		if(preg_match_all("/\[([_0-9a-zA-Z-]+)\=\%([d|s|a])\]/i",$path,$out))
+		if(preg_match_all("/\[([_0-9a-zA-Z-\\\]+)\=\%([d|s|p|a|])\]/i",$path,$out))
 		{
 			if(isset($out[1]) && $out[1])
 			{
 				foreach($out[1] as $val)
 				{
-					$value[] = $val;
+					$value[] = str_replace("\\","",$val);
 				}
 			}
 		}

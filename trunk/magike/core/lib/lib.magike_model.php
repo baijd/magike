@@ -140,4 +140,3 @@ class MagikeModel extends Database
  	 }
 }
 ?>
- 

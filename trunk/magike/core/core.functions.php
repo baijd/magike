@@ -268,6 +268,21 @@ function mgCreateRandomString($number)
     return $result;
 }
 
+//获得一个guid
+function mgGetGuid()
+{
+	return md5(uniqid(rand()));
+}
+
+//获取一个散列路径
+function mgGetGuidPath($guid)
+{
+	$path1 = substr($guid,0,2);
+	$path2 = substr($guid,2,2);
+	
+	return '/'.$path1.'/'.$path2;
+}
+
 //获取毫秒级时间
 function mgGetMicrotime()
 {
