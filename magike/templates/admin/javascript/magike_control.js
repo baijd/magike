@@ -376,37 +376,3 @@ $(document).ajaxStart(
 	}
 );
 
-var sidebarHover = new Array();
-function sidebarInt()
-{
-	$("#sidebar").toggle(
-		function(){
-				$("#sidebar").animate({left:0},"slow");
-		},
-		function(){
-				$("#sidebar").animate({left:-90},"slow");
-		}
-	);
-}
-
-function sidebarInsert(src)
-{
-	img = $(document.createElement('img'));
-	img.attr('src',src);
-	img.attr('width',70);
-	img.attr('height',70);
-	
-	img.hover(
-		function()
-		{
-			$(this).animate({width:120,height:120},"fast",function(){sidebarHover[this] = true;});
-		},
-		function()
-		{
-			$(this).animate({width:70,height:70},"fast",function(){sidebarHover[this] = false;});
-		}
-	);
-	
-	$("#sidebar").append(img);
-}
-

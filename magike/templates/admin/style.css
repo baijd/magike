@@ -180,26 +180,27 @@ body
 
 #element #sidebar
 {
-	position:absolute;
-	left:-90px;
-	width:80px;
-	padding:10px;
-	height:420px;
-	background:url(images/sidebar.png) left top no-repeat;
-	z-index:1000;
-	float:left;
+	height:34px;
+	padding:5px;
+	background:#444;
 	cursor:pointer;
+	margin-bottom:10px;
+	border:1px solid #222;
 }
 
 #element #sidebar img
 {
-	padding:4px;
-	border:1px solid #000;
+	border:2px solid #000;
 	background:#222;
-	margin-bottom:5px;
+	margin-right:5px;
 	float:left;
 	position:relative;
 	z-index:2000;
+}
+
+#element #sidebar img.hover
+{
+	border:2px solid #AAA;
 }
 
 #element .option

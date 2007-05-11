@@ -76,7 +76,7 @@ class PostInput extends MagikeModule
 		{
 			$tagsModel = $this->loadModel('tags');
 			$tagsModel->deleteTagsByPostId($_GET['post_id']);
-			$tagsModel->insertTags($input['post_tags']);
+			$tagsModel->insertTags($_GET['post_id'],$input['post_tags']);
 		}
 		
 		$this->result['open'] = true;
