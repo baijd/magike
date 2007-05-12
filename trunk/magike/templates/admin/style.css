@@ -186,6 +186,7 @@ body
 	cursor:pointer;
 	margin-bottom:10px;
 	border:1px solid #222;
+	display:none;
 }
 
 #element #sidebar img
@@ -194,8 +195,6 @@ body
 	background:#222;
 	margin-right:5px;
 	float:left;
-	position:relative;
-	z-index:2000;
 }
 
 #element #sidebar img.hover
@@ -436,6 +435,7 @@ body
 	margin-bottom:10px;
 	font-size:10pt;
 	color:#666;
+	display:none;
 }
 
 #element input,#element textarea,#element select
