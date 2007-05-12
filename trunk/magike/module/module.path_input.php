@@ -19,15 +19,8 @@ class PathInput extends MagikeModule
 	
 	private function updateCache()
 	{
-		if(file_exists(__CACHE__.'/access/access.php'))
-		{
-			unlink(__CACHE__.'/access/access.php');
-		}
-		
-		if(is_dir(__CACHE__.'/action'))
-		{
-			mgRmDir(__CACHE__.'/action');
-		}
+		$this->deleteCache('access');
+		$this->deleteCache('action');
 	}
 	
 	public function updatePath()

@@ -3,9 +3,9 @@
 <head>
 	<meta http-equiv="content-type" content="{$static_var.content_type};charset={$static_var.charset}" />
 	<title>{$static_var.admin_title} &raquo; {$static_var.blog_name}后台页面 - Powered by {$static_var.version}</title>
-	<link href="{$static_var.siteurl}/templates/{$static_var.admin_template}/style.css" rel="stylesheet" type="text/css" />
-	<script language="javascript" type="text/javascript" src="{$static_var.siteurl}/templates/{$static_var.admin_template}/javascript/jquery.js"></script>
-	<script language="javascript" type="text/javascript" src="{$static_var.siteurl}/templates/{$static_var.admin_template}/javascript/magike_control.js"></script>
+	<link href="{$static_var.siteurl}/{!__TEMPLATE__}/{$static_var.admin_template}/style.css" rel="stylesheet" type="text/css" />
+	<script language="javascript" type="text/javascript" src="{$static_var.siteurl}/{!__TEMPLATE__}/{$static_var.admin_template}/javascript/jquery.js"></script>
+	<script language="javascript" type="text/javascript" src="{$static_var.siteurl}/{!__TEMPLATE__}/{$static_var.admin_template}/javascript/magike_control.js"></script>
 	<style>
 		body{background:#FFF;}
 		#content{margin-bottom:0 !important;}

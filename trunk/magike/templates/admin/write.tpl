@@ -30,7 +30,7 @@
 				<div class="input">
 					<h2>{lang.admin_write.content}</h2>
 					<p>
-						<textarea name="post_content" rows="14" class="validate-me" style="background:url({$static_var.siteurl}/templates/{$static_var.admin_template}/images/editor_loading.gif) center no-repeat;width:600px">{$write_post.post_content}</textarea><br />
+						<textarea name="post_content" rows="14" class="validate-me" style="background:url({$static_var.siteurl}/{!__TEMPLATE__}/{$static_var.admin_template}/images/editor_loading.gif) center no-repeat;width:600px">{$write_post.post_content}</textarea><br />
 						<span class="validate-word" id="post_content-word"></span>&nbsp;
 						<span class="discribe">{lang.admin_write.content_describe}</span>
 					</p>
@@ -134,8 +134,8 @@ function validateSuccess()
 	document.getElementById('write').submit();
 }
 
-$.getScript("{$static_var.siteurl}/templates/{$static_var.admin_template}/javascript/tiny_mce/tiny_mce.js", function(){
- tinyMCE.scriptUrl = "{$static_var.siteurl}/templates/{$static_var.admin_template}/javascript/tiny_mce/tiny_mce.js";
+$.getScript("{$static_var.siteurl}/{!__TEMPLATE__}/{$static_var.admin_template}/javascript/tiny_mce/tiny_mce.js", function(){
+ tinyMCE.scriptUrl = "{$static_var.siteurl}/{!__TEMPLATE__}/{$static_var.admin_template}/javascript/tiny_mce/tiny_mce.js";
  tinyMCE.init({
 	mode : "exact",
 	theme : "advanced",
@@ -148,7 +148,7 @@ $.getScript("{$static_var.siteurl}/templates/{$static_var.admin_template}/javasc
 	theme_advanced_buttons3 : "",
 	theme_advanced_toolbar_location : "top",
 	theme_advanced_toolbar_align : "left",
-	content_css : "{$static_var.siteurl}/templates/{$static_var.admin_template}/editor.css",
+	content_css : "{$static_var.siteurl}/{!__TEMPLATE__}/{$static_var.admin_template}/editor.css",
 	relative_urls : false,
 	remove_script_host : false
 	});

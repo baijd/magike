@@ -17,14 +17,6 @@ class GroupInput extends MagikeModule
 		$this->result['open'] = false;
 	}
 	
-	private function updateCache()
-	{
-		if(file_exists(__CACHE__.'/access/access.php'))
-		{
-			unlink(__CACHE__.'/access/access.php');
-		}
-	}
-	
 	public function updateGroup()
 	{
 		$this->requirePost();
@@ -43,7 +35,7 @@ class GroupInput extends MagikeModule
 			}
 		}
 		
-		$this->updateCache();
+		$this->deleteCache('access');
 		$this->result['open'] = true;
 		$this->result['word'] = '您的用户组 "'.$_POST['group_name'].'" 已经更新成功';
 	}
@@ -65,7 +57,7 @@ class GroupInput extends MagikeModule
 			}
 		}
 		
-		$this->updateCache();
+		$this->deleteCache('access');
 		$this->result['open'] = true;
 		$this->result['word'] = '您的用户组 "'.$_POST['group_name'].'" 已经提交成功';
 	}
@@ -83,7 +75,7 @@ class GroupInput extends MagikeModule
 			$groupModel->deleteGroupUser($id);
 		}
 		
-		$this->updateCache();
+		$this->deleteCache('access');
 		$this->result['open'] = true;
 		$this->result['word'] = '您删除的用户组已经生效';
 	}
