@@ -25,8 +25,8 @@
 				<td><a href="{$static_var.index}/admin/users/group/?group_id={$group.id}">{$group.group_name}</a></td>
 				<td class="describe">{$group.group_describe}</td>
 				<td>
-					<a class="img" title="编辑" href="{$static_var.index}/admin/users/group/?group_id={$group.id}"><img src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/edit.gif" alt="编辑"/></a> 
-					<a class="img" title="删除" href="javascript:;" onclick="magikeConfirm(this);" msg="您确定删除用户组 '{$group.group_name}' 吗?" rel="{$static_var.index}/admin/users/groups_list/?group_id={$group.id}&do=del"><img src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/delete.gif" alt="删除"/></a>
+					<a class="img" title="编辑" href="{$static_var.index}/admin/users/group/?group_id={$group.id}"><img src="{$static_var.siteurl}/{!__TEMPLATE__}/{$static_var.admin_template}/images/edit.gif" alt="编辑"/></a> 
+					<a class="img" title="删除" href="javascript:;" onclick="magikeConfirm(this);" msg="您确定删除用户组 '{$group.group_name}' 吗?" rel="{$static_var.index}/admin/users/groups_list/?group_id={$group.id}&do=del"><img src="{$static_var.siteurl}/{!__TEMPLATE__}/{$static_var.admin_template}/images/delete.gif" alt="删除"/></a>
 				</td>
 			</tr>
 			<[/loop]>

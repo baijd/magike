@@ -196,6 +196,24 @@ class MagikeModule extends MagikeObject
 		}
 	}
 	
+	protected function deleteCache($cache)
+	{
+		if(is_file(__CACHE__.'/'.$cache.'/'.$cache.'.php'))
+		{
+			unlink(__CACHE__.'/'.$cache.'/'.$cache.'.php');
+			return true;
+		}
+		else if(is_dir(__CACHE__.'/'.$cache))
+		{
+			mgRmDir(__CACHE__.'/'.$cache);
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
 	//你可以自己重载这个函数作为模块的入口
 	//入口函数如果有返回值,这个值将被自动压入堆栈中
 	//压入的格式为$stack['module_name'] = array(...)

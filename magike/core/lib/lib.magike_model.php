@@ -132,6 +132,14 @@ class MagikeModel extends Database
 									'value' => $value));
  	 }
  	 
+ 	 public function updateByFiledEqual($filed,$filedValue,$value)
+ 	 {
+ 	 	 return $this->update(array('table' => $this->table,
+						 	 	 	'where' => array('template' => "{$filed} = ?",
+						 	 	 					 'value' => array($filedValue)),
+									'value' => $value));
+ 	 }
+ 	 
  	 public function countTable($args = array())
  	 {
  	 	 $args['key'] = isset($args['key']) ? $args['key'] : $this->key;
