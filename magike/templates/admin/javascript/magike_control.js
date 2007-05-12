@@ -323,7 +323,6 @@ function fixCssHack()
 	
 	$(".message").fadeIn(1000);
 	$(".message").click(function(){$(this).hide();});
-	$(".proc").hide();
 	$(".validate-word").hide();
 }
 
