@@ -111,9 +111,29 @@ class Database extends MagikeObject
 		//处理sort子句
 		$orderby = isset($args['orderby']) && isset($args['sort']) && NULL !== $args['orderby'] && NULL !== $args['sort'] ? $orderby.' '.$args['sort'] : '';
 
+		//分析limit
+		if(isset($args['limit']))
+		{
+			$args['limit'] = intval($args['limit']);
+			if($args['limit'] < 0)
+			{
+				return array();
+			}
+		}
+
 		//处理limit子句
 		$limit = isset($args['limit']) && NULL !== $args['limit'] ? $args['limit'] : '';
-
+		
+		//分析offset
+		if(isset($args['offset']))
+		{
+			$args['offset'] = intval($args['offset']);
+			if($args['offset'] < 0)
+			{
+				return array();
+			}
+		}
+		
 		//处理offset子句
 		$offset = isset($args['limit']) && isset($args['offset']) && NULL !== $args['limit'] && NULL !== $args['offset'] ? $args['offset'].',' : '';
 		$offset = isset($args['limit']) && NULL !== $args['limit'] ? ' LIMIT '.$offset : '';
@@ -218,6 +238,20 @@ class Database extends MagikeObject
  		//替换查询前缀
  		$args = $this->filterTablePrefix($args);
 		$fields = 'SELECT COUNT('.(isset($args['key']) ? $args['key'] : 'id').') AS number';
+ 		$table = ' FROM '.$args['table'];
+		$groupby = isset($args['groupby']) ? ' GROUP BY '.$args['groupby'] : '';
+ 		$where = self::praseWhereSentence($args);
+
+ 		$resource = mysql_query($fields.$table.$where.$groupby) or $this->databaseException();
+ 		$result = mysql_fetch_array($resource,MYSQL_ASSOC);
+ 		return $result['number'];
+ 	}
+ 	
+ 	public function sum($args)
+ 	{
+  		//替换查询前缀
+ 		$args = $this->filterTablePrefix($args);
+		$fields = 'SELECT SUM('.(isset($args['key']) ? $args['key'] : 'id').') AS number';
  		$table = ' FROM '.$args['table'];
 		$groupby = isset($args['groupby']) ? ' GROUP BY '.$args['groupby'] : '';
  		$where = self::praseWhereSentence($args);

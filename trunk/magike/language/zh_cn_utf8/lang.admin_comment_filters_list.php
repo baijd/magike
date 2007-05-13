@@ -1,7 +1,7 @@
 <?php
 /**********************************
  * Created on: 2007-3-3
- * File Name : admin_comment_filters_list.php
+ * File Name : lang.admin_comment_filters_list.php
  * Copyright : Magike Group
  * License   : GNU General Public License 2.0
  *********************************/

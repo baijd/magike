@@ -34,6 +34,10 @@ class CommentInput extends MagikeModule
 			$commentsModel->updateByKey($id,array('comment_publish' => 'spam'));
 		}
 		
+		$staticModel = $this->loadModel('statics');
+		$staticModel->decreaseValueByName('count_comments',count($post));
+		$this->deleteCache('static_var');
+		
 		foreach($post as $id)
 		{
 			$postModel->decreaseFieldByKey($id,'post_comment_num');
@@ -58,6 +62,10 @@ class CommentInput extends MagikeModule
 			}
 			$commentsModel->updateByKey($id,array('comment_publish' => 'waitting'));
 		}
+		
+		$staticModel = $this->loadModel('statics');
+		$staticModel->decreaseValueByName('count_comments',count($post));
+		$this->deleteCache('static_var');
 		
 		foreach($post as $id)
 		{
@@ -84,6 +92,10 @@ class CommentInput extends MagikeModule
 			$commentsModel->updateByKey($id,array('comment_publish' => 'approved'));
 		}
 		
+		$staticModel = $this->loadModel('statics');
+		$staticModel->increaseValueByName('count_comments',count($post));
+		$this->deleteCache('static_var');
+		
 		foreach($post as $id)
 		{
 			$postModel->increaseFieldByKey($id,'post_comment_num');
@@ -108,6 +120,10 @@ class CommentInput extends MagikeModule
 			}
 			$commentsModel->deleteByKeys($id);
 		}
+		
+		$staticModel = $this->loadModel('statics');
+		$staticModel->decreaseValueByName('count_comments',count($post));
+		$this->deleteCache('static_var');
 		
 		foreach($post as $id)
 		{

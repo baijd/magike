@@ -146,5 +146,12 @@ class MagikeModel extends Database
  	 	 $args['table'] = isset($args['table']) ? $args['table'] : $this->table;
  	 	 return $this->count($args);
  	 }
+ 	 
+ 	 public function sumTable($args = array())
+ 	 {
+ 	 	 $args['key'] = isset($args['key']) ? $args['key'] : $this->key;
+ 	 	 $args['table'] = isset($args['table']) ? $args['table'] : $this->table;
+ 	 	 return $this->sum($args);
+ 	 }
 }
 ?>

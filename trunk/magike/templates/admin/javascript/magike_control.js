@@ -304,7 +304,7 @@ function magikeConfirm(el)
 	confirmElement = el;
 	if(confirm($(el).attr("msg")))
 	{
-		setTimeout("window.location.href = $(confirmElement).rel(); ",0);
+		setTimeout("window.location.href = $(confirmElement).attr('rel'); ",0);
 	}
 }
 
@@ -323,6 +323,7 @@ function fixCssHack()
 	
 	$(".message").fadeIn(1000);
 	$(".message").click(function(){$(this).hide();});
+	$(".proc").click(function(){$(this).hide();});
 	$(".validate-word").hide();
 }
 
@@ -374,4 +375,3 @@ $(document).ajaxStart(
 		}
 	}
 );
-

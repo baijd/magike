@@ -3350,7 +3350,7 @@ TinyMCE_Control.prototype = {
 				var insertHTMLFailed = false;
 
 				// Removed since it produced problems in IE
-				// this.getWin().focus();
+				this.getWin().focus();
 
 				if (tinyMCE.isGecko || tinyMCE.isOpera) {
 					try {

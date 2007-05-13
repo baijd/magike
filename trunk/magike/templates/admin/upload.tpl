@@ -44,5 +44,8 @@
 	</script>
 	</div>
 </div>
+<script>
+	parent.getFilesList(1);
+</script>
 </body>
 </html>

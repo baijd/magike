@@ -4,9 +4,59 @@
 <[module:categories_list]>
 <[module:get_current_user]>
 <[module:write_post]>
+
+<script language="javascript" type="text/javascript" src="{$static_var.siteurl}/{!__TEMPLATE__}/{$static_var.admin_template}/javascript/interface.js"></script>
+<style>
+#files_grid
+{
+	margin:0 0 10px 10px !important;
+	margin:10px 0 10px 10px;
+	padding:0;
+	width:550px !important;
+	width:560px;
+	height:150px;
+	background:#EEF0F2;
+	border:1px solid #BEC9D1;
+	float:left;
+}
+
+#files_grid li
+{
+	list-style:none;
+	float:left;
+	width:88px;
+	height:128px;
+	padding:5px;
+	border:1px solid #BEC9D1;
+	background:#FFF;
+	margin:5px;
+	cursor:pointer;
+}
+
+#sidebar input
+{
+	border:1px solid #555;
+	background:#FFF;
+	height:20px;
+	line-height:20px;
+}
+
+#files_grid li.hover
+{
+	background:#FFFFAA;
+	border:1px solid #999;
+}
+</style>
+
 <div id="content">
 	<div id="element">
-	<div id="sidebar"></div>
+		<div id="sidebar">
+			您选定了
+			<strong id="sidebar_word"></strong>&nbsp;
+			<input type="button" value="插入" onclick="$('#first').trigger('click');setTimeout('insertContent();',0);"/> 
+			<input type="button" value="删除"/> 
+			<input type="button" value="取消" onclick="$('#sidebar').hide();" />
+		</div>
 		<div class="proc">
 			正在处理您的请求
 		</div>
@@ -79,6 +129,11 @@
 			</div>
 			<div id="write_upload">
 				<iframe frameborder=0 width=100% height=200 src="{$static_var.index}/admin/posts/upload/"></iframe>
+				<div class="input" style="padding-bottom:0 !important;padding-bottom:10px;margin-bottom:0 !important;margin-bottom:6px;">
+					<h2>文件列表</h2>
+						<ul id="files_grid">
+						</ul>
+				</div>
 			</div>
 			<div id="write_option">
 				<div class="input">
@@ -162,6 +217,84 @@ function showEditor()
 	{
 		tinyMCE.execCommand('mceAddControl', false, 'post_content');
 	}
+}
+
+function insertContent()
+{
+	if($("#sidebar").attr("type") == "true")
+	{
+		tinyMCE.execCommand('mceInsertContent',true,'<img src=' + $("#sidebar").attr("rel") + ' alt=' + $("#sidebar").attr("alt") + ' />');
+	}
+	else
+	{
+		tinyMCE.execCommand('mceInsertContent',true,'<a href=' + $("#sidebar").attr("rel") + ' title=' + $("#sidebar").attr("alt") + ' >'+$("#sidebar").attr("alt")+'</a>');
+	}
+}
+
+function getFilesList(page)
+{
+	showLoading = true;
+	$("#files_grid").html("");
+	$.getJSON("{$static_var.index}/admin/posts/files_list/?page="+page,
+				function(json)
+				{
+					for(var i in json)
+					{
+					if(typeof(json[i]["id"]) != "undefined")
+					{
+						li = $(document.createElement("li"));
+						src = "{$static_var.index}/res/" + json[i]["id"]+"/"+json[i]["file_name"];
+						li.attr("className","normal");
+						li.attr("rel",src);
+						li.attr("alt",json[i]["file_describe"] ? json[i]["file_describe"] : json[i]["file_name"]);
+						li.attr("type",json[i]["is_image"]);
+						img = $(document.createElement("img"));
+						if(json[i]["is_image"])
+						{
+							img.attr("src",src);
+						}
+						else
+						{
+							img.attr("src","{$static_var.siteurl}/{!__TEMPLATE__}/{$static_var.admin_template}/images/file_default.gif");
+						}
+						img.attr("width",88);
+						img.attr("alt",json[i]["file_describe"]);
+						p = $(document.createElement("p"));
+						p.css("font-size","8pt");
+						p.css("padding","5px");
+						p.html(li.attr("alt"));
+						li.append(img);
+						li.append(p);
+						$("#files_grid").append(li);
+						li.hover(
+							function()
+							{
+								$(this).attr("className",$(this).attr("className")+" hover");
+							},
+							function()
+							{
+								$(this).attr("className",$(this).attr("className").replace(" hover",""));
+							}
+						);
+						li.click(
+							function()
+							{
+								$("#sidebar_word").html($(this).attr("rel"));
+								$("#sidebar").attr("rel",$(this).attr("rel"));
+								$("#sidebar").attr("alt",$(this).attr("alt"));
+								$("#sidebar").attr("type",$(this).attr("type"));
+								
+								if($("#sidebar").css("display") == "none")
+								{
+									$("#sidebar").slideDown();
+								}
+							}
+						);
+					}
+					}
+					showLoading = false;
+					$(".proc").hide();
+				});
 }
 </script>
 
