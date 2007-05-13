@@ -33,9 +33,13 @@ class PostInput extends MagikeModule
 		$input['post_gmt'] = mgGetTimeZoneDiff();
 		
 		$postModel = $this->loadModel('posts');
-		$insertId = $this->database->insertTable($input);
+		$insertId = $postModel->insertTable($input);
 		$categoriesModel = $this->loadModel('categories');
 		$categoriesModel->increaseFieldByKey($input['category_id'],'category_count');
+		
+		$staticModel = $this->loadModel('statics');
+		$staticModel->increaseValueByName('count_posts');
+		$this->deleteCache('static_var');
 		
 		if($input['post_tags'])
 		{
@@ -103,6 +107,11 @@ class PostInput extends MagikeModule
 				$tagsModel->deleteTagsByPostId($id);
 			}
 		}
+		
+		$staticModel = $this->loadModel('statics');
+		$staticModel->decreaseValueByName('count_posts',count($select));
+		$this->deleteCache('static_var');
+		
 		$this->result['open'] = true;
 		$this->result['word'] = (count($select) > 1 ? '您的多篇文章' : '文章 "'.$post['post_title'].'" ').'已经被删除';
 	}

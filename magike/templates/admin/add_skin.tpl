@@ -44,10 +44,11 @@
 	padding:0 10px;
 	background:#EEF0F2;
 	border-bottom:#BEC9D1 solid 1px;
-    border-top:#FFF solid 1px;
+    	border-top:#FFF solid 1px;
 	height:28px;
 	line-height:28px;
 	font-size:9pt;
+	cursor:move;
 }
 
 #element ul li a
@@ -64,6 +65,7 @@
 #element ul li img
 {
 	margin-right:5px;
+	margin-top:7px;
 	margin-bottom:-3px;
 }
 

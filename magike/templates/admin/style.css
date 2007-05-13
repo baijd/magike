@@ -180,26 +180,16 @@ body
 
 #element #sidebar
 {
-	height:34px;
+	height:18px;
+	line-height:18px;
 	padding:5px;
-	background:#444;
-	cursor:pointer;
+	padding-left:32px;
+	background:#EEF0F2 url(images/information.gif) left center no-repeat;
+	border:1px solid #BEC9D1;
 	margin-bottom:10px;
-	border:1px solid #222;
 	display:none;
-}
-
-#element #sidebar img
-{
-	border:2px solid #000;
-	background:#222;
-	margin-right:5px;
-	float:left;
-}
-
-#element #sidebar img.hover
-{
-	border:2px solid #AAA;
+	font-size:9pt;
+	color:#444;
 }
 
 #element .option

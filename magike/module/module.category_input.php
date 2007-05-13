@@ -71,11 +71,19 @@ class CategoryInput extends MagikeModule
 		$select = is_array($_GET['c']) ? $_GET['c'] : array($_GET['c']);
 		$postModel = $this->loadModel('posts');
 		$tagsModel = $this->loadModel('tags');
-		$commentsModel = $this->loadModel('comments');
+		$commentModel = $this->loadModel('comments');
+		$staticModel = $this->loadModel('statics');
+		$deletePosts = 0;
+		$deleteComments = 0;
+		
 		
 		foreach($select as $id)
 		{
 			$categoryPosts = $postModel->fectchByFieldEqual('category_id',$id);
+			$deleteComments += $postModel->sum(array('key'	 => 'post_comment_num',
+													 'where' => 
+													 array('template' => 'category_id = ?',
+														   'value' => array($id))));
 			
 			$posts = array();
 			foreach($categoryPosts as $val)
@@ -89,14 +97,19 @@ class CategoryInput extends MagikeModule
 			{
 				$post = $postModel->fectchByKey($id);
 				$postModel->deleteByKeys($id);
-				$commentsModel->deleteByFieldEqual('post_id',$id);
+				$commentModel->deleteByFieldEqual('post_id',$id);
 				if($post['post_tags'])
 				{
 					$tagsModel->deleteTagsByPostId($id);
 				}
 			}
+			
+			$deletePosts += count($posts);
 		}
 		
+		$staticModel->decreaseValueByName('count_posts',$deletePosts);
+		$staticModel->decreaseValueByName('count_comments',$deleteComments);
+		$this->deleteCache('static_var');
 		$this->result['open'] = true;
 		$this->result['word'] = '您删除的分类已经生效';
 	}
