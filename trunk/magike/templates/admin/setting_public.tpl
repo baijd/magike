@@ -1,59 +1,65 @@
 <[include:header]>
 <[include:menu]>
 
+<[module:static_var_input]>
 <[module:languages_list]>
 <div id="content">
 	<div id="element">
+	<[if:$static_var_input.open]>
+		<div class="message">
+			{$static_var_input.word}
+		</div>
+	<[/if]>
 		<div class="proc">
 			正在处理您的请求
 		</div>
-	<form method="post" id="insert_path" action="{$static_var.index}/admin/paths/paths_list/?<[if:$insert_path.do == "update"]>path_id={$insert_path.id}&do=update<<[/if]>><[if:$insert_path.do == "insert"]>do=insert<<[/if]>>">
+	<form method="post" id="setting_public">
 		<h2>全局设置 <span class="discribe">(调整您网站的全局配置)</span></h2>
 		<div class="input">
 			<h2>站点名称</h2>
 			<p>
-				<input type="text" class="text validate-me" name="blog_name" value="{$static_var.blog_name}" size=60 /><span class="validate-word" id="path_describe-word"></span><br />
-				<span class="discribe">(描述这个路径,比如:网站主页)</span>
+				<input type="text" class="text validate-me" name="blog_name" value="{$static_var.blog_name}" size=60 /><span class="validate-word" id="blog_name-word"></span><br />
+				<span class="discribe">(您站点的名称,比如:我的个人空间)</span>
 			</p>
 		</div>
 		<div class="input">
 			<h2>站点描述</h2>
 			<p>
-				<input type="text" class="text validate-me" name="describe" value="{$static_var.describe}" size=60 /><span class="validate-word" id="path_name-word"></span><br />
-				<span class="discribe">(指向这个路径的地址,详细设置请参考帮助信息)</span>
+				<input type="text" class="text" name="describe" value="{$static_var.describe}" size=60 /><br />
+				<span class="discribe">(描述您的站点,比如:这是我的小窝)</span>
 			</p>
 		</div>
 		<div class="input">
 			<h2>网站地址</h2>
 			<p>
-				<input type="text" class="text validate-me" name="siteurl" value="{$static_var.siteurl}" size=60 /><span class="validate-word" id="path_file-word"></span><br />
-				<span class="discribe">(虚拟路径的解析地址,详细设置请参考帮助信息)</span>
+				<input type="text" class="text validate-me" name="siteurl" value="{$static_var.siteurl}" size=60 /><span class="validate-word" id="siteurl-word"></span><br />
+				<span class="discribe">(这是您网站的绝对地址,请不要在末尾加反斜杠)</span>
 			</p>
 		</div>
 		<div class="input">
 			<h2>关键字</h2>
 			<p>
-				<input type="text" class="text validate-me" name="keywords" value="{$static_var.keywords}" size=60 /><span class="validate-word" id="path_file-word"></span><br />
-				<span class="discribe">(虚拟路径的解析地址,详细设置请参考帮助信息)</span>
+				<input type="text" class="text" name="keywords" value="{$static_var.keywords}" size=60 /><br />
+				<span class="discribe">(为您的网站设置一组关键字,用半角逗号隔开)</span>
 			</p>
 		</div>
 		<div class="input">
 			<h2>静态链接</h2>
 			<p>
 				<input type="radio" name="index" value="{$static_var.siteurl}" <[if:$static_var.index == $static_var.siteurl]>checked=true<[/if]>/>是 
-				<input type="radio" name="index" value="{$static_var.siteurl}/index.php" <[if:$static_var.index != $static_var.siteurl]>checked=true<[/if]>/>否<span class="validate-word" id="path_file-word"></span><br />
-				<span class="discribe">(虚拟路径的解析地址,详细设置请参考帮助信息)</span>
+				<input type="radio" name="index" value="{$static_var.siteurl}/index.php" <[if:$static_var.index != $static_var.siteurl]>checked=true<[/if]>/>否<br />
+				<span class="discribe">(请选择是否为您的网站启用静态链接功能)</span>
 			</p>
 		</div>
 		<div class="input">
 			<h2>语言</h2>
 			<p>
-				<select name="language" class="validate-me">
+				<select name="language">
 				<[loop:$languages_list AS $lang]>
 					<option value="{$lang}" <[if:$static_var.language == $lang]>selected=true<[/if]>>{$lang}</option>
 				<[/loop]>
-				</select><span class="validate-word" id="path_action-word"></span><br />
-				<span class="discribe">(为这个路径选择一个解析器)</span>
+				</select><br />
+				<span class="discribe">(选择一个您适用的语言)</span>
 			</p>
 		</div>
 		<div class="input">
@@ -86,15 +92,16 @@
 					<option value="-39600" <[if:$static_var.time_zone == "-39600"]>selected=true<[/if]>>{lang.timezone.timezone_gmtf11}</option>
 					<option value="-43200" <[if:$static_var.time_zone == "-43200"]>selected=true<[/if]>>{lang.timezone.timezone_gmtf12}</option>
 				</select><br />
-				<span class="validate-word" id="user_group-word"></span><span class="discribe">(选择您当前所在的时区)</span>
+				<span class="discribe">(选择您当前所在的时区)</span>
 			</p>
 		</div>
 		<div class="submit">
-			<span class="button" onclick="magikeValidator('{$static_var.index}/helper/validator/','add_path');">提交信息</span>
+			<span class="button" onclick="magikeValidator('{$static_var.index}/helper/validator/','setting_public');">提交信息</span>
+			<input type="hidden" name="do" value="update" />
 			<script>
 				function validateSuccess()
 				{
-					document.getElementById('insert_path').submit();
+					document.getElementById('setting_public').submit();
 				}
 			</script>
 		</div>

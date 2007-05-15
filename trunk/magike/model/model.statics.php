@@ -23,5 +23,10 @@ class StaticsModel extends MagikeModel
  	 	 													'value' => array($name))),
  	 	 							'static_value',$num);
 	}
+	
+	public function listStaticVars($func = NULL)
+	{
+		$this->fectch(array('table' => 'table.statics'),$func);
+	}
 }
 ?>
