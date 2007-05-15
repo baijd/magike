@@ -40,7 +40,7 @@ $lang = array(
 	'setting_public' => '全局',
 	'setting_archives_output' => '文章输出',
 	'setting_write_archive' => '文章撰写',
-	'setting_comments_output' => '回响输出',
+	'setting_comments_output' => '回响',
 	'setting_users'	=> '用户',
 );
 ?>

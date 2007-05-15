@@ -80,7 +80,7 @@
 				<div class="input">
 					<h2>{lang.admin_write.content}</h2>
 					<p>
-						<textarea name="post_content" rows="14" class="validate-me" style="background:url({$static_var.siteurl}/{!__TEMPLATE__}/{$static_var.admin_template}/images/editor_loading.gif) center no-repeat;width:600px">{$write_post.post_content}</textarea><br />
+						<textarea name="post_content" rows="{$static_var.write_editor_rows}" class="validate-me" style="background:url({$static_var.siteurl}/{!__TEMPLATE__}/{$static_var.admin_template}/images/editor_loading.gif) center no-repeat;width:600px">{$write_post.post_content}</textarea><br />
 						<span class="validate-word" id="post_content-word"></span>&nbsp;
 						<span class="discribe">{lang.admin_write.content_describe}</span>
 					</p>
@@ -91,9 +91,16 @@
 				<h2>文章分类</h2>
 				<p>
 					<select name="category_id">
+					<[if:$write_post.do == "update"]>
 					<[loop:$categories_list AS $category]>
 						<option value="{$category.id}" <[if:$category.id == $write_post.category_id]>selected=true<[/if]>>{$category.category_name}</option>
 					<[/loop]>
+					<[/if]>
+					<[if:$write_post.do == "insert"]>
+					<[loop:$categories_list AS $category]>
+						<option value="{$category.id}" <[if:$category.id == $static_var.write_default_category]>selected=true<[/if]>>{$category.category_name}</option>
+					<[/loop]>
+					<[/if]>
 					</select> <br />
 					<span class="discribe">选择将您的文章发表在哪个分类</span>
 				</p>
@@ -102,6 +109,7 @@
 				<h2>发布者</h2>
 				<p><input type="hidden" name="user_id" value="{$get_current_user.id}" />
 					<select name="post_user_name">
+					<[if:$write_post.do == "update"]>
 						<[if:$get_current_user.user_name]>
 						<option value="{$get_current_user.user_name}" <[if:$get_current_user.user_name == $write_post.post_user_name]>selected=true<[/if]>>{$get_current_user.user_name}</option>
 						<[/if]>
@@ -111,6 +119,18 @@
 						<[if:$get_current_user.user_realname]>
 						<option value="{$get_current_user.user_realname}" <[if:$get_current_user.user_realname == $write_post.post_user_name]>selected=true<[/if]>>{$get_current_user.user_realname}</option>
 						<[/if]>
+					<[/if]>
+					<[if:$write_post.do == "insert"]>
+						<[if:$get_current_user.user_name]>
+						<option value="{$get_current_user.user_name}" <[if:$static_var.write_default_name == "username"]>selected=true<[/if]>>{$get_current_user.user_name}</option>
+						<[/if]>
+						<[if:$get_current_user.user_nick]>
+						<option value="{$get_current_user.user_nick}" <[if:$static_var.write_default_name == "nickname"]>selected=true<[/if]>>{$get_current_user.user_nick}</option>
+						<[/if]>
+						<[if:$get_current_user.user_realname]>
+						<option value="{$get_current_user.user_realname}" <[if:$static_var.write_default_name == "realname"]>selected=true<[/if]>>{$get_current_user.user_realname}</option>
+						<[/if]>
+					<[/if]>
 					</select> <br />
 					<span class="discribe">请为您的一个名称作为文章发布者</span>
 				</p>

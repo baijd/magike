@@ -1,13 +1,13 @@
 <?php
 /**********************************
  * Created on: 2007-2-2
- * File Name : validator.write_post.php
+ * File Name : validator.setting_public.php
  * Copyright : Magike Group
  * License   : GNU General Public License 2.0
  *********************************/
 
 $elements = array(
-	"post_title" => array("null" => "标题必须填写"),
-	"post_content" => array("null" => "内容不能为空")
+	"blog_name" => array("null" => "必须填写站点名称"),
+	"siteurl" => array("null" => "必须填写站点地址" , "url" => "您的网址必须符合规范"),
 );
 ?>

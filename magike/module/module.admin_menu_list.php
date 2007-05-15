@@ -36,6 +36,7 @@ class AdminMenuList extends MagikeModule
 
 			if($hasChild)
 			{
+				$this->stack['static_var']['admin_parent_title'] = $array[$focus]['menu_name'];
 				$this->praseFocusChild($array[$focus]['menu_id']);
 			}
 			else

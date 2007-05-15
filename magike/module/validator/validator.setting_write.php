@@ -1,13 +1,12 @@
 <?php
 /**********************************
  * Created on: 2007-2-2
- * File Name : validator.write_post.php
+ * File Name : validator.setting_write.php
  * Copyright : Magike Group
  * License   : GNU General Public License 2.0
  *********************************/
 
 $elements = array(
-	"post_title" => array("null" => "标题必须填写"),
-	"post_content" => array("null" => "内容不能为空")
+	"write_editor_rows" => array("null" => "必须填写编辑器行数" , "num" => "编辑器行数必须为数字")
 );
 ?>
