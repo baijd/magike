@@ -12,10 +12,11 @@ class Action extends Path
 {
 	function __construct($location = NULL,$message = NULL,$data = NULL)
 	{
+		$time = mgGetMicrotime();	//初始化解析时间
 		parent::__construct($location);
 		$this->stack = array();
 		$this->stack[$this->moduleName] = $this->runModule();
-		$this->stack[$this->moduleName]['prase_time'] = mgGetMicrotime();	//初始化解析时间
+		$this->stack[$this->moduleName]['prase_time'] = $time;	//初始化解析时间
 		$this->stack[$this->moduleName]['data'] = $data;
 		$this->stack[$this->moduleName]['message'] = $data;
 		$this->runKernelModule();
@@ -82,4 +83,4 @@ class Action extends Path
 		echo $contents;
 	}
  }
- ?>
+?>

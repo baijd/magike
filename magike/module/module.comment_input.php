@@ -26,7 +26,7 @@ class CommentInput extends MagikeModule
 
 		foreach($select as $id)
 		{
-			$comment = $commentsModel->fectchByKey($id);
+			$comment = $commentsModel->fectchOneByKey($id);
 			if($comment['comment_publish'] == 'approved')
 			{
 				$post[] = $comment['post_id'];
@@ -55,7 +55,7 @@ class CommentInput extends MagikeModule
 
 		foreach($select as $id)
 		{
-			$comment = $commentsModel->fectchByKey($id);
+			$comment = $commentsModel->fectchOneByKey($id);
 			if($comment['comment_publish'] == 'approved')
 			{
 				$post[] = $comment['post_id'];
@@ -84,7 +84,7 @@ class CommentInput extends MagikeModule
 
 		foreach($select as $id)
 		{
-			$comment = $commentsModel->fectchByKey($id);
+			$comment = $commentsModel->fectchOneByKey($id);
 			if($comment['comment_publish'] == 'spam' || $comment['comment_publish'] == 'waitting')
 			{
 				$post[] = $comment['post_id'];
@@ -113,7 +113,7 @@ class CommentInput extends MagikeModule
 
 		foreach($select as $id)
 		{
-			$comment = $commentsModel->fectchByKey($id);
+			$comment = $commentsModel->fectchOneByKey($id);
 			if($comment['comment_publish'] == 'approved')
 			{
 				$post[] = $comment['post_id'];

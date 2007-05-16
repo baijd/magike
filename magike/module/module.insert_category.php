@@ -20,7 +20,7 @@ class InsertCategory extends MagikeModule
 	
 	public function displayCategory()
 	{
-		$this->result = $this->category->fectchByKey($_GET['c']);
+		$this->result = $this->category->fectchOneByKey($_GET['c']);
 		
 		//修改菜单的内容
 		if(isset($this->stack['admin_menu_list']['children']))

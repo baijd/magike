@@ -13,7 +13,7 @@ class InsertLink extends MagikeModule
 		if(isset($_GET['link_id']))
 		{
 			$linkModel = $this->loadModel('links');
-			$result = $linkModel->fectchByKey($_GET['link_id']);
+			$result = $linkModel->fectchOneByKey($_GET['link_id']);
 			$result['do'] = 'update';
 			$this->stack['admin_menu_list']['children'][1]['menu_name'] = '编辑链接 "'.$result['link_name'].'"';
 			$this->stack['admin_menu_list']['children'][1]['path_name'] = '/admin/posts/category/?c='.$result['id'];

@@ -8,16 +8,24 @@
 
 class PostsModel extends MagikeModel
 {
-	private function fixPostWhere($limit = 0,$offset = 0,$where = NULL)
+	private function fixPostWhere($limit = false,$offset = false,$where = NULL)
 	{
 		$args = array('table'	=> 'table.posts LEFT JOIN table.categories ON table.posts.category_id = table.categories.id',
 					  'groupby' => 'table.posts.id',
 					  'fields'	=> '*,table.posts.id AS post_id',
 					  'orderby' => 'table.posts.post_time',
-					  'limit'	=> $limit,
-					  'offset'	=> $offset,
 					  'sort'	=> 'DESC'
 			  		);
+		
+		if(false !== $offset)
+		{
+			$args['offset'] = $offset;
+		}
+		if(false !== $limit)
+		{
+			$args['limit'] = $limit;
+		}
+ 	 	 
 		if($where)
 		{
 			$args['where'] = $where;
@@ -104,7 +112,7 @@ class PostsModel extends MagikeModel
 	public function countAllEntries()
 	{
 		$where = array('template'	=> 'post_is_draft = 0 AND post_is_page = 0 AND post_is_hidden = 0');
-		$args = $this->fixPostWhere(0,0,$where);
+		$args = $this->fixPostWhere(false,false,$where);
 		unset($args['groupby']);
 		return $this->countTable($args);
 	}
@@ -118,7 +126,21 @@ class PostsModel extends MagikeModel
 	public function countAllEntriesIncludeHidden()
 	{
 		$where = array('template'	=> 'post_is_draft = 0 AND post_is_page = 0');
-		$args = $this->fixPostWhere(0,0,$where);
+		$args = $this->fixPostWhere(false,false,$where);
+		unset($args['groupby']);
+		return $this->countTable($args);
+	}
+	
+	public function listAllPages($limit,$offset,$func = NULL)
+	{
+		$where = array('template'	=> 'post_is_page = 1 AND post_is_draft = 0 AND post_is_hidden = 0');
+		return $this->fectch($this->fixPostWhere($limit,$offset,$where),$func);
+	}
+	
+	public function countAllPages()
+	{
+		$where = array('template'	=> 'post_is_page = 1 AND post_is_draft = 0 AND post_is_hidden = 0');
+		$args = $this->fixPostWhere(false,false,$where);
 		unset($args['groupby']);
 		return $this->countTable($args);
 	}

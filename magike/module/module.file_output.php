@@ -11,7 +11,7 @@ class FileOutput extends MagikeModule
 	public function runModule()
 	{
 		$fileModel = $this->loadModel('files');
-		$file = $fileModel->fectchByKey($_GET['file_id']);
+		$file = $fileModel->fectchOneByKey($_GET['file_id']);
 		if($file && $file['file_name'] == $_GET['file_name'])
 		{
 			$path = __UPLOAD__.mgGetGuidPath($file['file_guid']).'/'.$file['file_guid'];
