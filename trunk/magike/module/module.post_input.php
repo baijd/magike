@@ -31,6 +31,7 @@ class PostInput extends MagikeModule
 		$input['post_edit_time'] = time();
 		$input['post_time'] = time();
 		$input['post_gmt'] = mgGetTimeZoneDiff();
+		$input['post_name'] = $input['post_is_page'] && NULL == $_POST['post_name'] ? urlencode($input['post_title']) : $input['post_name'];
 		
 		$postModel = $this->loadModel('posts');
 		$insertId = $postModel->insertTable($input);
@@ -64,9 +65,10 @@ class PostInput extends MagikeModule
 		$input['post_is_hidden'] = isset($_POST['post_is_hidden']) ? $_POST['post_is_hidden'] : 0;
 		$input['post_is_page'] = isset($_POST['post_is_page']) ? $_POST['post_is_page'] : 0;
 		$input['post_edit_time'] = time();
+		$input['post_name'] = $input['post_is_page'] && NULL == $_POST['post_name'] ? urlencode($input['post_title']) : $input['post_name'];
 		
 		$postModel = $this->loadModel('posts');
-		$post = $postModel->fectchByKey($_GET['post_id']);
+		$post = $postModel->fectchOneByKey($_GET['post_id']);
 		
 		if($post['category_id'] != $input['category_id'])
 		{
@@ -97,7 +99,7 @@ class PostInput extends MagikeModule
 		$select = is_array($_GET['post_id']) ? $_GET['post_id'] : array($_GET['post_id']);
 		foreach($select as $id)
 		{
-			$post = $postModel->fectchByKey($id);
+			$post = $postModel->fectchOneByKey($id);
 			$postModel->deleteByKeys($id);
 			$commentsModel->deleteByFieldEqual('post_id',$id);
 			$categoriesModel->decreaseFieldByKey($post['category_id'],'category_count');

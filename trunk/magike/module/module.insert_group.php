@@ -13,7 +13,7 @@ class InsertGroup extends MagikeModule
 		if(isset($_GET['group_id']))
 		{
 			$groupModel = $this->loadModel('groups');
-			$result = $groupModel->fectchByKey($_GET['group_id']);
+			$result = $groupModel->fectchOneByKey($_GET['group_id']);
 			$result['do'] = 'update';
 			$this->stack['admin_menu_list']['children'][3]['menu_name'] = '编辑用户组 "'.$result['group_name'].'"';
 			$this->stack['admin_menu_list']['children'][3]['path_name'] = '/admin/users/group/?group_id='.$result['id'];

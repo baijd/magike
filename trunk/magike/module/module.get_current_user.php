@@ -13,7 +13,7 @@ class GetCurrentUser extends MagikeModule
 		if(NULL != $this->stack['access']['user_id'])
 		{
 			$userModel = $this->loadModel('users');
-			return $userModel->fectchByKey($this->stack['access']['user_id']);
+			return $userModel->fectchOneByKey($this->stack['access']['user_id']);
 		}
 		else
 		{

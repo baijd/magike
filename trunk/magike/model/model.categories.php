@@ -15,7 +15,7 @@ class CategoriesModel extends MagikeModel
 	
 	public function moveUpCategory($id)
 	{
-		$item = $this->fectchByKey($id);
+		$item = $this->fectchOneByKey($id);
 		$title = $item['category_name'];
 		$item = $this->fectchOne(array('table' 	=> 'table.categories',
 											  'where'	=> array('template' => 'category_sort < ?',
@@ -37,7 +37,7 @@ class CategoriesModel extends MagikeModel
 	
 	public function moveDownCategory($id)
 	{
-		$item = $this->fectchByKey($id);
+		$item = $this->fectchOneByKey($id);
 		$title = $item['category_name'];
 		$item = $this->fectchOne(array('table' 	=> 'table.categories',
 											  'where'	=> array('template' => 'category_sort > ?',

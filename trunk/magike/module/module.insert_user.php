@@ -13,7 +13,7 @@ class InsertUser extends MagikeModule
 		if(isset($_GET['user_id']))
 		{
 			$userModel = $this->loadModel('users');
-			$result = $userModel->fectchByKey($_GET['user_id']);
+			$result = $userModel->fectchOneByKey($_GET['user_id']);
 			if(isset($this->stack['admin_menu_list']['children']))
 			{
 				$this->stack['admin_menu_list']['children'][1]['menu_name'] = '编辑用户 "'.$result['user_name'].'"';
