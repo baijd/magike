@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**********************************
  * Created on: 2007-4-14
  * File Name : module.validator.php
@@ -51,6 +51,9 @@ class Validator extends MagikeModule
 		$mod = isset($_GET['mod']) ? $_GET['mod'] : NULL;
 		$requireDir = __MODULE__.'/'.$this->moduleName.'/';
 		$result = 0;
+		$input = $_POST;
+		$_SESSION['validator_val'] = md5(serialize($input));
+		$_SESSION['validator_key'] = array_keys($input);
 		
 		if($mod)
 		{

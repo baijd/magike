@@ -155,9 +155,12 @@ class Database extends MagikeObject
 				$last = ($num == $sum - 1) ? true : false;
 				$rows = call_user_func($callback['function'],$rows,$num,$last,$callback['data']);
 			}
-
-            $result[$num] = $rows;
-            $num++;
+			
+			if(false !== $rows)
+			{
+            	$result[$num] = $rows;
+            	$num++;
+            }
 		}
 
 		if($num == 0 && $expection) $this->throwException(E_PATH_PATHNOTEXISTS,$this->stack['action']['path']);
