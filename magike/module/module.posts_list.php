@@ -19,14 +19,14 @@ class PostsList extends MagikeModule
 		$val["post_alt"] = $num%2;
 		$val["post_time"] = 
 		mgDate($this->stack['static_var']['post_date_format'],$this->stack['static_var']['time_zone'] - $val["post_gmt"],$val["post_time"]);
-
+		
 		return $val;
 	}
 
 	public function runModule($args)
 	{
-		$require = array('sub' 	  			=> $this->stack['static_var']['post_sub'],	//ժҪ����
-						 'limit'  			=> $this->stack['static_var']['post_page_num'],	//ÿҳƪ��
+		$require = array('sub' 	  			=> $this->stack['static_var']['post_sub'],	//摘要字数
+						 'limit'  			=> $this->stack['static_var']['post_page_num'],	//每页篇数
 						 'type'				=> 0,
 						 'striptags'		=> 0
 						);

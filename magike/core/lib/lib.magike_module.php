@@ -89,8 +89,41 @@ class MagikeModule extends MagikeObject
 		return false;
 	}
 	
-	protected function requirePost($value = NULL)
+	protected function requireValidate()
 	{
+		if(isset($_SESSION['validator_key']) && isset($_SESSION['validator_val']))
+		{
+			$input = array();
+			foreach($_POST as $key => $val)
+			{
+				if(in_array($key,$_SESSION['validator_key']))
+				{
+					$input[$key] = $val;
+				}
+			}
+			
+			if($_SESSION['validator_val'] == md5(serialize($input)))
+			{
+				return;
+			}
+			else
+			{
+				$this->throwException(E_FORMISOUTOFDATE);
+			}
+		}
+		else
+		{
+			$this->throwException(E_FORMISOUTOFDATE);
+		}
+	}
+	
+	protected function requirePost($value = NULL,$validator = true)
+	{
+		if($validator)
+		{
+			$this->requireValidate();
+		}
+		
 		if(NULL == $value)
 		{
 			if(!isset($_POST) || NULL == $_POST)

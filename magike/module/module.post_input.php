@@ -30,7 +30,7 @@ class PostInput extends MagikeModule
 		$input['post_is_page'] = isset($_POST['post_is_page']) ? $_POST['post_is_page'] : 0;
 		$input['post_edit_time'] = time();
 		$input['post_time'] = time();
-		$input['post_gmt'] = mgGetTimeZoneDiff();
+		$input['post_gmt'] = $this->stack['static']['server_timezone'];
 		$input['post_name'] = $input['post_is_page'] && NULL == $_POST['post_name'] ? urlencode($input['post_title']) : $input['post_name'];
 		
 		$postModel = $this->loadModel('posts');

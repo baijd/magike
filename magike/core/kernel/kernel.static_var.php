@@ -30,6 +30,7 @@ class StaticVar extends MagikeModule
 	{
 		$staticVar = array();
 		require($this->cacheFile);
+		$staticVar['server_timezone'] = mgGetTimeZoneDiff();
 		return $staticVar;
 	}
 
