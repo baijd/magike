@@ -9,7 +9,6 @@
 define('E_ACTION_TEMPLATEBUILD_INCLUDEFILENOTEXISTS','Include Template File Is Not Exists');
 
 //处理include语法
-//<section:include content="file_name" />
 class TbInclude extends TemplateBuild
 {
 	private $found;
