@@ -11,6 +11,8 @@ class MagikeModel extends Database
  	 protected $table;
  	 protected $key;
  	 protected $group;
+ 	 protected $orderby;
+ 	 protected $sort;
  	 
  	 function __construct($table = NULL)
  	 {
@@ -21,6 +23,8 @@ class MagikeModel extends Database
  	 	 }
  	 	 $this->table = str_replace('table.',__DBPREFIX__,$table);
  	 	 $this->group = NULL;
+ 	 	 $this->orderby = NULL;
+ 	 	 $this->sort = NULL;
  	 	 $this->key = $this->findPrimaryKey();
  	 }
  	 
@@ -90,6 +94,8 @@ class MagikeModel extends Database
  	 {
  	 	 $args = array('table' => $this->table,
  	 	 	 		   'groupby' => $this->group,
+ 	 	 	 		   'orderby' => $this->orderby,
+ 	 	 	 		   'sort'	 => $this->sort,
  	 	 			   'where' => array('template' => "{$field} = ?",
  	 	 								'value' => array($value)));
  	 	 if(false !== $offset)
@@ -107,6 +113,8 @@ class MagikeModel extends Database
  	 {
  	 	 $args = array('table' => $this->table,
  	 	 	 		   'groupby' => $this->group,
+ 	 	 	 		   'orderby' => $this->orderby,
+ 	 	 	 		   'sort'	 => $this->sort,
  	 	 			   'where' => array('template' => "{$field} LIKE ?",
  	 	 								'value' => array($value)));
  	 	 if(false !== $offset)

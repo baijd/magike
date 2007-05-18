@@ -18,5 +18,12 @@ class LinksModel extends MagikeModel
 								   'orderby' => 'table.links.id',
 								   'sort' => 'DESC'));
 	}
+	
+	public function listLinksByCategory($key,$limit,$sort)
+	{
+		$this->orderby = 'id';
+		$this->sort = $sort;
+		return $this->fectchByFieldEqual('link_category_id',$key,0,$limit);
+	}
 }
 ?>

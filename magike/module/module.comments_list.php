@@ -24,7 +24,7 @@ class CommentsList extends MagikeModule
 	public function runModule($args)
 	{
 		$require = array('limit'  => 0,				//每页显示多少,0表示都显示
-						 'list'	  => 0,				//是否为列表形式,如果不是则还要从GET值中获取一个post_id或者post_name值作为条件索引
+						 'list'	  => $this->stack['static_var']['comment_list_num'],				//是否为列表形式,如果不是则还要从GET值中获取一个post_id或者post_name值作为条件索引
 						 'substr' => 0,				//摘要字数,0表示不摘要
 						 'trim'	  => '...',			//摘要显示
 						 'datefmt'=> $this->stack['static_var']['comment_date_format'],	//日期输出格式
