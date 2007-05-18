@@ -15,6 +15,14 @@ class LinkCategoriesModel extends MagikeModel
 								   'sort' => 'ASC'));
 	}
 	
+	public function listUnhiddenLinkCategories($func = NULL)
+	{
+		return $this->fectch(array('table' => $this->table,
+								  'where'	=> array('template' => 'link_category_hide = 0'),
+								   'orderby' => 'table.link_categories.link_category_sort',
+								   'sort' => 'ASC'),$func);
+	}
+	
 	public function moveUpCategory($id)
 	{
 		$item = $this->fectchOneByKey($id);
