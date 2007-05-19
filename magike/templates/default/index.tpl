@@ -69,8 +69,37 @@
 			<!--textarea_end-->
 			
 			<!--rightpart-->
-			<div id="right">
-				
+			<div id="right">	
+			</div>
+			<div class="rightcon">
+				<div class="riblock">
+					<div class="rititle">
+						Category
+					</div>
+					<div class="rilist">
+						<ul>
+							<li><a href="#">Magike程序开发</a></li>
+							<li><a href="#">php编程</a></li>
+							<li><a href="#">生活之谈</a></li>
+							<li><a href="#">生活之谈生活之谈</a></li>
+							<li><a href="#">生活之谈</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="riblock">
+					<div class="rititle">
+						Recent Posts
+					</div>
+					<div class="rilist">
+						<ul>
+							<li><a href="#">一个MM模仿的多人演唱千里之外一个MM模仿的多人演唱千里之外</a></li>
+							<li><a href="#">一个MM模仿的多人演唱千里之外</a></li>
+							<li><a href="#">一个MM模仿的多人演唱千里之外</a></li>
+							<li><a href="#">一个MM模仿的多人演唱千里之外</a></li>
+							<li><a href="#">一个MM模仿的多人演唱千里之外</a></li>
+						</ul>
+					</div>
+				</div>
 			</div>
 			<!--rightpartend-->
 		</div>

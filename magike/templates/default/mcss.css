@@ -1,4 +1,4 @@
-﻿*{
+*{
 	margin:0px; 
 	padding:0px;
 }
@@ -264,9 +264,47 @@ h1 {
 		float:left;
 		margin-top:-260px !important;
 		margin-top:-280px;
+		padding-top:260px;
 		padding-bottom:32747px;
 		margin-bottom:-32487px;
 	}
+
+	.rightcon{
+		width:280px;
+		margin-left:470px;
+		margin-top:10px;
+		text-align:left;
+		position:absolute;	
+	}
+
+	.riblock{
+		margin:20px auto;
+	}
+	.rititle{
+		color:#b3ff68;
+		font-size:14px;
+		margin-bottom:5px;
+		font-weight:bold;
+	}
+	.rilist ul li{
+		list-style:none;
+		color:#eee;
+		text-decoration:none;
+	}
+		.rilist li a{
+			display:block;
+			color:#eee;
+			border-left:3px solid #aaa;
+			padding-left:3px;
+			text-decoration:none;
+			margin-bottom:1px;
+		}
+		.rilist li a:hover{
+			display:block;
+			color:#fff;
+			border-left:3px solid #b3ff68;
+			text-decoration:none;
+		}
 	/*======right_end======*/
 	/* easy clearing */
 	#conwr:after
