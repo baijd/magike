@@ -33,7 +33,7 @@
 	cursor:pointer;
 }
 
-#sidebar input
+.sidebar input
 {
 	border:1px solid #555;
 	background:#FFF;
@@ -50,12 +50,12 @@
 
 <div id="content">
 	<div id="element">
-		<div id="sidebar">
+		<div class="sidebar">
 			您选定了
 			<strong id="sidebar_word"></strong>&nbsp;
-			<input type="button" value="插入" onclick="$('#first').trigger('click');setTimeout('insertContent();',0);"/> 
-			<input type="button" value="删除"/> 
-			<input type="button" value="取消" onclick="$('#sidebar').hide();" />
+			<input type="button" id="insert-button" value="插入" onclick="$('#first').trigger('click');setTimeout('insertContent();',0);"/> 
+			<input type="button" id="delete-button" value="删除" onclick="deleteFile();"/> 
+			<input type="button" value="取消" onclick="$('.sidebar').hide();" />
 		</div>
 		<div class="proc">
 			正在处理您的请求
@@ -153,6 +153,7 @@
 					<h2>文件列表</h2>
 						<ul id="files_grid">
 						</ul>
+						<p style="padding:0;width:35px;"><input type="button" id="next-button" onclick="getFilesList(filePage + 1);" style="width:20px;height:75px;float:left;padding:0;" value="&raquo;"/> <input type="button" id="prev-button" onclick="getFilesList(filePage - 1);" style="width:20px;height:75px;float:left;padding:0;" value="&laquo;"/></p>
 				</div>
 			</div>
 			<div id="write_option">
@@ -241,20 +242,47 @@ function showEditor()
 
 function insertContent()
 {
-	if($("#sidebar").attr("type") == "true")
+	if($(".sidebar").attr("type") == "true")
 	{
-		tinyMCE.execCommand('mceInsertContent',true,'<img src=' + $("#sidebar").attr("rel") + ' alt=' + $("#sidebar").attr("alt") + ' />');
+		tinyMCE.execCommand('mceInsertContent',true,'<img src=' + $(".sidebar").attr("rel") + ' alt=' + $(".sidebar").attr("alt") + ' />');
 	}
 	else
 	{
-		tinyMCE.execCommand('mceInsertContent',true,'<a href=' + $("#sidebar").attr("rel") + ' title=' + $("#sidebar").attr("alt") + ' >'+$("#sidebar").attr("alt")+'</a>');
+		tinyMCE.execCommand('mceInsertContent',true,'<a href=' + $(".sidebar").attr("rel") + ' title=' + $(".sidebar").attr("alt") + ' >'+$(".sidebar").attr("alt")+'</a>');
 	}
 }
+
+var filePage;
 
 function getFilesList(page)
 {
 	showLoading = true;
 	$("#files_grid").html("");
+	
+	filePage = page;
+	
+	$.getJSON("{$static_var.index}/admin/posts/write/files_list_page_nav/?page="+page,
+	function(json)
+	{
+		if(json["next"] == 0)
+		{
+			$("#next-button").attr("disabled","disabled");
+		}
+		else
+		{
+			$("#next-button").removeAttr("disabled");
+		}
+		
+		if(json["prev"] == 0)
+		{
+			$("#prev-button").attr("disabled","disabled");
+		}
+		else
+		{
+			$("#prev-button").removeAttr("disabled");
+		}
+	});
+	
 	$.getJSON("{$static_var.index}/admin/posts/files_list/?page="+page,
 				function(json)
 				{
@@ -268,6 +296,7 @@ function getFilesList(page)
 						li.attr("rel",src);
 						li.attr("alt",json[i]["file_describe"] ? json[i]["file_describe"] : json[i]["file_name"]);
 						li.attr("type",json[i]["is_image"]);
+						li.attr("id",json[i]["id"]);
 						img = $(document.createElement("img"));
 						if(json[i]["is_image"])
 						{
@@ -300,13 +329,16 @@ function getFilesList(page)
 							function()
 							{
 								$("#sidebar_word").html($(this).attr("rel"));
-								$("#sidebar").attr("rel",$(this).attr("rel"));
-								$("#sidebar").attr("alt",$(this).attr("alt"));
-								$("#sidebar").attr("type",$(this).attr("type"));
+								$(".sidebar").attr("rel",$(this).attr("rel"));
+								$(".sidebar").attr("alt",$(this).attr("alt"));
+								$(".sidebar").attr("type",$(this).attr("type"));
+								$(".sidebar").attr("id",$(this).attr("id"));
+						  		$("#insert-button").removeAttr("disabled");
+						  		$("#delete-button").removeAttr("disabled");
 								
-								if($("#sidebar").css("display") == "none")
+								if($(".sidebar").css("display") == "none")
 								{
-									$("#sidebar").slideDown();
+									$(".sidebar").slideDown();
 								}
 							}
 						);
@@ -315,6 +347,24 @@ function getFilesList(page)
 					showLoading = false;
 					$(".proc").hide();
 				});
+}
+
+function deleteFile()
+{
+	showLoading = true;
+	$.getJSON("{$static_var.index}/admin/posts/write/delete_file/?do=del&file_id="+$(".sidebar").attr("id"),
+			  function(json)
+			  {
+			  	if(json['open'])
+			  	{
+			  		$("#sidebar_word").html(json['word']);
+			  		$("#insert-button").attr("disabled","disabled");
+			  		$("#delete-button").attr("disabled","disabled");
+			  	}
+			  	showLoading = false;
+			  	$(".proc").hide();
+			  	getFilesList(1);
+			  });
 }
 </script>
 

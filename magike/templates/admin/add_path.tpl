@@ -47,9 +47,9 @@
 			<h2>群组权限</h2>
 			<p>
 				<[loop:$groups_list AS $group]>
-					<input type="checkbox" name="path_group[]" class="checkbox validate-me" value="{$group.id}" <[if:in_array($group.id,$insert_path.path_group)]>checked=true<[/if]> /> {$group.group_name} <span class="discribe">{$group.group_describe}</span><br />
+					<input type="checkbox" name="path_group[]" class="checkbox" value="{$group.id}" <[if:in_array($group.id,$insert_path.path_group)]>checked=true<[/if]> /> {$group.group_name} <span class="discribe">{$group.group_describe}</span><br />
 				<[/loop]>
-				<span class="validate-word" id="user_group-word"></span><span class="discribe">(能够访问该路径的用户组)</span>
+				<span class="discribe">(能够访问该路径的用户组)</span>
 			</p>
 		</div>
 		<div class="submit">

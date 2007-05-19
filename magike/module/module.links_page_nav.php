@@ -8,8 +8,6 @@
  
 class LinksPageNav extends MagikeModule
 {
-	private $getArgs;
-
 	public function runModule()
 	{
 		$linkModel = $this->loadModel('links');

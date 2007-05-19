@@ -20,7 +20,7 @@ class FilesList extends MagikeModule
 	{
 		$page = isset($_GET['page']) ? $_GET['page'] : 1;
 		$fileModel = $this->loadModel('files');
-		return $fileModel->listFiles(5,$page,array('function' => array($this,'praseFile')));
+		return $fileModel->listFiles(5,($page-1)*5,array('function' => array($this,'praseFile')));
 	}
 }
 ?>

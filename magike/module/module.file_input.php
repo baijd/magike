@@ -46,10 +46,24 @@ class FileInput extends MagikeModule
 		$this->requireGet('file_id');
 		$select = is_array($_GET['file_id']) ? $_GET['file_id'] : array($_GET['file_id']);
 		$fileModel = $this->loadModel('files');
-		$fileModel->deleteByKeys($_GET['file_id']);
-		
-		$this->result['open'] = true;
-		$this->result['word'] = '您删除的文件已经生效';
+		$file = $fileModel->fectchOneByKey($_GET['file_id']);
+		if($file)
+		{
+			$fileModel->deleteByKeys($_GET['file_id']);
+			$path = __UPLOAD__.mgGetGuidPath($file['file_guid']).'/'.$file['file_guid'];
+			if(file_exists($path))
+			{
+				unlink($path);
+			}
+			
+			$this->result['open'] = true;
+			$this->result['word'] = '您的文件 "'.$file['file_name'].'" 已经被删除';
+		}
+		else
+		{
+			$this->result['open'] = true;
+			$this->result['word'] = '您的文件无效';
+		}
 	}
 	
 	public function runModule()
