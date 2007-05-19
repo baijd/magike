@@ -13,7 +13,7 @@ class FilesModel extends MagikeModel
 		return $this->fectch(array('table' => 'table.files',
 								   'orderby' => 'id',
 								   'limit'	=> $limit,
-								   '$offset' => $offset,
+								   'offset' => $offset,
 								   'sort' => 'DESC'),$func);
 	}
 }
