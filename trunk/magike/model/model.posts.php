@@ -69,6 +69,40 @@ class PostsModel extends MagikeModel
 		return $this->countTable($args);
 	}
 	
+	public function fectchPostsByTag($tag,$limit,$offset,$func = NULL)
+	{
+		$where['template'] = 'post_tags LIKE ?';
+		$where['value'] = array('%'.$tag.'%');
+		return $this->fectch($this->fixPostWhere($limit,$offset,$where),$func,true);
+	}
+	
+	public function countPostsByTag($tag)
+	{
+		$args = $this->fixPostWhere();
+		
+		$args['where']['template'] = 'post_tags LIKE ?';
+		$args['where']['value'] = array('%'.$tag.'%');
+		unset($args['groupby']);
+		return $this->countTable($args);
+	}
+	
+	public function fectchPostsByCategory($category,$limit,$offset,$func = NULL)
+	{
+		$where['template'] = 'category = ?';
+		$where['value'] = array($category);
+		return $this->fectch($this->fixPostWhere($limit,$offset,$where),$func,true);
+	}
+	
+	public function countPostsByCategory($category)
+	{
+		$args = $this->fixPostWhere();
+		
+		$args['where']['template'] = 'category = ?';
+		$args['where']['value'] = array($category);
+		unset($args['groupby']);
+		return $this->countTable($args);
+	}
+	
 	public function fectchPostById($id,$func = NULL)
 	{
 		$args = array('fields'=> '*,table.posts.id AS post_id',

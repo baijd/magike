@@ -22,9 +22,7 @@ class MagikeModel extends Database
  	 	 	 $table = 'table.'.str_replace('_model','',mgClassNameToFileName(get_class($this)));
  	 	 }
  	 	 $this->table = str_replace('table.',__DBPREFIX__,$table);
- 	 	 $this->group = NULL;
- 	 	 $this->orderby = NULL;
- 	 	 $this->sort = NULL;
+ 	 	 $this->clearArgs();
  	 	 $this->key = $this->findPrimaryKey();
  	 }
  	 
@@ -33,6 +31,13 @@ class MagikeModel extends Database
  	 	 $res = mysql_query("SHOW INDEX FROM {$this->table} WHERE Key_name = 'PRIMARY'") or $this->databaseException();
  	 	 $row = mysql_fetch_array($res);
  	 	 return $row ? $this->table.".".$row['Column_name'] : NULL;
+ 	 }
+ 	 
+ 	 protected function clearArgs()
+ 	 {
+ 	 	 $this->group = NULL;
+ 	 	 $this->orderby = NULL;
+ 	 	 $this->sort = NULL;
  	 }
  	 
  	 public function deleteByKeys($keys)

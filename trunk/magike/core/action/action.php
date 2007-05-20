@@ -65,7 +65,7 @@ class Action extends Path
 	private function runAction()
 	{
 		//分析path模块传递的数据
-		if(!is_dir(__DIR__.'/action/'.$this->stack[$this->moduleName]['action']))
+		if(__DEBUG__ && !is_dir(__DIR__.'/action/'.$this->stack[$this->moduleName]['action']))
 		{
 			$this->throwException(E_ACTION_ACTIONNOTEXISTS,$this->stack[$this->moduleName]['action']);
 		}

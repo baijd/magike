@@ -21,8 +21,16 @@ class LinksModel extends MagikeModel
 	
 	public function listLinksByCategory($key,$limit,$sort)
 	{
-		$this->orderby = 'id';
-		$this->sort = $sort;
+		$this->clearArgs();
+		if($sort != 'rand')
+		{
+			$this->orderby = 'id';
+			$this->sort = $sort;
+		}
+		else
+		{
+			$this->sort = 'RAND()';
+		}
 		return $this->fectchByFieldEqual('link_category_id',$key,0,$limit);
 	}
 }
