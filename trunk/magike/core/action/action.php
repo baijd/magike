@@ -15,10 +15,10 @@ class Action extends Path
 		$time = mgGetMicrotime();	//初始化解析时间
 		parent::__construct($location);
 		$this->stack = array();
-		$this->stack[$this->moduleName] = $this->runModule();
-		$this->stack[$this->moduleName]['prase_time'] = $time;	//初始化解析时间
-		$this->stack[$this->moduleName]['data'] = $data;
-		$this->stack[$this->moduleName]['message'] = $data;
+                $this->stack[$this->moduleName] = $this->runModule();
+                $this->stack[$this->moduleName]['prase_time'] = $time;  //初始化解析时间
+                $this->stack[$this->moduleName]['data'] = $data;
+                $this->stack[$this->moduleName]['message'] = $data;
 		$this->runKernelModule();
 		$this->runAction();
 	}
@@ -74,7 +74,7 @@ class Action extends Path
 			$tmp = null;
 			require_once(__DIR__.'/action/'.$this->stack[$this->moduleName]['action'].'/action.'.$this->stack[$this->moduleName]['action'].'.php');
 			eval('$tmp = new '.mgFileNameToClassName($this->stack[$this->moduleName]['action'])
-			.'(mgReplaceVar($this->stack[$this->moduleName]["file"],$this->stack));');
+			.'("'.str_replace('{','{$',$this->stack[$this->moduleName]["file"]).'");');
 			call_user_func(array($tmp,'runAction'));
 		}
 		

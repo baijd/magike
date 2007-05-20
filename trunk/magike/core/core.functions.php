@@ -63,6 +63,22 @@ function mgReplaceVarCallback($partten,$replace)
 	}
 }
 
+//替换字符串中的变量
+function mgPraseVar($str,$var,$explode = '.')
+{
+        if(preg_match("/\{\\$([_0-9a-zA-Z-\.]+)\}/is",$str,$matches))
+        {
+                array_shift($matches);
+                foreach($matches as $match)
+                {
+                        $str = str_replace('{$'.$match.'}','{'.$var."['".str_replace('.',"']['",$match)."']}",$str);
+                }
+        }
+
+        return $str;
+}
+
+
 //适用于utf8的字符串函数
 function mgSubStr($str,$start,$end,$trim = "...")
 {
@@ -251,6 +267,7 @@ function mgExportArrayToFile($file,$array,$name,$quotes = false)
 	if($quotes)
 	{
 		$var = str_replace("'",'"',$var);
+		$var = str_replace('\"',"'",$var);
 	}
 
 	file_put_contents($file,"<?php\n\$".$name." = ".$var.";\n?>");

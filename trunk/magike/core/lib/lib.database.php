@@ -5,7 +5,7 @@
  * Copyright : Magike Group
  * License   : GNU General Public License 2.0
  *********************************/
- 
+
 //连接数据库
 define('E_DATABASE','Database Error');
 $dblink=@mysql_connect(__DBHOST__,__DBUSER__,__DBPASS__) or die('Database Connect Error');
@@ -158,9 +158,9 @@ class Database extends MagikeObject
 			
 			if(false !== $rows)
 			{
-            	$result[$num] = $rows;
-            	$num++;
-            }
+            			$result[$num] = $rows;
+            			$num++;
+            		}		
 		}
 
 		if($num == 0 && $expection) $this->throwException(E_PATH_PATHNOTEXISTS,$this->stack['action']['path']);
