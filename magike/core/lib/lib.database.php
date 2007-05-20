@@ -106,10 +106,10 @@ class Database extends MagikeObject
 		$fields = isset($args['fields']) && NULL !== $args['fields'] ? 'SELECT '.$args['fields'] : 'SELECT *';
 
 		//处理order子句
-		$orderby = isset($args['orderby']) && NULL !== $args['orderby'] ? ' ORDER BY '.$args['orderby'] : '';
+		$orderby = isset($args['orderby']) && NULL !== $args['orderby'] ? ' ORDER BY '.$args['orderby'] : 'ORDER BY';
 		
 		//处理sort子句
-		$orderby = isset($args['orderby']) && isset($args['sort']) && NULL !== $args['orderby'] && NULL !== $args['sort'] ? $orderby.' '.$args['sort'] : '';
+		$orderby = isset($args['sort']) && NULL !== $args['sort'] ? $orderby.' '.$args['sort'] : '';
 
 		//分析limit
 		if(isset($args['limit']))

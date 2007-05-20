@@ -13,7 +13,8 @@ class LinksPraseList extends MagikeModule
 	
 	public function praseLinkCategory($val)
 	{
-		
+		$val['items'] = $this->linkModel->listLinksByCategory($val['id']);
+		return $val;
 	}
 	
 	public function runModule($args)

@@ -7,7 +7,7 @@
  *********************************/
 
 class SpamByWord
-{	
+{
 	private $settingWord;
 	
 	function __construct($val)
@@ -20,7 +20,7 @@ class SpamByWord
 		$content = isset($_POST['content']) ? $_POST['content'] : NULL;
 		if(preg_match($this->settingWord,$content))
 		{
-			return array('publish' => 'spam');
+			return array('publish' => 'spam','word' => '您的言论由于含有敏感词汇,将在管理员审核通过后展现');
 		}
 		else
 		{

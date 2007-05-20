@@ -240,14 +240,20 @@ function mgGetDir($inpath)
 }
 
 //将数组输出到一个文件中
-function mgExportArrayToFile($file,$array,$name)
+function mgExportArrayToFile($file,$array,$name,$quotes = false)
 {
 	if(!is_dir(dirname($file)))
 	{
 		mgMkdir(dirname($file));
 	}
 
-	file_put_contents($file,"<?php\n\$".$name." = ".var_export($array,true).";\n?>");
+	$var = var_export($array,true);
+	if($quotes)
+	{
+		$var = str_replace("'",'"',$var);
+	}
+
+	file_put_contents($file,"<?php\n\$".$name." = ".$var.";\n?>");
 }
 
 //将ip转化为长整型字符串

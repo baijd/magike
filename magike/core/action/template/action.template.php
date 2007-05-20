@@ -17,7 +17,7 @@ class Template extends MagikeObject
 	{
 		parent::__construct(array('private' => array('cache')));
 		$fileName = __TEMPLATE__.$fileName;
-		if(!file_exists($fileName))
+		if(__DEBUG__ && !file_exists($fileName))
 		{
 			$this->throwException(E_ACTION_TEMPLATE_FILENOTEXISTS,$fileName,
 								  '/exception' == $this->stack['action']['path']);

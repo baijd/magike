@@ -11,7 +11,7 @@ class LinkCategoriesModel extends MagikeModel
 	public function listLinkCategories()
 	{
 		return $this->fectch(array('table' => $this->table,
-								   'orderby' => 'table.link_categories.link_category_sort',
+								   'orderby' => 'link_category_sort',
 								   'sort' => 'ASC'));
 	}
 	
@@ -19,7 +19,7 @@ class LinkCategoriesModel extends MagikeModel
 	{
 		return $this->fectch(array('table' => $this->table,
 								  'where'	=> array('template' => 'link_category_hide = 0'),
-								   'orderby' => 'table.link_categories.link_category_sort',
+								   'orderby' => 'link_category_sort',
 								   'sort' => 'ASC'),$func);
 	}
 	

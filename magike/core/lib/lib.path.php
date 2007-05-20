@@ -166,8 +166,8 @@ class Path extends MagikeModule
 
 		//替换匹配变量
 		$path = preg_replace("/\[([_0-9a-zA-Z-\\\]+)\=\%d\]/i","([0-9]+)",$path);
-		$path = preg_replace("/\[([_0-9a-zA-Z-\\\]+)\=\%s\]/i","([_0-9a-zA-Z\\x80-\\xff-]+)",$path);
-		$path = preg_replace("/\[([_0-9a-zA-Z-\\\]+)\=\%p\]/i","([_\\.0-9a-zA-Z\\x80-\\xff-]+)",$path);
+		$path = preg_replace("/\[([_0-9a-zA-Z-\\\]+)\=\%s\]/i","([_0-9a-zA-Z\ \x80-\xff-]+)",$path);
+		$path = preg_replace("/\[([_0-9a-zA-Z-\\\]+)\=\%p\]/i","([_\.0-9a-zA-Z\x80-\xff-]+)",$path);
 		$path = preg_replace("/\[([_0-9a-zA-Z-\\\]+)\=\%a\]/i","([_0-9a-zA-Z-]+)",$path);
 		$path = '^'.$path.'[/]?$';
 
@@ -199,7 +199,7 @@ class Path extends MagikeModule
 		$this->database->fectch(array('table' => 'table.paths'),array('function' => array($this,'pushPathData')));
 		foreach($this->pathCache as $key => $val)
 		{
-			mgExportArrayToFile($this->cacheDir.'/'.$key.'.php',$val,'pathConfig');
+			mgExportArrayToFile($this->cacheDir.'/'.$key.'.php',$val,'pathConfig',true);
 		}
 	}
 

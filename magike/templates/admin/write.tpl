@@ -361,8 +361,6 @@ function deleteFile()
 			  		$("#insert-button").attr("disabled","disabled");
 			  		$("#delete-button").attr("disabled","disabled");
 			  	}
-			  	showLoading = false;
-			  	$(".proc").hide();
 			  	getFilesList(1);
 			  });
 }
