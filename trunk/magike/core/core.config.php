@@ -16,6 +16,6 @@ define('__LANGUAGE__','./language');			//定义语言目录
 define('__UPLOAD__','./data/upload');			//定义上传目录
 define('__CONFIG__','./config.php');			//定义初始配置文件
 define('__LIB__',__DIR__.'/lib');				//定义库文件目录
-define('__DEBUG__',false);						//是否开启debug模式
+define('__DEBUG__',true);						//是否开启debug模式
 define('__GZIP__',false);						//是否开启gzip模式
 ?>
