@@ -21,8 +21,8 @@ class Path extends MagikeModule
 	{
 		parent::__construct(array('private'=> array('cache')));
 		$this->cache->checkCacheFile(array($this->cacheDir  => array('listener' => 'dirExists',
-																	 'callback' => array($this,'buildCache')
-																	  )));
+									     'callback' => array($this,'buildCache')
+									    )));
 		$this->location = $location;
 	}
 	
@@ -207,10 +207,10 @@ class Path extends MagikeModule
 	{
 		$deep = count(explode("/",$val['path_name']));
 		$this->pathCache[$deep][$this->praseEregPath($val['path_name'])] = array('id'  => $val['id'],
-																			   	 'action' => $val['path_action'],
-																			   	 'file'   => $val['path_file'],
-																			   	 'value'  => $this->prasePathValue($val['path_name'])
-																				 );
+		'action' => $val['path_action'],
+		'file'   => mgPraseVar($val['path_file'],'this->stack'),
+		'value'  => $this->prasePathValue($val['path_name'])
+		);
 	}
 	
 	public function runModule()
