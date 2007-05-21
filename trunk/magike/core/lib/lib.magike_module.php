@@ -16,6 +16,7 @@ class MagikeModule extends MagikeObject
 	protected $getLanguage;
 	protected $moduleName;
 	protected $model;
+	public $waittingFor;
 	
 	function __construct($args = array())
 	{
@@ -25,6 +26,7 @@ class MagikeModule extends MagikeObject
 		$this->cacheFile = $this->cacheDir.'/'.$this->moduleName.'.php';
 		$this->model = $this->loadModel($this->moduleName,false);
 		$this->getLanguage = array();
+		$this->waittingFor = NULL;
 	}
 	
 	protected function loadModel($model,$triggerException = true)
