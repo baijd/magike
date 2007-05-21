@@ -16,6 +16,11 @@ body{
 	text-justify :distribute;
 }
 
+*::-moz-selection {
+background-color:#FF3C00;
+color:white;
+}
+
 img{
 	border:0px;
 }
