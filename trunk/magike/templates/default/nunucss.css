@@ -272,6 +272,54 @@ h1 {
 		padding-bottom:32747px;
 		margin-bottom:-32487px;
 	}
+
+	.rightcon{
+		width:250px;
+		margin-left:510px;
+		text-align:left;
+		position:relative;	
+	}
+
+	.riblock{
+		margin:10px auto;
+	}
+	.rititle{
+		color:#333;
+		font-size:14px;
+		margin-bottom:5px;
+		letter-spacing:0px;
+		
+	}
+	.rititleicon{
+		width:19px;
+		height:13px;
+		background:url(images/bgm.jpg) -220px -35px no-repeat;
+		margin:3px;
+		float:left;
+	}
+	.rilist ul li{
+		list-style:none;
+		color:#eee;
+		text-decoration:none;
+		line-height:24px;
+		text-indent:5px;
+	}
+		.rilist li a{
+			display:block;
+			color:#aaa;
+			border-bottom:1px solid #666;
+			background-color:#555;
+			padding-left:3px;
+			text-decoration:none;
+			margin-bottom:1px;
+		}
+		.rilist li a:hover{
+			display:block;
+			color:#fff;
+			border-bottom:1px solid #666;
+			background-color:#444;
+			text-decoration:none;
+		}
 	/*======right_end======*/
 	/* easy clearing */
 	#conwr:after

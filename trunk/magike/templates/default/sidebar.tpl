@@ -2,8 +2,6 @@
 <[module:recent_posts]>
 <[module:comments_list_all?striptags=1&substr=20]>
 	<!--rightpart-->
-			<div id="right">	
-			</div>
 			<div class="rightcon">
 				<div class="riblock">
 					<div class="rititle">
@@ -45,4 +43,5 @@
 					</div>
 				</div>
 			</div>
+
 			<!--rightpartend-->
