@@ -1,4 +1,4 @@
-﻿*{
+*{
 	margin:0px; 
 	padding:0px;
 }
@@ -20,11 +20,6 @@ img{
 	border:0px;
 }
 
-
-*::-moz-selection {
-background-color:#8bc646;
-color:#fff;
-}
 
 h1 {
 	font-size:20px;
@@ -111,26 +106,6 @@ h1 {
 				text-decoration:none;
 			}
 
-			#hnav li a span{
-				display:none;
-			}
-
-			#hnav li a:hover span{
-				color:#333333;
-				width:500px;
-				height:15px;
-				padding:5px;
-				margin-left:-430px;
-				margin-top:-50px;
-				display:block;
-				background:#FFCC00;
-				filter:alpha(opacity=70);
-				opacity:0.7;
-				text-align:right;
-				text-decoration: none;
-				cursor:pointer;
-				position:absolute;
-			}
 
 	#hrss{/*RSS*/
 		width:31px;
@@ -150,26 +125,6 @@ h1 {
 		#hrss a:hover{
 			background:url(images/bgm.jpg) -184px 0px no-repeat;
 			display:block;
-		}
-
-		#hrss a span{
-			display:none;
-		}	
-
-		#hrss a:hover span{
-			color:#333333;
-			width:500px;
-			height:15px;
-			padding:5px;
-			margin-left:-530px;
-			margin-top:10px;
-			display:block;
-			background:#FFCC00;
-			filter:alpha(opacity=70);
-			opacity:0.7;
-			text-align:right;
-			text-decoration: none;
-			position:absolute;
 		}
 
 /*======head_end======*/
@@ -292,28 +247,39 @@ h1 {
 		margin:3px;
 		float:left;
 	}
-	.rilist ul li{
+
+	.rilist li{
 		list-style:none;
-		color:#eee;
+		color:#aaa;
 		text-decoration:none;
 		line-height:24px;
 		text-indent:5px;
+		height:24px;
+		border-bottom:1px solid #666;
+		background-color:#555;
+		padding-left:3px;
 	}
 		.rilist li a{
 			display:block;
 			color:#aaa;
-			border-bottom:1px solid #666;
-			background-color:#555;
 			text-decoration:none;
 			margin-bottom:1px;
 		}
 		.rilist li a:hover{
 			display:block;
+		}
+
+		.rilist li span{display:none;}
+		.rilist li a:hover span{ 
+			display:block; 
 			color:#fff;
 			border-bottom:1px solid #666;
 			background-color:#444;
 			text-decoration:none;
+			width:250px;
+			height:24px;
 		}
+
 	/*======right_end======*/
 	/* easy clearing */
 	#conwr:after
