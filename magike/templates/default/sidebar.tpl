@@ -7,6 +7,7 @@
 			<div class="rightcon">
 				<div class="riblock">
 					<div class="rititle">
+						<div class="rititleicon"></div>
 						Category
 					</div>
 					<div class="rilist">
@@ -19,6 +20,7 @@
 				</div>
 				<div class="riblock">
 					<div class="rititle">
+						<div class="rititleicon"></div>
 						Recent Posts
 					</div>
 					<div class="rilist">
@@ -31,6 +33,7 @@
 				</div>
 				<div class="riblock">
 					<div class="rititle">
+						<div class="rititleicon"></div>
 						Recent Comments
 					</div>
 					<div class="rilist">

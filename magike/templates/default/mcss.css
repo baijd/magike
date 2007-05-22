@@ -1,4 +1,4 @@
-*{
+﻿*{
 	margin:0px; 
 	padding:0px;
 }
@@ -6,7 +6,7 @@
 body{
 	margin:0px; 
 	padding:0px;
-	font-family:verdana, Helvetica, sans-serif;
+	font-family:Trebuchet MS,verdana, Helvetica, sans-serif;
 	font-size:12px;
 	color:#333333;
 	background:#242428;
@@ -20,14 +20,17 @@ img{
 	border:0px;
 }
 
-
+*::-moz-selection {
+background-color:#8bc646;
+color:white;
+}
 
 h1 {
 	font-size:20px;
 	color:#f60;
 	line-height:170%;
 	margin-bottom:20px;
-	text-align:right;
+	text-align:left;
 }
 
 /*a {
@@ -219,7 +222,7 @@ h1 {
 	/*======banner_end======*/
 	/*======textarea======*/
 	#text{
-		width:420px;
+		width:470px;
 		padding:20px;
 		float:left;
 		padding-bottom: 32767px;
@@ -257,10 +260,10 @@ h1 {
 	/*======textarea_end======*/
 	/*======right======*/ 
 	#right{
-		width:300px;
+		width:250px;
 		background:#000;
-		filter:alpha(opacity=40);
-		opacity:0.4;
+		filter:alpha(opacity=65);
+		opacity:0.65;
 		float:left;
 		margin-top:-260px !important;
 		margin-top:-280px;
@@ -270,31 +273,41 @@ h1 {
 	}
 
 	.rightcon{
-		width:280px;
-		margin-left:470px;
-		margin-top:10px;
+		width:250px;
+		margin-left:510px;
 		text-align:left;
 		position:absolute;	
 	}
 
 	.riblock{
-		margin:20px auto;
+		margin:10px auto;
 	}
 	.rititle{
-		color:#b3ff68;
+		color:#333;
 		font-size:14px;
 		margin-bottom:5px;
-		font-weight:bold;
+		letter-spacing:0px;
+		
+	}
+	.rititleicon{
+		width:19px;
+		height:13px;
+		background:url(images/bgm.jpg) -220px -35px no-repeat;
+		margin:3px;
+		float:left;
 	}
 	.rilist ul li{
 		list-style:none;
 		color:#eee;
 		text-decoration:none;
+		line-height:24px;
+		text-indent:5px;
 	}
 		.rilist li a{
 			display:block;
-			color:#eee;
-			border-left:3px solid #aaa;
+			color:#aaa;
+			border-bottom:1px solid #666;
+			background-color:#555;
 			padding-left:3px;
 			text-decoration:none;
 			margin-bottom:1px;
@@ -302,7 +315,8 @@ h1 {
 		.rilist li a:hover{
 			display:block;
 			color:#fff;
-			border-left:3px solid #b3ff68;
+			border-bottom:1px solid #666;
+			background-color:#444;
 			text-decoration:none;
 		}
 	/*======right_end======*/
