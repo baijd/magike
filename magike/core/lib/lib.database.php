@@ -86,9 +86,9 @@ class Database extends MagikeObject
 		return $matches[1].__DBPREFIX__.$matches[2];
 	}
 
-	protected function databaseException()
+	protected function databaseException($query = NULL)
 	{
-		$this->throwException(E_DATABASE,__DEBUG__ ? mysql_error() : NULL);
+		$this->throwException(E_DATABASE,__DEBUG__ ? $query."<br />\n".mysql_error() : NULL);
 	}
 
  	public function fectch($args,$callback = NULL,$expection = false)
@@ -141,7 +141,7 @@ class Database extends MagikeObject
 		//处理where子句
 		$where = self::praseWhereSentence($args);
 		$query = $fields.$table.$where.$groupby.$orderby.$offset.$limit;
-		$resource = mysql_query($query) or $this->databaseException();
+		$resource = mysql_query($query) or $this->databaseException($query);
 		$sum = mysql_num_rows($resource);
 		$result = array();
 		$num = 0;
@@ -192,7 +192,8 @@ class Database extends MagikeObject
  		}
  		$value = $value.implode(' , ',$columns);
 		$where = self::praseWhereSentence($args);
-		mysql_query($table.$value.$where) or $this->databaseException();
+		$query = $table.$value.$where;
+		mysql_query($query) or $this->databaseException($query);
 		return mysql_affected_rows();
  	}
  	
@@ -222,7 +223,7 @@ class Database extends MagikeObject
  		//替换查询前缀
  		$args = $this->filterTablePrefix($args);
 		$query = 'INSERT INTO '.$args['table'].' ('.implode(',',array_keys($args['value'])).') VALUES('.implode(',',$args['value']).')';
-		mysql_query($query) or $this->databaseException();
+		mysql_query($query) or $this->databaseException($query);
 		return mysql_insert_id();
  	}
 
@@ -232,7 +233,8 @@ class Database extends MagikeObject
  		$args = $this->filterTablePrefix($args);
  		$table = 'DELETE FROM '.$args['table'];
 		$where = self::praseWhereSentence($args);
-		mysql_query($table.$where) or $this->databaseException();
+		$query = $table.$where;
+		mysql_query($query) or $this->databaseException($query);
 		return mysql_affected_rows();
  	}
 
@@ -244,8 +246,9 @@ class Database extends MagikeObject
  		$table = ' FROM '.$args['table'];
 		$groupby = isset($args['groupby']) ? ' GROUP BY '.$args['groupby'] : '';
  		$where = self::praseWhereSentence($args);
-
- 		$resource = mysql_query($fields.$table.$where.$groupby) or $this->databaseException();
+		
+		$query = $fields.$table.$where.$groupby;
+ 		$resource = mysql_query($query) or $this->databaseException($query);
  		$result = mysql_fetch_array($resource,MYSQL_ASSOC);
  		return $result['number'];
  	}
@@ -259,7 +262,8 @@ class Database extends MagikeObject
 		$groupby = isset($args['groupby']) ? ' GROUP BY '.$args['groupby'] : '';
  		$where = self::praseWhereSentence($args);
 
- 		$resource = mysql_query($fields.$table.$where.$groupby) or $this->databaseException();
+		$query = $fields.$table.$where.$groupby;
+ 		$resource = mysql_query($query) or $this->databaseException($query);
  		$result = mysql_fetch_array($resource,MYSQL_ASSOC);
  		return $result['number'];
  	}
