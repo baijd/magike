@@ -17,37 +17,50 @@ class MagikeModule extends MagikeObject
 	protected $moduleName;
 	protected $model;
 	public $waittingFor;
+	public $globalModel;
 	
 	function __construct($args = array())
 	{
 		parent::__construct($args);
+		
+		global $globalModel;
 		$this->moduleName = mgClassNameToFileName(get_class($this));
 		$this->cacheDir = __CACHE__.'/'.$this->moduleName;
 		$this->cacheFile = $this->cacheDir.'/'.$this->moduleName.'.php';
 		$this->model = $this->loadModel($this->moduleName,false);
 		$this->getLanguage = array();
 		$this->waittingFor = NULL;
+		$this->globalModel = &$globalModel;
 	}
 	
 	protected function loadModel($model,$triggerException = true)
 	{
-		$modelFile = strtolower(__MODEL__.'/model.'.$model.'.php');
-		if(file_exists($modelFile))
+		$model = strtolower($model);
+		if(isset($this->globalModel[$model]))
 		{
-			require_once($modelFile);
-			$object = mgFileNameToClassName($model);
-			eval('$tmp = new '.$object.'Model();');
-			return $tmp;
+			return $this->globalModel[$model];
 		}
 		else
 		{
-			if($triggerException)
+			$modelFile = __MODEL__.'/model.'.$model.'.php';
+			if(file_exists($modelFile))
 			{
-				$this->throwException(E_MODELFILENOTEXISTS,$modelFile);
+				require_once($modelFile);
+				$object = mgFileNameToClassName($model);
+				eval('$tmp = new '.$object.'Model();');
+				$this->globalModel[$model] = $tmp;
+				return $tmp;
 			}
 			else
 			{
-				return NULL;
+				if($triggerException)
+				{
+					$this->throwException(E_MODELFILENOTEXISTS,$modelFile);
+				}
+				else
+				{
+					return NULL;
+				}
 			}
 		}
 	}

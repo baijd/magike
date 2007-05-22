@@ -95,7 +95,7 @@ class Template extends MagikeObject
 		foreach($waitting as $key => $object)
 		{
 			//运行模块入口函数runModule并将运行结果保存到临时堆栈中
-			$stack = call_user_func(array($tmp,'runModule'),isset($args[$key]) ? $args[$key] : array());
+			$stack = call_user_func(array($object,'runModule'),isset($args[$key]) ? $args[$key] : array());
 			
 			//将临时堆栈中的数据转移到全局堆栈中
 			//将类名转化为模块名(文件名)

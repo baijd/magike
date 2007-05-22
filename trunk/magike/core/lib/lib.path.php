@@ -16,14 +16,17 @@ class Path extends MagikeModule
 	private $value;
 	private $pathCache;
 	private $last;
+	private $isFile;
 	
 	function __construct($location = NULL)
 	{
 		parent::__construct(array('private'=> array('cache')));
+		$this->globalModel = array();
 		$this->cache->checkCacheFile(array($this->cacheDir  => array('listener' => 'dirExists',
 									     'callback' => array($this,'buildCache')
 									    )));
 		$this->location = $location;
+		$this->isFile = false;
 	}
 	
 	private function loadCache()
@@ -96,6 +99,12 @@ class Path extends MagikeModule
 
 		if(!$found)
 		{
+			if($this->isFile)
+			{
+				$pathArray = explode('/',$this->path);
+				array_pop($pathArray);
+				header('location: '.implode('/',$pathArray).'/');
+			}
 			$this->throwException(E_PATH_PATHNOTEXISTS,$this->path,'/exception' == $this->path);
 		}
 		
@@ -134,9 +143,9 @@ class Path extends MagikeModule
 	{
 		$this->last = $path[strlen($path) - 1] == '/';
 		$path = $this->last ? substr($path,0,strlen($path) - 1) : $path;
-		$isFile = strrpos($path,'.') === false ? false : strrpos($path,'/') < strrpos($path,'.');
+		$this->isFile = strrpos($path,'.') === false ? false : strrpos($path,'/') < strrpos($path,'.');
 
-		if(!$isFile & !$this->last)
+		if(!$this->isFile & !$this->last)
 		{
 			$request = array_shift(explode('?',$_SERVER['REQUEST_URI'])).'/';
 			if(isset($_SERVER['QUERY_STRING']) && NULL != $_SERVER['QUERY_STRING'])
@@ -145,7 +154,7 @@ class Path extends MagikeModule
 			}
 			header("location: {$request}");
 		}
-		if($isFile & $this->last)
+		if($this->isFile & $this->last)
 		{
 			$request = array_shift(explode('?',$_SERVER['REQUEST_URI']));
 			$request = substr($request,0,strlen($request) - 1);
