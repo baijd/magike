@@ -8,7 +8,7 @@
 	<div class="proc">
 		正在处理您的请求
 	</div>
-	<form method="post" id="insert_user" action="{$static_var.index}/admin/users/user_list/?<[if:$insert_user.do == "update"]>user_id={$insert_user.id}&do=update<[/if]><[if:$insert_user.do == "insert"]>do=insert<[/if]>">
+	<form method="post" id="insert_user" action="{$static_var.index}/admin/users/users_list/?<[if:$insert_user.do == "update"]>user_id={$insert_user.id}&do=update<[/if]><[if:$insert_user.do == "insert"]>do=insert<[/if]>">
 	<h2>新增或编辑用户 <span class="discribe">(您可以在此编辑用户的资料)</span></h2>
 	<div class="input">
 		<h2>用户名</h2>

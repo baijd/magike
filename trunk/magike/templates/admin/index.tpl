@@ -36,7 +36,7 @@
 		border-top:1px solid #CCC;
 		border-bottom:none;
 		margin:0;
-		background:url({$static_var.siteurl}/{!__TEMPLATE__}/{$static_var.admin_template}/images/top.gif) top repeat-x;
+		background:url({$static_var.siteurl}/templates/{$static_var.admin_template}/images/top.gif) top repeat-x;
 	}
 	
 	#element ul.info
@@ -64,7 +64,7 @@
 	#element u
 	{
 		padding-left:12px;
-		background:url({$static_var.siteurl}/{!__TEMPLATE__}/{$static_var.admin_template}/images/ufolder.gif) left top no-repeat;
+		background:url({$static_var.siteurl}/templates/{$static_var.admin_template}/images/ufolder.gif) left top no-repeat;
 		text-decoration: none;
 		color:#777;
 	}
@@ -73,7 +73,7 @@
 	{
 		color:#444;
 		padding-right:12px;
-		background:url({$static_var.siteurl}/{!__TEMPLATE__}/{$static_var.admin_template}/images/folder.gif) right top no-repeat;
+		background:url({$static_var.siteurl}/templates/{$static_var.admin_template}/images/folder.gif) right top no-repeat;
 	}
 	
 	#element ul.info li a.close

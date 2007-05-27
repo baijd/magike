@@ -27,8 +27,8 @@
 				<td class="describe">{$filter.comment_filter_value}</td>
 				<td>{$filter.comment_filter_type}</td>
 				<td>
-					<a class="img" title="编辑" href="{$static_var.index}/admin/comments/filter/?cf_id={$filter.id}"><img src="{$static_var.siteurl}/{!__TEMPLATE__}/{$static_var.admin_template}/images/edit.gif" alt="编辑"/></a> 
-					<a class="img" title="删除" href="javascript:;" onclick="magikeConfirm(this);" msg="您确定删除 '{$filter.comment_filter_name}' 吗?" rel="{$static_var.index}/admin/comments/filters_list/?cf_id={$filter.id}&do=del"><img src="{$static_var.siteurl}/{!__TEMPLATE__}/{$static_var.admin_template}/images/delete.gif" alt="删除"/></a> 
+					<a class="img" title="编辑" href="{$static_var.index}/admin/comments/filter/?cf_id={$filter.id}"><img src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/edit.gif" alt="编辑"/></a> 
+					<a class="img" title="删除" href="javascript:;" onclick="magikeConfirm(this);" msg="您确定删除 '{$filter.comment_filter_name}' 吗?" rel="{$static_var.index}/admin/comments/filters_list/?cf_id={$filter.id}&do=del"><img src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/delete.gif" alt="删除"/></a> 
 				</td>
 			</tr>
 			<[/loop]>

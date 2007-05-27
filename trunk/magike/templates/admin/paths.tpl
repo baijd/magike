@@ -27,8 +27,8 @@
 				<td>{$path.path_action}</td>
 				<td class="describe">{$path.path_name}</td>
 				<td>
-					<a class="img" title="编辑" href="{$static_var.index}/admin/paths/path/?path_id={$path.id}"><img src="{$static_var.siteurl}/{!__TEMPLATE__}/{$static_var.admin_template}/images/edit.gif" alt="编辑"/></a> 
-					<a class="img" title="删除" href="javascript:;" onclick="magikeConfirm(this);" msg="您确定删除路径 '{$path.path_describe}' 吗?" rel="{$static_var.index}/admin/paths/paths_list/?path_id={$path.id}&do=del"><img src="{$static_var.siteurl}/{!__TEMPLATE__}/{$static_var.admin_template}/images/delete.gif" alt="删除"/></a>
+					<a class="img" title="编辑" href="{$static_var.index}/admin/paths/path/?path_id={$path.id}"><img src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/edit.gif" alt="编辑"/></a> 
+					<a class="img" title="删除" href="javascript:;" onclick="magikeConfirm(this);" msg="您确定删除路径 '{$path.path_describe}' 吗?" rel="{$static_var.index}/admin/paths/paths_list/?path_id={$path.id}&do=del"><img src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/delete.gif" alt="删除"/></a>
 				</td>
 			</tr>
 			<[/loop]>

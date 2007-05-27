@@ -40,7 +40,7 @@ class MagikeModel extends Database
  	 	 $this->sort = NULL;
  	 }
  	 
- 	 public function deleteByKeys($keys)
+ 	 public function deleteByKeys($keys,$except = array())
  	 {
  	 	 $sum = 0;
  	 	 if(is_string($keys))
@@ -50,14 +50,17 @@ class MagikeModel extends Database
  	 	 
  	 	 foreach($keys as $key)
  	 	 {
- 	 	 	$result = 
- 	 	 	$this->delete(array('table' => $this->table,
- 	 	 						'where' => array('template' => "{$this->key} = ?",
- 	 	 										 'value' => array($key)
- 	 	 			)));
- 	 	 	if($result)
+ 	 	 	if(!$except || !in_array($key,$except))
  	 	 	{
- 	 	 		$sum ++;
+	 	 	 	$result = 
+	 	 	 	$this->delete(array('table' => $this->table,
+	 	 	 						'where' => array('template' => "{$this->key} = ?",
+	 	 	 										 'value' => array($key)
+	 	 	 			)));
+	 	 	 	if($result)
+	 	 	 	{
+	 	 	 		$sum ++;
+	 	 	 	}
  	 	 	}
  	 	 }
  	 	 return $sum;

@@ -71,33 +71,42 @@ class PostsModel extends MagikeModel
 	
 	public function fectchPostsByTag($tag,$limit,$offset,$func = NULL)
 	{
-		$where['template'] = 'post_tags LIKE ?';
-		$where['value'] = array('%'.$tag.'%');
-		return $this->fectch($this->fixPostWhere($limit,$offset,$where),$func,true);
+		$args['table'] = '((table.posts JOIN table.post_tag_mapping ON table.posts.id = table.post_tag_mapping.post_id)
+		 LEFT JOIN table.tags ON table.post_tag_mapping.tag_id = table.tags.id)';
+		$args['where']['template'] = 'table.tags.tag_name = ?';
+		$args['where']['value'] = array($tag);
+		$args['limit'] = $limit;
+		$args['offset'] = $offset;
+		$args['groupby'] = 'table.posts.id';
+		$args['fields']	= '*,table.posts.id AS post_id';
+		$args['orderby'] = 'table.posts.post_time';
+		$args['sort']	= 'DESC';
+		
+		return $this->fectch($args,$func,true);
 	}
 	
 	public function countPostsByTag($tag)
 	{
-		$args = $this->fixPostWhere();
+		$args['table'] = '((table.posts JOIN table.post_tag_mapping ON table.posts.id = table.post_tag_mapping.post_id)
+		 LEFT JOIN table.tags ON table.post_tag_mapping.tag_id = table.tags.id)';
 		
-		$args['where']['template'] = 'post_tags LIKE ?';
-		$args['where']['value'] = array('%'.$tag.'%');
-		unset($args['groupby']);
+		$args['where']['template'] = 'table.tags.tag_name = ?';
+		$args['where']['value'] = array($tag);
 		return $this->countTable($args);
 	}
 	
 	public function fectchPostsByCategory($category,$limit,$offset,$func = NULL)
 	{
-		$where['template'] = 'category = ?';
+		$where['template'] = 'category_postname = ?';
 		$where['value'] = array($category);
-		return $this->fectch($this->fixPostWhere($limit,$offset,$where),$func,true);
+		return $this->fectch($this->fixPostWhere($limit,$offset,$where),$func);
 	}
 	
 	public function countPostsByCategory($category)
 	{
 		$args = $this->fixPostWhere();
 		
-		$args['where']['template'] = 'category = ?';
+		$args['where']['template'] = 'category_postname = ?';
 		$args['where']['value'] = array($category);
 		unset($args['groupby']);
 		return $this->countTable($args);

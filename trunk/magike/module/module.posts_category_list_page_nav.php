@@ -9,24 +9,30 @@
 class PostsCategoryListPageNav extends MagikeModule
 {
 	private $getArgs;
+	private $result;
+	
+	public function outputPageNav()
+	{
+		$postModel = $this->loadModel('posts');
+		$total = $postModel->countPostsByCategory($_GET['category_postname']);
+		
+		$page = isset($_GET['page']) ? $_GET['page'] : 1;
+		$this->result['query'] = 'category/'.$_GET['category_postname'];
+		$this->result['next'] = $total > $page*$this->getArgs['limit'] ? $page + 1 : 0;
+		$this->result['prev'] = $page > 1 ? $page - 1 : 0;
+		$this->result['total'] = $total%$this->getArgs['limit'] > 0 ? intval($total/$this->getArgs['limit']) + 1
+		: intval($total/$this->getArgs['limit']);
+	}
 
 	public function runModule($args)
 	{
-		$require = array('limit'  			=> $this->stack['static_var']['post_page_num']	//每页篇数
-						);
+		$this->result = array();
+		$require = array('limit'  			=> $this->stack['static_var']['post_page_num']);
 		
 		$this->getArgs = $this->initArgs($args,$require);
-		$postModel = $this->loadModel('posts');
-		$total = $postModel->countPostsByCategory($_GET['category_name']);
-		
-		$page = isset($_GET['page']) ? $_GET['page'] : 1;
-		$result['query'] = $query;
-		$result['next'] = $total > $page*$this->getArgs['limit'] ? $page + 1 : 0;
-		$result['prev'] = $page > 1 ? $page - 1 : 0;
-		$result['total'] = $total%$this->getArgs['limit'] > 0 ? intval($total/$this->getArgs['limit']) + 1
-		: intval($total/$this->getArgs['limit']);
-		
-		return $result;
+
+		$this->onGet('category_postname','outputPageNav');
+		return $this->result;
 	}
 }
 ?>

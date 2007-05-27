@@ -10,14 +10,9 @@ class AdminLogin extends MagikeModule
 {
 	private $result;
 	
-	function __construct()
-	{
-		parent::__construct(array('public' => array('database')));
-		$this->result = array();
-	}
-	
 	public function runModule()
 	{
+		$this->result = array();
 		$this->result['message_open'] = false;
 		if(!$this->stack['access']['login'])
 		{
@@ -33,13 +28,14 @@ class AdminLogin extends MagikeModule
 
 	public function loginAction()
 	{
-		$user = $this->database->fectchOne(array('table' => 'table.users',
+		$userModel = $this->loadModel('users');
+		$groupModel = $this->loadModel('groups');
+		$user = $userModel->fectchOne(array('table' => 'table.users',
 										 	  'where' => array('template' => 'user_name = ? AND user_password = ?',
 										  					   'value' => array($_POST['username'],
 										  					  				   md5($_POST['password'])
 										  					  				  )
-										  					   ),
-										  	  'limit' => 1
+										  					   )
 										  	  ));
 		if(NULL == $user)
 		{
@@ -48,10 +44,7 @@ class AdminLogin extends MagikeModule
 		}
 		else
 		{
-			$group = $this->database->fectch(array('table' => 'table.user_group_mapping',
-												   'where' => array('template' => 'user_id = ?',
-												   					'value'	   => array($user['id']))
-													));
+			$group = $groupModel->getUserGroups($user['id']);
 			$userGroup = array();
 			foreach($group as $val)
 			{
@@ -64,7 +57,15 @@ class AdminLogin extends MagikeModule
 			$_SESSION['auth_data'] = mgCreateRandomString(128);
 			
 			setcookie('auth_data',$_SESSION['auth_data'],time() + 3600,'/');
-			header('location: '.$this->stack['static_var']['index'].'/admin/');
+			
+			if($userGroup == array($this->stack['static_var']['user_register_group']))
+			{
+				header('location: '.$this->stack['static_var']['siteurl']);
+			}
+			else
+			{
+				header('location: '.$this->stack['static_var']['index'].'/admin/');
+			}
 		}
 	}
 }

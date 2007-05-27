@@ -19,7 +19,6 @@ class TagsModel extends MagikeModel
 	
 	private function getTags($tags)
 	{
-		str_replace("，",",",$tags);
 		$tags = explode(",",$tags);
 
 		$where = array_fill(0,count($tags),'tag_name = ?');

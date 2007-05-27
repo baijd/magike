@@ -17,10 +17,12 @@ class SpamByWord
 	
 	public function runFilter()
 	{
-		$content = isset($_POST['content']) ? $_POST['content'] : NULL;
+		$content = isset($_POST['comment_text']) ? $_POST['comment_text'] : NULL;
+		$content = isset($_POST['content']) ? $_POST['content'] : $content;
+		
 		if(preg_match($this->settingWord,$content))
 		{
-			return array('publish' => 'spam','word' => 'ÄúµÄÑÔÂÛÓÉÓÚº¬ÓÐÃô¸Ð´Ê»ã,½«ÔÚ¹ÜÀíÔ±ÉóºËÍ¨¹ýºóÕ¹ÏÖ');
+			return array('publish' => 'spam','word' => 'æ‚¨çš„è¨€è®ºç”±äºŽå«æœ‰æ•æ„Ÿè¯æ±‡,å°†åœ¨ç®¡ç†å‘˜å®¡æ ¸é€šè¿‡åŽå±•çŽ°');
 		}
 		else
 		{
