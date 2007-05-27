@@ -111,7 +111,7 @@ class PostsModel extends MagikeModel
 			  );
 		$args['where']['template'] = 'table.posts.id = ?';
 		$args['where']['value'] = array($id);
-		return $this->fectchOne($args,$func);
+		return $this->fectchOne($args,$func,true);
 	}
 	
 	public function fectchPostByName($name,$func = NULL)
@@ -122,7 +122,7 @@ class PostsModel extends MagikeModel
 			  );
 		$args['where']['template'] = 'table.posts.post_name = ?';
 		$args['where']['value'] = array($name);
-		return $this->fectchOne($args,$func);
+		return $this->fectchOne($args,$func,true);
 	}
 	
 	public function listAllPosts($limit,$offset,$func = NULL)

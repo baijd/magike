@@ -38,6 +38,11 @@ class PostsSearchListPageNav extends MagikeModule
 			$keywords['category_name'] = $_GET['keywords'];
 			$query .= '&category=1';
 		}
+		else
+		{
+			$keywords['post_title'] = $_GET['keywords'];
+			$query .= '&title=1';
+		}
 		
 		$total = $postModel->countPostsByKeywords($keywords);
 		

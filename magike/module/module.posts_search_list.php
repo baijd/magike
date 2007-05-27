@@ -20,7 +20,7 @@ class PostsSearchList extends MagikeModule
 			$val["post_content"] = $this->getArgs["sub"] == 0 ? $post[0] : mgSubStr($post[0],0,$this->getArgs["sub"]);
 		}
 		$val["post_alt"] = $num%2;
-		$val["post_tags"] = explode(",",$val["post_tags"]);
+		$val["post_tags"] = $val["post_tags"] ? explode(",",$val["post_tags"]) : array();
 		$val["post_time"] = 
 		mgDate($this->getArgs["time_format"],$this->stack['static_var']['time_zone'] - $val["post_gmt"],$val["post_time"]);
 
@@ -62,6 +62,11 @@ class PostsSearchList extends MagikeModule
 		{
 			$keywords['category_name'] = $_GET['keywords'];
 			$query .= '&category=1';
+		}
+		else
+		{
+			$keywords['post_title'] = $_GET['keywords'];
+			$query .= '&title=1';
 		}
 		
 		$this->stack['admin_menu_list']['children'][1]['menu_name'] = '搜索关键字 "'.$_GET['keywords'].'"';

@@ -69,7 +69,7 @@ class Path extends MagikeModule
 		$result = array();
 		$result['path'] = $this->path;
 		$found = false;
-		$eregPath = '^'.$this->path.'$';		//适合正则表达的路径
+		$eregPath = '^'.$this->path.'[/]?$';		//适合正则表达的路径
 
 		if(isset($this->pathConfig[$eregPath]))
 		{
