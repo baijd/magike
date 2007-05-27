@@ -31,6 +31,11 @@ class CommentFilter extends MagikeModule
 				$filterByType[$val['comment_filter_type']] = array();
 			}
 			$filterByType[$val['comment_filter_type']][$val['comment_filter_name']] = $val['comment_filter_value'];
+			if('all' == $val['comment_filter_type'])
+			{
+				$filterByType['comment'][$val['comment_filter_name']] = $val['comment_filter_value'];
+				$filterByType['ping'][$val['comment_filter_name']] = $val['comment_filter_value'];
+			}
 		}
 		
 		mgExportArrayToFile($this->cacheFile,$filterByType,'filter');
@@ -42,7 +47,7 @@ class CommentFilter extends MagikeModule
 		require($this->cacheFile);
 		$filterByType = isset($filter[$this->filterType]) ? $filter[$this->filterType] : array();
 		$requireDir = __MODULE__.'/'.$this->moduleName.'/';
-		
+
 		foreach($filterByType as $key => $val)
 		{
 			$currentFile = $requireDir.'comment_filter.'.$key.'.php';

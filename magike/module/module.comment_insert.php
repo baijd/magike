@@ -8,8 +8,12 @@
 
 class CommentInsert extends MagikeModule
 {
+	private $showWord;
+	private $result;
+	
 	public function insertComment()
 	{
+		$this->showWord = false;
 		if($this->stack['static_var']['comment_ajax_validator'])
 		{
 			$this->requirePost();
@@ -30,8 +34,8 @@ class CommentInsert extends MagikeModule
 		
 		if($post && $post['post_allow_comment'])
 		{
-			$result['open'] = true;
-			$result['word'] = '感谢您的参与,您的评论已经提交';
+			$this->result['open'] = true;
+			$this->result['word'] = '感谢您的参与,您的评论已经提交';
 			
 			$input['comment_publish'] = 'approved';
 			$input['comment_date'] = time();
@@ -47,27 +51,36 @@ class CommentInsert extends MagikeModule
 			
 			if(NULL == $input['comment_user'])
 			{
-				$result['word'] = '对不起,您必须填写用户名';
-				return $result;
+				$this->result['word'] = '对不起,您必须填写用户名';
+				$this->showWord = true;
+				return;
+			}
+			if(NULL == $input['comment_text'])
+			{
+				$this->result['word'] = '对不起,评论内容不能为空';
+				$this->showWord = true;
+				return;
 			}
 			if($this->stack['static_var']['comment_email_notnull'] && NULL == $input['comment_email'])
 			{
-				$result['word'] = '对不起,您必须填写电子邮件';
-				return $result;
+				$this->result['word'] = '对不起,您必须填写电子邮件';
+				$this->showWord = true;
+				return;
 			}
 			if($this->stack['static_var']['comment_homepage_notnull'] && NULL == $input['comment_homepage'])
 			{
-				$result['word'] = '对不起,您必须填写个人主页';
-				return $result;
+				$this->result['word'] = '对不起,您必须填写个人主页';
+				$this->showWord = true;
+				return;
 			}
 			if($this->stack['static_var']['comment_check'])
 			{
-				$result['word'] = '您的评论正在等待审核';
+				$this->result['word'] = '您的评论正在等待审核';
 				$input['comment_publish'] = 'waitting';
 			}
 			if(isset($this->stack['comment_filter']) && $this->stack['comment_filter'])
 			{
-				$result['word'] = $this->stack['comment_filter']['word'];
+				$this->result['word'] = $this->stack['comment_filter']['word'];
 				$input['comment_publish'] = $this->stack['comment_filter']['publish'];
 			}
 			
@@ -82,11 +95,9 @@ class CommentInsert extends MagikeModule
 		}
 		else
 		{
-			$result['open'] = true;
-			$result['word'] = '对不起,该文章禁止评论';
+			$this->result['open'] = true;
+			$this->result['word'] = '对不起,该文章禁止评论';
 		}
-		
-		$this->result = $result;
 	}
 	
 	public function runModule($args)
@@ -98,7 +109,14 @@ class CommentInsert extends MagikeModule
 		$this->onPost($getArgs['key'],'insertComment',$getArgs['val']);
 		if(isset($_GET['referer']))
 		{
-			header('location: '.$_GET['referer']);
+			if($this->showWord)
+			{
+				return $this->result;
+			}
+			else
+			{
+				header('location: '.$_GET['referer']);
+			}
 		}
 		else
 		{

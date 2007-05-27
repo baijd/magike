@@ -27,10 +27,10 @@
 				<td class="describe">{$link_category.link_category_describe}</td>
 				<td><[if:$link_category.link_category_linksort == "asc"]>升序<[/if]><[if:$link_category.link_category_linksort == "desc"]>降序<[/if]><[if:$link_category.link_category_linksort == "rand"]>随机排序<[/if]></td>
 				<td>
-					<a class="img" title="编辑" href="{$static_var.index}/admin/links/link_category/?lc_id={$link_category.id}"><img src="{$static_var.siteurl}/{!__TEMPLATE__}/{$static_var.admin_template}/images/edit.gif" alt="编辑"/></a> 
-					<a class="img" title="删除" href="javascript:;" onclick="magikeConfirm(this);" msg="您确定删除链接分类 '{$link_category.link_category_name}' 吗?" rel="{$static_var.index}/admin/links/link_categories_list/?lc_id={$link_category.id}&do=del"><img src="{$static_var.siteurl}/{!__TEMPLATE__}/{$static_var.admin_template}/images/delete.gif" alt="删除"/></a> 
-					<a class="img" title="向上" href="{$static_var.index}/admin/links/link_categories_list/?lc_id={$link_category.id}&do=up"><img src="{$static_var.siteurl}/{!__TEMPLATE__}/{$static_var.admin_template}/images/arrow_up.gif" alt="向上"/></a> 
-					<a class="img" title="向下" href="{$static_var.index}/admin/links/link_categories_list/?lc_id={$link_category.id}&do=down"><img src="{$static_var.siteurl}/{!__TEMPLATE__}/{$static_var.admin_template}/images/arrow_down.gif" alt="向下"/></a>
+					<a class="img" title="编辑" href="{$static_var.index}/admin/links/link_category/?lc_id={$link_category.id}"><img src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/edit.gif" alt="编辑"/></a> 
+					<a class="img" title="删除" href="javascript:;" onclick="magikeConfirm(this);" msg="您确定删除链接分类 '{$link_category.link_category_name}' 吗?" rel="{$static_var.index}/admin/links/link_categories_list/?lc_id={$link_category.id}&do=del"><img src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/delete.gif" alt="删除"/></a> 
+					<a class="img" title="向上" href="{$static_var.index}/admin/links/link_categories_list/?lc_id={$link_category.id}&do=up"><img src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/arrow_up.gif" alt="向上"/></a> 
+					<a class="img" title="向下" href="{$static_var.index}/admin/links/link_categories_list/?lc_id={$link_category.id}&do=down"><img src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/arrow_down.gif" alt="向下"/></a>
 				</td>
 			</tr>
 			<[/loop]>

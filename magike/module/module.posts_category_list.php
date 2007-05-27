@@ -26,20 +26,29 @@ class PostsCategoryList extends MagikeModule
 
 		return $val;
 	}
+	
+	public function outputPosts()
+	{
+		$postModel = $this->loadModel('posts');
+		$page = isset($_GET['page']) ? $_GET['page'] : 1;
+		$offset = ($page - 1)*$this->getArgs['limit'];
+		
+		$this->result = $postModel->fectchPostsByCategory($_GET['category_postname'],$this->getArgs['limit'],$offset,array('function' => array($this,'prasePost')));
+	}
 
 	public function runModule($args)
 	{
-		$this->requireGet('keywords');
+		$this->result = array();
 		$require = array('sub' 	  			=> $this->stack['static_var']['post_sub'],	//摘要字数
 						 'limit'  			=> $this->stack['static_var']['post_page_num'],	//每页篇数
 						 'striptags'		=> 0,
 						 'content'			=> 0,
 						 'time_format'		=> $this->stack['static_var']['post_date_format'],
 						);
-		$this->getArgs = $this->initArgs($args,$require);
-		$postModel = $this->loadModel('posts');
 		
-		return $postModel->fectchPostsByCategory($_GET['category_name'],$this->getArgs['limit'],$offset,array('function' => array($this,'prasePost')));
+		$this->getArgs = $this->initArgs($args,$require);
+		$this->onGet('category_postname','outputPosts');
+		return $this->result;
 	}
 }
 ?>

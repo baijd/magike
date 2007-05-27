@@ -17,14 +17,6 @@ class CommentFilterInput extends MagikeModule
 		$this->result['open'] = false;
 	}
 	
-	private function updateCache()
-	{
-		if(file_exists(__CACHE__.'/comment_filter/comment_filter.php'))
-		{
-			unlink(__CACHE__.'/comment_filter/comment_filter.php');
-		}
-	}
-	
 	public function updateCommentFilter()
 	{
 		$this->requirePost();
@@ -34,7 +26,7 @@ class CommentFilterInput extends MagikeModule
 													   'comment_filter_value'	=> $_POST['comment_filter_value'],
 													   'comment_filter_type'	=> $_POST['comment_filter_type'])
 									  );
-		$this->updateCache();
+		$this->deleteCache('comment_filter');
 
 		
 		$this->result['open'] = true;

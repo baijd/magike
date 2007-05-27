@@ -1,7 +1,7 @@
 <?php
 /**********************************
  * Created on: 2006-12-3
- * File Name : model.users.php
+ * File Name : model.groups.php
  * Copyright : Magike Group
  * License   : GNU General Public License 2.0
  *********************************/

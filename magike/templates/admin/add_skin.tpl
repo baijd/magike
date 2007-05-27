@@ -5,7 +5,7 @@
 <[module:get_skin_file]>
 <[module:skin_files_list]>
 
-<script language="javascript" type="text/javascript" src="{$static_var.siteurl}/{!__TEMPLATE__}/{$static_var.admin_template}/javascript/interface.js"></script>
+<script language="javascript" type="text/javascript" src="{$static_var.siteurl}/templates/{$static_var.admin_template}/javascript/interface.js"></script>
 <style>
 #element h2
 {
@@ -99,7 +99,7 @@
 			<h2 style="border-bottom:#BEC9D1 solid 1px;">风格元素 <span class="discribe">(这是组成当前页面风格元素)</span></h2>
 			<ul>
 			<[loop:$skin_files_list AS $file]>
-				<li rel="{$file.file}" class="html-element"><[if:$file.icon]><img src="{$static_var.siteurl}/{!__TEMPLATE__}/{$static_var.admin_template}/images/elements/{$file.file}.gif" alt="{$file.name}" /><[/if]><a href="{$static_var.index}/admin/skins/skin/?file={$file.file}">{$file.name}</a></li>
+				<li rel="{$file.file}" class="html-element"><[if:$file.icon]><img src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/elements/{$file.file}.gif" alt="{$file.name}" /><[/if]><a href="{$static_var.index}/admin/skins/skin/?file={$file.file}">{$file.name}</a></li>
 			<[/loop]>
 			</ul>
 		</div>

@@ -3,17 +3,17 @@
 <head>
 	<meta http-equiv="content-type" content="{$static_var.content_type};charset={$static_var.charset}" />
 	<title>{lang.login.login_to}{$static_var.blog_name}</title>
-	<link href="{$static_var.siteurl}/{!__TEMPLATE__}/{$static_var.admin_template}/style.css" rel="stylesheet" type="text/css" />
+	<link href="{$static_var.siteurl}/templates/{$static_var.admin_template}/style.css" rel="stylesheet" type="text/css" />
 	<script>
-		var templateUrl = "{$static_var.siteurl}/{!__TEMPLATE__}/{$static_var.admin_template}";
+		var templateUrl = "{$static_var.siteurl}/templates/{$static_var.admin_template}";
 	</script>
-	<script language="javascript" type="text/javascript" src="{$static_var.siteurl}/{!__TEMPLATE__}/{$static_var.admin_template}/javascript/jquery.js"></script>
-	<script language="javascript" type="text/javascript" src="{$static_var.siteurl}/{!__TEMPLATE__}/{$static_var.admin_template}/javascript/magike_control.js"></script>
+	<script language="javascript" type="text/javascript" src="{$static_var.siteurl}/templates/{$static_var.admin_template}/javascript/jquery.js"></script>
+	<script language="javascript" type="text/javascript" src="{$static_var.siteurl}/templates/{$static_var.admin_template}/javascript/magike_control.js"></script>
 	<style>
 		body
 		{
 			border-top:4px solid #222;
-			background:#FFF url({$static_var.siteurl}/{!__TEMPLATE__}/{$static_var.admin_template}/images/top.gif) top repeat-x;
+			background:#FFF url({$static_var.siteurl}/templates/{$static_var.admin_template}/images/top.gif) top repeat-x;
 		}
 		
 		#login
@@ -22,7 +22,7 @@
 			padding:10px 0;
 			width:333px;
 			height:333px;
-			background:url({$static_var.siteurl}/{!__TEMPLATE__}/{$static_var.admin_template}/images/loginbg.gif) top no-repeat;
+			background:url({$static_var.siteurl}/templates/{$static_var.admin_template}/images/loginbg.gif) top no-repeat;
 		}
 		
 		#login_top
@@ -69,7 +69,7 @@
 <body>
 <[module:admin_login]>
 <div id="banner">
-	<img width="200" src="{$static_var.siteurl}/{!__TEMPLATE__}/{$static_var.admin_template}/images/logo.jpg" alt="logo" />
+	<img width="200" src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/logo.jpg" alt="logo" />
 </div>
 <div id="login">
 	<div id="element" style="width:270px;padding:30px;padding-top:0;text-align:center;">
@@ -88,7 +88,7 @@
 	<p><input type="password" name="password" style="width:260px" class="text" /></p>
 	<br/>
 	<p style="margin-top:10px;text-align:right">
-	<input type="button" value="{lang.login.login}" onclick="submit();" class="button" />
+	<input type="submit" value="{lang.login.login}" class="button" />
 	<input type="button" value="{lang.login.foget_password}&raquo;" class="button" />
 	<input type="hidden" name="do" value="login" /></p>
 	</form>

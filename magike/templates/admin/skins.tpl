@@ -42,7 +42,7 @@
 	list-style:none;
 	margin:0;
 	padding:10px;
-	background:url({$static_var.siteurl}/{!__TEMPLATE__}/{$static_var.admin_template}/images/top.gif) top repeat-x;
+	background:url({$static_var.siteurl}/templates/{$static_var.admin_template}/images/top.gif) top repeat-x;
 	border-top:1px solid #CCC;
 	height:120px;
 	font-size:9pt;
@@ -66,13 +66,13 @@
 	<[/if]>
 		<div id="element-left">
 			<h2>当前风格 <span class="discribe">(这是当前应用在您网站的风格)</span></h2>
-			<div class="now"><img src="{$static_var.siteurl}/{!__TEMPLATE__}/{$static_var.template}/screen.jpg" /></div>
+			<div class="now"><img src="{$static_var.siteurl}/templates/{$static_var.template}/screen.jpg" /></div>
 		</div>
 		<div id="element-right">
 			<h2>风格列表 <span class="discribe">(选择一个风格,应用到您的网站)</span></h2>
 			<ul>
 			<[loop:$skins_list AS $skin]>
-				<li><a href="{$static_var.index}/admin/skins/skins_list/?tpl={$skin.template}"><img src="{$static_var.siteurl}/{!__TEMPLATE__}/{$skin.template}/screen.jpg" align=left height=100 /></a>{$skin.readme}</li>
+				<li><a href="{$static_var.index}/admin/skins/skins_list/?tpl={$skin.template}"><img src="{$static_var.siteurl}/templates/{$skin.template}/screen.jpg" align=left height=100 /></a>{$skin.readme}</li>
 			<[/loop]>
 			</ul>
 		</div>

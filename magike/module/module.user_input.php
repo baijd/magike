@@ -19,7 +19,7 @@ class UserInput extends MagikeModule
 	
 	public function updateUser()
 	{
-		$this->requirePost();
+		$this->requirePost(NULL,false);
 		$this->requireGet('user_id');
 		$userModel = $this->loadModel('users');
 		$args = array('user_name' => $_POST['user_name'],
@@ -50,7 +50,7 @@ class UserInput extends MagikeModule
 	
 	public function insertUser()
 	{
-		$this->requirePost();
+		$this->requirePost(NULL,false);
 		$userModel = $this->loadModel('users');
 		
 		$password = isset($_POST['user_password']) && $_POST['user_password'] ? $_POST['user_password'] : mgCreateRandomString(7);
@@ -82,10 +82,13 @@ class UserInput extends MagikeModule
 		$select = is_array($_GET['user_id']) ? $_GET['user_id'] : array($_GET['user_id']);
 		$userModel = $this->loadModel('users');
 		$groupModel = $this->loadModel('groups');
-		$userModel->deleteByKeys($_GET['user_id']);
+		$userModel->deleteByKeys($select,array(1));
 		foreach($select as $id)
 		{
-			$groupModel->deleteUserGroup($id);
+			if($id != 1)
+			{
+				$groupModel->deleteUserGroup($id);
+			}
 		}
 		
 		$this->result['open'] = true;

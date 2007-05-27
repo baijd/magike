@@ -127,7 +127,7 @@ class CommentInput extends MagikeModule
 		
 		foreach($post as $id)
 		{
-			$postModel->increaseFieldByKey($id,'post_comment_num');
+			$postModel->decreaseFieldByKey($id,'post_comment_num');
 		}
 		$this->result['open'] = true;
 		$this->result['word'] = '评论已经被成功删除';
