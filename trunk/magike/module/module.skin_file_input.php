@@ -19,7 +19,7 @@ class SkinFileInput extends MagikeModule
 	
 	public function updateSkinFile()
 	{
-		$this->requirePost("file");
+		$this->requirePost("file",false);
 		
 		$skin = isset($_POST['skin']) ? $_POST['skin'] : $this->stack['static_var']['template'];
 		$path = __TEMPLATE__.'/'.$skin.'/'.$_POST['file'];

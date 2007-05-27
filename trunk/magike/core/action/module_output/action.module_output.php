@@ -25,10 +25,12 @@ class ModuleOutput extends MagikeObject
 	
 	public function runAction()
 	{
+		$args = isset($_POST['args']) && is_array($_POST['args']) ? $_POST['args'] : array();
+		
 		require($this->fileName);
 		$tmp = null;
 		eval('$tmp = new '.mgFileNameToClassName($this->objName).'();');
-		$output = call_user_func(array($tmp,'runModule'));
+		$output = call_user_func(array($tmp,'runModule'),$args);
 		header("content-Type: {$this->stack['static_var']['content_type']}; charset={$this->stack['static_var']['charset']}");
 		echo $output;
 	}

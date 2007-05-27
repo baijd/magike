@@ -39,13 +39,43 @@
 			</p>
 		</div>
 		<div class="input">
-			<h2>评论审核</h2>
+			<h2>回响审核</h2>
 			<p>
 				<select name="comment_check">
 					<option value="1" <[if:$static_var.comment_check == 1]>selected=true<[/if]>>是</option>
 					<option value="0" <[if:$static_var.comment_check != 1]>selected=true<[/if]>>否</option>
 				</select><br />
-				<span class="discribe">(让所有者审核所有的评论)</span>
+				<span class="discribe">(让管理员审核所有的回响)</span>
+			</p>
+		</div>
+		<div class="input">
+			<h2>必须填写电子邮件</h2>
+			<p>
+				<select name="comment_email_notnull">
+					<option value="1" <[if:$static_var.comment_email_notnull == 1]>selected=true<[/if]>>是</option>
+					<option value="0" <[if:$static_var.comment_email_notnull != 1]>selected=true<[/if]>>否</option>
+				</select><br />
+				<span class="discribe">(评论者是否必须填写电子邮件)</span>
+			</p>
+		</div>
+		<div class="input">
+			<h2>必须填写个人主页</h2>
+			<p>
+				<select name="comment_homepage_notnull">
+					<option value="1" <[if:$static_var.comment_homepage_notnull == 1]>selected=true<[/if]>>是</option>
+					<option value="0" <[if:$static_var.comment_homepage_notnull != 1]>selected=true<[/if]>>否</option>
+				</select><br />
+				<span class="discribe">(评论者是否必须填写个人主页)</span>
+			</p>
+		</div>
+		<div class="input">
+			<h2>采用ajax方式验证</h2>
+			<p>
+				<select name="comment_ajax_validator">
+					<option value="1" <[if:$static_var.comment_ajax_validator == 1]>selected=true<[/if]>>是</option>
+					<option value="0" <[if:$static_var.comment_ajax_validator != 1]>selected=true<[/if]>>否</option>
+				</select><br />
+				<span class="discribe">(启用这一设置需要您当前的风格支持)</span>
 			</p>
 		</div>
 		<div class="submit">

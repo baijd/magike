@@ -85,7 +85,7 @@ class CommentsModel extends MagikeModel
 					  'limit' => $limit,
 					  'offset' => $offset,
 					  'sort'   => $sort,
-					  'orderby'=> $ordery);
+					  'orderby'=> $orderby);
 		
 		$args['where'] = array();
 		$args['where']['template'] = "comment_publish = 'approved' AND comment_type = 'comment'";
@@ -136,7 +136,7 @@ class CommentsModel extends MagikeModel
 	
 	public function getAllPublishCommentsTrackbacksNum($field = NULL,$value = NULL)
 	{
-		$args = array('table' => 'table.comments JOIN table.posts ON table.comments.post_id = table.posts.id');
+		$args = array('table' => 'table.comments LEFT JOIN table.posts ON table.comments.post_id = table.posts.id');
 		$args['where'] = array();
 		$args['where']['template'] = "comment_publish = 'approved'";
 		if(NULL !== $field && NULL !== $value)
