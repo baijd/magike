@@ -9,6 +9,11 @@
 	<[if:$post_input.open]>
 		<div class="message">
 			{$post_input.word}
+			<[if:$post_input.trackback]>
+				<[loop:$post_input.trackback AS $trackback]>
+					<br/>"{$trackback}" 已经成功发送
+				<[/loop]>
+			<[/if]>
 		</div>
 	<[/if]>
 		<h2>{lang.admin_posts_list.list_title} <span class="discribe">{lang.admin_posts_list.list_describe}</span></h2>

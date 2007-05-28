@@ -10,7 +10,8 @@ class ExceptionCatcher extends MagikeModule
 {
 	public function runModule()
 	{
-		print_r($this->stack['action']['data']);
+		return array('data' => $this->stack['action']['data'],
+					 'message' => $this->stack['action']['message']);
 	}
 }
 ?>

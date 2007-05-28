@@ -153,7 +153,7 @@
 					<h2>文件列表</h2>
 						<ul id="files_grid">
 						</ul>
-						<p style="padding:0;width:35px;"><input type="button" id="next-button" onclick="getFilesList(filePage + 1);" style="width:20px;height:75px;float:left;padding:0;" value="&raquo;"/> <input type="button" id="prev-button" onclick="getFilesList(filePage - 1);" style="width:20px;height:75px;float:left;padding:0;" value="&laquo;"/></p>
+						<p style="padding:0 !important;padding:10px 0 0 0;width:35px;"><input type="button" id="next-button" onclick="getFilesList(filePage + 1);" style="width:20px;height:75px;float:left;padding:0;" value="&raquo;"/> <input type="button" id="prev-button" onclick="getFilesList(filePage - 1);" style="width:20px;height:75px;float:left;padding:0;" value="&laquo;"/></p>
 				</div>
 			</div>
 			<div id="write_option">

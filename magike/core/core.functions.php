@@ -336,4 +336,79 @@ function mgDate($fmt,$UTC = 0,$timestamp = NULL)
 		return date($fmt,mgTime($UTC));
 	}
 }
+
+//tackback提交函数
+function mgSendTrackback($url,$args)
+{
+if($url)
+{
+$urls = explode("\n",$url);
+$result = array();
+
+	//send information
+	foreach($urls as $val)
+	{
+			$parsed_url = parse_url($val);
+			if ( $parsed_url['scheme'] != 'http' ||   $parsed_url['host'] == '' )
+			{
+	     		continue;
+	     	}
+	     	$port = isset($parsed_url['port']) ? $parsed_url['port'] : 80;
+	     	
+			$content  = 'title=' . urlencode($args["title"]);
+			$content .= '&url=' . urlencode($args["url"]);
+			$content .= '&excerpt=' . urlencode($args["excerpt"]);
+			$content .= '&blog_name=' . urlencode($args["blog_name"]);
+
+			$user_agent = str_replace(" ","/", $args["agent"]);
+			$request  = 'POST ' . $parsed_url['path'];
+
+			if (isset($parsed_url['query']))	$request .= '?' . $parsed_url['query'];
+			$request .= " HTTP/1.1\r\n";
+			$request .= "Accept: */*\r\n";
+			$request .= "User-Agent: " . $user_agent . "\r\n";
+			$request .= "Host: " . $parsed_url['host'] . ":" . $port . "\r\n";
+			$request .= "Connection: Keep-Alive\r\n";
+			$request .= "Cache-Control: no-cache\r\n";
+			$request .= "Connection: Close\r\n";
+			$request .= "Content-Length: " . strlen( $content ) . "\r\n";
+			$request .= "Content-Type: application/x-www-form-urlencoded\r\n";
+			$request .= "\r\n";
+			$request .= $content;
+
+			$socket = fsockopen($parsed_url['host'], $port, $errno, $errstr);
+			if(!$socket)
+			{
+			  continue;
+			}
+
+			//send ping
+			fputs( $socket, $request );
+			$reponse = "";
+
+			//get response
+			while ( ! feof ( $socket ) ) {
+			$reponse .= fgets( $socket, 4096 );
+			}
+			fclose($socket);
+			//here is reponse
+			if ( strstr($reponse,'<error>1</error>') )
+			{
+				continue;
+			}
+			if ( strstr($reponse,'<error>0</error>') )
+			{
+				$result[] = $val;
+				continue;
+			}
+			if ( !strstr($reponse,'<error>') )
+			{
+				continue;
+			}
+	}
+	return $result;
+}
+
+return array();
+}
 ?>
