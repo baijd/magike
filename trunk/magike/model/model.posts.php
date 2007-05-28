@@ -112,7 +112,7 @@ class PostsModel extends MagikeModel
 		return $this->countTable($args);
 	}
 	
-	public function fectchPostById($id,$func = NULL)
+	public function fectchPostById($id,$func = NULL,$exception = true)
 	{
 		$args = array('fields'=> '*,table.posts.id AS post_id',
 			  'table' => 'table.posts LEFT JOIN table.categories ON table.posts.category_id = table.categories.id',
@@ -120,10 +120,10 @@ class PostsModel extends MagikeModel
 			  );
 		$args['where']['template'] = 'table.posts.id = ?';
 		$args['where']['value'] = array($id);
-		return $this->fectchOne($args,$func,true);
+		return $this->fectchOne($args,$func,$exception);
 	}
 	
-	public function fectchPostByName($name,$func = NULL)
+	public function fectchPostByName($name,$func = NULL,$exception = true)
 	{
 		$args = array('fields'=> '*,table.posts.id AS post_id',
 			  'table' => 'table.posts LEFT JOIN table.categories ON table.posts.category_id = table.categories.id',
@@ -131,7 +131,7 @@ class PostsModel extends MagikeModel
 			  );
 		$args['where']['template'] = 'table.posts.post_name = ?';
 		$args['where']['value'] = array($name);
-		return $this->fectchOne($args,$func,true);
+		return $this->fectchOne($args,$func,$exception);
 	}
 	
 	public function listAllPosts($limit,$offset,$func = NULL)

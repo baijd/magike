@@ -25,11 +25,11 @@ class CommentInsert extends MagikeModule
 		
 		if(isset($_GET['post_id']))
 		{
-			$post = $postModel->fectchPostById($_GET['post_id']);
+			$post = $postModel->fectchPostById($_GET['post_id'],NULL,false);
 		}
 		else if(isset($_GET['post_name']))
 		{
-			$post = $postModel->fectchPostByName($_GET['post_name']);
+			$post = $postModel->fectchPostByName($_GET['post_name'],NULL,false);
 		}
 		
 		if($post && $post['post_allow_comment'])

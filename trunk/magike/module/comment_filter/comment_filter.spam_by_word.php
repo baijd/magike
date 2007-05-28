@@ -18,7 +18,7 @@ class SpamByWord
 	public function runFilter()
 	{
 		$content = isset($_POST['comment_text']) ? $_POST['comment_text'] : NULL;
-		$content = isset($_POST['content']) ? $_POST['content'] : $content;
+		$content = isset($_POST['excerpt']) ? $_POST['excerpt'] : $content;
 		
 		if(preg_match($this->settingWord,$content))
 		{

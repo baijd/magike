@@ -18,7 +18,7 @@
 				<td width=15%>用户名</td>
 				<td width=30%>用户网站</td>
 				<td width=25%>电子邮件</td>
-				<td width=15%>最后登录</td>
+				<td width=15%>注册时间</td>
 				<td width=10%>操作</td>
 			</tr>
 			<[loop:$users_list AS $user]>
@@ -27,7 +27,7 @@
 				<td><a href="{$static_var.index}/admin/users/user/?user_id={$user.id}">{$user.user_name}</a></td>
 				<td class="describe">{$user.user_url}</td>
 				<td class="describe">{$user.user_mail}</td>
-				<td>{$user.user_lastvisit}</td>
+				<td>{$user.user_register}</td>
 				<td>
 					<a class="img" title="编辑" href="{$static_var.index}/admin/users/user/?user_id={$user.id}"><img src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/edit.gif" alt="编辑"/></a> 
 					<[if:$user.id != 1]>

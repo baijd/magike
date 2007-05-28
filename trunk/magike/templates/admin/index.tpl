@@ -4,6 +4,7 @@
 <[module:admin_index]>
 <[module:posts_list?type=1&sub=20&striptags=1&limit=5]>
 <[module:comments_list_all?limit=5&striptags=1&substr=20]>
+<[module:get_current_user]>
 <style>
 	#element
 	{
@@ -101,26 +102,21 @@
 			<h2>快速链接&raquo;</h2>
 			<ul class="info">
 				<li><a href="{$static_var.index}/admin/posts/write/">撰写一篇文章</a></li>
-				<li><a href="#">更改我的博客皮肤</a></li>
-				<li><a href="#">编辑我的档案</a></li>
-				<li><a href="#">配置我的网站</a></li>
-				<li><a href="#">增加一个友情链接</a></li>
+				<li><a href="{$static_var.index}/admin/skins/skin/">更改我的博客皮肤</a></li>
+				<li><a href="{$static_var.index}/admin/settings/">配置我的网站</a></li>
+				<li><a href="{$static_var.index}/admin/links/link/">增加一个友情链接</a></li>
 			</ul>
 		</div>
 		<div id="element-right">
-			<h2>{lang.admin_index.global_runtime}</h2>
+			<h2>关于我</h2>
 			<ul class="info">
-				<li><u>{lang.admin_index.server_version}</u> {$admin_index.server_version}</li>
-				<li><u>{lang.admin_index.database_version}</u> {$admin_index.database_version}</li>
-				<li><u>{lang.admin_index.magike_version}</u> {$admin_index.magike_version}</li>
+				<li><u>用户名</u> {$get_current_user.user_name}</li>
+				<li><u>昵称</u> {$get_current_user.user_nick}</li>
+				<li><u>注册时间</u> {$get_current_user.user_register}</li>
+				<li><a href="{$static_var.index}/admin/users/user/?user_id={$access.user_id}">编辑我的档案</a></li>
 			</ul>
-			<h2>快速链接&raquo;</h2>
+			<h2>反向链接&raquo;</h2>
 			<ul class="info">
-				<li><a href="{$static_var.index}/admin/posts/write">撰写一篇文章</a></li>
-				<li><a href="#">更改我的博客皮肤</a></li>
-				<li><a href="#">编辑我的档案</a></li>
-				<li><a href="#">配置我的网站</a></li>
-				<li><a href="#">增加一个友情链接</a></li>
 			</ul>
 		</div>
 		<div id="element-center">
@@ -133,7 +129,7 @@
 			<h2>最新评论</h2>
 			<ul class="info">
 			<[loop:$comments_list_all AS $comment]>
-				<li>{$comment.comment_user} 在 <a href="#">{$comment.post_title}</a> <span class="describe">{$comment.comment_text}</span></li>
+				<li>{$comment.comment_user} 在 <a href="{$static_var.index}/admin/posts/write/?post_id={$comment.post_id}">{$comment.post_title}</a> <span class="describe">{$comment.comment_text}</span></li>
 			<[/loop]>
 			</ul>
 		</div>

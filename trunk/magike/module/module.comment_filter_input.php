@@ -40,7 +40,7 @@ class CommentFilterInput extends MagikeModule
 		$filterModel->insertTable(array('comment_filter_name' 	=> $_POST['comment_filter_name'],
 										'comment_filter_value'	=> $_POST['comment_filter_value'],
 										'comment_filter_type'	=> $_POST['comment_filter_type']));
-		$this->updateCache();
+		$this->deleteCache('comment_filter');
 		
 		$this->result['open'] = true;
 		$this->result['word'] = '您的过滤器 "'.$this->getLanguage($_POST['comment_filter_name'],'comment_filter').'" 已经提交成功';
@@ -52,7 +52,7 @@ class CommentFilterInput extends MagikeModule
 		$select = is_array($_GET['cf_id']) ? $_GET['cf_id'] : array($_GET['cf_id']);
 		$filterModel = $this->loadModel('comment_filters');
 		$filterModel->deleteByKeys($_GET['cf_id']);
-		$this->updateCache();
+		$this->deleteCache('comment_filter');
 		
 		$this->result['open'] = true;
 		$this->result['word'] = '您删除的过滤器已经生效';

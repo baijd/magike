@@ -21,6 +21,8 @@ class PostInput extends MagikeModule
 	{
 		$this->requirePost();
 		$input = $_POST;
+		
+		$url = isset($_POST['post_trackback']) ? $_POST['post_trackback'] : NULL;
 		unset($input["post_trackback"]);
 		$input['post_allow_ping'] = isset($_POST['post_allow_ping']) ? $_POST['post_allow_ping'] : 0;
 		$input['post_allow_comment'] = isset($_POST['post_allow_comment']) ? $_POST['post_allow_comment'] : 0;
@@ -38,6 +40,13 @@ class PostInput extends MagikeModule
 		$categoriesModel = $this->loadModel('categories');
 		$categoriesModel->increaseFieldByKey($input['category_id'],'category_count');
 		
+		$trackback = 
+		mgSendTrackback($url,array("title" => $input['post_title'],
+								   "url"   => $this->stack['static_var']['index'].'/archives/'.$insertId.'/',
+								   "excerpt" => $input['post_content'],
+								   "blog_name" => $this->stack['static_var']['blog_name'],
+								   "agent" => $this->stack['static_var']['version']));
+		
 		$staticModel = $this->loadModel('statics');
 		$staticModel->increaseValueByName('count_posts');
 		$this->deleteCache('static_var');
@@ -49,6 +58,7 @@ class PostInput extends MagikeModule
 		}
 		
 		$this->result['open'] = true;
+		$this->result['trackback'] = $trackback;
 		$this->result['word'] = '文章 "'.$input['post_title'].'" 已经成功提交';
 	}
 	
@@ -57,6 +67,8 @@ class PostInput extends MagikeModule
 		$this->requirePost();
 		$this->requireGet('post_id');
 		$input = $_POST;
+		
+		$url = isset($_POST['post_trackback']) ? $_POST['post_trackback'] : NULL;
 		unset($input["post_trackback"]);
 		$input['post_allow_ping'] = isset($_POST['post_allow_ping']) ? $_POST['post_allow_ping'] : 0;
 		$input['post_allow_comment'] = isset($_POST['post_allow_comment']) ? $_POST['post_allow_comment'] : 0;
@@ -69,6 +81,12 @@ class PostInput extends MagikeModule
 		
 		$postModel = $this->loadModel('posts');
 		$post = $postModel->fectchOneByKey($_GET['post_id']);
+		$trackback = 
+		mgSendTrackback($url,array("title" => $input['post_title'],
+								   "url"   => $this->stack['static_var']['index'].'/archives/'.$_GET['post_id'].'/',
+								   "excerpt" => $input['post_content'],
+								   "blog_name" => $this->stack['static_var']['blog_name'],
+								   "agent" => $this->stack['static_var']['version']));
 		
 		if($post['category_id'] != $input['category_id'])
 		{
@@ -86,6 +104,7 @@ class PostInput extends MagikeModule
 		}
 		
 		$this->result['open'] = true;
+		$this->result['trackback'] = $trackback;
 		$this->result['word'] = '文章 "'.$post['post_title'].'" 已经被更新';
 	}
 	
