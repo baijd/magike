@@ -16,7 +16,7 @@ class CommentsList extends MagikeModule
 	
 	public function praseComment($val,$num,$last,$data)
 	{
-		if($val['comment_publish'] == 'waitting')
+		if($val['comment_publish'] == 'waitting' || $val['comment_publish'] == 'spam')
 		{
 			if($_SERVER["REMOTE_ADDR"] != $val['comment_ip'] || $_SERVER["HTTP_USER_AGENT"] != $val['comment_agent'])
 			{
@@ -78,8 +78,6 @@ class CommentsList extends MagikeModule
 			$query['where']['template'] .= ' AND table.comments.comment_type = ?';
 			$query['where']['value'][] = $getArgs['type'];
 		}
-		$query['where']['template'] .= ' AND table.comments.comment_publish <> ?';
-		$query['where']['value'][] = 'spam';
 
 		return $this->model->fectch($query,array('function' => array($this,'praseComment'),'data' => $getArgs));
 	}

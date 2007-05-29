@@ -100,7 +100,8 @@ function magikeValidator(url,mod)
 		    <[loop:$comments_list AS $comment]>
 		    <li id="comment-{$comment.comment_id}">
 		    <cite><[if:$comment.comment_homepage != NULL]><a href="{$comment.comment_homepage}"><[/if]>{$comment.comment_user}<[if:$comment.comment_homepage != NULL]></a><[/if]> says:
-			<[if:$comment.comment_publish == "waitting"]>(等待审核)<[/if]></cite><br />
+			<[if:$comment.comment_publish == "waitting"]>(等待管理员审核)<[/if]>
+			<[if:$comment.comment_publish == "spam"]>(被标记为垃圾评论,等待处理)<[/if]></cite><br />
 		    <small>{$comment.comment_date}</small>
 		    <p>{$comment.comment_text}</p>
 		    </li>
@@ -108,9 +109,14 @@ function magikeValidator(url,mod)
 		</ol>
 		<div class="comment-form">
 		<form method="post" id="post_comment" action="{$static_var.index}/post_comment/{$post.post_id}/?referer={$static_var.index}/archives/{$post.post_id}/">
+			<[if:!$access.login]>
 			<p><input type="text" class="text validate-me" size=30 name="comment_user"/> 名称<[if:$static_var.comment_ajax_validator]><span class="validate-word" id="comment_user-word"></span><[/if]></p>
 			<p><input type="text" class="text validate-me" size=30 name="comment_email"/> 电子邮件<[if:$static_var.comment_ajax_validator]><span class="validate-word" id="comment_email-word"></span><[/if]></p>
 			<p><input type="text" class="text validate-me" size=30 name="comment_homepage"/> 个人主页<[if:$static_var.comment_ajax_validator]><span class="validate-word" id="comment_homepage-word"></span><[/if]></p>
+			<[/if]>
+			<[if:$access.login]>
+			<p>{$access.user_name},欢迎您留下评论</p>
+			<[/if]>
 			<p><textarea class="text validate-me" rows=7 cols=50 name="comment_text"></textarea></p>
 			<[if:$static_var.comment_ajax_validator]><p><span class="validate-word" id="comment_text-word"></span></p><[/if]>
 			<p>

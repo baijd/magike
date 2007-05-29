@@ -78,15 +78,12 @@
 	<div id="message" style="color:#FFF;background:#990000;font-weight:bold;padding:5px;">
 		{$admin_login.message}
 	</div>
-	<br/>
 	<[/if]>
 	<form method="post">
 	<h2>{lang.login.user_name}</h2>
 	<p><input type="text" name="username" style="width:260px" class="text" /></p>
-	<br/>
 	<h2>{lang.login.password}</h2>
 	<p><input type="password" name="password" style="width:260px" class="text" /></p>
-	<br/>
 	<p style="margin-top:10px;text-align:right">
 	<input type="submit" value="{lang.login.login}" class="button" />
 	<input type="button" value="{lang.login.foget_password}&raquo;" class="button" />

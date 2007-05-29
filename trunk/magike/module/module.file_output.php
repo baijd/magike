@@ -10,6 +10,11 @@ class FileOutput extends MagikeModule
 {
 	public function runModule()
 	{
+		if($this->stack['static_var']['referer_denny'] && 0 !== strpos($_SERVER['HTTP_REFERER'],$this->stack['static_var']['siteurl']))
+		{
+			return '对不起,您要访问的资源不存在';
+		}
+		
 		$fileModel = $this->loadModel('files');
 		$file = $fileModel->fectchOneByKey($_GET['file_id']);
 		if($file && $file['file_name'] == $_GET['file_name'])

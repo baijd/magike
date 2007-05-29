@@ -49,7 +49,7 @@ class CommentsModel extends MagikeModel
 					  'limit' => $limit,
 					  'offset' => $offset,
 					  'sort'   => $sort,
-					  'orderby'=> $ordery);
+					  'orderby'=> $orderby);
 		
 		$args['where'] = array();
 		$args['where']['template'] = "comment_publish = 'approved' AND comment_type = 'ping'";
@@ -121,7 +121,7 @@ class CommentsModel extends MagikeModel
 					  'limit' => $limit,
 					  'offset' => $offset,
 					  'sort'   => $sort,
-					  'orderby'=> $ordery);
+					  'orderby'=> $orderby);
 		
 		$args['where'] = array();
 		$args['where']['template'] = "comment_publish = 'approved'";

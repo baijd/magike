@@ -14,7 +14,7 @@ class CommentInsert extends MagikeModule
 	public function insertComment()
 	{
 		$this->showWord = false;
-		if($this->stack['static_var']['comment_ajax_validator'])
+		if($this->stack['static_var']['comment_ajax_validator'] && !$this->stack['access']['login'])
 		{
 			$this->requirePost();
 		}
@@ -48,6 +48,15 @@ class CommentInsert extends MagikeModule
 			$input['comment_email'] = isset($_POST['comment_email']) ? $_POST['comment_email'] : NULL;
 			$input['comment_homepage'] = isset($_POST['comment_homepage']) ? $_POST['comment_homepage'] : NULL;
 			$input['comment_text'] = isset($_POST['comment_text']) ? $_POST['comment_text'] : NULL;
+			
+			if($this->stack['access']['login'])
+			{
+				$userModel = $this->loadModel('users');
+				$user = $userModel->fectchOneByKey($this->stack['access']['user_id']);
+				$input['comment_user'] = $user["user_name"];
+				$input['comment_email'] = $user["user_mail"];
+				$input['comment_homepage'] = $user["user_url"];
+			}
 			
 			if(NULL == $input['comment_user'])
 			{

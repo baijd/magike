@@ -345,7 +345,7 @@ function getFilesList(page)
 					}
 					}
 					showLoading = false;
-					$(".proc").hide();
+					$(".proc").fadeOut();
 				});
 }
 

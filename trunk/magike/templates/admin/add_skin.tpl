@@ -104,7 +104,7 @@
 			</ul>
 		</div>
 		<div id="element-right">
-			<h2>编辑器 <span class="discribe">(再左侧选择一个元素,以供编辑)</span></h2>
+			<h2>编辑器 <span class="discribe">(在左侧选择一个元素,以供编辑)</span></h2>
 			<form method="post" id="skin_file_form" action="{$static_var.index}/admin/skins/skin/?file={$get_skin_file.file}">
 			<div class="textarea">
 			<textarea class="text" id="drop" name="file_content" style="width:98%;height:350px;margin:0;">{$get_skin_file.content}</textarea>
