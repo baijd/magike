@@ -224,7 +224,8 @@ query("INSERT INTO `mg_path_group_mapping` (`id`, `path_id`, `group_id`) VALUES
 (65, 57, 1),
 (66, 57, 2),
 (67, 37, 1),
-(68, 37, 2)");
+(68, 37, 2),
+(69, 45, 1)");
 
 query("CREATE TABLE `mg_paths` (
   `id` int(10) unsigned NOT NULL auto_increment,
@@ -239,8 +240,8 @@ query("CREATE TABLE `mg_paths` (
 query("INSERT INTO `mg_paths` (`id`, `path_name`, `path_action`, `path_file`, `path_describe`) VALUES 
 (1, '/', 'template', '/{\$static_var.template}/index.tpl', '网站主页'),
 (2, '/admin/login/', 'template', '/{\$static_var.admin_template}/login.tpl', '后台登陆'),
-(3, '/admin/', 'template', '/{\$static_var.admin_template}/index.tpl', '后台主页'),
-(4, '/admin/panel/', 'template', '/{\$static_var.admin_template}/index.tpl', '后台主面板'),
+(3, '/admin/panel/', 'template', '/{\$static_var.admin_template}/index.tpl', '后台主页'),
+(4, '/admin/panel/dashboard', 'template', '/{\$static_var.admin_template}/index.tpl', '后台主面板'),
 (5, '/admin/posts/', 'template', '/{\$static_var.admin_template}/write.tpl', '后台文章管理'),
 (6, '/admin/posts/write/', 'template', '/{\$static_var.admin_template}/write.tpl', '后台撰写文章'),
 (7, '/admin/posts/all/', 'template', '/{\$static_var.admin_template}/posts_list.tpl', '后台文章列表'),
@@ -281,6 +282,7 @@ query("INSERT INTO `mg_paths` (`id`, `path_name`, `path_action`, `path_file`, `p
 (42, '/res/[file_id=%d]/[file_name=%p]', 'module_output', 'file_output', '文件输出'),
 (43, '/admin/skins/get_skin_file/', 'json_output', 'get_skin_file', '后台输出风格元素文件'),
 (44, '/admin/posts/files_list/', 'json_output', 'files_list', '后台文件列表'),
+(45, '/admin/', 'template', '/{\$static_var.admin_template}/index.tpl', '后台默认主页'),
 (47, '/admin/posts/write/delete_file/', 'json_output', 'file_input', '后台删除文件'),
 (48, '/admin/posts/write/files_list_page_nav/', 'json_output', 'files_list_page_nav', '后台文件列表分页'),
 (49, '/archives/[post_id=%d]/', 'template', '/{\$static_var.template}/archive.tpl', '根据ID查看文章'),

@@ -95,6 +95,16 @@
 				<span class="discribe">(选择您当前所在的时区)</span>
 			</p>
 		</div>
+		<div class="input">
+			<h2>启用防盗链功能</h2>
+			<p>
+				<select name="referer_denny">
+					<option value="1" <[if:$static_var.referer_denny == 1]>selected=true<[/if]>>是</option>
+					<option value="0" <[if:$static_var.referer_denny != 1]>selected=true<[/if]>>否</option>
+				</select><br />
+				<span class="discribe">(防止您网站的资源被其它网站盗用)</span>
+			</p>
+		</div>
 		<div class="submit">
 			<span class="button" onclick="magikeValidator('{$static_var.index}/helper/validator/','setting_public');">提交信息</span>
 			<input type="hidden" name="do" value="update" />

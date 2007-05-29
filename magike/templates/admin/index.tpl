@@ -97,7 +97,7 @@
 				<li><u>{lang.admin_index.database_version}</u> {$admin_index.database_version}</li>
 				<li><u>{lang.admin_index.magike_version}</u> {$admin_index.magike_version}</li>
 				<li><u>文章总数</u> <a href="{$static_var.index}/admin/posts/all/">{$static_var.count_posts}篇</a></li>
-				<li><u>评论总数</u> <a href="{$static_var.index}/admin/comments/all/">{$static_var.count_comments}则</a></li>
+				<li><u>回响总数</u> <a href="{$static_var.index}/admin/comments/all/">{$static_var.count_comments}则</a></li>
 			</ul>
 			<h2>快速链接&raquo;</h2>
 			<ul class="info">
