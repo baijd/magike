@@ -330,7 +330,8 @@ body
 
 #element table tr td img.describe
 {
-	margin-bottom:-4px;
+	float:left;
+	padding:2px;
 }
 
 #element table tr td a
