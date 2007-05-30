@@ -28,10 +28,6 @@ class Access extends MagikeModule
 		$this->result['user_id'] = isset($_SESSION['user_id']) && $this->result['login'] ? $_SESSION['user_id'] : NULL;
 		$this->result['user_group'] = isset($_SESSION['user_group']) && $this->result['login'] ? $_SESSION['user_group'] : array($this->stack['static_var']['visitor_group']);
 		$this->result['auth_data'] = isset($_SESSION['auth_data']) && $this->result['login'] ? $_SESSION['auth_data'] : NULL;
-		if($this->result['login'])
-		{
-			setcookie('auth_data',$_SESSION['auth_data'],time() + 3600,'/');
-		}
 	}
 	
 	private function checkAccess()

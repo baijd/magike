@@ -16,20 +16,23 @@
 		<table width="100%" cellpadding="0" cellspacing="0" id="comment_list">
 			<tr class="heading">
 				<td width=5%>&nbsp;</td>
-				<td width=15%>发表者</td>
+				<td width=10%>发表者</td>
+				<td width=8%></td>
 				<td widht=10%>IP地址</td>
 				<td width=40%>摘要</td>
-				<td width=15%>发表日期</td>
+				<td width=12%>发表日期</td>
 				<td width=15%>操作</td>
 			</tr>
 			<[loop:$comments_list_all AS $comment]>
 			<tr id="drag-{$comment.comment_id}">
 				<td><input type="checkbox" class="checkbox_element" name="comment_id[]" value="{$comment.comment_id}"/></td>
 				<td>{$comment.comment_user}
+				</td>
+				<td>
 				<[if:$comment.comment_type == "ping"]><img class="describe" src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/trackback.gif" title="这是一条引用通告" alt="这是一条引用通告"/><[/if]>
 				<[if:$comment.comment_type == "comment"]><img class="describe" src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/comment.gif" title="这是一条评论" alt="这是一条评论"/><[/if]>
-				<[if:$comment.comment_homepage]><a class="img" title="{$comment.comment_homepage}" style="float:none" href="{$comment.comment_homepage}"><img class="describe" src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/homepage.gif" style="float:none" title="{$comment.comment_homepage}" alt="{$comment.comment_homepage}"/></a><[/if]>
-				<[if:$comment.comment_email]><a class="img" title="{$comment.comment_email}" style="float:none" href="mailto:{$comment.comment_email}"><img class="describe" src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/email.gif" style="float:none" title="{$comment.comment_email}" alt="{$comment.comment_email}"/></a><[/if]>
+				<[if:$comment.comment_homepage]><a class="img" title="{$comment.comment_homepage}" href="{$comment.comment_homepage}"><img src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/homepage.gif" style="float:none" title="{$comment.comment_homepage}" alt="{$comment.comment_homepage}"/></a><[/if]>
+				<[if:$comment.comment_email]><a class="img" title="{$comment.comment_email}" href="mailto:{$comment.comment_email}"><img src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/email.gif" style="float:none" title="{$comment.comment_email}" alt="{$comment.comment_email}"/></a><[/if]>
 				</td>
 				<td>{$comment.comment_ip}</td>
 				<td class="discribe">{$comment.comment_text}</td>

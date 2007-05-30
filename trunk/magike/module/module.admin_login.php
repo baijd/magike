@@ -56,7 +56,7 @@ class AdminLogin extends MagikeModule
 			$_SESSION['user_group'] = $userGroup;
 			$_SESSION['auth_data'] = mgCreateRandomString(128);
 			
-			setcookie('auth_data',$_SESSION['auth_data'],time() + 3600,'/');
+			setcookie('auth_data',$_SESSION['auth_data'],0,'/');
 			
 			if($userGroup == array($this->stack['static_var']['user_register_group']))
 			{
