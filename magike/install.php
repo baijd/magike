@@ -41,14 +41,14 @@ function install_get_siteurl()
 			margin:10px;
 			padding:10px 10px 0 10px;
 		}
-#element{margin:0 auto;padding:10px;width:500px;height:460px;color:#222;font-weight:bold;}
-#element h2{font-size:10pt;color:#222;padding:15px 0;height:50px;margin:0 0 10px 0;font-family:'Georgia', 'Times New Roman', Times, serif;border-bottom:1px solid #DDD;}
-#element h2 img{margin-bottom:0px;margin-top:0px;float;left}
-#element h2 span{float:right;margin-top:-12px}
-#element #show{color:#222;text-align:left;font-size:9pt;font-weight:normal;}
-#element .button{background:#EEE;border:1px solid #999;width:auto;color:#000;padding:2px 5px;height:auto}
-#element p{padding:10px 0}
-#element #show p{padding:5px 0;}
+		#element{margin:0 auto;padding:10px;width:500px;height:460px;color:#222;font-weight:bold;}
+		#element h2{font-size:10pt;color:#222;padding:15px 0;height:50px;margin:0 0 10px 0;font-family:'Georgia', 'Times New Roman', Times, serif;border-bottom:1px solid #DDD;}
+		#element h2 img{margin-bottom:0px;margin-top:0px;float;left}
+		#element h2 span{float:right;margin-top:-12px}
+		#element #show{color:#222;text-align:left;font-size:9pt;font-weight:normal;}
+		#element .button{background:#EEE;border:1px solid #999;width:auto;color:#000;padding:2px 5px;height:auto}
+		#element p{padding:10px 0}
+		#element #show p{padding:5px 0;}
 	</style>
 </head>
 <body>
