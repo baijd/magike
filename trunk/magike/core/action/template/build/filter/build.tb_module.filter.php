@@ -24,22 +24,32 @@ class TbModule extends TemplateBuild
 	}
 	
 	public function addModule($matches)
-	{	
-		$query = explode('?',$matches[1]);
+	{
+		$matches[1] = str_replace(' AS ',' as ',$matches[1]);
+		$moduleVar = explode(' as ',$matches[1]);
+		
+		$query = explode('?',$moduleVar[0]);
 		if(file_exists(__MODULE__.'/module.'.$query[0].'.php'))
 		{
-			$this->module[] = mgFileNameToClassName($query[0]);
+
+			$nameSpace = isset($moduleVar[1]) ? $moduleVar[1] : $query[0];
+			$this->module[$nameSpace] = mgFileNameToClassName($query[0]);
+			
 			if(isset($query[1]))
 			{
-				parse_str($query[1],$this->args[mgFileNameToClassName($query[0])]);
+				parse_str($query[1],$this->args[$nameSpace]);
 			}
-			$this->moduleFile[__MODULE__.'/module.'.$query[0].'.php'] = filemtime(__MODULE__.'/module.'.$query[0].'.php');
-			$this->moduleSource .= __DEBUG__ ? file_get_contents(__MODULE__.'/module.'.$query[0].'.php') : 
-			php_strip_whitespace(__MODULE__.'/module.'.$query[0].'.php');
+			
+			if(!isset($this->moduleFile[__MODULE__.'/module.'.$query[0].'.php']))
+			{
+				$this->moduleFile[__MODULE__.'/module.'.$query[0].'.php'] = filemtime(__MODULE__.'/module.'.$query[0].'.php');
+				$this->moduleSource .= __DEBUG__ ? file_get_contents(__MODULE__.'/module.'.$query[0].'.php') : 
+				php_strip_whitespace(__MODULE__.'/module.'.$query[0].'.php');
+			}
 		}
 		else
 		{
-			$this->throwException(E_ACTION_TEMPLATEBUILD_MODULEFILENOTEXISTS,__MODULE__.'/module.'.$matches[1].'.php');
+			$this->throwException(E_ACTION_TEMPLATEBUILD_MODULEFILENOTEXISTS,__MODULE__.'/module.'.$query[0].'.php');
 		}
 		return NULL;
 	}

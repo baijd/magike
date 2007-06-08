@@ -29,13 +29,13 @@ class PostsList extends MagikeModule
 
 	public function runModule($args)
 	{
-		$require = array('sub' 	  			=> $this->stack['static_var']['post_sub'],	//摘要字数
-						 'limit'  			=> $this->stack['static_var']['post_page_num'],	//每页篇数
-						 'type'				=> 0,
-						 'striptags'		=> 0,
-						 'content'			=> 0,
-						 'time_format'		=> $this->stack['static_var']['post_date_format'],
-						);
+		$require = array(  'sub' 	  	=> $this->stack['static_var']['post_sub'],	//摘要字数
+					 'limit'  		=> $this->stack['static_var']['post_page_num'],	//每页篇数
+					 'type'		=> 0,
+					 'striptags'		=> 0,
+					 'content'		=> 0,
+					 'time_format'	=> $this->stack['static_var']['post_date_format'],
+					);
 		$this->getArgs = $this->initArgs($args,$require);
 		$postModel = $this->loadModel('posts');
 
@@ -45,7 +45,6 @@ class PostsList extends MagikeModule
 		switch ($this->getArgs['type'])
 		{
 			case 0:
-				
 				return $postModel->listAllEntriesIncludeHidden($this->getArgs['limit'],$offset,array('function' => array($this,'prasePost')));
 				break;
 			case 1:

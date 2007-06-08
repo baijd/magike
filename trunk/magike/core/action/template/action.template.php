@@ -56,40 +56,39 @@ class Template extends MagikeObject
 	public function runAction()
 	{
 		$module = array();	//初始化module数组
-		$args	= array();	//初始化args数组
+		$args	= array();		//初始化args数组
 		$hasRun = array();	//已经运行的模块
-		$waitting = array();
+		$waitting = array();	//正在等待的模块
+		
 
 		require(__COMPILE__.'/'.mgPathToFileName($this->compileFile).'.mod.php');
-		foreach($module as $object)
+		
+		foreach($module as $nameSpace => $object)
 		{
 			//创建module
 			$tmp = null;
 			eval('$tmp = new '.$object.'();');
 			
-			$waittingFor = mgFileNameToClassName($tmp->waittingFor);
-			if($tmp->waittingFor && in_array($waittingFor,$module) && !in_array($waittingFor,$hasRun))
+			if($tmp->waittingFor && isset($module[$tmp->waittingFor]) && !isset($hasRun[$tmp->waittingFor]))
 			{
-				$waitting[$object] = $tmp;
+				$waitting[$nameSpace] = $tmp;
 				continue;
 			}
 			
 			//运行模块入口函数runModule并将运行结果保存到临时堆栈中
-			$stack = call_user_func(array($tmp,'runModule'),isset($args[$object]) ? $args[$object] : array());
+			$stack = call_user_func(array($tmp,'runModule'),isset($args[$nameSpace]) ? $args[$nameSpace] : array());
 			
 			//将临时堆栈中的数据转移到全局堆栈中
-			//将类名转化为模块名(文件名)
-			$moduleName = mgClassNameToFileName($object);
-			if(isset($this->stack[$moduleName]))
+			if(isset($this->stack[$nameSpace]))
 			{
-				$this->stack[$moduleName] = array_merge($this->stack[$moduleName],$stack);
+				$this->stack[$nameSpace] = array_merge($this->stack[$nameSpace],$stack);
 			}
 			else
 			{
-				$this->stack[$moduleName] = $stack;
+				$this->stack[$nameSpace] = $stack;
 			}
 			
-			$hasRun[] = $object;
+			$hasRun[$nameSpace] = $object;
 		}
 		
 		foreach($waitting as $key => $object)
@@ -98,15 +97,13 @@ class Template extends MagikeObject
 			$stack = call_user_func(array($object,'runModule'),isset($args[$key]) ? $args[$key] : array());
 			
 			//将临时堆栈中的数据转移到全局堆栈中
-			//将类名转化为模块名(文件名)
-			$moduleName = mgClassNameToFileName($key);
-			if(isset($this->stack[$moduleName]))
+			if(isset($this->stack[$key]))
 			{
-				$this->stack[$moduleName] = array_merge($this->stack[$moduleName],$stack);
+				$this->stack[$key] = array_merge($this->stack[$key],$stack);
 			}
 			else
 			{
-				$this->stack[$moduleName] = $stack;
+				$this->stack[$key] = $stack;
 			}
 		}
 		
