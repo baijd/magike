@@ -15,10 +15,10 @@ class Action extends Path
 		$time = mgGetMicrotime();	//初始化解析时间
 		parent::__construct($location);
 		$this->stack = array();
-        $this->stack[$this->moduleName] = $this->runModule();
-        $this->stack[$this->moduleName]['prase_time'] = $time;  //初始化解析时间
-        $this->stack[$this->moduleName]['data'] = $data;
-        $this->stack[$this->moduleName]['message'] = $message;
+		$this->stack[$this->moduleName] = $this->runModule();
+		$this->stack[$this->moduleName]['prase_time'] = $time;  //初始化解析时间
+		$this->stack[$this->moduleName]['data'] = $data;
+		$this->stack[$this->moduleName]['message'] = $message;
 		$this->runKernelModule();
 		$this->runAction();
 	}

@@ -112,7 +112,7 @@ function mgMkdir($inpath,$mode = 0777)
 
 	foreach($dir as $key => $val)
 	{
-		array_push($dirs,$val);
+		$dirs[] = $val;
 		$path = implode('/',$dirs);
 
 		if(!is_dir($path))
@@ -132,21 +132,24 @@ function mgRmDir($inpath)
 	foreach($dir as $key => $val)
 	{
 		$path = implode("/",$dir);
-		if(mgUnLink($path) == false) return false;
-		if(($dirs = mgGetDir($path)) != NULL)
+		if(false == mgUnLink($path)) 
+		{
+			return false;
+		}
+		if(NULL != ($dirs = mgGetDir($path)))
 		{
 			foreach($dirs as $inkey => $inval)
 			{
 				if(mgRmDir($path."/".$inval) == false) return false;
 			}
 		}
-		if(@rmdir($path) == false)
+		if(false == @rmdir($path))
 		{
 			return false;
 		}
 		if($inpath != $path)
 		{
-		array_pop($dir);
+			array_pop($dir);
 		}
 		else break;
 	}
@@ -159,7 +162,7 @@ function mgUnLink($inpath)
 	str_replace("//","/",$inpath);
 	$files = mgGetFile($inpath,true);
 	
-	if($files != NULL)
+	if(NULL != $files)
 	{
 		foreach($files as $key => $val)
 		{
@@ -212,7 +215,7 @@ function mgCreateObjects($objects,$method = null,$args = array())
 //获取一个目录下的文件
 function mgGetFile($inpath,$trim = false,$stamp = NULL)
 {
-    $file = array();
+	$file = array();
 
 	if(!is_dir($inpath))
 	{
@@ -220,39 +223,43 @@ function mgGetFile($inpath,$trim = false,$stamp = NULL)
 	}
 
 	$handle=opendir($inpath);
-    if($stamp != NULL)
-    {
-    	$stamp = explode("|",$stamp);
-    }
+	if(NULL != $stamp)
+	{
+		$stamp = explode("|",$stamp);
+	}
 
-    while ($tmp = readdir($handle)) {
-        if(is_file($inpath."/".$tmp) && eregi("^([_@0-9a-zA-Z\x80-\xff\^\.\%-]{0,})[\.]([0-9a-zA-Z]{1,})$",$tmp,$file_name))
-        {
-        	if($stamp != NULL && in_array($file_name[2],$stamp))
-        	{
-        		$file[] = $trim ? $file_name[0] : $file_name[1];
-        	}
-        	else if($stamp == NULL)
-        	{
-        		$file[] = $trim ? $file_name[0] : $file_name[1];
-        	}
-        }
-    }
-    closedir($handle);
-    return $file;
+	while ($tmp = readdir($handle)) 
+	{
+		if(is_file($inpath."/".$tmp) && eregi("^([_@0-9a-zA-Z\x80-\xff\^\.\%-]{0,})[\.]([0-9a-zA-Z]{1,})$",$tmp,$file_name))
+		{
+			if($stamp != NULL && in_array($file_name[2],$stamp))
+			{
+				$file[] = $trim ? $file_name[0] : $file_name[1];
+			}
+			else if($stamp == NULL)
+			{
+				$file[] = $trim ? $file_name[0] : $file_name[1];
+			}
+		}
+	}
+	closedir($handle);
+	return $file;
 }
 
 //获取一个目录下的目录
 function mgGetDir($inpath)
 {
 	$handle=opendir($inpath);
-    $dir = array();
-    while ($tmp = readdir($handle))
-    {
-    	if(is_dir($inpath."/".$tmp) && $tmp != ".." && $tmp != "." && 0 !== stripos($tmp,'.')) array_push($dir,$tmp);
-    }
-    closedir($handle);
-    return $dir;
+	$dir = array();
+	while ($tmp = readdir($handle))
+	{
+		if(is_dir($inpath."/".$tmp) && $tmp != ".." && $tmp != "." && 0 !== stripos($tmp,'.')) 
+		{
+			$dir[] = $tmp;
+		}
+	}
+	closedir($handle);
+	return $dir;
 }
 
 //将数组输出到一个文件中
@@ -282,13 +289,13 @@ function mgIpToLong($ip)
 //创建一个任意长度的随机字符串
 function mgCreateRandomString($number)
 {
-    $str = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890';
-    $result = '';
-    for($i=0;$i<$number;$i++)
-    {
-        $result .= $str[rand(0,52)];
-    }
-    return $result;
+	$str = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890';
+	$result = '';
+	for($i=0;$i<$number;$i++)
+	{
+		$result .= $str[rand(0,52)];
+	}
+	return $result;
 }
 
 //获得一个guid
@@ -340,75 +347,76 @@ function mgDate($fmt,$UTC = 0,$timestamp = NULL)
 //tackback提交函数
 function mgSendTrackback($url,$args)
 {
-if($url)
-{
-$urls = explode("\n",$url);
-$result = array();
-
-	//send information
-	foreach($urls as $val)
+	if($url)
 	{
+		$urls = explode("\n",$url);
+		$result = array();
+
+		//send information
+		foreach($urls as $val)
+		{
 			$parsed_url = parse_url($val);
 			if ( $parsed_url['scheme'] != 'http' ||   $parsed_url['host'] == '' )
 			{
-	     		continue;
-	     	}
-	     	$port = isset($parsed_url['port']) ? $parsed_url['port'] : 80;
-	     	
-			$content  = 'title=' . urlencode($args["title"]);
-			$content .= '&url=' . urlencode($args["url"]);
-			$content .= '&excerpt=' . urlencode($args["excerpt"]);
-			$content .= '&blog_name=' . urlencode($args["blog_name"]);
-
-			$user_agent = str_replace(" ","/", $args["agent"]);
-			$request  = 'POST ' . $parsed_url['path'];
-
-			if (isset($parsed_url['query']))	$request .= '?' . $parsed_url['query'];
-			$request .= " HTTP/1.1\r\n";
-			$request .= "Accept: */*\r\n";
-			$request .= "User-Agent: " . $user_agent . "\r\n";
-			$request .= "Host: " . $parsed_url['host'] . ":" . $port . "\r\n";
-			$request .= "Connection: Keep-Alive\r\n";
-			$request .= "Cache-Control: no-cache\r\n";
-			$request .= "Connection: Close\r\n";
-			$request .= "Content-Length: " . strlen( $content ) . "\r\n";
-			$request .= "Content-Type: application/x-www-form-urlencoded\r\n";
-			$request .= "\r\n";
-			$request .= $content;
-
-			$socket = fsockopen($parsed_url['host'], $port, $errno, $errstr);
-			if(!$socket)
-			{
-			  continue;
-			}
-
-			//send ping
-			fputs( $socket, $request );
-			$reponse = "";
-
-			//get response
-			while ( ! feof ( $socket ) ) {
-			$reponse .= fgets( $socket, 4096 );
-			}
-			fclose($socket);
-			//here is reponse
-			if ( strstr($reponse,'<error>1</error>') )
-			{
 				continue;
 			}
-			if ( strstr($reponse,'<error>0</error>') )
-			{
-				$result[] = $val;
-				continue;
-			}
-			if ( !strstr($reponse,'<error>') )
-			{
-				continue;
-			}
+			$port = isset($parsed_url['port']) ? $parsed_url['port'] : 80;
+			
+				$content  = 'title=' . urlencode($args["title"]);
+				$content .= '&url=' . urlencode($args["url"]);
+				$content .= '&excerpt=' . urlencode($args["excerpt"]);
+				$content .= '&blog_name=' . urlencode($args["blog_name"]);
+
+				$user_agent = str_replace(" ","/", $args["agent"]);
+				$request  = 'POST ' . $parsed_url['path'];
+
+				if (isset($parsed_url['query']))	$request .= '?' . $parsed_url['query'];
+				$request .= " HTTP/1.1\r\n";
+				$request .= "Accept: */*\r\n";
+				$request .= "User-Agent: " . $user_agent . "\r\n";
+				$request .= "Host: " . $parsed_url['host'] . ":" . $port . "\r\n";
+				$request .= "Connection: Keep-Alive\r\n";
+				$request .= "Cache-Control: no-cache\r\n";
+				$request .= "Connection: Close\r\n";
+				$request .= "Content-Length: " . strlen( $content ) . "\r\n";
+				$request .= "Content-Type: application/x-www-form-urlencoded\r\n";
+				$request .= "\r\n";
+				$request .= $content;
+
+				$socket = @fsockopen($parsed_url['host'], $port, $errno, $errstr);
+				if(!$socket)
+				{
+					continue;
+				}
+
+				//send ping
+				fputs( $socket, $request );
+				$reponse = "";
+
+				//get response
+				while ( ! feof ( $socket ) )
+				{
+					$reponse .= fgets( $socket, 4096 );
+				}
+				fclose($socket);
+				//here is reponse
+				if ( strstr($reponse,'<error>1</error>') )
+				{
+					continue;
+				}
+				if ( strstr($reponse,'<error>0</error>') )
+				{
+					$result[] = $val;
+					continue;
+				}
+				if ( !strstr($reponse,'<error>') )
+				{
+					continue;
+				}
+		}
+		return $result;
 	}
-	return $result;
-}
 
-return array();
+	return array();
 }
 ?>
