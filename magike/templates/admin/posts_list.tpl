@@ -23,7 +23,8 @@
 		<table width="100%" cellpadding="0" cellspacing="0" id="post_list">
 			<tr class="heading">
 				<td width=5%>&nbsp;</td>
-				<td width=20%>标题</td>
+				<td width=15%>标题</td>
+				<td width=5%></td>
 				<td width=30%>摘要</td>
 				<td width=20%>分类</td>
 				<td width=15%>发布日期</td>
@@ -33,7 +34,9 @@
 			<tr>
 				<td><input type="checkbox" class="checkbox_element" name="post_id[]" value="{$post.post_id}"/></td>
 				<td><a href="{$static_var.index}/admin/posts/write/?post_id={$post.post_id}" title="{$post.post_title}">{$post.post_title}</a>
-				<[if:$post.post_is_page]><img class="describe" src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/page.gif" title="这是一个页面" alt="这是一个页面"/><[/if]>
+				</td>
+				<td>
+				<[if:$post.post_is_page]><img class="describe" style="float:left" src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/page.gif" title="这是一个页面" alt="这是一个页面"/><[/if]>
 				<[if:$post.post_is_draft]><img class="describe" src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/draft.gif" title="这是一篇草稿" alt="这是一篇草稿"/><[/if]>
 				</td>
 				<td class="describe">{$post.post_content}</td>
