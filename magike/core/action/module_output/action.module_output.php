@@ -31,7 +31,8 @@ class ModuleOutput extends MagikeObject
 		$tmp = null;
 		eval('$tmp = new '.mgFileNameToClassName($this->objName).'();');
 		$output = call_user_func(array($tmp,'runModule'),$args);
-		header("content-Type: {$this->stack['static_var']['content_type']}; charset={$this->stack['static_var']['charset']}");
+		$this->stack['action']['content_type'] = "content-Type: {$this->stack['static_var']['content_type']}; charset={$this->stack['static_var']['charset']}";
+		header($this->stack['action']['content_type']);
 		echo $output;
 	}
 }

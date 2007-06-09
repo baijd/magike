@@ -76,6 +76,7 @@ class Path extends MagikeModule
 			$this->eregPath = $eregPath;
 			$this->value = $this->pathConfig[$eregPath]['value'];
 			$result['id'] = $this->pathConfig[$eregPath]['id'];
+			$result['cache'] = $this->pathConfig[$eregPath]['cache'];
 			$result['action'] = $this->pathConfig[$eregPath]['action'];
 			$result['file'] = $this->pathConfig[$eregPath]['file'];
 			$found = true;
@@ -89,6 +90,7 @@ class Path extends MagikeModule
 					$this->eregPath = $key;
 					$this->value = $val['value'];
 					$result['id'] = $val['id'];
+					$result['cache'] = $val['cache'];
 					$result['action'] = $val['action'];
 					$result['file'] = $val['file'];
 					$found = true;
@@ -217,6 +219,7 @@ class Path extends MagikeModule
 		$deep = count(explode("/",$val['path_name']));
 		$this->pathCache[$deep][$this->praseEregPath($val['path_name'])] = array('id'  => $val['id'],
 		'action' => $val['path_action'],
+		'cache' => $val['path_cache'],
 		'file'   => mgPraseVar($val['path_file'],'this->stack'),
 		'value'  => $this->prasePathValue($val['path_name'])
 		);

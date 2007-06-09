@@ -16,7 +16,7 @@ class TbInclude extends TemplateBuild
 	
 	private function praseLinkPath($fileString,$dirName)
 	{
-		return preg_replace_callback("/\<\[include:\s*(.+?)\s*\]\>/is",$dirName."/\\1",$fileString);
+		return preg_replace("/\<\[include:\s*(.+?)\s*\]\>/is",$dirName."/\\1",$fileString);
 	}
 	
 	public function linkInclude($matches)

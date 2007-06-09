@@ -36,32 +36,54 @@ class MagikeModule extends MagikeObject
 	protected function loadModel($model,$triggerException = true)
 	{
 		$model = strtolower($model);
+		
 		if(isset($this->globalModel[$model]))
 		{
 			return $this->globalModel[$model];
 		}
 		else
 		{
+			mgTrace();
 			$modelFile = __MODEL__.'/model.'.$model.'.php';
-			if(file_exists($modelFile))
+			$object = mgFileNameToClassName($model);
+			
+			if(!class_exists($object.'Model'))
 			{
-				require_once($modelFile);
-				$object = mgFileNameToClassName($model);
-				eval('$tmp = new '.$object.'Model();');
-				$this->globalModel[$model] = $tmp;
-				return $tmp;
-			}
-			else
-			{
-				if($triggerException)
+				if(file_exists($modelFile))
 				{
-					$this->throwException(E_MODELFILENOTEXISTS,$modelFile);
+					require_once($modelFile);
+					if(isset($this->stack['action']['application_cache_path']))
+					{
+						file_put_contents($this->stack['action']['application_cache_path'],
+						__DEBUG__ ? file_get_contents($this->stack['action']['application_cache_path']).file_get_contents($modelFile) : 
+						file_get_contents($this->stack['action']['application_cache_path']).php_strip_whitespace($modelFile));
+					}
+					if(isset($this->stack['action']['application_config_path']))
+					{
+						$files = array();
+						require($this->stack['action']['application_config_path']);
+						$files[$modelFile] = filemtime($modelFile);
+						mgExportArrayToFile($this->stack['action']['application_config_path'],$files,'files');
+					}
 				}
 				else
 				{
-					return NULL;
+					if($triggerException)
+					{
+						$this->throwException(E_MODELFILENOTEXISTS,$modelFile);
+					}
+					else
+					{
+						return NULL;
+					}
 				}
 			}
+			
+			eval('$tmp = new '.$object.'Model();');
+			$this->globalModel[$model] = $tmp;
+			mgTrace(false);
+			mgDebug('Load Model',$tmp);
+			return $tmp;
 		}
 	}
 	

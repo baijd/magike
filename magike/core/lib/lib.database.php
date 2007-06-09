@@ -8,9 +8,14 @@
 
 //连接数据库
 define('E_DATABASE','Database Error');
+
+mgTrace();
 $dblink=@mysql_connect(__DBHOST__,__DBUSER__,__DBPASS__) or die('Database Connect Error');
 @mysql_select_db(__DBNAME__,$dblink) or die('Database Connect Error');
 mysql_query('SET NAMES "utf8"') or die('Database Connect Error');
+mgTrace(false);
+mgDebug('Connect Database',__DBHOST__);
+
 
 class Database extends MagikeObject
 {
@@ -141,7 +146,7 @@ class Database extends MagikeObject
 		//处理where子句
 		$where = self::praseWhereSentence($args);
 		$query = $fields.$table.$where.$groupby.$orderby.$offset.$limit;
-		$resource = mysql_query($query) or $this->databaseException($query);
+		$resource = $this->query($query);
 		$sum = mysql_num_rows($resource);
 		$result = array();
 		$num = 0;
@@ -160,7 +165,7 @@ class Database extends MagikeObject
 			{
             			$result[$num] = $rows;
             			$num++;
-            }
+		}
 		}
 
 		if($num == 0 && $expection) $this->throwException(E_PATH_PATHNOTEXISTS,$this->stack['action']['path']);
@@ -193,7 +198,7 @@ class Database extends MagikeObject
  		$value = $value.implode(' , ',$columns);
 		$where = self::praseWhereSentence($args);
 		$query = $table.$value.$where;
-		mysql_query($query) or $this->databaseException($query);
+		$this->query($query);
 		return mysql_affected_rows();
  	}
  	
@@ -203,7 +208,7 @@ class Database extends MagikeObject
  		$table = 'UPDATE '.$args['table'];
  		$increase = " SET {$field} = {$field} + {$num}";
  		$where = self::praseWhereSentence($args);
- 		mysql_query($table.$increase.$where) or $this->databaseException();
+ 		$this->query($table.$increase.$where);
  		return mysql_affected_rows();
  	}
  		
@@ -213,7 +218,7 @@ class Database extends MagikeObject
  		$table = 'UPDATE '.$args['table'];
  		$increase = " SET {$field} = {$field} - {$num}";
  		$where = self::praseWhereSentence($args);
- 		mysql_query($table.$increase.$where) or $this->databaseException();
+ 		$this->query($table.$increase.$where);
  		return mysql_affected_rows();
  	}
 
@@ -223,7 +228,7 @@ class Database extends MagikeObject
  		//替换查询前缀
  		$args = $this->filterTablePrefix($args);
 		$query = 'INSERT INTO '.$args['table'].' ('.implode(',',array_keys($args['value'])).') VALUES('.implode(',',$args['value']).')';
-		mysql_query($query) or $this->databaseException($query);
+		$this->query($query);
 		return mysql_insert_id();
  	}
 
@@ -234,7 +239,7 @@ class Database extends MagikeObject
  		$table = 'DELETE FROM '.$args['table'];
 		$where = self::praseWhereSentence($args);
 		$query = $table.$where;
-		mysql_query($query) or $this->databaseException($query);
+		$this->query($query) or $this->databaseException($query);
 		return mysql_affected_rows();
  	}
 
@@ -248,7 +253,7 @@ class Database extends MagikeObject
  		$where = self::praseWhereSentence($args);
 		
 		$query = $fields.$table.$where.$groupby;
- 		$resource = mysql_query($query) or $this->databaseException($query);
+ 		$resource = $this->query($query);
  		$result = mysql_fetch_array($resource,MYSQL_ASSOC);
  		return $result['number'];
  	}
@@ -263,9 +268,18 @@ class Database extends MagikeObject
  		$where = self::praseWhereSentence($args);
 
 		$query = $fields.$table.$where.$groupby;
- 		$resource = mysql_query($query) or $this->databaseException($query);
+ 		$resource = $this->query($query);
  		$result = mysql_fetch_array($resource,MYSQL_ASSOC);
  		return $result['number'];
  	}
+	
+	public function query($query)
+	{
+		mgTrace();
+		$result =  mysql_query($query) or $this->databaseException($query);
+		mgTrace(false);
+		mgDebug('Excute SQL',$query);
+		return $result;
+	}
 }
 ?>
