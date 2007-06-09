@@ -127,6 +127,18 @@ else
 	ob_start();
 }
 
+//载入debug支持
+if(__DEBUG__)
+{
+	global $debugData,$debugTime;
+	
+	$debugData = array();
+	$debugTime = array();
+	$debugTime['now'] = array();
+	$debugTime['start'] = mgGetMicrotime();
+	$debugTime['now'][] = $debugTime['start'];
+}
+
 //关闭魔术变量功能
 if (get_magic_quotes_gpc()) 
 {

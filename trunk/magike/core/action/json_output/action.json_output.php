@@ -25,11 +25,14 @@ class JsonOutput extends MagikeObject
 	
 	public function runAction()
 	{
+		$args = isset($_POST['args']) && is_array($_POST['args']) ? $_POST['args'] : array();
+		
 		require($this->fileName);
 		$tmp = null;
 		eval('$tmp = new '.mgFileNameToClassName($this->objName).'();');
-		$output = call_user_func(array($tmp,'runModule'));
-		header("content-Type: text/html; charset={$this->stack['static_var']['charset']}");
+		$output = call_user_func(array($tmp,'runModule'),$args);
+		$this->stack['action']['content_type'] = "content-Type: text/html; charset={$this->stack['static_var']['charset']}";
+		header($this->stack['action']['content_type']);
 		echo Json::json_encode($output);
 	}
 }

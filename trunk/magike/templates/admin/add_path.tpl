@@ -33,6 +33,13 @@
 			</p>
 		</div>
 		<div class="input">
+			<h2>页面缓存过期时间</h2>
+			<p>
+				<input type="text" class="text validate-me" name="path_cache" value="{$insert_path.path_cache}" size=60 /><span class="validate-word" id="path_cache-word"></span><br />
+				<span class="discribe">(单位为秒,如果为0则表示不启用页面过期缓存机制)</span>
+			</p>
+		</div>
+		<div class="input">
 			<h2>解析器</h2>
 			<p>
 				<select name="path_action" class="validate-me">

@@ -32,6 +32,7 @@ class PathInput extends MagikeModule
 		$args = array('path_name' => $_POST['path_name'],
 					  'path_action' => $_POST['path_action'],
 					  'path_file' => $_POST['path_file'],
+					  'path_cache' => $_POST['path_cache'],
 					  'path_describe'	=> $_POST['path_describe']);
 		$pathModel->updateByKey($_GET['path_id'],$args);
 		
@@ -59,6 +60,7 @@ class PathInput extends MagikeModule
 		$pathModel->insertTable(array('path_name' => $_POST['path_name'],
 					  'path_action' => $_POST['path_action'],
 					  'path_file' => $_POST['path_file'],
+					  'path_cache' => $_POST['path_cache'],
 					  'path_describe'	=> $_POST['path_describe']));
 		
 		if(isset($_POST['path_group']) && $_POST['path_group'])

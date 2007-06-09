@@ -60,14 +60,18 @@ class Template extends MagikeObject
 		$hasRun = array();	//已经运行的模块
 		$waitting = array();	//正在等待的模块
 		
-
-		require(__COMPILE__.'/'.mgPathToFileName($this->compileFile).'.mod.php');
+		$this->stack['action']['application_cache_path'] = __COMPILE__.'/'.mgPathToFileName($this->compileFile).'.mod.php';
+		$this->stack['action']['application_config_path'] = __COMPILE__.'/'.mgPathToFileName($this->compileFile).'.cnf.php';
+		require($this->stack['action']['application_cache_path']);
 		
 		foreach($module as $nameSpace => $object)
 		{
 			//创建module
 			$tmp = null;
+			mgTrace();
 			eval('$tmp = new '.$object.'();');
+			mgTrace(false);
+			mgDebug('Create Module',$tmp);
 			
 			if($tmp->waittingFor && isset($module[$tmp->waittingFor]) && !isset($hasRun[$tmp->waittingFor]))
 			{
@@ -76,7 +80,10 @@ class Template extends MagikeObject
 			}
 			
 			//运行模块入口函数runModule并将运行结果保存到临时堆栈中
+			mgTrace();
 			$stack = call_user_func(array($tmp,'runModule'),isset($args[$nameSpace]) ? $args[$nameSpace] : array());
+			mgTrace(false);
+			mgDebug('Run Module',$tmp);
 			
 			//将临时堆栈中的数据转移到全局堆栈中
 			if(isset($this->stack[$nameSpace]))
@@ -94,7 +101,10 @@ class Template extends MagikeObject
 		foreach($waitting as $key => $object)
 		{
 			//运行模块入口函数runModule并将运行结果保存到临时堆栈中
+			mgTrace();
 			$stack = call_user_func(array($object,'runModule'),isset($args[$key]) ? $args[$key] : array());
+			mgTrace(false);
+			mgDebug('Run Module',$tmp);
 			
 			//将临时堆栈中的数据转移到全局堆栈中
 			if(isset($this->stack[$key]))
@@ -108,9 +118,10 @@ class Template extends MagikeObject
 		}
 		
 		$this->stack['action']['prase_time'] = substr(mgGetMicrotime() - $this->stack['action']['prase_time'],0,6);
+		$this->stack['action']['content_type'] = "content-Type: {$this->stack['static_var']['content_type']}; charset={$this->stack['static_var']['charset']}";
 
 		//定义头文件
-		header("content-Type: {$this->stack['static_var']['content_type']}; charset={$this->stack['static_var']['charset']}");
+		header($this->stack['action']['content_type']);
 		$data = $this->stack;
 		require(__COMPILE__.'/'.mgPathToFileName($this->compileFile).'.php');
 	}

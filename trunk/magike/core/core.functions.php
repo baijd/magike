@@ -25,6 +25,23 @@ function mgFileNameToClassNameCallback($matches)
 	return strtoupper($matches[1]);
 }
 
+//获取对象类型
+function mgGetObjectClass($object)
+{
+	$require = array('MagikeObject','MagikeModule','MagikeModel');
+	
+	$object = get_class($object);
+	do
+	{
+		if(in_array($object,$require))
+		{
+			break;
+		}
+	}
+	while($object = get_parent_class($object));
+	return $object;
+}
+
 //将路径名转化为一个经过压缩的唯一文件名
 function mgPathToFileName($path)
 {
@@ -286,6 +303,47 @@ function mgIpToLong($ip)
 	return sprintf("%u",ip2long($ip));
 }
 
+function mgTrace($inOut = true)
+{
+	if(__DEBUG__)
+	{
+		global $debugData,$debugTime;
+		if($inOut)
+		{
+			$debugTime['now'][] = mgGetMicrotime() - $debugTime['start'];
+		}
+		else
+		{
+			$debugTime['time'] = array_pop($debugTime['now']);
+			$debugTime['last'] = mgGetMicrotime() - $debugTime['start'] - $debugTime['time'];
+		}
+	}
+}
+
+function mgDebug($message,$object = NULL)
+{
+	if(__DEBUG__)
+	{
+		global $debugData,$debugTime;
+		$debug = array();
+		if(is_string($object) && $object)
+		{
+			$debug['object'] = $object;
+			$debug['parent'] = 'Stream';
+			
+		}
+		else
+		{
+			$debug['object'] = get_class(NULL == $object ? $this : $object);
+			$debug['parent'] = mgGetObjectClass(NULL == $object ? $this : $object);
+		}
+		$debug['time'] = $debugTime['time'];
+		$debug['last'] = $debugTime['last'];
+		$debug['message'] = $message;
+		$debugData[] = $debug;
+	}
+}
+
 //创建一个任意长度的随机字符串
 function mgCreateRandomString($number)
 {
@@ -311,6 +369,21 @@ function mgGetGuidPath($guid)
 	$path2 = substr($guid,2,2);
 	
 	return '/'.$path1.'/'.$path2;
+}
+
+//打印调试信息
+function mgPrintDebug($path,$debug)
+{
+	$str = '';
+	foreach($debug as $val)
+	{
+		$str .= 'Message:'.$val['message']."\r\n";
+		$str .= $val['parent'].':'.$val['object']."\r\n";
+		$str .= 'TimeLine:'.$val['time']." Seconds\r\n";
+		$str .= 'LastTime:'.$val['last']." Seconds\r\n";
+		$str .= "\r\n\r\n";
+	}
+	file_put_contents($path,$str);
 }
 
 //获取毫秒级时间

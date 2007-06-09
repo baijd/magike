@@ -10,7 +10,7 @@ $elements = array(
 	"path_name" => array("null" => "路径地址不能为空"),
 	"path_describe" => array("null" => "路径描述名称不能为空"),
 	"path_action" => array("null" => "您必须选择一个解析器"),
+	"path_cache" => array("null" => "您必须设置过期时间","num" => "页面过期时间必须为数字"),
 	"path_file" => array("null" => "解析文件不能为空"),
 );
 ?>
- 

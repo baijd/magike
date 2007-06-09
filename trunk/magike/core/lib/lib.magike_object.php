@@ -9,6 +9,8 @@
 class MagikeObject
 {
 	public $stack;
+	public $debugData;
+	public $debugTime;
 	
 	function __construct($args = array())
 	{
