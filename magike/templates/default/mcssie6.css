@@ -264,6 +264,7 @@ h1 {
 			color:#aaa;
 			text-decoration:none;
 			margin-bottom:1px;
+			padding:0 5px;
 		}
 		.rilist li a:hover{
 			display:block;

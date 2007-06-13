@@ -38,6 +38,23 @@ class Template extends MagikeObject
 		}
 	}
 	
+	private function pushData($name,$data,$stack)
+	{
+		$head = $name[0];
+		if(isset($name[1]))
+		{
+			array_shift($name);
+			$stack[$head]  = array();
+			$stack[$head] = $this->pushData($name,$data,$stack[$head]);
+			return $stack;
+		}
+		else
+		{
+			$stack[$head] = $data;
+			return $stack;
+		}
+	}
+	
 	public function buildCache()
 	{
 		$str = file_get_contents($this->compileFile);
@@ -86,14 +103,7 @@ class Template extends MagikeObject
 			mgDebug('Run Module',$tmp);
 			
 			//将临时堆栈中的数据转移到全局堆栈中
-			if(isset($this->stack[$nameSpace]))
-			{
-				$this->stack[$nameSpace] = array_merge($this->stack[$nameSpace],$stack);
-			}
-			else
-			{
-				$this->stack[$nameSpace] = $stack;
-			}
+			$this->stack = $this->pushData(explode('.',$nameSpace),$stack,$this->stack);
 			
 			$hasRun[$nameSpace] = $object;
 		}
@@ -107,14 +117,7 @@ class Template extends MagikeObject
 			mgDebug('Run Module',$tmp);
 			
 			//将临时堆栈中的数据转移到全局堆栈中
-			if(isset($this->stack[$key]))
-			{
-				$this->stack[$key] = array_merge($this->stack[$key],$stack);
-			}
-			else
-			{
-				$this->stack[$key] = $stack;
-			}
+			$this->stack = $this->pushData(explode('.',$key),$stack,$this->stack);
 		}
 		
 		$this->stack['action']['prase_time'] = substr(mgGetMicrotime() - $this->stack['action']['prase_time'],0,6);

@@ -3,9 +3,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset={$static_var.charset}" />
 <title>monster nunu 2007</title>
-<!--[if !IE 6]>
+
 <link href="{$static_var.siteurl}/templates/{$static_var.template}/mcss.css" rev="stylesheet" rel="stylesheet"/>
-<![endif]-->
 <!--[if IE 6]>
 <link href="{$static_var.siteurl}/templates/{$static_var.template}/mcssie6.css" rev="stylesheet" rel="stylesheet"/>
 <![endif]-->

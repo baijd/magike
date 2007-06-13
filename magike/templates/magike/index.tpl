@@ -1,11 +1,12 @@
 <[include:header]>
-<[include:menu]>
 
 
 <[module:posts_list?type=1]>
 <[module:posts_list_page_nav?type=1]>
 <div id="content">
 	<div id="side">
+	<div id="incontent">
+	<[include:menu]>
 	<div id="sidecontent">
 	<[loop:$posts_list AS $post]>
 		<div class="entry">
@@ -23,6 +24,8 @@
 	</div>
 	</div>
 	<[include:sidebar]>
+	<div style="height:10px;float:left;width:750px;background:#FFF;clear:both"></div>
+	</div>
 	</div>
 </div>
 <[include:footer]>
