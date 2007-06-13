@@ -5,6 +5,5 @@
  * Copyright : Magike Group
  * License   : GNU General Public License 2.0
  *********************************/
-
 include('./core/core.php');
 ?>

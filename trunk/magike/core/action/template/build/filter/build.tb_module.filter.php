@@ -23,33 +23,56 @@ class TbModule extends TemplateBuild
 		mgExportArrayToFile(__COMPILE__.'/'.mgPathToFileName($this->fileName).'.cnf.php',$files,'files');
 	}
 	
+	private function getModulePath($moduleString)
+	{
+		$path = explode('.',$moduleString);
+		$file = 'module.'.array_pop($path).'.php';
+		array_push($path,$file);
+		return implode('/',$path);
+	}
+	
+	private function getClassName($moduleString)
+	{
+		$path = explode('.',$moduleString);
+		$className = mgFileNameToClassName(array_pop($path));
+		array_push($path,$className);
+		return array($className,implode('__',$path));
+	}
+	
+	private function replaceClassName($str,$className)
+	{
+		return 
+		preg_replace("/class {$className[0]} extends ([_0-9a-zA-Z-]+) \{\s*(.+?)\}/is","class {$className[1]} extends \\1 {\\2}",$str);
+	}
+	
 	public function addModule($matches)
 	{
 		$matches[1] = str_replace(' AS ',' as ',$matches[1]);
 		$moduleVar = explode(' as ',$matches[1]);
+		array_walk($moduleVar,'trim');
 		
 		$query = explode('?',$moduleVar[0]);
-		if(file_exists(__MODULE__.'/module.'.$query[0].'.php'))
+		$file = __MODULE__.'/'.$this->getModulePath($query[0]);
+		if(file_exists($file))
 		{
-
+			$className = $this->getClassName($query[0]);
 			$nameSpace = isset($moduleVar[1]) ? $moduleVar[1] : $query[0];
-			$this->module[$nameSpace] = mgFileNameToClassName($query[0]);
+			$this->module[$nameSpace] = $className[1];
 			
 			if(isset($query[1]))
 			{
 				parse_str($query[1],$this->args[$nameSpace]);
 			}
 			
-			if(!isset($this->moduleFile[__MODULE__.'/module.'.$query[0].'.php']))
+			if(!isset($this->moduleFile[$file]))
 			{
-				$this->moduleFile[__MODULE__.'/module.'.$query[0].'.php'] = filemtime(__MODULE__.'/module.'.$query[0].'.php');
-				$this->moduleSource .= __DEBUG__ ? file_get_contents(__MODULE__.'/module.'.$query[0].'.php') : 
-				php_strip_whitespace(__MODULE__.'/module.'.$query[0].'.php');
+				$this->moduleFile[$file] = filemtime($file);
+				$this->moduleSource .= $this->replaceClassName(php_strip_whitespace($file),$className);
 			}
 		}
 		else
 		{
-			$this->throwException(E_ACTION_TEMPLATEBUILD_MODULEFILENOTEXISTS,__MODULE__.'/module.'.$query[0].'.php');
+			$this->throwException(E_ACTION_TEMPLATEBUILD_MODULEFILENOTEXISTS,$file);
 		}
 		return NULL;
 	}

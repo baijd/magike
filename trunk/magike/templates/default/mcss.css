@@ -306,6 +306,7 @@ h1 {
 			background-color:#555;
 			text-decoration:none;
 			margin-bottom:1px;
+			padding:0 5px;
 		}
 		.rilist li a:hover{
 			display:block;

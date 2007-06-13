@@ -359,7 +359,7 @@ function mgCreateRandomString($number)
 //获得一个guid
 function mgGetGuid()
 {
-	return md5(uniqid(rand()));
+	return md5(uniqid(time()));
 }
 
 //获取一个散列路径
@@ -377,11 +377,15 @@ function mgPrintDebug($path,$debug)
 	$str = '';
 	foreach($debug as $val)
 	{
-		$str .= 'Message:'.$val['message']."\r\n";
-		$str .= $val['parent'].':'.$val['object']."\r\n";
-		$str .= 'TimeLine:'.$val['time']." Seconds\r\n";
-		$str .= 'LastTime:'.$val['last']." Seconds\r\n";
-		$str .= "\r\n\r\n";
+		if(((__DEBUG_MESSAGE_FILTER__ && __DEBUG_MESSAGE_FILTER__ == $val['message']) || !__DEBUG_MESSAGE_FILTER__)
+		&& __DEBUG_TIME_FILTER__ < $val['last'])
+		{
+			$str .= 'Message:'.$val['message']."\r\n";
+			$str .= $val['parent'].':'.$val['object']."\r\n";
+			$str .= 'TimeLine:'.$val['time']." Seconds\r\n";
+			$str .= 'LastTime:'.$val['last']." Seconds\r\n";
+			$str .= "\r\n\r\n";
+		}
 	}
 	file_put_contents($path,$str);
 }
