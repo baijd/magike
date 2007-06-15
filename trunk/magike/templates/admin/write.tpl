@@ -194,9 +194,9 @@
 				</div>
 			</div>
 		</div>
-		<div style="margin-top:6px;line-height:40px;">
-		<input type="button" class="button" onclick="$('#post_is_draft').val(1);magikeValidator('{$static_var.index}/helper/validator/','write_post');" style="cursor:pointer;padding:0;width:100px;height:30px;background:#FF9900;color:#FFF;border:2px solid #DB8400;font-size:11pt;font-weight:bold" value="{lang.admin_write.draft}" />
-		<input type="button" class="button" onclick="$('#post_is_draft').val(0);magikeValidator('{$static_var.index}/helper/validator/','write_post');" style="cursor:pointer;padding:0;width:100px;height:30px;background:#003399;color:#FFF;border:2px solid #001A4F;font-size:11pt;font-weight:bold" value="{lang.admin_write.publish}" />
+		<div style="float:left;height:40px;padding-top:5px;">
+		<span class="button" onclick="$('#post_is_draft').val(1);document.getElementById('write').submit();">{lang.admin_write.draft}</span>
+		<span class="button" onclick="$('#post_is_draft').val(0);magikeValidator('{$static_var.index}/helper/validator/','write_post');">{lang.admin_write.publish}</span>
 		<input type="hidden" name="post_is_draft" id="post_is_draft" value="0" />
 		</div>
 	</form>

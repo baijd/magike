@@ -10,15 +10,15 @@
 			{$path_input.word}
 		</div>
 	<[/if]>
-		<h2>路径列表 <span class="discribe">(这里列出了本网站所有虚拟路径,请谨慎操作)</span></h2>
+		<h2 style="border:none">路径列表 <span class="discribe">(这里列出了本网站所有虚拟路径,请谨慎操作)</span></h2>
 		<form method="get" id="all_paths">
 		<table width="100%" cellpadding="0" cellspacing="0" id="paths_list">
 			<tr class="heading">
-				<td width=5%>&nbsp;</td>
+				<td width=5% class="left">&nbsp;</td>
 				<td width=25%>路径名称</td>
 				<td width=20%>解析器</td>
 				<td width=40%>路径</td>
-				<td width=10%>操作</td>
+				<td width=10% class="right">操作</td>
 			</tr>
 			<[loop:$paths_list AS $path]>
 			<tr>

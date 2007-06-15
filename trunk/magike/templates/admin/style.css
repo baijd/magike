@@ -135,7 +135,7 @@ body
 	height:22px;
 	line-height:22px;
 	color:#AAA;
-	text-decoration: underline;;
+	text-decoration: underline;
 	display:block;
 	text-align:center;
 	float:left;
@@ -169,8 +169,6 @@ body
 {
 	width:100%;
 	float:left;
-	margin-bottom:40px !important;
-	margin-bottom:30px;
 }
 
 #element
@@ -319,13 +317,21 @@ body
 	font-size:9pt;
 }
 
+#element table
+{
+	border-left:1px solid #BEC9D1;
+	border-right:1px solid #BEC9D1;
+}
+
 #element table tr td
 {
 	color:#292D34;
 	height:24px;
 	line-height:24px;
-	border-bottom:1px solid #CCC;
 	overflow:hidden;
+	background:#EEF0F2;
+	border-bottom:#BEC9D1 solid 1px;
+    border-top:#FFF solid 1px;
 }
 
 #element table tr td img.describe
@@ -350,32 +356,55 @@ body
 	color:#AAA;
 }
 
-#element table tr.heading
-{
-	background:#DDD url(images/button.gif) top;
-}
-
 #element table tr.heading td
 {
-	color:#464A52;
+	color:#3F515C;
 	font-weight:bold;
 	font-size:10pt;
+	height:24px;
+	line-height:24px;
+	border-bottom:none;
+	background:#DDD url(images/button.gif) top;
+	border:none;
 }
+
+#element table tr td.left
+{
+	border-left:1px solid #FFF;
+}
+
+#element table tr td.right
+{
+	border-right:1px solid #FFF;
+}
+
+#element table tr.heading td.left
+{
+	border-left:none;
+	background:transparent url(images/button_left_right.gif) left top no-repeat;
+}
+
+#element table tr.heading td.right
+{
+	border-right:none;
+	background:transparent url(images/button_left_right.gif) right top no-repeat;
+}
+
 
 #element  table tr.select td
 {
-	background:#FFFFAA;
+	background-color:#FFFFAA;
 }
 
 #element  table tr.hover td
 {
-	background:#F4F4F4;
+	background-color:#F4F4F4;
 }
 
 #element .table_nav
 {
 	line-height:22px;
-	padding:3px;
+	padding:3px 10px;
 	font-size:9pt;
 	color:#464A52;
 	font-weight:bold;
@@ -450,11 +479,16 @@ body
 #element span.button
 {
 	line-height:22px;
+	height:23px;
+	width:82px;
+	display:block;
 	cursor:pointer;
 	font-size:10pt;
-	border:2px groove #AAA;
-	padding:2px 10px;
-	background:#FFF url(images/btn_bg.gif) bottom repeat-x;
+	color:#363636;
+	text-align:center;
+	float:left;
+	margin-right:3px;
+	background:#FFF url(images/glass_button.gif) top left no-repeat;
 }
 
 #element span.describe
@@ -464,12 +498,12 @@ body
 
 #element span.focus
 {
-	border:2px groove #FFC94B;
+	background:#FFF url(images/glass_button.gif) top right no-repeat;
 }
 
 #element span.click
 {
-	border:2px groove #1980E7;
+	background:#FFF url(images/glass_button.gif) top right no-repeat;
 }
 
 #element textarea.text
@@ -490,8 +524,8 @@ body
 
 #element .tab_nav
 {
-	border-bottom:2px solid #75818A;
-	height:24px;
+	border-bottom:2px solid #AAA;
+	height:23px;
 	margin-bottom:10px;
 }
 
@@ -534,34 +568,39 @@ body
 {
 	float:left;
 	list-style:none;
-	margin:0 1px;
+	margin:0 3px;
 	padding:0;
 	font-size:10pt;
 	height:24px;
 	line-height:24px;
 }
 
-.tab_nav ul li.focus
-{
-	background:#75818A url(images/tab.gif) top left no-repeat;
-}
-
 .tab_nav ul li span
 {
 	display:block;
 	text-align:center;
-	color:#464A52;
-	text-decoration: underline;
-	padding:0 10px;
+	color:#5B686F;
 	cursor:pointer;
 	font-weight:bold;
+	padding:0 10px;
+	border:1px solid #AAA;
+	border-bottom:none;
+	background:url(images/top.gif) top left repeat-x;
 	float:left;
 }
 
 .tab_nav ul li.focus span
 {
-	color:#FFF;
-	text-decoration: none;
-	font-weight:bold;
-	background:url(images/tab.gif) bottom right no-repeat;
+	color:#363636;
+	padding:0 10px;
+	border:1px solid #AAA;
+	border-bottom:none;
+	background:#FFF url(images/top.gif) top left repeat-x;
+}
+
+#footer
+{
+	float:left;
+	width:100%;
+	height:40px;
 }

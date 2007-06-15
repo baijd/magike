@@ -10,15 +10,15 @@
 			{$category_input.word}
 		</div>
 	<[/if]>
-		<h2>{lang.admin_categories_list.categories_title} <span class="discribe">{lang.admin_categories_list.categories_describe}</span></h2>
+		<h2 style="border:none">{lang.admin_categories_list.categories_title} <span class="discribe">{lang.admin_categories_list.categories_describe}</span></h2>
 		<form method="get" id="all_categories">
 		<table width="100%" cellpadding="0" cellspacing="0" id="category_list">
 			<tr class="heading">
-				<td width=5%></td>
+				<td width=5% class="left"></td>
 				<td width=20%>分类名称</td>
 				<td width=35%>相关描述</td>
 				<td width=20%>URL名称</td>
-				<td width=20%>操作</td>
+				<td width=20% class="right">操作</td>
 			</tr>
 			<[loop:$categories_list AS $category]>
 			<tr>

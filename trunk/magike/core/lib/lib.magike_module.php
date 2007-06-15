@@ -46,7 +46,6 @@ class MagikeModule extends MagikeObject
 			mgTrace();
 			$modelFile = __MODEL__.'/model.'.$model.'.php';
 			$object = mgFileNameToClassName($model);
-			
 			if(!class_exists($object.'Model'))
 			{
 				if(file_exists($modelFile))

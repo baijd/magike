@@ -31,3 +31,5 @@ class InsertCommentFilter extends MagikeModule
 		}
 	}
 }
+?>
+
