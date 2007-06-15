@@ -73,7 +73,6 @@ class Action extends Path
 	private function runAction()
 	{
 		//分析path模块传递的数据
-		
 		$cacheTime = intval($this->stack[$this->moduleName]['cache']);
 		$pastTime = false;
 		if($cacheTime)

@@ -22,8 +22,7 @@ class StaticVar extends MagikeModule
 	{
 		$this->initPublicObject(array('database'));
 		$this->staticVar = array();
-		$staticModel = $this->loadModel('statics');
-		$staticModel->listStaticVars(array('function' => array($this,'pushStaticValue')));
+		$this->database->fectch(array('table' => 'table.statics'),array('function' => array($this,'pushStaticValue')));
 	}
 	
 	public function runModule()

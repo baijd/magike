@@ -11,16 +11,16 @@
 			{$link_input.word}
 		</div>
 	<[/if]>
-		<h2>{lang.admin_links.links_title} <span class="discribe">{lang.admin_links.links_describe}</span></h2>
+		<h2 style="border:none">{lang.admin_links.links_title} <span class="discribe">{lang.admin_links.links_describe}</span></h2>
 		<form method="get" id="all_links">
 		<table width="100%" cellpadding="0" cellspacing="0" id="link_list">
 			<tr class="heading">
-				<td width=5%>&nbsp;</td>
+				<td width=5% class="left">&nbsp;</td>
 				<td width=15%>链接名称</td>
 				<td width=30%>链接地址</td>
 				<td width=25%>描述</td>
 				<td width=15%>所属分类</td>
-				<td width=10%>操作</td>
+				<td width=10% class="right">操作</td>
 			</tr>
 			<[loop:$links_list AS $link]>
 			<tr>

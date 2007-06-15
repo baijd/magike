@@ -20,7 +20,7 @@
 	<div class="input">
 		<h2>上传文件</h2>
 		<p>
-				  <input type="file" name="file" size="60" /><br />
+				  <input type="file" id="file_name" name="file" size="60" /><br />
 			<span class="discribe">(请选择一个文件以供上传)</span>
 		</p>
 	</div>
@@ -34,7 +34,7 @@
 	<div class="input">
 		<h2>文件上传</h2>
 		<p>
-	  			<input type="submit" value="上传" /><input type="hidden" name="do" value="insert" /><br />
+	  			<input type="button" onclick="if($('#file_name').val()) document.getElementById('upload').submit();else alert('您必须选择一个文件');" value="上传" /><input type="hidden" name="do" value="insert" /><br />
 			<span class="discribe">(点击这个按钮,上传您刚刚选定的文件)</span>
 		</p>
 	</div>

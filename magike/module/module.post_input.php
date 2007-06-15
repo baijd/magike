@@ -19,15 +19,17 @@ class PostInput extends MagikeModule
 	
 	public function insertPost()
 	{
-		$this->requirePost();
 		$input = $_POST;
+		$input['post_is_draft'] = isset($_POST['post_is_draft']) ? $_POST['post_is_draft'] : 0;
+		$this->requirePost(NULL,!$input['post_is_draft']);
 		
 		$url = isset($_POST['post_trackback']) ? $_POST['post_trackback'] : NULL;
 		unset($input["post_trackback"]);
+		$input['post_title'] = isset($_POST['post_title']) && $_POST['post_title'] ? $_POST['post_title'] : ($input['post_is_draft'] ? '无标题文档' : NULL);
+		$input['post_content'] = isset($_POST['post_content'])  && $_POST['post_content'] ? $_POST['post_content'] : NULL;
 		$input['post_allow_ping'] = isset($_POST['post_allow_ping']) ? $_POST['post_allow_ping'] : 0;
 		$input['post_allow_comment'] = isset($_POST['post_allow_comment']) ? $_POST['post_allow_comment'] : 0;
 		$input['post_allow_feed'] = isset($_POST['post_allow_feed']) ? $_POST['post_allow_feed'] : 0;
-		$input['post_is_draft'] = isset($_POST['post_is_draft']) ? $_POST['post_is_draft'] : 0;
 		$input['post_is_hidden'] = isset($_POST['post_is_hidden']) ? $_POST['post_is_hidden'] : 0;
 		$input['post_is_page'] = isset($_POST['post_is_page']) ? $_POST['post_is_page'] : 0;
 		$input['post_edit_time'] = time();
@@ -64,12 +66,15 @@ class PostInput extends MagikeModule
 	
 	public function updatePost()
 	{
-		$this->requirePost();
-		$this->requireGet('post_id');
 		$input = $_POST;
+		$input['post_is_draft'] = isset($_POST['post_is_draft']) ? $_POST['post_is_draft'] : 0;
+		$this->requirePost(NULL,!$input['post_is_draft']);
+		$this->requireGet('post_id');
 		
 		$url = isset($_POST['post_trackback']) ? $_POST['post_trackback'] : NULL;
 		unset($input["post_trackback"]);
+		$input['post_title'] = isset($_POST['post_title']) && $_POST['post_title'] ? $_POST['post_title'] : ($input['post_is_draft'] ? '无标题文档' : NULL);
+		$input['post_content'] = isset($_POST['post_content'])  && $_POST['post_content'] ? $_POST['post_content'] : NULL;
 		$input['post_allow_ping'] = isset($_POST['post_allow_ping']) ? $_POST['post_allow_ping'] : 0;
 		$input['post_allow_comment'] = isset($_POST['post_allow_comment']) ? $_POST['post_allow_comment'] : 0;
 		$input['post_allow_feed'] = isset($_POST['post_allow_feed']) ? $_POST['post_allow_feed'] : 0;

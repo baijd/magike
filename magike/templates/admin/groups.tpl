@@ -10,14 +10,14 @@
 			{$group_input.word}
 		</div>
 	<[/if]>
-		<h2>用户组列表 <span class="discribe">(这里列出了本网站所有的用户组)</span></h2>
+		<h2 style="border:none">用户组列表 <span class="discribe">(这里列出了本网站所有的用户组)</span></h2>
 		<form method="get" id="all_groups">
 		<table width="100%" cellpadding="0" cellspacing="0" id="groups_list">
 			<tr class="heading">
-				<td width=5%>&nbsp;</td>
+				<td width=5% class="left">&nbsp;</td>
 				<td width=25%>用户组名称</td>
 				<td width=60%>用户组描述</td>
-				<td width=10%>操作</td>
+				<td width=10% class="right">操作</td>
 			</tr>
 			<[loop:$groups_list AS $group]>
 			<tr>

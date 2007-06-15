@@ -15,8 +15,10 @@ class JsonOutput extends MagikeObject
 	function __construct($fileName)
 	{
 		parent::__construct();
-		$this->fileName = __MODULE__.'/module.'.$fileName.'.php';
-		$this->objName = $fileName;
+		$path = explode('.',$fileName);
+		$this->objName = array_pop($path);
+		array_push($path,'module.'.$this->objName.'.php');
+		$this->fileName =  __MODULE__.'/'.implode("/",$path);
 		if(!file_exists($this->fileName))
 		{
 			$this->throwException(E_ACTION_JSONOUTPUT_FILENOTEXISTS,$this->fileName);

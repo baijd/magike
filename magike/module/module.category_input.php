@@ -80,7 +80,7 @@ class CategoryInput extends MagikeModule
 		foreach($select as $id)
 		{
 			$categoryPosts = $postModel->fectchOneByFieldEqual('category_id',$id);
-			$deleteComments += $postModel->sum(array('key'	 => 'post_comment_num',
+			$deleteComments += $postModel->sumTable(array('key'	 => 'post_comment_num',
 													 'where' => 
 													 array('template' => 'category_id = ?',
 														   'value' => array($id))));
