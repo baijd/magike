@@ -20,7 +20,7 @@
 	<div class="input">
 		<h2>上传文件</h2>
 		<p>
-				  <input type="file" id="file_name" name="file" size="60" /><br />
+				  <input type="file" id="file_name" name="file" /><br />
 			<span class="discribe">(请选择一个文件以供上传)</span>
 		</p>
 	</div>

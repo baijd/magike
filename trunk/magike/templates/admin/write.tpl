@@ -63,11 +63,11 @@
 	<form method="post" id="write" action="{$static_var.index}/admin/posts/all/?do={$write_post.do}<[if:$write_post.do == "update"]>&post_id={$write_post.post_id}<[/if]>">
 		<div class="tab_nav">
 			<ul id="tab">
-				<li id="first" rel="write_content"><span>{lang.admin_write.write}</span></li>
-				<li rel="write_option"><span>{lang.admin_write.option}</span></li>
-				<li rel="write_tools"><span>{lang.admin_write.publish}</span></li>
-				<li rel="write_upload"><span>{lang.admin_write.upload}</span></li>
-				<li><span>{lang.admin_write.tools}</span></li>
+				<li id="first" rel="write_content"><span><img src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/pencil.gif" alt="pencil" >{lang.admin_write.write}</span></li>
+				<li rel="write_option"><span><img src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/setting.gif" alt="setting" >{lang.admin_write.option}</span></li>
+				<li rel="write_tools"><span><img src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/edit.gif" alt="publish" >{lang.admin_write.publish}</span></li>
+				<li rel="write_upload"><span><img src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/folder_picture.gif" alt="files" >{lang.admin_write.upload}</span></li>
+				<li><span><img src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/cog.gif" alt="tools" >{lang.admin_write.tools}</span></li>
 			</ul>
 		</div>
 		<div class="tab_content" id="write_tab">
@@ -195,7 +195,7 @@
 			</div>
 		</div>
 		<div style="float:left;height:40px;padding-top:5px;">
-		<span class="button" onclick="$('#post_is_draft').val(1);document.getElementById('write').submit();">{lang.admin_write.draft}</span>
+		<span class="button" id="draft_button" onclick="$('#post_is_draft').val(1);document.getElementById('write').submit();">{lang.admin_write.draft}</span>
 		<span class="button" onclick="$('#post_is_draft').val(0);magikeValidator('{$static_var.index}/helper/validator/','write_post');">{lang.admin_write.publish}</span>
 		<input type="hidden" name="post_is_draft" id="post_is_draft" value="0" />
 		</div>
@@ -364,6 +364,56 @@ function deleteFile()
 			  	getFilesList(1);
 			  });
 }
+
+var draftButtonText = $('#draft_button').html();
+var draftDelayTime = 60;
+var draftChange = 0;
+window.setInterval('refreshDraftButton();',1000);
+
+function refreshDraftButton()
+{
+	if(typeof(tinyMCE) != 'undefined' && tinyMCE.undoIndex != draftChange)
+	{
+		if(draftDelayTime <= 0)
+		{
+			$('#draft_button').html(draftButtonText);
+			draftDelayTime = 60;
+			draftChange = tinyMCE.undoIndex;
+		}
+		else
+		{
+			$('#draft_button').html('[' + draftDelayTime + ']' + draftButtonText);
+			draftDelayTime--;
+		}
+	}
+}
+
+var unloadConfirm = false;
+window.onbeforeunload=function()
+{
+	if(typeof(tinyMCE) != 'undefined' && tinyMCE.undoIndex != draftChange)
+	{
+		if(!unloadConfirm)
+		{
+			return '您的草稿未保存,确定要离开吗?';
+		}
+	}
+}
+
+$('a').click(
+	function()
+	{
+		if(typeof(tinyMCE) != 'undefined' && tinyMCE.undoIndex != draftChange)
+		{
+			unloadConfirm = true;
+			return confirm('您的草稿未保存,确定要离开吗?');
+		}
+		else
+		{
+			return true;
+		}
+	}
+);
 </script>
 
 <[include:footer]>

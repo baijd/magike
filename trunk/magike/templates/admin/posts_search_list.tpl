@@ -11,7 +11,7 @@
 			{$post_input.word}
 		</div>
 	<[/if]>
-		<h2>{lang.admin_posts_list.list_title} <span class="discribe">{lang.admin_posts_list.list_describe}</span></h2>
+		<h2 style="border:none">{lang.admin_posts_list.list_title} <span class="discribe">{lang.admin_posts_list.list_describe}</span></h2>
 		<div id="search"><form method="get" action="{$static_var.index}/admin/posts/all/search/"><strong>关键字:</strong> <input type="text" size=20 name="keywords" /> <input type="checkbox" name="title" value="1" />按标题
 		 <input type="checkbox" name="tags" value="1" />按标签 <input type="checkbox" name="content" value="1" />按内容 <input type="checkbox" name="category" value="1" />按分类 <input type="submit" value="搜索" /></form></div>
 		<form method="get" id="all_posts">

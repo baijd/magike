@@ -6147,7 +6147,6 @@ TinyMCE_Engine.prototype.accessibleEventHandler = function(e) {
 		elm.onchange = elm.oldonchange;
 		elm.onchange();
 		elm.oldonchange = null;
-
 		tinyMCE.cancelEvent(e);
 		return false;
 	}
