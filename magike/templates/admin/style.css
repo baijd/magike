@@ -215,6 +215,15 @@ body
 	font-weight:normal;
 }
 
+#element .hit_message
+{
+	font-size:9pt;
+	margin-left:5px;
+	line-height:21px;
+	font-weight:bold;
+	color:#777;
+}
+
 #element table.classic_table tr td
 {
 	background:#F1F1F1;
