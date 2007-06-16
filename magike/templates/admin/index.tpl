@@ -34,10 +34,12 @@
 	
 	#element h2
 	{
-		border-top:1px solid #CCC;
 		border-bottom:none;
 		margin:0;
-		background:url({$static_var.siteurl}/templates/{$static_var.admin_template}/images/top.gif) top repeat-x;
+		height:24px;
+		line-height:24px;
+		padding-left:7px;
+		background:url({$static_var.siteurl}/templates/{$static_var.admin_template}/images/button.gif) top repeat-x;
 	}
 	
 	#element ul.info
@@ -55,6 +57,9 @@
 		margin:0;
 		color:#444;
 		line-height:22px;
+		background:#EEF0F2;
+		border-bottom:#BEC9D1 solid 1px;
+		border-top:#FFF solid 1px;
 	}
 	
 	#element ul.info li.alt

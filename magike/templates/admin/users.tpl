@@ -14,12 +14,12 @@
 		<form method="get" id="all_users">
 		<table width="100%" cellpadding="0" cellspacing="0" id="users_list">
 			<tr class="heading">
-				<td width=5% class="left">&nbsp;</td>
+				<td width=5%>&nbsp;</td>
 				<td width=15%>用户名</td>
 				<td width=30%>用户网站</td>
 				<td width=25%>电子邮件</td>
 				<td width=15%>注册时间</td>
-				<td width=10% class="right">操作</td>
+				<td width=10%>操作</td>
 			</tr>
 			<[loop:$users_list AS $user]>
 			<tr>

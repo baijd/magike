@@ -14,11 +14,11 @@
 		<form method="get" id="all_link_categories">
 		<table width="100%" cellpadding="0" cellspacing="0" id="link_category_list">
 			<tr class="heading">
-				<td width=5% class="left"></td>
+				<td width=5%></td>
 				<td width=20%>分类名称</td>
 				<td width=35%>相关描述</td>
 				<td width=20%>链接排序</td>
-				<td width=20% class="right">操作</td>
+				<td width=20%>操作</td>
 			</tr>
 			<[loop:$link_categories AS $link_category]>
 			<tr>

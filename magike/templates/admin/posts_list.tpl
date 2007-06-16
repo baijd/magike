@@ -22,17 +22,17 @@
 		<form method="get" id="all_posts">
 		<table width="100%" cellpadding="0" cellspacing="0" id="post_list">
 			<tr class="heading">
-				<td width=5% class="left">&nbsp;</td>
+				<td width=5%>&nbsp;</td>
 				<td width=15%>标题</td>
 				<td width=5%></td>
 				<td width=30%>摘要</td>
 				<td width=20%>分类</td>
 				<td width=15%>发布日期</td>
-				<td width=10% class="right">操作</td>
+				<td width=10%>操作</td>
 			</tr>
 			<[loop:$posts_list AS $post]>
 			<tr>
-				<td class="left"><input type="checkbox" class="checkbox_element" name="post_id[]" value="{$post.post_id}"/></td>
+				<td><input type="checkbox" class="checkbox_element" name="post_id[]" value="{$post.post_id}"/></td>
 				<td><a href="{$static_var.index}/admin/posts/write/?post_id={$post.post_id}" title="{$post.post_title}">{$post.post_title}</a>
 				</td>
 				<td>
@@ -42,7 +42,7 @@
 				<td class="describe">{$post.post_content}</td>
 				<td>{$post.category_name}</td>
 				<td>{$post.post_time}</td>
-				<td class="right">
+				<td>
 					<a class="img" title="编辑" href="{$static_var.index}/admin/posts/write/?post_id={$post.post_id}"><img src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/edit.gif" alt="编辑"/></a> 
 					<a class="img" title="删除" href="javascript:;" onclick="magikeConfirm(this);" msg="您确定删除 '{$post.post_title}' 吗?" rel="{$static_var.index}/admin/posts/all/?post_id={$post.post_id}&do=del"><img src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/delete.gif" alt="删除"/></a> 
 				</td>

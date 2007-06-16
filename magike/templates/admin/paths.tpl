@@ -14,11 +14,11 @@
 		<form method="get" id="all_paths">
 		<table width="100%" cellpadding="0" cellspacing="0" id="paths_list">
 			<tr class="heading">
-				<td width=5% class="left">&nbsp;</td>
+				<td width=5%>&nbsp;</td>
 				<td width=25%>路径名称</td>
 				<td width=20%>解析器</td>
 				<td width=40%>路径</td>
-				<td width=10% class="right">操作</td>
+				<td width=10%>操作</td>
 			</tr>
 			<[loop:$paths_list AS $path]>
 			<tr>

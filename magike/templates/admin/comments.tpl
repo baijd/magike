@@ -15,13 +15,13 @@
 		<form method="get" id="all_comments">
 		<table width="100%" cellpadding="0" cellspacing="0" id="comment_list">
 			<tr class="heading">
-				<td width=5% class="left">&nbsp;</td>
+				<td width=5%>&nbsp;</td>
 				<td width=10%>发表者</td>
 				<td width=8%></td>
 				<td widht=10%>IP地址</td>
 				<td width=40%>摘要</td>
 				<td width=12%>发表日期</td>
-				<td width=15% class="right">操作</td>
+				<td width=15%>操作</td>
 			</tr>
 			<[loop:$comments_list_all AS $comment]>
 			<tr id="drag-{$comment.comment_id}">

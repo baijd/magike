@@ -319,8 +319,6 @@ body
 
 #element table
 {
-	border-left:1px solid #BEC9D1;
-	border-right:1px solid #BEC9D1;
 }
 
 #element table tr td
@@ -596,6 +594,12 @@ body
 	border:1px solid #AAA;
 	border-bottom:none;
 	background:#FFF url(images/top.gif) top left repeat-x;
+}
+
+#element .tab_nav img
+{
+	margin-bottom:-2px;
+	margin-right:2px;
 }
 
 #footer

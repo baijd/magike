@@ -14,11 +14,11 @@
 		<form method="get" id="comment_filters">
 		<table width="100%" cellpadding="0" cellspacing="0" id="filter_list">
 			<tr class="heading">
-				<td width=5% class="left">&nbsp;</td>
+				<td width=5%>&nbsp;</td>
 				<td width=30%>过滤器名称</td>
 				<td width=40%>相关参数</td>
 				<td width=15%>作用范围</td>
-				<td width=10% class="right">操作</td>
+				<td width=10%>操作</td>
 			</tr>
 			<[loop:$comment_filters_list AS $filter]>
 			<tr>
