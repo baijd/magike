@@ -195,9 +195,10 @@
 			</div>
 		</div>
 		<div style="float:left;height:40px;padding-top:5px;">
-		<span class="button" id="draft_button" onclick="$('#post_is_draft').val(1);document.getElementById('write').submit();">{lang.admin_write.draft}</span>
-		<span class="button" onclick="$('#post_is_draft').val(0);magikeValidator('{$static_var.index}/helper/validator/','write_post');">{lang.admin_write.publish}</span>
+		<span class="button" id="draft_button" onclick="unloadConfirm = true;$('#post_is_draft').val(1);document.getElementById('write').submit();">{lang.admin_write.draft}</span>
+		<span class="button" onclick="unloadConfirm = true;$('#post_is_draft').val(0);magikeValidator('{$static_var.index}/helper/validator/','write_post');">{lang.admin_write.publish}</span>
 		<input type="hidden" name="post_is_draft" id="post_is_draft" value="0" />
+		<span class="hit_message"></span>
 		</div>
 	</form>
 	</div>
@@ -211,6 +212,19 @@ function validateSuccess()
 }
 
 $.getScript("{$static_var.siteurl}/templates/{$static_var.admin_template}/javascript/tiny_mce/tiny_mce.js", function(){
+	window.setTimeout("initEditor();",0);
+ });
+
+function showEditor()
+{
+	if(!$(".mceEditor").html())
+	{
+		tinyMCE.execCommand('mceAddControl', false, 'post_content');
+	}
+}
+
+function initEditor()
+{
  tinyMCE.scriptUrl = "{$static_var.siteurl}/templates/{$static_var.admin_template}/javascript/tiny_mce/tiny_mce.js";
  tinyMCE.init({
 	mode : "exact",
@@ -228,16 +242,7 @@ $.getScript("{$static_var.siteurl}/templates/{$static_var.admin_template}/javasc
 	relative_urls : false,
 	remove_script_host : false
 	});
-	
  window.setTimeout("showEditor();",500);
- });
-
-function showEditor()
-{
-	if(!$(".mceEditor").html())
-	{
-		tinyMCE.execCommand('mceAddControl', false, 'post_content');
-	}
 }
 
 function insertContent()
@@ -365,10 +370,37 @@ function deleteFile()
 			  });
 }
 
-var draftButtonText = $('#draft_button').html();
-var draftDelayTime = 60;
+
 var draftChange = 0;
+
+<[if:$static_var.write_auto_save]>
 window.setInterval('refreshDraftButton();',1000);
+var draftButtonText = $('#draft_button').html();
+var draftTitle = $('title').html();
+var draftDelayTime = 60;
+<[if:$write_post.do == "insert"]>
+var insertId = 0;
+<[/if]>
+<[if:$write_post.do == "update"]>
+var insertId = {$write_post.post_id};
+<[/if]>
+var checkedValue;
+var formAction;
+var hasPost = false;
+
+function getCheckedValue()
+{
+	checkedValue = '';
+	$('input[@type=checkbox]').each(
+		function()
+		{
+			if($(this).attr('checked') == true)
+			{
+				checkedValue += '&'+$(this).attr('name')+'='+$(this).val();
+			}
+		}
+	);
+}
 
 function refreshDraftButton()
 {
@@ -377,16 +409,40 @@ function refreshDraftButton()
 		if(draftDelayTime <= 0)
 		{
 			$('#draft_button').html(draftButtonText);
-			draftDelayTime = 60;
-			draftChange = tinyMCE.undoIndex;
+			if(!hasPost)
+			{
+				hasPost = true;
+				formAction = '{$static_var.index}/admin/posts/auto_save/?'+(insertId ? 'do=update&post_id='+insertId : 'do=insert');
+				getCheckedValue();
+				$('.hit_message').html('正在自动保存...');
+				s = $('select').serialize()+'&'+$('input.text').serialize()
+				+checkedValue+'&post_is_draft=1&post_content='+encodeURIComponent(tinyMCE.getContent());
+				$.ajax({
+					type: 'POST',
+					url:formAction,
+					data: s,
+					success: function(data){
+						js = data.parseJSON();
+						insertId = insertId ? insertId : js['insert_id'];
+						$('#write').attr('action','{$static_var.index}/admin/posts/all/?do=update&post_id='+insertId);
+						$('.hit_message').html('上次保存发生在'+js['time']);
+						window.document.title = draftTitle;
+						draftDelayTime = 60;
+						draftChange = tinyMCE.undoIndex;
+						hasPost = false;
+					}
+				});
+			}
 		}
 		else
 		{
+			window.document.title = draftTitle + ' *';
 			$('#draft_button').html('[' + draftDelayTime + ']' + draftButtonText);
 			draftDelayTime--;
 		}
 	}
 }
+<[/if]>
 
 var unloadConfirm = false;
 window.onbeforeunload=function()

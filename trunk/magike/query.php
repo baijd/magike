@@ -225,7 +225,8 @@ query("INSERT INTO `mg_path_group_mapping` (`id`, `path_id`, `group_id`) VALUES
 (66, 57, 2),
 (67, 37, 1),
 (68, 37, 2),
-(69, 45, 1)");
+(69, 45, 1),
+(70, 46, 1)");
 
 query("CREATE TABLE `mg_paths` (
   `id` int(10) unsigned NOT NULL auto_increment,
@@ -284,6 +285,7 @@ query("INSERT INTO `mg_paths` (`id`, `path_name`, `path_action`, `path_file`, `p
 (43, '/admin/skins/get_skin_file/', 'json_output', 'get_skin_file', 0,'后台输出风格元素文件'),
 (44, '/admin/posts/files_list/', 'json_output', 'files_list', 0,'后台文件列表'),
 (45, '/admin/', 'template', '/{\$static_var.admin_template}/index.tpl', 0,'后台默认主页'),
+(46, '/admin/posts/auto_save/', 'template', 'post_input', 0,'自动保存'),
 (47, '/admin/posts/write/delete_file/', 'json_output', 'file_input', 0,'后台删除文件'),
 (48, '/admin/posts/write/files_list_page_nav/', 'json_output', 'files_list_page_nav', 0,'后台文件列表分页'),
 (49, '/archives/[post_id=%d]/', 'template', '/{\$static_var.template}/archive.tpl', 0,'根据ID查看文章'),

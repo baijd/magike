@@ -20,18 +20,18 @@ class PostInput extends MagikeModule
 	public function insertPost()
 	{
 		$input = $_POST;
-		$input['post_is_draft'] = isset($_POST['post_is_draft']) ? $_POST['post_is_draft'] : 0;
+		$input['post_is_draft'] = isset($_POST['post_is_draft']) && $_POST['post_is_draft'] ? $_POST['post_is_draft'] : 0;
 		$this->requirePost(NULL,!$input['post_is_draft']);
 		
 		$url = isset($_POST['post_trackback']) ? $_POST['post_trackback'] : NULL;
 		unset($input["post_trackback"]);
 		$input['post_title'] = isset($_POST['post_title']) && $_POST['post_title'] ? $_POST['post_title'] : ($input['post_is_draft'] ? '无标题文档' : NULL);
 		$input['post_content'] = isset($_POST['post_content'])  && $_POST['post_content'] ? $_POST['post_content'] : NULL;
-		$input['post_allow_ping'] = isset($_POST['post_allow_ping']) ? $_POST['post_allow_ping'] : 0;
-		$input['post_allow_comment'] = isset($_POST['post_allow_comment']) ? $_POST['post_allow_comment'] : 0;
-		$input['post_allow_feed'] = isset($_POST['post_allow_feed']) ? $_POST['post_allow_feed'] : 0;
-		$input['post_is_hidden'] = isset($_POST['post_is_hidden']) ? $_POST['post_is_hidden'] : 0;
-		$input['post_is_page'] = isset($_POST['post_is_page']) ? $_POST['post_is_page'] : 0;
+		$input['post_allow_ping'] = isset($_POST['post_allow_ping']) && $_POST['post_allow_ping'] ? $_POST['post_allow_ping'] : 0;
+		$input['post_allow_comment'] = isset($_POST['post_allow_comment']) && $_POST['post_allow_comment'] ? $_POST['post_allow_comment'] : 0;
+		$input['post_allow_feed'] = isset($_POST['post_allow_feed']) && $_POST['post_allow_feed'] ? $_POST['post_allow_feed'] : 0;
+		$input['post_is_hidden'] = isset($_POST['post_is_hidden']) && $_POST['post_is_hidden'] ? $_POST['post_is_hidden'] : 0;
+		$input['post_is_page'] = isset($_POST['post_is_page']) && $_POST['post_is_page'] ? $_POST['post_is_page'] : 0;
 		$input['post_edit_time'] = time();
 		$input['post_time'] = time();
 		$input['post_gmt'] = $this->stack['static_var']['server_timezone'];
@@ -61,6 +61,8 @@ class PostInput extends MagikeModule
 		
 		$this->result['open'] = true;
 		$this->result['trackback'] = $trackback;
+		$this->result['insert_id'] = $insertId;
+		$this->result['time'] = date("H点i分");
 		$this->result['word'] = '文章 "'.$input['post_title'].'" 已经成功提交';
 	}
 	
@@ -75,12 +77,12 @@ class PostInput extends MagikeModule
 		unset($input["post_trackback"]);
 		$input['post_title'] = isset($_POST['post_title']) && $_POST['post_title'] ? $_POST['post_title'] : ($input['post_is_draft'] ? '无标题文档' : NULL);
 		$input['post_content'] = isset($_POST['post_content'])  && $_POST['post_content'] ? $_POST['post_content'] : NULL;
-		$input['post_allow_ping'] = isset($_POST['post_allow_ping']) ? $_POST['post_allow_ping'] : 0;
-		$input['post_allow_comment'] = isset($_POST['post_allow_comment']) ? $_POST['post_allow_comment'] : 0;
-		$input['post_allow_feed'] = isset($_POST['post_allow_feed']) ? $_POST['post_allow_feed'] : 0;
-		$input['post_is_draft'] = isset($_POST['post_is_draft']) ? $_POST['post_is_draft'] : 0;
-		$input['post_is_hidden'] = isset($_POST['post_is_hidden']) ? $_POST['post_is_hidden'] : 0;
-		$input['post_is_page'] = isset($_POST['post_is_page']) ? $_POST['post_is_page'] : 0;
+		$input['post_allow_ping'] = isset($_POST['post_allow_ping']) && $_POST['post_allow_ping'] ? $_POST['post_allow_ping'] : 0;
+		$input['post_allow_comment'] = isset($_POST['post_allow_comment']) && $_POST['post_allow_comment'] ? $_POST['post_allow_comment'] : 0;
+		$input['post_allow_feed'] = isset($_POST['post_allow_feed']) && $_POST['post_allow_feed'] ? $_POST['post_allow_feed'] : 0;
+		$input['post_is_hidden'] = isset($_POST['post_is_hidden']) && $_POST['post_is_hidden'] ? $_POST['post_is_hidden'] : 0;
+		$input['post_is_page'] = isset($_POST['post_is_page']) && $_POST['post_is_page'] ? $_POST['post_is_page'] : 0;
+		$input['post_is_draft'] = isset($_POST['post_is_draft']) && $_POST['post_is_draft'] ? $_POST['post_is_draft'] : 0;
 		$input['post_edit_time'] = time();
 		$input['post_name'] = $input['post_is_page'] && NULL == $_POST['post_name'] ? urlencode($input['post_title']) : $input['post_name'];
 		
@@ -110,6 +112,7 @@ class PostInput extends MagikeModule
 		
 		$this->result['open'] = true;
 		$this->result['trackback'] = $trackback;
+		$this->result['time'] = date("H点i分");
 		$this->result['word'] = '文章 "'.$post['post_title'].'" 已经被更新';
 	}
 	
