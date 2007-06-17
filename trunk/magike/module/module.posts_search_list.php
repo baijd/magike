@@ -22,7 +22,7 @@ class PostsSearchList extends MagikeModule
 		$val["post_alt"] = $num%2;
 		$val["post_tags"] = $val["post_tags"] ? explode(",",$val["post_tags"]) : array();
 		$val["post_time"] = 
-		mgDate($this->getArgs["time_format"],$this->stack['static_var']['time_zone'] - $val["post_gmt"],$val["post_time"]);
+		date($this->stack['static_var']['post_date_format'],$this->stack['static_var']['time_zone']+$val["post_time"]);
 
 		return $val;
 	}
