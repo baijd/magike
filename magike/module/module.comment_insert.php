@@ -38,8 +38,7 @@ class CommentInsert extends MagikeModule
 			$this->result['word'] = '感谢您的参与,您的评论已经提交';
 			
 			$input['comment_publish'] = 'approved';
-			$input['comment_date'] = time();
-			$input['comment_gmt'] = $this->stack['static_var']['server_timezone'];
+			$input['comment_date'] = time() - $this->stack['static_var']['server_timezone'];
 			$input['post_id'] = $post['post_id'];
 			$input['comment_type'] = 'comment';
 			$input['comment_agent'] = $_SERVER["HTTP_USER_AGENT"];

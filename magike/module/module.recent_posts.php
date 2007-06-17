@@ -11,7 +11,7 @@ class RecentPosts extends MagikeModule
 	public function prasePost($val)
 	{
 		$val["post_time"] = 
-		mgDate($this->stack['static_var']['post_date_format'],$this->stack['static_var']['time_zone'] - $val["post_gmt"],$val["post_time"]);
+		date($this->stack['static_var']['post_date_format'],$this->stack['static_var']['time_zone']+$val["post_time"]);
 		return $val;
 	}
 	

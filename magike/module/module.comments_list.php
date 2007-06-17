@@ -24,7 +24,7 @@ class CommentsList extends MagikeModule
 			}
 		}
 		$val['comment_text'] = mgStripTags($data['substr'] ? mgSubStr($val['comment_text'],0,$data['substr'],$data['trim']) : $val['comment_text']);
-		$val['comment_date'] = mgDate($data['datefmt'],$this->stack['static_var']['time_zone'] - $val['comment_gmt'],$val['comment_date']);
+		$val['comment_date'] = date($data['datefmt'],$this->stack['static_var']['time_zone'] + $val['comment_date']);
 		$val['comment_alt']	 = $num%2;
 		return $val;
 	}
@@ -59,7 +59,7 @@ class CommentsList extends MagikeModule
 		else
 		{
 			$query['fields'] = '*,table.comments.id AS comment_id';
-			$query['table'] = 'table.posts LEFT JOIN table.comments ON table.comments.post_id = table.posts.id';
+			$query['table'] = 'table.posts JOIN table.comments ON table.comments.post_id = table.posts.id';
 			$query['groupby'] = 'table.comments.id';
 			if(isset($_GET['post_id']))
 			{
@@ -78,7 +78,7 @@ class CommentsList extends MagikeModule
 			$query['where']['template'] .= ' AND table.comments.comment_type = ?';
 			$query['where']['value'][] = $getArgs['type'];
 		}
-
+	
 		return $this->model->fectch($query,array('function' => array($this,'praseComment'),'data' => $getArgs));
 	}
 }

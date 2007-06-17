@@ -103,6 +103,7 @@
 				<li><u>{lang.admin_index.magike_version}</u> {$admin_index.magike_version}</li>
 				<li><u>文章总数</u> <a href="{$static_var.index}/admin/posts/all/">{$static_var.count_posts}篇</a></li>
 				<li><u>回响总数</u> <a href="{$static_var.index}/admin/comments/all/">{$static_var.count_comments}则</a></li>
+				<li><u>数据库空间</u></li>
 			</ul>
 			<h2>快速链接&raquo;</h2>
 			<ul class="info">
@@ -136,6 +137,9 @@
 			<[loop:$comments_list_all AS $comment]>
 				<li>{$comment.comment_user} 在 <a href="{$static_var.index}/admin/posts/write/?post_id={$comment.post_id}">{$comment.post_title}</a> <span class="describe">{$comment.comment_text}</span></li>
 			<[/loop]>
+			</ul>
+			<h2>访问统计</h2>
+			<ul class="info">
 			</ul>
 		</div>
 	</div>

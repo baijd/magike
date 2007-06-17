@@ -39,7 +39,6 @@ query("CREATE TABLE `mg_comment_filters` (
 query("CREATE TABLE `mg_comments` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `comment_user` varchar(64) default NULL,
-  `comment_gmt` int(6) default NULL,
   `comment_date` int(11) unsigned default NULL,
   `comment_email` varchar(64) default NULL,
   `comment_homepage` varchar(64) default NULL,
@@ -54,7 +53,7 @@ query("CREATE TABLE `mg_comments` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8");
 
 query("INSERT INTO `mg_comments` (`id`, `comment_user`, `comment_gmt`, `comment_date`, `comment_email`, `comment_homepage`, `comment_agent`, `comment_ip`, `comment_text`, `comment_title`, `post_id`, `comment_type`, `comment_publish`) VALUES 
-(1, 'magike', 28800, 1172842951, 'magike.net@gmail.com', 'http://www.magike.net', 'Magike/1.0', '127.0.0.1', '欢迎您选择Magike', NULL, 1, 'comment', 'approved')");
+(1, 'magike' , 1172842951, 'magike.net@gmail.com', 'http://www.magike.net', 'Magike/1.0', '127.0.0.1', '欢迎您选择Magike', NULL, 1, 'comment', 'approved')");
 
 query("CREATE TABLE `mg_files` (
   `id` int(10) NOT NULL auto_increment,
@@ -311,7 +310,6 @@ query("CREATE TABLE `mg_posts` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `post_title` varchar(200) default NULL,
   `post_name` varchar(64) default NULL,
-  `post_gmt` int(7) default '0',
   `post_time` int(11) unsigned default NULL,
   `post_edit_time` int(11) unsigned default NULL,
   `post_tags` varchar(200) default NULL,
@@ -335,7 +333,7 @@ query("CREATE TABLE `mg_posts` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8");
 
 query("INSERT INTO `mg_posts` (`id`, `post_title`, `post_name`, `post_gmt`, `post_time`, `post_edit_time`, `post_tags`, `post_password`, `post_content`, `category_id`, `user_id`, `post_user_name`, `post_comment_num`, `post_allow_ping`, `post_allow_comment`, `post_allow_feed`, `post_is_draft`, `post_is_hidden`, `post_is_page`) VALUES 
-(1, '欢迎使用Magike', 'hello_world', 28800, 1172842951, 1180181533, '', '', '<p>如果您看到这篇文章,表示您的blog已经安装成功.</p>', 1, 1, 'admin', 1, 1, 1, 1, 0, 0, 0)");
+(1, '欢迎使用Magike', 'hello_world', 1172842951, 1180181533, '', '', '<p>如果您看到这篇文章,表示您的blog已经安装成功.</p>', 1, 1, 'admin', 1, 1, 1, 1, 0, 0, 0)");
 
 query("CREATE TABLE `mg_statics` (
   `id` int(10) unsigned NOT NULL auto_increment,

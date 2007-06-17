@@ -11,7 +11,7 @@ class CommentsModel extends MagikeModel
 	public function getAllComments($limit,$offset,$sort,$orderby,$func = NULL,$field = NULL,$value = NULL)
 	{
 		$args = array('fields'=> '*,table.comments.id AS comment_id',
-					  'table' => 'table.comments LEFT JOIN table.posts ON table.comments.post_id = table.posts.id',
+					  'table' => 'table.comments JOIN table.posts ON table.comments.post_id = table.posts.id',
 					  'groupby' => 'table.comments.id',
 					  'limit' => $limit,
 					  'offset' => $offset,
@@ -136,7 +136,7 @@ class CommentsModel extends MagikeModel
 	
 	public function getAllPublishCommentsTrackbacksNum($field = NULL,$value = NULL)
 	{
-		$args = array('table' => 'table.comments LEFT JOIN table.posts ON table.comments.post_id = table.posts.id');
+		$args = array('table' => 'table.comments JOIN table.posts ON table.comments.post_id = table.posts.id');
 		$args['where'] = array();
 		$args['where']['template'] = "comment_publish = 'approved'";
 		if(NULL !== $field && NULL !== $value)

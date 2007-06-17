@@ -32,9 +32,8 @@ class PostInput extends MagikeModule
 		$input['post_allow_feed'] = isset($_POST['post_allow_feed']) && $_POST['post_allow_feed'] ? $_POST['post_allow_feed'] : 0;
 		$input['post_is_hidden'] = isset($_POST['post_is_hidden']) && $_POST['post_is_hidden'] ? $_POST['post_is_hidden'] : 0;
 		$input['post_is_page'] = isset($_POST['post_is_page']) && $_POST['post_is_page'] ? $_POST['post_is_page'] : 0;
-		$input['post_edit_time'] = time();
-		$input['post_time'] = time();
-		$input['post_gmt'] = $this->stack['static_var']['server_timezone'];
+		$input['post_edit_time'] = time() - $this->stack['static_var']['server_timezone'];
+		$input['post_time'] = time() - $this->stack['static_var']['server_timezone'];
 		$input['post_name'] = $input['post_is_page'] && NULL == $_POST['post_name'] ? urlencode($input['post_title']) : $input['post_name'];
 		
 		$postModel = $this->loadModel('posts');
@@ -83,7 +82,7 @@ class PostInput extends MagikeModule
 		$input['post_is_hidden'] = isset($_POST['post_is_hidden']) && $_POST['post_is_hidden'] ? $_POST['post_is_hidden'] : 0;
 		$input['post_is_page'] = isset($_POST['post_is_page']) && $_POST['post_is_page'] ? $_POST['post_is_page'] : 0;
 		$input['post_is_draft'] = isset($_POST['post_is_draft']) && $_POST['post_is_draft'] ? $_POST['post_is_draft'] : 0;
-		$input['post_edit_time'] = time();
+		$input['post_edit_time'] = time() - $this->stack['static_var']['server_timezone'];
 		$input['post_name'] = $input['post_is_page'] && NULL == $_POST['post_name'] ? urlencode($input['post_title']) : $input['post_name'];
 		
 		$postModel = $this->loadModel('posts');
