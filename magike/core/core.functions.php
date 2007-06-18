@@ -25,6 +25,14 @@ function mgFileNameToClassNameCallback($matches)
 	return strtoupper($matches[1]);
 }
 
+function mgFileNameToUniqueClassName($className)
+{
+	$path = explode('.',$className);
+	$class = array_pop($path);
+	array_push($path,mgFileNameToClassName($class));
+	return implode('__',$path);
+}
+
 //获取对象类型
 function mgGetObjectClass($object)
 {

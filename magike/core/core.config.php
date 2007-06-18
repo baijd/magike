@@ -11,6 +11,7 @@
 //环境路径配置
 define('__COMPILE__','./data/compile');			//模板编译目录
 define('__CACHE__','./data/cache');			//定义缓存目录
+define('__RUNTIME__','./data/runtime');			//定义运行时文件目录
 define('__MODULE__','./module');				//定义模块目录
 define('__MODEL__','./model');				//定义模型目录
 define('__TEMPLATE__','./templates');			//定义模板目录

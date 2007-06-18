@@ -114,7 +114,8 @@ function __autoload($className)
 	if(file_exists($fileName))
 	{
 		require_once($fileName);
-    }
+		return;
+	}
 }
 
 //打开系统缓存

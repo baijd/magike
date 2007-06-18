@@ -10,7 +10,7 @@ class FileOutput extends MagikeModule
 {
 	public function runModule()
 	{
-		if($this->stack['static_var']['referer_denny'] && 0 !== strpos($_SERVER['HTTP_REFERER'],$this->stack['static_var']['siteurl']))
+		if($this->stack['static_var']['referer_denny'] && (!isset($_SERVER['HTTP_REFERER']) || 0 !== strpos($_SERVER['HTTP_REFERER'],$this->stack['static_var']['siteurl'])))
 		{
 			return '对不起,您要访问的资源不存在';
 		}

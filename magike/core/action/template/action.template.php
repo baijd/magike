@@ -29,10 +29,10 @@ class Template extends MagikeObject
 			array(__COMPILE__.'/'.mgPathToFileName($fileName).'.php' 
 					=> array('listener' => 'fileExists',
 							 'callback' => array($this,'buildCache')),
-				  __COMPILE__.'/'.mgPathToFileName($fileName).'.mod.php' 
+				  __RUNTIME__.'/template/'.mgPathToFileName($fileName).'.mod.php' 
 					=> array('listener' => 'fileExists',
 							 'callback' => array($this,'buildCache')),
-				  __COMPILE__.'/'.mgPathToFileName($fileName).'.cnf.php' 
+				  __RUNTIME__.'/template/'.mgPathToFileName($fileName).'.cnf.php' 
 					=> array('listener' => 'fileDate',
 							 'callback' => array($this,'buildCache'))));
 		}
@@ -58,6 +58,7 @@ class Template extends MagikeObject
 	public function buildCache()
 	{
 		$str = file_get_contents($this->compileFile);
+		require(__DIR__.'/action/action_build.php');
 		require(__DIR__.'/action/template/template.template_build.php');
 		$objects = array_merge(mgRequireObjects(__DIR__.'/action/template/build/core','/build\.([_a-zA-Z0-9-]+)\.core\.php/i'),
 					mgRequireObjects(__DIR__.'/action/template/build/filter','/build\.([_a-zA-Z0-9-]+)\.filter\.php/i'));
@@ -66,6 +67,11 @@ class Template extends MagikeObject
 			$tmp = null;
 			eval('$tmp = new '.$object.'($str,$this->compileFile);');
 			$str = call_user_func(array($tmp,'prase'));
+		}
+		
+		if(!is_dir(__COMPILE__))
+		{
+			mgMkdir(__COMPILE__);
 		}
 		file_put_contents(__COMPILE__.'/'.mgPathToFileName($this->compileFile).'.php',$str);
 	}
@@ -77,8 +83,8 @@ class Template extends MagikeObject
 		$hasRun = array();	//已经运行的模块
 		$waitting = array();	//正在等待的模块
 		
-		$this->stack['action']['application_cache_path'] = __COMPILE__.'/'.mgPathToFileName($this->compileFile).'.mod.php';
-		$this->stack['action']['application_config_path'] = __COMPILE__.'/'.mgPathToFileName($this->compileFile).'.cnf.php';
+		$this->stack['action']['application_cache_path'] = __RUNTIME__.'/template/'.mgPathToFileName($this->compileFile).'.mod.php';
+		$this->stack['action']['application_config_path'] = __RUNTIME__.'/template/'.mgPathToFileName($this->compileFile).'.cnf.php';
 		require($this->stack['action']['application_cache_path']);
 		
 		foreach($module as $nameSpace => $object)

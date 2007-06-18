@@ -7,7 +7,7 @@
  *********************************/
 
 //模板解析基类
-class TemplateBuild extends MagikeObject
+class TemplateBuild extends ActionBuild
 {
 	private $callback;
 	private $foundVar;
