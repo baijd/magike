@@ -100,6 +100,11 @@ class CommentInsert extends MagikeModule
 				$staticModel->increaseValueByName('count_comments');
 				$this->deleteCache('static_var');
 			}
+			
+			//发送邮件提示
+			//$mail = new Smtp('smtp.126.com',25,true,'qining_china','6561041');
+			//$mail->sendmail('qining-china@tom.com', 'qining_china@126.com', '测试', '这是一封测试邮件', 'HTML',$this->stack['static_var']['charset']);
+
 		}
 		else
 		{

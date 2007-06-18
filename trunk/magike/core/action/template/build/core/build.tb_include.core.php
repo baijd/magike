@@ -48,7 +48,7 @@ class TbInclude extends TemplateBuild
 		}while($this->found);
 		
 		//生成配置文件
-		mgExportArrayToFile(__COMPILE__.'/'.mgPathToFileName($this->fileName).'.cnf.php',$this->include,'files');
+		mgExportArrayToFile(__RUNTIME__.'/template/'.mgPathToFileName($this->fileName).'.cnf.php',$this->include,'files');
 		return $this->str;
 	}
 }

@@ -211,7 +211,7 @@ body
 	border-bottom:1px solid #444;
 }
 
-#sidebar ul li a,.entry_tags a,.entry_nav a
+#sidebar ul li a
 {
 	color:#CCC;
 	text-decoration: none;
@@ -227,6 +227,12 @@ body
 {
 	color:#FFF;
 	background:#444;
+}
+
+.entry_tags a,.entry_nav a
+{
+	color:#777;
+	text-decoration: none;
 }
 
 .entry

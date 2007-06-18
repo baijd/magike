@@ -11,38 +11,18 @@ define('E_ACTION_TEMPLATEBUILD_MODULEFILENOTEXISTS','Module File Is Not Exists')
 class TbModule extends TemplateBuild
 {
 	private $module;
-	private $moduleSource;
-	private $moduleFile;
+	public $moduleSource;
+	public $extendsSoruce;
+	public $moduleFile;
+	public $className;
 	private $args;
 	
 	private function addCacheListenFile()
 	{
 		$files = array();
-		require(__COMPILE__.'/'.mgPathToFileName($this->fileName).'.cnf.php');
+		require(__RUNTIME__.'/template/'.mgPathToFileName($this->fileName).'.cnf.php');
 		$files = array_merge($files,$this->moduleFile);
-		mgExportArrayToFile(__COMPILE__.'/'.mgPathToFileName($this->fileName).'.cnf.php',$files,'files');
-	}
-	
-	private function getModulePath($moduleString)
-	{
-		$path = explode('.',$moduleString);
-		$file = 'module.'.array_pop($path).'.php';
-		array_push($path,$file);
-		return implode('/',$path);
-	}
-	
-	private function getClassName($moduleString)
-	{
-		$path = explode('.',$moduleString);
-		$className = mgFileNameToClassName(array_pop($path));
-		array_push($path,$className);
-		return array($className,implode('__',$path));
-	}
-	
-	private function replaceClassName($str,$className)
-	{
-		return 
-		preg_replace("/class {$className[0]} extends ([_0-9a-zA-Z-]+) \{\s*(.+?)\}/is","class {$className[1]} extends \\1 {\\2}",$str);
+		mgExportArrayToFile(__RUNTIME__.'/template/'.mgPathToFileName($this->fileName).'.cnf.php',$files,'files');
 	}
 	
 	public function addModule($matches)
@@ -55,9 +35,9 @@ class TbModule extends TemplateBuild
 		$file = __MODULE__.'/'.$this->getModulePath($query[0]);
 		if(file_exists($file))
 		{
-			$className = $this->getClassName($query[0]);
+			$this->className = $this->getClassName($query[0]);
 			$nameSpace = isset($moduleVar[1]) ? $moduleVar[1] : $query[0];
-			$this->module[$nameSpace] = $className[1];
+			$this->module[$nameSpace] = $this->className[1];
 			
 			if(isset($query[1]))
 			{
@@ -67,7 +47,7 @@ class TbModule extends TemplateBuild
 			if(!isset($this->moduleFile[$file]))
 			{
 				$this->moduleFile[$file] = filemtime($file);
-				$this->moduleSource .= $this->replaceClassName(php_strip_whitespace($file),$className);
+				$this->moduleSource .= $this->replaceClassName(php_strip_whitespace($file),$this->className);
 			}
 		}
 		else
@@ -82,12 +62,13 @@ class TbModule extends TemplateBuild
 		$this->module = array();
 		$this->args	  = array();
 		$this->moduleSource = '';
+		$this->extendsSrouce = '';
 		$this->moduleFile = array();
 		$this->findSection('module','addModule');
-		file_put_contents(__COMPILE__.'/'.mgPathToFileName($this->fileName).'.mod.php',
+		file_put_contents(__RUNTIME__.'/template/'.mgPathToFileName($this->fileName).'.mod.php',
 		"<?php\n\$module = ".var_export($this->module,true).";\n".
 		"\$args = ".var_export($this->args,true).";\n?>"
-		.$this->moduleSource);
+		.$this->moduleSource.$this->extendsSrouce);
 		$this->addCacheListenFile();
 		return $this->str;
 	}
