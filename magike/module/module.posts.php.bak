@@ -1,15 +1,28 @@
 <?php
 /**********************************
  * Created on: 2006-12-16
- * File Name : module.posts_list.php
+ * File Name : module.posts.php
  * Copyright : Magike Group
  * License   : GNU General Public License 2.0
  *********************************/
  
-class PostsList extends MagikeModule
-{
-	private $result;
-	private $getArgs;
+ class Posts extends MagikeModule
+ {
+	protected $getArgs;
+	protected $page;
+	protected $offset;
+
+	function __construct()
+	{
+		parent::__construct();
+		$this->model = $this->loadModel('posts');
+	}
+	
+	protected function getPage($limit,$page = 'page')
+	{
+		$this->page = isset($_GET[$page]) ? $_GET[$page] : 1;
+		$this->offset = ($this->page - 1)*$limit;
+	}
 	
 	public function prasePost($val,$num)
 	{
@@ -23,38 +36,23 @@ class PostsList extends MagikeModule
 		$val["post_tags"] = $val["post_tags"] ? explode(",",$val["post_tags"]) : array();
 		$val["post_time"] = 
 		date($this->stack['static_var']['post_date_format'],$this->stack['static_var']['time_zone']+$val["post_time"]);
-		
+
 		return $val;
 	}
-
+	
 	public function runModule($args)
 	{
-		$require = array(  'sub' 	  	=> $this->stack['static_var']['post_sub'],	//摘要字数
-					 'limit'  		=> $this->stack['static_var']['post_page_num'],	//每页篇数
-					 'type'		=> 0,
+		$require = array(  'sub' 	  	=> $this->stack['static_var']['post_sub'],	//鎽樿瀛楁暟
+					 'limit'  		=> $this->stack['static_var']['post_page_num'],//姣忛〉绡囨暟
 					 'striptags'		=> 0,
 					 'content'		=> 0,
 					 'time_format'	=> $this->stack['static_var']['post_date_format'],
 					);
 		$this->getArgs = $this->initArgs($args,$require);
-		$postModel = $this->loadModel('posts');
-
-		$page = isset($_GET['page']) ? $_GET['page'] : 1;
-		$offset = ($page - 1)*$this->getArgs['limit'];
-
-		switch ($this->getArgs['type'])
-		{
-			case 0:
-				return $postModel->listAllEntriesIncludeHidden($this->getArgs['limit'],$offset,array('function' => array($this,'prasePost')));
-				break;
-			case 1:
-				return $postModel->listAllEntries($this->getArgs['limit'],$offset,array('function' => array($this,'prasePost')));
-				break;
-			case 2:
-			default:
-				return $postModel->listAllPosts($this->getArgs['limit'],$offset,array('function' => array($this,'prasePost')));
-				break;
-		}
+		$this->getPage($this->getArgs['limit']);
+		
+		return $this->model->listAllPosts($this->getArgs['limit'],$this->offset,array('function' => array($this,'prasePost')));
 	}
-}
-?>
+ }
+ ?>
+ 

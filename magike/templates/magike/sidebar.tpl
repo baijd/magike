@@ -1,9 +1,10 @@
-<[module:recent_posts]>
+<[module:posts.is_recent_archive]>
 <[module:recent_comments?striptags=1&substr=10]>
 <[module:links_prase_list?limit=7]>
 <[module:categories_list]>
 
 <div id="sidebar">
+	<div class="top"></div>
 	<h2>Category</h2>
 	<ul>
 	<[loop:$categories_list AS $category]>
@@ -12,7 +13,7 @@
 	</ul>
 	<h2>Recent Posts</h2>
 	<ul>
-	<[loop:$recent_posts AS $post]>
+	<[loop:$posts.is_recent_archive AS $post]>
 	<li><a href="{$static_var.index}/archives/{$post.post_id}/">{$post.post_title}</a></li>
 	<[/loop]>
 	</ul>
@@ -30,4 +31,5 @@
 	<[/loop]>
 	</ul>
 	<[/loop]>
+	<div class="bottom"></div>
 </div>

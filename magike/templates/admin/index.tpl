@@ -2,7 +2,7 @@
 <[include:menu]>
 
 <[module:admin_index]>
-<[module:posts_list?type=1&sub=20&striptags=1&limit=5]>
+<[module:posts?sub=20&striptags=1&limit=5]>
 <[module:comments_list_all?limit=5&striptags=1&substr=20]>
 <[module:get_current_user]>
 <style>
@@ -121,14 +121,14 @@
 				<li><u>注册时间</u> {$get_current_user.user_register}</li>
 				<li><a href="{$static_var.index}/admin/users/user/?user_id={$access.user_id}">编辑我的档案</a></li>
 			</ul>
-			<h2>反向链接&raquo;</h2>
+			<h2>来自友情链接&raquo;</h2>
 			<ul class="info">
 			</ul>
 		</div>
 		<div id="element-center">
 						<h2>我最近发表的文章</h2>
 			<ul class="info">
-			<[loop:$posts_list AS $post]>
+			<[loop:$posts AS $post]>
 				<li><a href="{$static_var.index}/admin/posts/write/?post_id={$post.post_id}" title="{$post.post_title}">{$post.post_title}</a> 发布在<a class="close" href="{$static_var.index}/admin/posts/category?c={$post.category_id}">{$post.category_name}</a>  <span class="describe">{$post.post_time}</span></li>
 			<[/loop]>
 			</ul>

@@ -30,11 +30,36 @@ class Post extends MagikeModule
 		$val["post_time"] = 
 		date($this->stack['static_var']['post_date_format'],$this->stack['static_var']['time_zone']+$val["post_time"]);
 		$val["post_tags"] = $val["post_tags"] ? explode(",",$val["post_tags"]) : array();
+		
+		if($val['post_is_hidden'])
+		{
+			if((isset($_COOKIE['post_password']) && $_COOKIE['post_password'] == $val['post_password'])
+			|| $this->stack['access']['user_id'] == $val['user_id'])
+			{
+				$val['post_access'] = true;
+			}
+			else
+			{
+				$val['post_access'] = false;
+			}
+		}
+		else
+		{
+			$val['post_access'] = true;
+		}
 		return $val;
+	}
+	
+	public function getAccess()
+	{
+		setcookie('post_password',$_POST['post_password'],0,'/');
+		$_COOKIE['post_password'] = $_POST['post_password'];
+		@reset($_COOKIE);
 	}
 	
 	public function runModule()
 	{
+		$this->onPost('post_password','getAccess');
 		if(isset($_GET['post_id']))
 		{
 			return $this->post->fectchPostById($_GET['post_id'],array('function' => array($this,'prasePost')));

@@ -1,5 +1,4 @@
 <[include:header]>
-<[include:menu]>
 
 <[module:post]>
 <[module:comments_list?sort=ASC]>
@@ -77,7 +76,9 @@ function magikeValidator(url,mod)
 
 <div id="content">
 	<div id="side">
+	<div id="incontent">
 	<div id="sidecontent">
+	<[if:$post.post_access]>
 		<div class="entry" style="border:none">
 			<h2><a href="{$static_var.index}/archives/{$post.post_id}/">{$post.post_title}</a></h2>
 			<div class="entry_tags"><strong>Tags:</strong>
@@ -138,8 +139,21 @@ function magikeValidator(url,mod)
 		</script>
 		<[/if]>
 		</div>
+	<[/if]>
+	<[if:!$post.post_access]>
+		<div class="entry" style="border:none">
+			<h2>这篇文章被作者设为隐藏</h2>
+			<div class="entry_content">
+			<form method="post">
+				<input type="text" name="post_password" size=30 />
+				<input type="submit" value="提交授权码" />
+			</form>
+			</div>
+		</div>
+	<[/if]>
 	</div>
 	<[include:sidebar]>
+	</div>
 	</div>
 </div>
 <[include:footer]>

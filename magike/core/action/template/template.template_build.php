@@ -6,10 +6,12 @@
  * License   : GNU General Public License 2.0
  *********************************/
 
+define('E_ACTION_TEMPLATEBUILD_CANTFINDTAG',"Cant't Find Tag");
 //模板解析基类
 class TemplateBuild extends ActionBuild
 {
 	private $callback;
+	private $closeCallback;
 	private $foundVar;
 	public	$str;
 	public	$fileName;
@@ -42,6 +44,39 @@ class TemplateBuild extends ActionBuild
 	private function findSectionCallback($matches)
 	{
 		return preg_replace_callback("/\s*(.+)/is",array($this,$this->callback),$matches[1]);
+	}
+	
+	//寻找闭合文件段
+	protected function findCloseSection($sectionName,$callback,$closeCallback)
+	{
+		$this->callback = $callback;
+		$this->closeCallback = $closeCallback;
+		while(false !== ($pos = strpos($this->str,"<[/{$sectionName}]>")))
+		{
+			$out = array();
+			$out[0] = $this->str;
+			$out[1] = substr($this->str,0,$pos);
+			$out[2] = $sectionName;
+			$out[3] = substr($this->str,$pos + strlen("<[/{$sectionName}]>"),strlen($this->str) - ($pos+strlen("<[/{$sectionName}]>")));
+			$this->str = call_user_func(array($this,'findCloseSectionCallback'),$out);
+		}
+	}
+	
+	public function findCloseSectionCallback($matches)
+	{
+		preg_match_all("/\<\[{$matches[2]}:\s*(.+?)\s*\]\>/is",$matches[1],$out);
+		if(isset($out[1]))
+		{
+			$section = array_pop($out[1]);
+			$sectionAll = array_pop($out[0]);
+			$matches[1] = str_replace($sectionAll,call_user_func(array($this,$this->callback),array($sectionAll,$section)),$matches[1]);
+			$matches[2] = call_user_func(array($this,$this->closeCallback),array($sectionAll,$section));
+			return $matches[1].$matches[2].$matches[3];
+		}
+		else
+		{
+			$this->throwException(E_ACTION_TEMPLATEBUILD_CANTFINDTAG,$matches[2]);
+		}
 	}
 	
 	protected function praseVar($input,&$var = array())

@@ -2,8 +2,8 @@
 <[include:menu]>
 
 <[module:post_input]>
-<[module:posts_list?type=2&sub=20&striptags=1&limit=20]>
-<[module:posts_list_page_nav?type=2&limit=20]>
+<[module:posts?&sub=20&striptags=1&limit=20]>
+<[module:page_navigator.posts?limit=20]>
 <div id="content">
 	<div id="element">
 	<[if:$post_input.open]>
@@ -30,7 +30,7 @@
 				<td width=15%>发布日期</td>
 				<td width=10%>操作</td>
 			</tr>
-			<[loop:$posts_list AS $post]>
+			<[loop:$posts AS $post]>
 			<tr>
 				<td><input type="checkbox" class="checkbox_element" name="post_id[]" value="{$post.post_id}"/></td>
 				<td><a href="{$static_var.index}/admin/posts/write/?post_id={$post.post_id}" title="{$post.post_title}">{$post.post_title}</a>
@@ -57,9 +57,9 @@
 			<span onclick="selectTableOther('post_list','checkbox_element')">{lang.admin_db_grid.select_other}</span><b>,</b>
 			<span onclick="if(confirm('您确定删除这些文章吗?')) document.getElementById('all_posts').submit();">{lang.admin_db_grid.select_delete}</span><b>,</b>
 			<span id="search_btn">搜索</span>
-			<[if:$posts_list_page_nav.next]><a href="{$static_var.index}/admin/posts/all/?page={$posts_list_page_nav.next}">下一页</a><[/if]>
-			<[if:$posts_list_page_nav.next and $posts_list_page_nav.prev]><u>,</u><[/if]>
-			<[if:$posts_list_page_nav.prev]><a href="{$static_var.index}/admin/posts/all/?page={$posts_list_page_nav.prev}">上一页</a><[/if]>
+			<[if:$page_navigator.posts.next]><a href="{$static_var.index}/admin/posts/all/?page={$posts_list_page_nav.next}">下一页</a><[/if]>
+			<[if:$page_navigator.posts.next and $page_navigator.posts.prev]><u>,</u><[/if]>
+			<[if:$page_navigator.posts.prev]><a href="{$static_var.index}/admin/posts/all/?page={$posts_list_page_nav.prev}">上一页</a><[/if]>
 	</div>
 </div>
 <script>

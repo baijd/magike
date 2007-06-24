@@ -44,7 +44,10 @@ class Template extends MagikeObject
 		if(isset($name[1]))
 		{
 			array_shift($name);
-			$stack[$head]  = array();
+			if(!isset($stack[$head]))
+			{
+				$stack[$head]  = array();
+			}
 			$stack[$head] = $this->pushData($name,$data,$stack[$head]);
 			return $stack;
 		}

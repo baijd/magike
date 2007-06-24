@@ -1,4 +1,4 @@
-<[module:pages_list]>
+<[module:posts.is_page]>
 <div id="menu_content">
 	<ul>
 		<[if:$access.login]>
@@ -8,7 +8,7 @@
 		<[if:!$access.login]>
 		<li><a href="{$static_var.index}/admin/login">Login</a></li>
 		<[/if]>
-		<[loop:$pages_list AS $page]>
+		<[loop:$posts.is_page AS $page]>
 		<li><a href="{$static_var.index}/{$page.post_name}/">
 		{$page.post_title}
 		</a></li>
@@ -18,5 +18,4 @@
 		</a></li>
 	</ul>
 </div>
-<div id="banner">
-</div>
+

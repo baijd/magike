@@ -52,7 +52,7 @@ class CommentsModel extends MagikeModel
 					  'orderby'=> $orderby);
 		
 		$args['where'] = array();
-		$args['where']['template'] = "comment_publish = 'approved' AND comment_type = 'ping'";
+		$args['where']['template'] = "comment_publish = 'approved' AND comment_type = 'ping' AND post_is_hidden = 0";
 		if(NULL !== $field && NULL !== $value)
 		{
 			$args['where']['template'] .= " AND {$field} = ?";
@@ -66,7 +66,7 @@ class CommentsModel extends MagikeModel
 	{
 		$args = array('table' => 'table.comments JOIN table.posts ON table.comments.post_id = table.posts.id');
 		$args['where'] = array();
-		$args['where']['template'] = "comment_publish = 'approved' AND comment_type = 'ping'";
+		$args['where']['template'] = "comment_publish = 'approved' AND comment_type = 'ping' AND post_is_hidden = 0";
 		if(NULL !== $field && NULL !== $value)
 		{
 			$args['where']['template'] .= " AND {$field} = ?";
@@ -88,7 +88,7 @@ class CommentsModel extends MagikeModel
 					  'orderby'=> $orderby);
 		
 		$args['where'] = array();
-		$args['where']['template'] = "comment_publish = 'approved' AND comment_type = 'comment'";
+		$args['where']['template'] = "comment_publish = 'approved' AND comment_type = 'comment' AND post_is_hidden = 0";
 		if(NULL !== $field && NULL !== $value)
 		{
 			$args['where']['template'] .= " AND {$field} = ?";
@@ -102,7 +102,7 @@ class CommentsModel extends MagikeModel
 	{
 		$args = array('table' => 'table.comments JOIN table.posts ON table.comments.post_id = table.posts.id');
 		$args['where'] = array();
-		$args['where']['template'] = "comment_publish = 'approved' AND comment_type = 'comment'";
+		$args['where']['template'] = "comment_publish = 'approved' AND comment_type = 'comment' AND post_is_hidden = 0";
 		if(NULL !== $field && NULL !== $value)
 		{
 			$args['where']['template'] .= " AND {$field} = ?";
@@ -124,7 +124,7 @@ class CommentsModel extends MagikeModel
 					  'orderby'=> $orderby);
 		
 		$args['where'] = array();
-		$args['where']['template'] = "comment_publish = 'approved'";
+		$args['where']['template'] = "comment_publish = 'approved' AND post_is_hidden = 0";
 		if(NULL !== $field && NULL !== $value)
 		{
 			$args['where']['template'] .= " AND {$field} = ?";
@@ -138,7 +138,7 @@ class CommentsModel extends MagikeModel
 	{
 		$args = array('table' => 'table.comments JOIN table.posts ON table.comments.post_id = table.posts.id');
 		$args['where'] = array();
-		$args['where']['template'] = "comment_publish = 'approved'";
+		$args['where']['template'] = "comment_publish = 'approved' AND post_is_hidden = 0";
 		if(NULL !== $field && NULL !== $value)
 		{
 			$args['where']['template'] .= " AND {$field} = ?";

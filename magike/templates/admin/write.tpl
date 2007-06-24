@@ -75,14 +75,14 @@
 				<div class="input">
 				<h2>{lang.admin_write.title}</h2>
 				<p><input type="text" class="text validate-me" name="post_title" size=60 value="{$write_post.post_title}" /><span class="validate-word" id="post_title-word"></span> <br />
-				<span class="discribe">{lang.admin_write.title_describe}</span></p>
+				<span class="discribe">({lang.admin_write.title_describe})</span></p>
 				</div>
 				<div class="input">
 					<h2>{lang.admin_write.content}</h2>
 					<p>
 						<textarea name="post_content" rows="{$static_var.write_editor_rows}" class="validate-me" style="background:url({$static_var.siteurl}/templates/{$static_var.admin_template}/images/editor_loading.gif) center no-repeat;width:600px">{$write_post.post_content}</textarea><br />
 						<span class="validate-word" id="post_content-word"></span>&nbsp;
-						<span class="discribe">{lang.admin_write.content_describe}</span>
+						<span class="discribe">({lang.admin_write.content_describe})</span>
 					</p>
 				</div>
 			</div>
@@ -102,7 +102,7 @@
 					<[/loop]>
 					<[/if]>
 					</select> <br />
-					<span class="discribe">选择将您的文章发表在哪个分类</span>
+					<span class="discribe">(选择将您的文章发表在哪个分类)</span>
 				</p>
 				</div>
 				<div class="input">
@@ -132,19 +132,19 @@
 						<[/if]>
 					<[/if]>
 					</select> <br />
-					<span class="discribe">请为您的一个名称作为文章发布者</span>
+					<span class="discribe">(请为您的一个名称作为文章发布者)</span>
 				</p>
 				</div>
 				<div class="input">
 				<h2>{lang.admin_write.tag}</h2>
 				<p><input type="text" class="text" name="post_tags" value="{$write_post.post_tags}" size=60 /> <br />
-				<span class="discribe">{lang.admin_write.tag_describe}</span></p>
+				<span class="discribe">({lang.admin_write.tag_describe})</span></p>
 				</div>
 				<div class="input">
 				<h2>{lang.admin_write.trackback}</h2>
 				<p>
 				<textarea class="text" name="post_trackback" cols=60 rows=5 ></textarea> <br />
-				<span class="discribe">{lang.admin_write.trackback_describe}</span></p>
+				<span class="discribe">({lang.admin_write.trackback_describe})</span></p>
 				</div>
 			</div>
 			<div id="write_upload">
@@ -162,7 +162,7 @@
 					<p>
 					<input type="checkbox" name="post_is_page" value="1" <[if:$write_post.post_is_page]>checked=true<[/if]> class="checkbox"/> {lang.admin_write.write_type_page}
 					<br />
-					<span class="discribe">{lang.admin_write.write_type_describe}</span>
+					<span class="discribe">({lang.admin_write.write_type_describe})</span>
 					</p>
 				</div>
 				<div class="input">
@@ -171,9 +171,9 @@
 					<input type="checkbox" name="post_allow_comment" class="checkbox" value="1" <[if:$write_post.post_allow_comment]>checked=true<[/if]>/> {lang.admin_write.write_allowcomment} 
 					<input type="checkbox" name="post_allow_ping" class="checkbox" value="1" <[if:$write_post.post_allow_ping]>checked=true<[/if]>/> {lang.admin_write.write_allowtrackback} 
 					<input type="checkbox" name="post_allow_feed" class="checkbox" value="1" <[if:$write_post.post_allow_feed]>checked=true<[/if]>/> {lang.admin_write.write_allowfeed} 
-					<input type="checkbox" name="post_is_hidden" class="checkbox" value="1" <[if:$write_post.post_is_hidden]>checked=true<[/if]>/> {lang.admin_write.write_hidden} 
+					<input type="checkbox" id="post_is_hidden_check" onclick="checkPasswordInput(this);" name="post_is_hidden" class="checkbox" value="1" <[if:$write_post.post_is_hidden]>checked=true<[/if]>/> {lang.admin_write.write_hidden} 
 					<br />
-					<span class="discribe">{lang.admin_write.write_access_describe}</span>
+					<span class="discribe">({lang.admin_write.write_access_describe})</span>
 					</p>
 				</div>
 				<div class="input">
@@ -181,15 +181,15 @@
 					<p>
 					<input type="text" name="post_name" class="text"  value="{$write_post.post_name}" />
 					<br />
-					<span class="discribe">{lang.admin_write.post_name_describe}</span>
+					<span class="discribe">({lang.admin_write.post_name_describe})</span>
 					</p>
 				</div>
-				<div class="input">
+				<div class="input" id="post_password_input">
 					<h2>{lang.admin_write.post_password}</h2> 
 					<p>
 					<input type="text" name="post_password" class="text"  value="{$write_post.post_password}" />
 					<br />
-					<span class="discribe">{lang.admin_write.post_password_describe}</span>
+					<span class="discribe">({lang.admin_write.post_password_describe})</span>
 					</p>
 				</div>
 			</div>
@@ -210,6 +210,21 @@ function validateSuccess()
 {
 	document.getElementById('write').submit();
 }
+
+function checkPasswordInput(ele)
+{
+	if($(ele).attr("checked") == true)
+	{
+		$("#post_password_input").show();
+	}
+	else
+	{
+		$("input[@name=post_password]").val("");
+		$("#post_password_input").hide();
+	}
+}
+
+checkPasswordInput("#post_is_hidden_check");
 
 $.getScript("{$static_var.siteurl}/templates/{$static_var.admin_template}/javascript/tiny_mce/tiny_mce.js", function(){
 	window.setTimeout("initEditor();",0);

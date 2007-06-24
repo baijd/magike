@@ -10,14 +10,15 @@ class AdminLogout extends MagikeModule
 {
 	public function runModule()
 	{
-    	session_unregister('user_name');
-    	session_unregister('user_id');
-    	session_unregister('user_group');
-    	session_unregister('auth_data');
-    	setcookie('auth_data','');
+		session_unregister('user_name');
+		session_unregister('user_id');
+		session_unregister('user_group');
+		session_unregister('auth_data');
+		setcookie('auth_data','',0,'/');
+		setcookie('post_password','',0,'/');
 
-    	header('location: '.$this->stack['static_var']['siteurl']);
-    	return NULL;
+		header('location: '.$this->stack['static_var']['siteurl']);
+		return NULL;
 	}
 }
 ?>
