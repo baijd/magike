@@ -3,13 +3,35 @@ body
 	font-family:verdana, Helvetica, sans-serif;
 	padding:0;
 	margin:0;
-	background:url(images/top.gif);
+	background:#292D34;
 }
 
 #banner
 {
 	background:url(images/banner.jpg);
 	height:260px;
+}
+
+h1
+{
+	font-family:Georgia, Helvetica, sans-serif;
+	font-weight:normal;
+	color:#AAA;
+	font-size:42px;
+	margin:0 0 20px 0;
+	padding-left:40px;
+	background:url(images/rss.jpg) left center no-repeat;
+}
+
+h1 a
+{
+	color:#AAA;
+}
+
+h1 a:hover
+{
+	color:#EEE;
+	text-decoration: none;
 }
 
 #photo_border
@@ -151,7 +173,6 @@ body
 {
 	width:750px;
 	float:left;
-	background:#FFF;
 }
 
 #side
@@ -165,34 +186,42 @@ body
 {
 	float:left;
 	width:470px;
-	padding:20px;
+	padding:10px 20px;
 }
 
 #sidebar
 {
 	float:left;
 	font-family:'Trebuchet ms',Helvetica,sans-serif;
-	width:239px;
-	background:#595959;
+	width:240px;
+	background:#383D44;
 	margin-top:10px;
-	padding-bottom:32769px;
-	margin-bottom:-32769px;
-	border-left:1px solid #555;
-	border-top:1px solid #555;
+}
+
+#sidebar .top
+{
+	height:10px;
+	background:url(images/sidebar_top.gif);
+}
+
+#sidebar .bottom
+{
+	height:10px;
+	background:url(images/sidebar_bottom.gif);
 }
 
 #sidebar h2
 {
 	font-size:10pt;
-	color:#333;
+	color:#777;
+	background:#383D44;
 	margin:0;
 	font-weight:normal;
-	padding:0 5px 0 25px;
+	padding:0 5px;
 	height:24px;
 	line-height:24px;
-	border-top:1px solid #666;
-	border-bottom:1px solid #444;
-	background:url(images/li.gif) left center no-repeat;
+	border-top:1px solid #464A52;
+	border-bottom:1px solid #2C2F32;
 }
 
 #sidebar ul
@@ -207,18 +236,18 @@ body
 	height:24px;
 	line-height:24px;
 	font-size:9pt;
-	border-top:1px solid #666;
-	border-bottom:1px solid #444;
+	border-top:1px solid #464A52;
+	border-bottom:1px solid #2C2F32;
 }
 
 #sidebar ul li a
 {
 	color:#CCC;
 	text-decoration: none;
-	background:#555;
+	background:#383D44;
 	display:block;
 	padding:0 5px;
-	width:229px;
+	width:230px;
 	height:24px;
 	line-height:24px;
 }
@@ -237,8 +266,8 @@ body
 
 .entry
 {
-	border-bottom:1px solid #CCC;
-	color:#383D44;
+	border-bottom:1px solid #383D44;
+	color:#6D7887;
 	font-family:'Trebuchet ms',Helvetica,sans-serif;
 	margin-bottom:20px;
 }
@@ -247,7 +276,7 @@ body
 {
 	padding:0;
 	margin:0;
-	font-size:12pt;
+	font-size:22px;
 	height:30px;
 	line-height:30px;
 	font-weight:normal;
@@ -340,12 +369,12 @@ ol.comment li{
 
 .entry h2 a
 {
-	color:#333;
+	color:#777;
 }
 
 .entry h2 a:hover
 {
-	color:#000;
+	color:#CCC;
 	text-decoration: none;
 }
 
@@ -356,7 +385,7 @@ ol.comment li{
 
 .entry_date
 {
-	font-size:7pt;
+	font-size:9pt;
 	font-family:Georgia, Helvetica, sans-serif;
 	margin-bottom:10px;
 }
@@ -414,12 +443,11 @@ ol.comment li{
 
 #menu_content
 {
-	height:77px;
 	padding:0;
-	padding-top:60px;
 	font-size:10pt;
 	height:24px;
-	background:#171817 url(images/logo.jpg) left top no-repeat;
+	background:#14161B url(images/top_menu.gif);
+	border-bottom:1px solid #111;
 }
 
 #menu_content ul
@@ -460,40 +488,42 @@ ol.comment li{
 	color:#FFF;
 }
 
-#bottom
-{
-	width:100%;
-    float:left;
-	background:#E3EFFF url(images/bottom.gif);
-	border-top:1px solid #AAA;
-}
-
 #bottom_content
 {
+	background:#111317;
 	height:200px;
-	border-top:2px solid #B7D6FF;
+	border-top:1px solid #464A52;
+	border-bottom:1px solid #464A52;
 }
 
-#footer{
-    color:#EEE;
+#footer
+{
+    color:#AAA;
     margin:0;
-	font-size:7pt;
+	font-size:8pt;
     float:left;
 	width:100%;
 	text-align:center;
-	font-weight:bold;
-	font-family:verdana, Helvetica, sans-serif;
+	font-family:Trebuchet MS,verdana, Helvetica, sans-serif;
+}
+
+#footer a img
+{
+	border:none;
 }
 
 #footer_content
 {
-	padding:2px 0;
+	background:#111317;
+	height:60px;
+	border-top:1px solid #464A52;
 }
 
 #footer_content p
 {
 	padding:0;
 	margin:0;
-	height:30px;
-	line-height:30px;
+	height:25px;
+	line-height:25px;
 }
+

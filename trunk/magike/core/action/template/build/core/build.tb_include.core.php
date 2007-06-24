@@ -16,14 +16,14 @@ class TbInclude extends TemplateBuild
 	
 	private function praseLinkPath($fileString,$dirName)
 	{
-		return preg_replace("/\<\[include:\s*(.+?)\s*\]\>/is",$dirName."/\\1",$fileString);
+		return preg_replace("/\<\[include:\s*(.+?)\s*\]\>/is","<[include:".$dirName."/\\1]>",$fileString);
 	}
 	
 	public function linkInclude($matches)
 	{
 		$this->found = true;
 		$includeFile = $this->dirName.'/'.$matches[1].'.tpl';
-		$dirName = str_replace($this->dirName.'/','',dirname($includeFile));
+		$dirName = str_replace($this->dirName,'',dirname($includeFile));
 		if(!file_exists($includeFile))
 		{
 			$this->throwException(E_ACTION_TEMPLATEBUILD_INCLUDEFILENOTEXISTS,$includeFile);

@@ -36,6 +36,14 @@ class PostInput extends MagikeModule
 		$input['post_time'] = time() - $this->stack['static_var']['server_timezone'];
 		$input['post_name'] = $input['post_is_page'] && NULL == $_POST['post_name'] ? urlencode($input['post_title']) : $input['post_name'];
 		
+		//自动生成密码
+		$autoPassword = NULL;
+		if($input['post_is_hidden'] && NULL == $_POST['post_password'])
+		{
+			$input['post_password'] = mgCreateRandomString(7);
+			$autoPassword = ',密码为<b>'.$input['post_password'].'</b>.';
+		}
+		
 		$postModel = $this->loadModel('posts');
 		$insertId = $postModel->insertTable($input);
 		$categoriesModel = $this->loadModel('categories');
@@ -62,7 +70,7 @@ class PostInput extends MagikeModule
 		$this->result['trackback'] = $trackback;
 		$this->result['insert_id'] = $insertId;
 		$this->result['time'] = date("H点i分");
-		$this->result['word'] = '文章 "'.$input['post_title'].'" 已经成功提交';
+		$this->result['word'] = '文章 "'.$input['post_title'].'" 已经成功提交'.$autoPassword;
 	}
 	
 	public function updatePost()
@@ -84,6 +92,14 @@ class PostInput extends MagikeModule
 		$input['post_is_draft'] = isset($_POST['post_is_draft']) && $_POST['post_is_draft'] ? $_POST['post_is_draft'] : 0;
 		$input['post_edit_time'] = time() - $this->stack['static_var']['server_timezone'];
 		$input['post_name'] = $input['post_is_page'] && NULL == $_POST['post_name'] ? urlencode($input['post_title']) : $input['post_name'];
+		
+		//自动生成密码
+		$autoPassword = NULL;
+		if($input['post_is_hidden'] && NULL == $_POST['post_password'])
+		{
+			$input['post_password'] = mgCreateRandomString(7);
+			$autoPassword = ',密码为<b>'.$input['post_password'].'</b>.';
+		}
 		
 		$postModel = $this->loadModel('posts');
 		$post = $postModel->fectchOneByKey($_GET['post_id']);
@@ -112,7 +128,7 @@ class PostInput extends MagikeModule
 		$this->result['open'] = true;
 		$this->result['trackback'] = $trackback;
 		$this->result['time'] = date("H点i分");
-		$this->result['word'] = '文章 "'.$post['post_title'].'" 已经被更新';
+		$this->result['word'] = '文章 "'.$post['post_title'].'" 已经被更新'.$autoPassword;
 	}
 	
 	public function deletePost()

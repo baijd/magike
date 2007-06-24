@@ -56,6 +56,11 @@ class Database extends MagikeObject
 
 	private function filterQuotesSentence($value)
 	{
+		if(NULL == $value)
+		{
+			return "''";
+		}
+		
 		foreach($value as $key => $val)
 		{
 			$val = str_replace("'","''",$val);

@@ -12,3 +12,5 @@
 <link href="{$static_var.siteurl}/templates/{$static_var.template}/style.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
+<[include:menu]>
+

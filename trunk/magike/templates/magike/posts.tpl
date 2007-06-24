@@ -1,27 +1,28 @@
 <[include:header]>
-<[include:menu]>
 
 
-<[module:posts_category_list]>
-<[module:posts_category_list_page_nav]>
+<[module:posts.fectch_by_category]>
+<[module:page_navigator.posts_fectch_by_category]>
 
-<[if:$posts_category_list]>
-<[assign:$posts_category_list AS $posts]>
-<[assign:$posts_category_list_page_nav AS $posts_nav]>
+<[if:$posts.fectch_by_category]>
+<[assign:$posts.fectch_by_category AS $archives]>
+<[assign:$page_navigator.posts_fectch_by_category AS $navigator]>
 <[/if]>
 
-<[module:posts_tag_list]>
-<[module:posts_tag_list_page_nav]>
+<[module:posts.fectch_by_tag]>
+<[module:page_navigator.posts_fectch_by_tag]>
 
-<[if:$posts_tag_list]>
-<[assign:$posts_tag_list AS $posts]>
-<[assign:$posts_tag_list_page_nav AS $posts_nav]>
+<[if:$posts.fectch_by_tag]>
+<[assign:$posts.fectch_by_tag AS $archives]>
+<[assign:$page_navigator.posts_fectch_by_tag AS $navigator]>
 <[/if]>
 
 <div id="content">
 	<div id="side">
+	<div id="incontent">
+	<[include:menu]>
 	<div id="sidecontent">
-	<[loop:$posts AS $post]>
+	<[loop:$archives AS $post]>
 		<div class="entry">
 			<h2><a href="{$static_var.index}/archives/{$post.post_id}/">{$post.post_title}</a></h2>
 			<div class="entry_date">{$post.post_time}</div>
@@ -32,11 +33,13 @@
 		</div>
 	<[/loop]>
 	<div class="page_nav">
-			<[if:$posts_nav.next]><a class="right" href="{$static_var.index}/{$posts_nav.query}/{$posts_nav.next}/">下一页</a><[/if]>
-			<[if:$posts_nav.prev]><a class="left" href="{$static_var.index}/{$posts_nav.query}/{$posts_nav.prev}/">上一页</a><[/if]>
+			<[if:$navigator.next]><a class="right" href="{$static_var.index}/{$navigator.query}/{$navigator.next}/">下一页</a><[/if]>
+			<[if:$navigator.prev]><a class="left" href="{$static_var.index}/{$navigator.query}/{$navigator.prev}/">上一页</a><[/if]>
 	</div>
 	</div>
 	<[include:sidebar]>
+	<div style="height:10px;float:left;width:750px;background:#FFF;clear:both"></div>
+	</div>
 	</div>
 </div>
 <[include:footer]>
