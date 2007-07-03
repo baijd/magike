@@ -6,12 +6,6 @@ body
 	background:#292D34;
 }
 
-#banner
-{
-	background:url(images/banner.jpg);
-	height:260px;
-}
-
 h1
 {
 	font-family:Georgia, Helvetica, sans-serif;
@@ -32,136 +26,6 @@ h1 a:hover
 {
 	color:#EEE;
 	text-decoration: none;
-}
-
-#photo_border
-{
-	border-top:1px solid #AAA;
-}
-
-#photo
-{
-	height:35px;
-	background:#FFF url(images/top.gif) top repeat-x;;
-	border-top:2px solid #BED889;
-	border-bottom:2px solid #BED889;
-	font-size:10pt;
-	color:#383D44;
-	font-family:'Trebuchet ms',Helvetica,sans-serif;
-}
-
-#photo a
-{
-	color:#326EA1;
-	font-weight:bold;
-	text-decoration: underline;
-}
-
-#photo sup
-{
-	font-weight:bold;
-	font-size:8pt;
-}
-
-#photo a:hover
-{
-	text-decoration: none;
-}
-
-#photo h3
-{
-	font-size:9pt;
-	font-family:verdana, Helvetica, sans-serif;
-	margin:0;
-}
-
-#photo_content img
-{
-	background:#FFF;
-	margin:0 10px 0 0;
-}
-
-#photo h2
-{
-	padding:0;
-	margin:0;
-	font-size:20pt;
-	height:30px;
-	line-height:30px;
-	font-weight:normal;
-}
-
-#photo_content
-{
-	height:35px;
-	margin:0 auto;
-	width:750px;
-}
-
-#photo_content_left
-{
-	height:35px;
-	width:510px;
-	float:left;
-}
-
-#photo_content_right
-{
-	height:35px;
-	width:235px;
-	float:left;
-	padding:0;
-}
-
-#photo_content_right input.text
-{
-	border:1px solid #AAA;
-	padding:4px;
-	background:#FFF url(images/input_bg.gif) top repeat-x;
-	color:#999;
-	font-size:9pt;
-	float:left;
-	margin-right:0;
-	height:14px;
-	width:120px;
-}
-
-#photo_content_right img
-{
-	padding:6px;
-}
-
-#photo_content_right input.image
-{
-	float:left;
-}
-
-#photo_content p
-{
-	padding:5px;
-	margin:0;
-	line-height:18px;
-}
-
-#banner_content
-{
-	width:750px;
-	margin:0 auto;
-	padding-top:15px;
-}
-
-#banner_content img
-{
-	margin:-5px 0 0 15px;
-	padding:0;
-}
-
-#banner_logo
-{
-	background:url(images/logo.gif) top left no-repeat;
-	width:162px;
-	height:162px;
-	position:absolute;
 }
 
 #content
@@ -201,13 +65,15 @@ h1 a:hover
 #sidebar .top
 {
 	height:10px;
-	background:url(images/sidebar_top.gif);
+	font-size:5px;
+	background:url(images/sidebar_top.gif) left bottom no-repeat;
 }
 
 #sidebar .bottom
 {
 	height:10px;
-	background:url(images/sidebar_bottom.gif);
+	font-size:5px;
+	background:url(images/sidebar_bottom.gif) left top no-repeat;
 }
 
 #sidebar h2
@@ -284,44 +150,79 @@ h1 a:hover
 
 h2.response,.comment-form
 {
-	color:#566F22;
+	color:#6D7887;
 }
 
 .comment-form
 {
 	font-size:9pt;
+	background:#0B0C0F url(images/quote.gif) top right no-repeat;
+	padding:10px;
+	border:2px solid #1E2128;
+	margin-top:20px;
+}
+
+.comment-form p
+{
+	font-size:16px;
 }
 
 .comment-form input.text
 {
-	background:#FFF url(images/input_bg.gif) left repeat-x;
-	border:1px solid #F4F4F4;
-	border-left:1px solid #ACA899;
-	border-top:1px solid #ACA899;
+	background:#111317;
+	border:1px solid #1E2128;
+	border-top:#111;
+	border-left:#111;
+	color:#6D7887;
 	line-height:20px;
 	height:20px;
-	font-size:10pt;
+	font-size:9pt;
 	padding:2px;
+}
+
+.comment-form input.button
+{
+	background:#111317;
+	border:1px solid #1E2128;
+	border-bottom:#111;
+	border-right:#111;
+	color:#6D7887;
+	line-height:20px;
+	font-weight:bold;
 }
 
 .comment-form textarea.text
 {
-	background:#FFF;
-	border:1px solid #EBEBEB;
-	border-left:1px solid #ACA899;
-	border-top:1px solid #ACA899;
-	font-size:10pt;
+	background:#111317;
+	border:1px solid #1E2128;
+	border-top:#111;
+	border-left:#111;
+	color:#6D7887;
+	font-size:9pt;
 	padding:2px;
 	margin:0;
+	overflow:auto;
+}
+
+.comment-form p
+{
+	padding:0;
+	margin:0;
+}
+
+.comment-form p.comment-word
+{
+	font-size:9pt;
+	font-weight:bold;
+	margin:0;
+	padding:10px 0 0 0;
 }
 
 .comment-form .validate-word
 {
-	background:url(images/exclamation.gif) left center no-repeat;
-	margin-left:10px;
-	padding-left:20px;
 	font-weight:bold;
-	color:#990000;
+	font-size:9pt;
+	color:#6D7887;
 }
 
 ol.comment{
@@ -330,41 +231,45 @@ ol.comment{
 }
 
 ol.comment cite{
-    color:#444;
-    background:url(images/comments.gif) left top no-repeat;
-    padding:0 20px;
+    color:#999;
+    padding:0;
     margin:0;
     font-style:normal;
     font-size:9pt; font-weight:bold; font-family:Verdana
 }
 
 ol.comment li small{
-	color:#AAA;
+	color:#999;
 	font-size:7pt;
 }
 
 ol.comment li p{
-    color:#29303B;
+    color:#6D7887;
     margin:5px 0;
     padding:0;
     font-size:9pt;
 }
 
 ol.comment li a{
-	color:#566F22;
-	text-decoration: none;
+	color:#999;
+	text-decoration: underline;
 }
 
 ol.comment li a:hover{
-	color: #b41;
+	text-decoration: none;
 }
 
 ol.comment li{
     list-style:none;
-    padding:10px 2px;
+    padding:10px 20px;
     margin:0;
     line-height:20px;
-    border-top:1px solid #C1DB8C;
+	background:#202328 url(images/comment-alt.gif) left center no-repeat;
+}
+
+ol.comment li.alt
+{
+	background:none;
 }
 
 .entry h2 a

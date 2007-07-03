@@ -20,8 +20,8 @@
 <div id="content">
 	<div id="side">
 	<div id="incontent">
-	<[include:menu]>
 	<div id="sidecontent">
+	<h1>{<a href="{$static_var.siteurl}">{$static_var.blog_name}</a>}</h1>
 	<[loop:$archives AS $post]>
 		<div class="entry">
 			<h2><a href="{$static_var.index}/archives/{$post.post_id}/">{$post.post_title}</a></h2>
@@ -38,7 +38,6 @@
 	</div>
 	</div>
 	<[include:sidebar]>
-	<div style="height:10px;float:left;width:750px;background:#FFF;clear:both"></div>
 	</div>
 	</div>
 </div>

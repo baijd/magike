@@ -42,5 +42,6 @@ $lang = array(
 	'setting_write_archive' => '文章撰写',
 	'setting_comments_output' => '回响',
 	'setting_users'	=> '用户',
+	'setting_mail'	=> '邮件',
 );
 ?>

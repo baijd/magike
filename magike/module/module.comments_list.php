@@ -23,7 +23,7 @@ class CommentsList extends MagikeModule
 				return false;
 			}
 		}
-		$val['comment_text'] = mgStripTags($data['substr'] ? mgSubStr($val['comment_text'],0,$data['substr'],$data['trim']) : $val['comment_text']);
+		$val['comment_text'] = nl2br(mgStripTags($data['substr'] ? mgSubStr($val['comment_text'],0,$data['substr'],$data['trim']) : $val['comment_text']));
 		$val['comment_date'] = date($data['datefmt'],$this->stack['static_var']['time_zone'] + $val['comment_date']);
 		$val['comment_alt']	 = $num%2;
 		return $val;

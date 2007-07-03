@@ -48,9 +48,9 @@ class CommentInsert extends MagikeModule
 			$input['comment_homepage'] = isset($_POST['comment_homepage']) ? $_POST['comment_homepage'] : NULL;
 			$input['comment_text'] = isset($_POST['comment_text']) ? $_POST['comment_text'] : NULL;
 			
+			$userModel = $this->loadModel('users');
 			if($this->stack['access']['login'])
 			{
-				$userModel = $this->loadModel('users');
 				$user = $userModel->fectchOneByKey($this->stack['access']['user_id']);
 				$input['comment_user'] = $user["user_name"];
 				$input['comment_email'] = $user["user_mail"];
@@ -102,9 +102,17 @@ class CommentInsert extends MagikeModule
 			}
 			
 			//发送邮件提示
-			//$mail = new Smtp('smtp.126.com',25,true,'qining_china','6561041');
-			//$mail->sendmail('qining-china@tom.com', 'qining_china@126.com', '测试', '这是一封测试邮件', 'HTML',$this->stack['static_var']['charset']);
-
+			if($this->stack['static_var']['comment_email'])
+			{
+				$author = $userModel->fectchOneByKey($post['user_id']);
+				if($author['user_mail'])
+				{
+					$this->result['mailer']['subject'] = '"'.$this->stack['static_var']['blog_name'].'"访客评论提示';
+					$this->result['mailer']['body'] = '这是一封测试邮件';
+					$this->result['mailer']['send_to'] = $author['user_mail'];
+					$this->result['mailer']['send_to_user'] = $author['user_name'];
+				}
+			}
 		}
 		else
 		{
@@ -128,7 +136,7 @@ class CommentInsert extends MagikeModule
 			}
 			else
 			{
-				header('location: '.$_GET['referer']);
+				//header('location: '.$_GET['referer']);
 			}
 		}
 		else

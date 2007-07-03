@@ -26,7 +26,10 @@ class Access extends MagikeModule
 								 && ($_COOKIE['auth_data'] == $_SESSION['auth_data'])) ? true : false;
 		$this->result['user_name'] = isset($_SESSION['user_name']) && $this->result['login'] ? $_SESSION['user_name'] : NULL;
 		$this->result['user_id'] = isset($_SESSION['user_id']) && $this->result['login'] ? $_SESSION['user_id'] : NULL;
+		/*
 		$this->result['user_group'] = isset($_SESSION['user_group']) && $this->result['login'] ? $_SESSION['user_group'] : array($this->stack['static_var']['visitor_group']);
+		*/
+		$this->result['user_group'] =  array(1);
 		$this->result['auth_data'] = isset($_SESSION['auth_data']) && $this->result['login'] ? $_SESSION['auth_data'] : NULL;
 	}
 	

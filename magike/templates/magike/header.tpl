@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="content-type" content="{$static_var.content_type};charset={$static_var.charset}" />
-<title>{$static_var.blog_name}</title>
+<title><[if:$static_var.blog_title]>{$static_var.blog_title}<[else]>{$static_var.blog_name}<[/if]> - {$static_var.describe}</title>
 <meta name="generator" content="{$static_var.version}" />
 <meta name="template" content="{$static_var.template}" />
 <meta name="description" content="{$static_var.describe}" />

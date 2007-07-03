@@ -34,7 +34,7 @@ class FectchBySearch extends Posts
 		}
 		else
 		{
-			$this->stack['static_var']['blog_name'] = '搜索关键字 "'.$_GET['keywords'].'"'.' &raquo; '.$this->stack['static_var']['blog_name'];
+			$this->stack['static_var']['blog_title'] = '搜索关键字 "'.$_GET['keywords'].'"'.' &raquo; '.$this->stack['static_var']['blog_name'];
 		}
 		
 		return $this->model->fectchPostsByKeywords($keywords,$this->getArgs['limit'],$this->offset,array('function' => array($this,'prasePost')));

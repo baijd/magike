@@ -5,6 +5,14 @@
 
 <div id="sidebar">
 	<div class="top"></div>
+	<h2>Search</h2>
+	<ul>
+		<li>
+		<form method="get" style="margin:0;padding:0">
+			<input type="text" name="keywords" size="40" value="Please enter keywords here ..." style="height:16px;font-size:8pt;border:none;padding:0 5px;color:#CCC;background:#383D44" />
+		</form>
+		</li>
+	</ul>
 	<h2>Category</h2>
 	<ul>
 	<[loop:$categories_list AS $category]>

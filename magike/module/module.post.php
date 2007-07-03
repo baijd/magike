@@ -20,7 +20,7 @@ class Post extends MagikeModule
 	{
 		if(isset($this->stack['static_var']['blog_name']))
 		{
-			$this->stack['static_var']['blog_name'] = $val['post_title'].' &raquo; '.$this->stack['static_var']['blog_name'];
+			$this->stack['static_var']['blog_title'] = $val['post_title'].' &raquo; '.$this->stack['static_var']['blog_name'];
 		}
 		if(isset($this->stack['static_var']['keywords']) && $val['post_tags'])
 		{
