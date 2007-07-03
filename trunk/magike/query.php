@@ -52,7 +52,7 @@ query("CREATE TABLE `mg_comments` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8");
 
-query("INSERT INTO `mg_comments` (`id`, `comment_user`, `comment_gmt`, `comment_date`, `comment_email`, `comment_homepage`, `comment_agent`, `comment_ip`, `comment_text`, `comment_title`, `post_id`, `comment_type`, `comment_publish`) VALUES 
+query("INSERT INTO `mg_comments` (`id`, `comment_user`, `comment_date`, `comment_email`, `comment_homepage`, `comment_agent`, `comment_ip`, `comment_text`, `comment_title`, `post_id`, `comment_type`, `comment_publish`) VALUES 
 (1, 'magike' , 1172842951, 'magike.net@gmail.com', 'http://www.magike.net', 'Magike/1.0', '127.0.0.1', '欢迎您选择Magike', NULL, 1, 'comment', 'approved')");
 
 query("CREATE TABLE `mg_files` (
@@ -146,7 +146,8 @@ query("INSERT INTO `mg_menus` (`id`, `menu_name`, `path_id`, `menu_parent`) VALU
 (32, 'lang.admin_menu.setting_archives_output', 32, 30),
 (33, 'lang.admin_menu.setting_write_archive', 33, 30),
 (34, 'lang.admin_menu.setting_comments_output', 34, 30),
-(35, 'lang.admin_menu.setting_users', 35, 30)");
+(35, 'lang.admin_menu.setting_users', 35, 30),
+(36, 'lang.admin_menu.setting_mail', 58, 30)");
 
 query("CREATE TABLE `mg_path_group_mapping` (
   `id` int(10) unsigned NOT NULL auto_increment,
@@ -225,7 +226,8 @@ query("INSERT INTO `mg_path_group_mapping` (`id`, `path_id`, `group_id`) VALUES
 (67, 37, 1),
 (68, 37, 2),
 (69, 45, 1),
-(70, 46, 1)");
+(70, 46, 1),
+(71, 58, 1)");
 
 query("CREATE TABLE `mg_paths` (
   `id` int(10) unsigned NOT NULL auto_increment,
@@ -238,7 +240,7 @@ query("CREATE TABLE `mg_paths` (
   UNIQUE KEY `pt_name` (`path_name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8");
 
-query("INSERT INTO `mg_paths` (`id`, `path_name`, `path_action`, `path_file`, `path_describe`) VALUES 
+query("INSERT INTO `mg_paths` (`id`, `path_name`, `path_action`, `path_file`, `path_cache`,`path_describe`) VALUES 
 (1, '/', 'template', '/{\$static_var.template}/index.tpl', 0,'网站主页'),
 (2, '/admin/login/', 'template', '/{\$static_var.admin_template}/login.tpl', 0,'后台登陆'),
 (3, '/admin/panel/', 'template', '/{\$static_var.admin_template}/index.tpl', 0,'后台主页'),
@@ -295,7 +297,8 @@ query("INSERT INTO `mg_paths` (`id`, `path_name`, `path_action`, `path_file`, `p
 (54, '/category/[category_postname=%a]/', 'template', '/{\$static_var.template}/posts.tpl', 0,'分类文章'),
 (55, '/category/[category_postname=%a]/[page=%d]/', 'template', '/{\$static_var.template}/posts.tpl', 0,'分类文章分页'),
 (56, '/tags/[tag_name=%s]/', 'template', '/{\$static_var.template}/posts.tpl', 0,'标签文章'),
-(57, '/tags/[tag_name=%s]/[page=%d]/', 'template', '/{\$static_var.template}/posts.tpl', 0,'标签文章分页')");
+(57, '/tags/[tag_name=%s]/[page=%d]/', 'template', '/{\$static_var.template}/posts.tpl', 0,'标签文章分页'),
+(58, '/admin/settings/setting_mail/', 'template', '/{\$static_var.template}/setting_mail.tpl', 0,'后台设置邮箱')");
 
 query("CREATE TABLE `mg_post_tag_mapping` (
   `id` int(10) unsigned NOT NULL auto_increment,
@@ -332,7 +335,7 @@ query("CREATE TABLE `mg_posts` (
   KEY `post_tags` (`post_tags`(20))
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8");
 
-query("INSERT INTO `mg_posts` (`id`, `post_title`, `post_name`, `post_gmt`, `post_time`, `post_edit_time`, `post_tags`, `post_password`, `post_content`, `category_id`, `user_id`, `post_user_name`, `post_comment_num`, `post_allow_ping`, `post_allow_comment`, `post_allow_feed`, `post_is_draft`, `post_is_hidden`, `post_is_page`) VALUES 
+query("INSERT INTO `mg_posts` (`id`, `post_title`, `post_name`, `post_time`, `post_edit_time`, `post_tags`, `post_password`, `post_content`, `category_id`, `user_id`, `post_user_name`, `post_comment_num`, `post_allow_ping`, `post_allow_comment`, `post_allow_feed`, `post_is_draft`, `post_is_hidden`, `post_is_page`) VALUES 
 (1, '欢迎使用Magike', 'hello_world', 1172842951, 1180181533, '', '', '<p>如果您看到这篇文章,表示您的blog已经安装成功.</p>', 1, 1, 'admin', 1, 1, 1, 1, 0, 0, 0)");
 
 query("CREATE TABLE `mg_statics` (
@@ -364,21 +367,26 @@ query("INSERT INTO `mg_statics` (`id`, `static_name`, `static_value`) VALUES
 (18, 'count_posts', '1'),
 (19, 'count_comments', '1'),
 (20, 'keywords', 'Magike'),
-(21, 'post_log', '0'),
-(22, 'referer_log', '0'),
-(23, 'post_list_num', '10'),
-(24, 'comment_list_num', '10'),
-(25, 'comment_email', '0'),
-(26, 'write_editor_rows', '16'),
-(27, 'write_default_name', 'nickname'),
-(28, 'write_default_category', '1'),
-(29, 'write_auto_save', '0'),
-(30, 'comment_check', '0'),
-(31, 'user_allow_register', '0'),
-(32, 'user_register_group', '2'),
-(33, 'comment_email_notnull', '1'),
-(34, 'comment_homepage_notnull', '0'),
-(35, 'comment_ajax_validator', '1')");
+(21, 'post_list_num', '10'),
+(22, 'comment_list_num', '10'),
+(23, 'comment_email', '0'),
+(24, 'write_editor_rows', '16'),
+(25, 'write_default_name', 'nickname'),
+(26, 'write_default_category', '1'),
+(27, 'write_auto_save', '0'),
+(28, 'comment_check', '0'),
+(29, 'user_allow_register', '0'),
+(30, 'user_register_group', '2'),
+(31, 'comment_email_notnull', '1'),
+(32, 'comment_homepage_notnull', '0'),
+(33, 'comment_ajax_validator', '1'),
+(34, 'referer_denny', '0'),
+(35, 'smtp_host', ''),
+(36, 'smtp_port', '25'),
+(37, 'smtp_user', ''),
+(38, 'smtp_pass', ''),
+(39, 'smtp_auth', '0'),
+(40, 'smtp_ssl', '0')");
 
 query("CREATE TABLE `mg_tags` (
   `id` int(10) unsigned NOT NULL auto_increment,

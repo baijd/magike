@@ -152,17 +152,6 @@ $dblink=@mysql_connect(__DBHOST__, __DBUSER__,__DBPASS__) or die("数据库连�
 @mysql_select_db(__DBNAME__, $dblink) or die("对不起,您指定的数据库并不存在");
 require('./query.php');
 unlink('./query.php');
-file_put_contents('./index.php',"<?php
-/**********************************
- * Created on: 2006-12-3
- * File Name : index.php
- * Copyright : Magike Group
- * License   : GNU General Public License 2.0
- *********************************/
-
-include('./core/core.php');
-?>
-");
 ?>
 <div id="element" style="height:300px">
 	<h2><img width="200" src="./templates/admin/images/logo.jpg" alt="logo" /><span>Magike安装完成!</span></h2>

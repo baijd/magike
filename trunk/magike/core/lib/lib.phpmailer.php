@@ -1021,7 +1021,7 @@ class SMTP
      */
     function get_lines() {
         $data = "";
-        while($str = fgets($this->smtp_conn,515)) {
+        while($str = @fgets($this->smtp_conn,515)) {
             if($this->do_debug >= 4) {
                 echo "SMTP -> get_lines(): \$data was \"$data\"" .
                          $this->CRLF;
@@ -1060,7 +1060,7 @@ class SMTP
  * @author Brent R. Matzelle
  * @copyright 2001 - 2003 Brent R. Matzelle
  */
-class PHPMailer
+class Phpmailer
 {
     /////////////////////////////////////////////////
     // PUBLIC VARIABLES
@@ -1208,6 +1208,8 @@ class PHPMailer
      *  @var string
      */
     var $Helo        = "";
+    
+    var $useSSL	= false;
 
     /**
      *  Sets SMTP authentication. Utilizes the Username and Password variables.
@@ -1278,6 +1280,15 @@ class PHPMailer
             $this->ContentType = "text/html";
         else
             $this->ContentType = "text/plain";
+    }
+    
+    /**
+     * Sets message type to HTML.  
+     * @param bool $bool
+     * @return void
+     */
+    function IsSSL($bool) {
+        $this->useSSL = $bool;
     }
 
     /**
@@ -1581,6 +1592,12 @@ class PHPMailer
                 $host = $hosts[$index];
                 $port = $this->Port;
             }
+	    
+	    //add ssl support
+	    if($this->useSSL)
+	    {
+		$host = 'ssl://'.$host;
+	    }
 
             if($this->smtp->Connect($host, $port, $this->Timeout))
             {

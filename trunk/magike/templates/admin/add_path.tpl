@@ -26,7 +26,7 @@
 			</p>
 		</div>
 		<div class="input">
-			<h2>路径地址</h2>
+			<h2>解析文件</h2>
 			<p>
 				<input type="text" class="text validate-me" name="path_file" value="{$insert_path.path_file}" size=60 /><span class="validate-word" id="path_file-word"></span><br />
 				<span class="discribe">(虚拟路径的解析地址,详细设置请参考帮助信息)</span>

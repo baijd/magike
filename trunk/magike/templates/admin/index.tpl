@@ -20,8 +20,7 @@
 	
 	#element-center
 	{
-		margin:0 255px !important;
-		margin:0 253px;
+		margin:0 255px;
 		width:auto;
 	}
 	
@@ -38,7 +37,7 @@
 		margin:0;
 		height:24px;
 		line-height:24px;
-		padding-left:7px;
+		padding:0 0 0 7px;
 		background:url({$static_var.siteurl}/templates/{$static_var.admin_template}/images/button.gif) top repeat-x;
 	}
 	
@@ -57,9 +56,11 @@
 		margin:0;
 		color:#444;
 		line-height:22px;
+		height:22px;
 		background:#EEF0F2;
 		border-bottom:#BEC9D1 solid 1px;
 		border-top:#FFF solid 1px;
+		overflow:hidden;
 	}
 	
 	#element ul.info li.alt
@@ -121,12 +122,12 @@
 				<li><u>注册时间</u> {$get_current_user.user_register}</li>
 				<li><a href="{$static_var.index}/admin/users/user/?user_id={$access.user_id}">编辑我的档案</a></li>
 			</ul>
-			<h2>来自友情链接&raquo;</h2>
+			<h2>新闻&raquo;</h2>
 			<ul class="info">
 			</ul>
 		</div>
 		<div id="element-center">
-						<h2>我最近发表的文章</h2>
+			<h2>我最近发表的文章</h2>
 			<ul class="info">
 			<[loop:$posts AS $post]>
 				<li><a href="{$static_var.index}/admin/posts/write/?post_id={$post.post_id}" title="{$post.post_title}">{$post.post_title}</a> 发布在<a class="close" href="{$static_var.index}/admin/posts/category?c={$post.category_id}">{$post.category_name}</a>  <span class="describe">{$post.post_time}</span></li>
@@ -137,9 +138,6 @@
 			<[loop:$comments_list_all AS $comment]>
 				<li>{$comment.comment_user} 在 <a href="{$static_var.index}/admin/posts/write/?post_id={$comment.post_id}">{$comment.post_title}</a> <span class="describe">{$comment.comment_text}</span></li>
 			<[/loop]>
-			</ul>
-			<h2>访问统计</h2>
-			<ul class="info">
 			</ul>
 		</div>
 	</div>

@@ -16,7 +16,7 @@ class PostsFectchByTag extends PageNavigator
 		$postModel = $this->loadModel('posts');
 		$total = $postModel->countPostsByTag($_GET['tag_name']);
 		$this->result = $this->makeClassicNavigator($this->getArgs['limit'],$total,'tags/'.$_GET['tag_name']);
-		$this->stack['static_var']['blog_name'] = $_GET['tag_name'].' &raquo; 标签 &raquo; '.$this->stack['static_var']['blog_name'];
+		$this->stack['static_var']['blog_title'] = $_GET['tag_name'].' &raquo; 标签 &raquo; '.$this->stack['static_var']['blog_name'];
 	}
 	
 	public function runModule($args)

@@ -18,7 +18,7 @@ class PostsFectchByCategory extends PageNavigator
 		$total = $postModel->countPostsByCategory($_GET['category_postname']);
 		$category = $categoryModel->fectchOneByFieldEqual('category_postname',$_GET['category_postname']);
 		$this->result = $this->makeClassicNavigator($this->getArgs['limit'],$total,'category/'.$_GET['category_postname']);
-		$this->stack['static_var']['blog_name'] = $category['category_name'].' &raquo; 分类 &raquo; '.$this->stack['static_var']['blog_name'];
+		$this->stack['static_var']['blog_title'] = $category['category_name'].' &raquo; 分类 &raquo; '.$this->stack['static_var']['blog_name'];
 	}
 	
 	public function runModule($args)

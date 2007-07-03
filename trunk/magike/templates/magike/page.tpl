@@ -1,10 +1,10 @@
 <[include:header]>
-<[include:menu]>
 
 
 <[module:post]>
 <div id="content">
 	<div id="side">
+	<div id="incontent">
 	<div id="sidecontent">
 		<div class="entry">
 			<h2><a href="{$static_var.index}/{$post.post_name}/">{$post.post_title}</a></h2>
@@ -15,6 +15,7 @@
 		</div>
 	</div>
 	<[include:sidebar]>
+	</div>
 	</div>
 </div>
 <[include:footer]>

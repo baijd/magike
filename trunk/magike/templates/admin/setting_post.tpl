@@ -42,26 +42,6 @@
 				<span class="discribe">(文章强制摘要的字数,如果为0表示不强制摘要)</span>
 			</p>
 		</div>
-		<div class="input">
-			<h2>启用来源统计</h2>
-			<p>
-				<select name="referer_log">
-					<option value="1" <[if:$static_var.referer_log == 1]>selected=true<[/if]>>是</option>
-					<option value="0" <[if:$static_var.referer_log != 1]>selected=true<[/if]>>否</option>
-				</select><br />
-				<span class="discribe">(记录用户从何处点击您的文章)</span>
-			</p>
-		</div>
-		<div class="input">
-			<h2>启用访问统计</h2>
-			<p>
-				<select name="post_log">
-					<option value="1" <[if:$static_var.post_log == 1]>selected=true<[/if]>>是</option>
-					<option value="0" <[if:$static_var.post_log != 1]>selected=true<[/if]>>否</option>
-				</select><br />
-				<span class="discribe">(记录每篇文章的访问量)</span>
-			</p>
-		</div>
 		<div class="submit">
 			<span class="button" onclick="magikeValidator('{$static_var.index}/helper/validator/','setting_post');">提交信息</span>
 			<input type="hidden" name="do" value="update" />

@@ -120,9 +120,9 @@ function mgStrLen($str)
 
 function mgStripTags($string)
 {
-	$string=strip_tags($string);
-	$string=str_replace(" ","",$string);
-	$string=trim($string);
+	$string = strip_tags($string);
+	$string = trim($string);
+	$string = str_replace("\r\n\r\n","",$string);
 
 	return $string;
 }
