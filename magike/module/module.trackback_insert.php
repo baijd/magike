@@ -73,6 +73,22 @@ class TrackbackInsert extends MagikeModule
 				$staticModel->increaseValueByName('count_comments');
 				$this->deleteCache('static_var');
 			}
+			
+			//发送邮件提示
+			if($this->stack['static_var']['comment_email'])
+			{
+				$userModel = $this->loadModel('users');
+				$author = $userModel->fectchOneByKey($post['user_id']);
+				if($author['user_mail'])
+				{
+					$this->result['mailer']['subject'] = '"'.$this->stack['static_var']['blog_name'].'"回响提示';
+					$this->result['mailer']['body'] = $input['comment_user'].'在['.
+					date('Y-m-d H:i:s',$this->stack['static_var']['time_zone'] + $input['comment_date'])."]发布引用通告:\r\n".
+					mgStripTags($input['comment_text']);
+					$this->result['mailer']['send_to'] = $author['user_mail'];
+					$this->result['mailer']['send_to_user'] = $author['user_name'];
+				}
+			}
 		}
 		else
 		{
