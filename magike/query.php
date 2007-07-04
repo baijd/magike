@@ -227,7 +227,11 @@ query("INSERT INTO `mg_path_group_mapping` (`id`, `path_id`, `group_id`) VALUES
 (68, 37, 2),
 (69, 45, 1),
 (70, 46, 1),
-(71, 58, 1)");
+(71, 58, 1),
+(72, 59, 1),
+(73, 59, 2),
+(74, 60, 1),
+(75, 60, 2)");
 
 query("CREATE TABLE `mg_paths` (
   `id` int(10) unsigned NOT NULL auto_increment,
@@ -298,7 +302,9 @@ query("INSERT INTO `mg_paths` (`id`, `path_name`, `path_action`, `path_file`, `p
 (55, '/category/[category_postname=%a]/[page=%d]/', 'template', '/{\$static_var.template}/posts.tpl', 0,'分类文章分页'),
 (56, '/tags/[tag_name=%s]/', 'template', '/{\$static_var.template}/posts.tpl', 0,'标签文章'),
 (57, '/tags/[tag_name=%s]/[page=%d]/', 'template', '/{\$static_var.template}/posts.tpl', 0,'标签文章分页'),
-(58, '/admin/settings/setting_mail/', 'template', '/{\$static_var.template}/setting_mail.tpl', 0,'后台设置邮箱')");
+(58, '/admin/settings/setting_mail/', 'template', '/{\$static_var.template}/setting_mail.tpl', 0,'后台设置邮箱'),
+(59, '/search/', 'template', '/{$static_var.template}/posts.tpl', 0,'文章搜索'),
+(60, '/rss/archives/[post_id=%d]/', 'template', '/{$static_var.xml_template}/rss_archives.tpl', 0,'RSS文章输出')");
 
 query("CREATE TABLE `mg_post_tag_mapping` (
   `id` int(10) unsigned NOT NULL auto_increment,
@@ -419,5 +425,5 @@ query("CREATE TABLE `mg_users` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8");
 
 query("INSERT INTO `mg_users` (`id`, `user_name`, `user_realname`, `user_password`, `user_mail`, `user_url`, `user_nick`, `user_about`, `user_register`) VALUES 
-(1, 'admin', 'magike', '827ccb0eea8a706c4c34a16891f84e7b', '{$_POST['email']}', NULL, 'magike_nick', NULL, '".date("Y-m-d H:i:s")."')");
+(1, 'admin', 'magike', '827ccb0eea8a706c4c34a16891f84e7b', '{$_POST['email']}', {$_POST['siteurl']}, 'magike_nick', NULL, '".date("Y-m-d H:i:s")."')");
 ?>

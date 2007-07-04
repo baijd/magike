@@ -7,7 +7,11 @@
 <meta name="template" content="{$static_var.template}" />
 <meta name="description" content="{$static_var.describe}" />
 <meta name="keywords" content="{$static_var.keywords}" />
+<[if:$post.post_id]>
+<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="{$static_var.index}/rss/archives/{$post.post_id}/" />
+<[else]>
 <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="{$static_var.index}/rss/" />
+<[/if]>
 
 <link href="{$static_var.siteurl}/templates/{$static_var.template}/style.css" rel="stylesheet" type="text/css" />
 </head>

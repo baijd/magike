@@ -8,18 +8,12 @@
  
 class FectchBySearch extends Posts
 {
-	public function runModule($args)
+	private $result;
+	
+	public function outputPosts()
 	{
 		$this->requireGet('keywords');
-		$require = array('sub' 	  			=> $this->stack['static_var']['post_sub'],	//摘要字数
-					 'limit'  			=> $this->stack['static_var']['post_page_num'],	//每页篇数
-					 'striptags'		=> 0,
-					 'content'			=> 0,
-					 'time_format'		=> $this->stack['static_var']['post_date_format'],
-					);
-		$this->getArgs = $this->initArgs($args,$require);
 		$this->getPage($this->getArgs['limit']);
-		
 		$keywords = array();
 		$query = 'keywords='.$_GET['keywords'];
 		$keywords['post_title'] = $_GET['keywords'];
@@ -37,8 +31,20 @@ class FectchBySearch extends Posts
 			$this->stack['static_var']['blog_title'] = '搜索关键字 "'.$_GET['keywords'].'"'.' &raquo; '.$this->stack['static_var']['blog_name'];
 		}
 		
-		return $this->model->fectchPostsByKeywords($keywords,$this->getArgs['limit'],$this->offset,array('function' => array($this,'prasePost')));
-
+		$this->result = $this->model->fectchPostsByKeywords($keywords,$this->getArgs['limit'],$this->offset,array('function' => array($this,'prasePost')),$this->getArgs['supper']);
+	}
+	public function runModule($args)
+	{
+		$require = array('sub' 	  			=> $this->stack['static_var']['post_sub'],	//摘要字数
+					 'limit'  			=> $this->stack['static_var']['post_page_num'],	//每页篇数
+					 'striptags'		=> 0,
+					 'content'			=> 0,
+					 'time_format'		=> $this->stack['static_var']['post_date_format'],
+					 'supper'		=> 0,
+					);
+		$this->getArgs = $this->initArgs($args,$require);
+		$this->onGet('keywords','outputPosts');
+		return $this->result;
 	}
 }
 ?>

@@ -122,7 +122,8 @@ RewriteBase {$basepath}
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule   ^(.*)$  index.php/$1 [L]
-</IfModule>";
+</IfModule>
+Options -Indexes FollowSymLinks";
 file_put_contents("./.htaccess",$rewrite);
 
 //初始化数据库

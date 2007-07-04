@@ -307,9 +307,9 @@ body
 
 #element #search
 {
-	background:#FFFFAA;
+	background:#EEF0F2;
 	padding:10px;
-	border-bottom:1px solid #CCC;
+	border-top:1px solid #CCC;
 	color:#666;
 	display:none;
 }

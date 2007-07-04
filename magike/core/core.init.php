@@ -31,6 +31,7 @@ class MagikeException extends Exception
    public function __toString()
    {
        	$data = '';
+	
        	if(is_array($this->data))
        	{
        		foreach($this->data as $key => $val)

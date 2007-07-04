@@ -3,7 +3,7 @@
 
 <[module:admin_index]>
 <[module:posts?sub=20&striptags=1&limit=5]>
-<[module:comments_list_all?limit=5&striptags=1&substr=20]>
+<[module:comments_list_all?limit=10&striptags=1&substr=20]>
 <[module:get_current_user]>
 <style>
 	#element

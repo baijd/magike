@@ -27,11 +27,6 @@ class TbIf extends TemplateBuild
 		return "<?php if({$setVar}{$matches[1]}){ ?>";
 	}
 	
-	public function filterElseSyntaxCallback($matches)
-	{
-		return "<?php }else{ ?>";
-	}
-	
 	public function prase()
 	{
 		$this->findSection('if','filterIfSyntaxCallback','<?php } ?>');

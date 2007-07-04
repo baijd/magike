@@ -103,6 +103,7 @@ class PostInput extends MagikeModule
 		
 		$postModel = $this->loadModel('posts');
 		$post = $postModel->fectchOneByKey($_GET['post_id']);
+
 		$trackback = 
 		mgSendTrackback($url,array("title" => $input['post_title'],
 								   "url"   => $this->stack['static_var']['index'].'/archives/'.$_GET['post_id'].'/',

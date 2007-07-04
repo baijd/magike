@@ -468,7 +468,7 @@ function mgSendTrackback($url,$args)
 				$request .= "\r\n";
 				$request .= $content;
 
-				$socket = @fsockopen($parsed_url['host'], $port, $errno, $errstr);
+				$socket = fsockopen($parsed_url['host'], $port, $errno, $errstr);
 				if(!$socket)
 				{
 					continue;

@@ -17,7 +17,7 @@ class CommentsListAll extends MagikeModule
 	{
 		$val['comment_text'] = $data['striptags'] ? mgStripTags($val["comment_text"]) : $val["comment_text"];
 		$val['comment_text'] = mgStripTags($data['substr'] ? mgSubStr($val['comment_text'],0,$data['substr'],$data['trim']) : $val['comment_text']);
-		$val['comment_date'] = date($data['datefmt'],$this->stack['static_var']['time_zone'] + $val['comment_date']);
+		$val['comment_date'] = date($data['time_format'],$this->stack['static_var']['time_zone'] + $val['comment_date']);
 		$val['comment_alt']	 = $num%2;
 		return $val;
 	}
@@ -28,7 +28,7 @@ class CommentsListAll extends MagikeModule
 						 'substr' => 0,				//摘要字数,0表示不摘要
 						 'trim'	  => '...',			//摘要显示
 						 'striptags' => 0,			//去除标签
-						 'datefmt'=> $this->stack['static_var']['comment_date_format'],	//日期输出格式
+						 'time_format'=> $this->stack['static_var']['comment_date_format'],	//日期输出格式
 						 'orderby'=> 'comment_date',//排序索引
 						 'sort'   => 'DESC');
 		

@@ -322,9 +322,9 @@ ol.comment li.alt
 .page_nav a
 {
 	font-size:9pt;
-	border:1px solid #C1DB8C;
+	border:1px solid #6D7887;
 	padding:2px 5px;
-	color:#566F22;
+	color:#6D7887;
 	text-decoration: none;
 	height:16px;
 	line-height:16px;
@@ -342,8 +342,9 @@ ol.comment li.alt
 
 .page_nav a:hover
 {
-	background:#C1DB8C;
-	border:1px solid #566F22;
+	background:#6D7887;
+	border:1px solid #000;
+	color:#292D34;
 }
 
 #menu_content

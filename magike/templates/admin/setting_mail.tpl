@@ -12,33 +12,33 @@
 		<div class="proc">
 			正在处理您的请求
 		</div>
-	<form method="post" id="setting_other">
+	<form method="post" id="setting_mail">
 		<h2>邮件设置 <span class="discribe">(设置您的邮件选项)</span></h2>
 		<div class="input">
 			<h2>邮件服务器地址</h2>
 			<p>
-				<input type="text" class="text validate-me" name="smtp_host" value="{$static_var.smtp_host}" size=60 /><span class="validate-word" id="post_date_format-word"></span><br />
+				<input type="text" class="text" name="smtp_host" value="{$static_var.smtp_host}" size=60 /><br />
 				<span class="discribe">(请设置邮件服务器SMTP的地址)</span>
 			</p>
 		</div>
 		<div class="input">
 			<h2>服务端口</h2>
 			<p>
-				<input type="text" class="text validate-me" name="smtp_port" value="{$static_var.smtp_port}" size=60 /><span class="validate-word" id="post_date_format-word"></span><br />
+				<input type="text" class="text validate-me" name="smtp_port" value="{$static_var.smtp_port}" size=60 /><span class="validate-word" id="smtp_port-word"></span><br />
 				<span class="discribe">(请设置SMTP服务器的端口)</span>
 			</p>
 		</div>
 		<div class="input">
 			<h2>电子邮箱用户名</h2>
 			<p>
-				<input type="text" class="text validate-me" name="smtp_user" value="{$static_var.smtp_user}" size=60 /><span class="validate-word" id="post_date_format-word"></span><br />
+				<input type="text" class="text" name="smtp_user" value="{$static_var.smtp_user}" size=60 /><br />
 				<span class="discribe">(请设置电子邮箱的用户名)</span>
 			</p>
 		</div>
 		<div class="input">
 			<h2>电子邮箱密码</h2>
 			<p>
-				<input type="text" class="text validate-me" name="smtp_pass" value="{$static_var.smtp_pass}" size=60 /><span class="validate-word" id="post_date_format-word"></span><br />
+				<input type="text" class="text" name="smtp_pass" value="{$static_var.smtp_pass}" size=60 /><br />
 				<span class="discribe">(请设置电子邮箱的密码,如果这一项不为空则表示将使用认证方式)</span>
 			</p>
 		</div>
@@ -63,12 +63,12 @@
 			</p>
 		</div>
 		<div class="submit">
-			<span class="button" onclick="magikeValidator('{$static_var.index}/helper/validator/','setting_other');">提交信息</span>
+			<span class="button" onclick="magikeValidator('{$static_var.index}/helper/validator/','setting_mail');">提交信息</span>
 			<input type="hidden" name="do" value="update" />
 			<script>
 				function validateSuccess()
 				{
-					document.getElementById('setting_other').submit();
+					document.getElementById('setting_mail').submit();
 				}
 			</script>
 		</div>
