@@ -23,7 +23,7 @@ class SmtpMailer extends MagikeModule
 				$userModel = $this->loadModel('users');
 				$webMaster =  $userModel->fectchOneByKey(1);
 				$this->phpmailer->isSMTP();
-				$this->phpmailer->SMTPDebug = true;
+				$this->phpmailer->SMTPDebug = __DEBUG__;
 				$this->phpmailer->CharSet = $this->stack['static_var']['charset'];
 				$this->phpmailer->Encoding = 'base64';
 				$this->phpmailer->From = $webMaster['user_mail'];

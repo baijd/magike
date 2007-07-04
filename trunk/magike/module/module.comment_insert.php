@@ -107,8 +107,10 @@ class CommentInsert extends MagikeModule
 				$author = $userModel->fectchOneByKey($post['user_id']);
 				if($author['user_mail'])
 				{
-					$this->result['mailer']['subject'] = '"'.$this->stack['static_var']['blog_name'].'"访客评论提示';
-					$this->result['mailer']['body'] = '这是一封测试邮件';
+					$this->result['mailer']['subject'] = '"'.$this->stack['static_var']['blog_name'].'"回响提示';
+					$this->result['mailer']['body'] = $input['comment_user'].'在['.
+					date('Y-m-d H:i:s',$this->stack['static_var']['time_zone'] + $input['comment_date'])."]说:\r\n".
+					mgStripTags($input['comment_text']);
 					$this->result['mailer']['send_to'] = $author['user_mail'];
 					$this->result['mailer']['send_to_user'] = $author['user_name'];
 				}
@@ -128,20 +130,10 @@ class CommentInsert extends MagikeModule
 		$getArgs = $this->initArgs($args,$require);
 
 		$this->onPost($getArgs['key'],'insertComment',$getArgs['val']);
-		if(isset($_GET['referer']))
+		if($this->showWord)
 		{
-			if($this->showWord)
-			{
-				return $this->result;
-			}
-			else
-			{
-				//header('location: '.$_GET['referer']);
-			}
-		}
-		else
-		{
-			header('location: '.$this->stack['static_var']['siteurl']);
+			unset($_POST['referer']);
+			reset($_POST);
 		}
 		
 		return $this->result;

@@ -110,7 +110,7 @@ function magikeValidator(url,mod)
 		    <[/loop]>
 		</ol>
 		<div class="comment-form">
-		<form method="post" id="post_comment" action="{$static_var.index}/post_comment/{$post.post_id}/?referer={$static_var.index}/archives/{$post.post_id}/">
+		<form method="post" id="post_comment" action="{$static_var.index}/post_comment/{$post.post_id}/">
 			<[if:!$access.login]>
 			<p class="comment-word">Name:</p>
 			<p><input type="text" class="text validate-me" size=30 name="comment_user"/> <[if:$static_var.comment_ajax_validator]><span class="validate-word" id="comment_user-word"></span><[/if]></p>
@@ -138,7 +138,8 @@ function magikeValidator(url,mod)
 			<input type="submit" class="button" value="Finish!"/>
 			</p>
 			<[/if]>
-			<input type="hidden" name="do" value="insert"/></p>
+			<input type="hidden" name="do" value="insert"/>
+			<input type="hidden" name="referer" value="{$static_var.index}/archives/{$post.post_id}/"/></p>
 		</form>
 		<[if:$static_var.comment_ajax_validator]>
 		<script>
