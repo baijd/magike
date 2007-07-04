@@ -8,10 +8,11 @@
  
 class PostsFectchBySearch extends PageNavigator
 {
-	public function runModule($args)
+	private $getArgs;
+	private $result;
+	
+	public function outputPageNav()
 	{
-		$require = array('limit'  => $this->stack['static_var']['post_page_num']	);
-		$getArgs = $this->initArgs($args,$require);
 		$postModel = $this->loadModel('posts');
 		$keywords = array();
 
@@ -19,8 +20,14 @@ class PostsFectchBySearch extends PageNavigator
 		$keywords['post_tags'] = $_GET['keywords'];
 		$keywords['post_content'] = $_GET['keywords'];
 		
-		$total = $postModel->countPostsByKeywords($keywords);
-		return $this->makeClassicNavigator($getArgs['limit'],$total,'keywords='.$_GET['keywords']);
+		$total = $postModel->countPostsByKeywords($keywords,$this->getArgs['supper']);
+		$this->result = $this->makeClassicNavigator($this->getArgs['limit'],$total,'search/?keywords='.$_GET['keywords'].'&page=');
+	}
+	public function runModule($args)
+	{
+		$require = array('limit'  => $this->stack['static_var']['post_page_num']	,'supper' => 0);
+		$this->getArgs = $this->initArgs($args,$require);
+		return $this->result;
 	}
 }
 ?>

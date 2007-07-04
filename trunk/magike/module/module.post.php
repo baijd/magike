@@ -9,6 +9,7 @@
 class Post extends MagikeModule
 {
 	private $post;
+	private $getArgs;
 	
 	function __construct()
 	{
@@ -28,7 +29,7 @@ class Post extends MagikeModule
 		}
 		
 		$val["post_time"] = 
-		date($this->stack['static_var']['post_date_format'],$this->stack['static_var']['time_zone']+$val["post_time"]);
+		date($this->getArgs['time_format'],$this->stack['static_var']['time_zone']+$val["post_time"]);
 		$val["post_tags"] = $val["post_tags"] ? explode(",",$val["post_tags"]) : array();
 		
 		if($val['post_is_hidden'])
@@ -57,8 +58,11 @@ class Post extends MagikeModule
 		@reset($_COOKIE);
 	}
 	
-	public function runModule()
+	public function runModule($args)
 	{
+		$require = array('time_format'=> $this->stack['static_var']['post_date_format']);	//日期输出格式
+		$this->getArgs = $this->initArgs($args,$require);
+		
 		$this->onPost('post_password','getAccess');
 		if(isset($_GET['post_id']))
 		{

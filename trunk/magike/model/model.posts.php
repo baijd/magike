@@ -34,7 +34,7 @@ class PostsModel extends MagikeModel
 		return $args;
 	}
 	
-	public function fectchPostsByKeywords($keywords,$limit,$offset,$func = NULL)
+	public function fectchPostsByKeywords($keywords,$limit,$offset,$func = NULL,$supper = false)
 	{
 		$whereTpl = array();
 		$value = array();
@@ -46,12 +46,16 @@ class PostsModel extends MagikeModel
 			$value[] = '%'.$val.'%';
 		}
 		
-		$where['template'] = implode(' OR ',$whereTpl);
+		$where['template'] = '('.implode(' OR ',$whereTpl).')';
+		if(!$supper)
+		{
+			$where['template'] .= 'AND post_is_draft = 0 AND post_is_page = 0 AND post_is_hidden = 0 AND post_time < '.(time() - $this->stack['static_var']['server_timezone']);
+		}
 		$where['value'] = $value;
 		return $this->fectch($this->fixPostWhere($limit,$offset,$where),$func);
 	}
 	
-	public function countPostsByKeywords($keywords)
+	public function countPostsByKeywords($keywords,$supper = false)
 	{
 		$args = $this->fixPostWhere();
 		
@@ -63,7 +67,11 @@ class PostsModel extends MagikeModel
 			$value[] = '%'.$val.'%';
 		}
 		
-		$args['where']['template'] = implode(' OR ',$whereTpl);
+		$args['where']['template'] = '('.implode(' OR ',$whereTpl).')';
+		if(!$supper)
+		{
+			$where['template'] .= 'AND post_is_draft = 0 AND post_is_page = 0 AND post_is_hidden = 0 AND post_time < '.(time() - $this->stack['static_var']['server_timezone']);
+		}
 		$args['where']['value'] = $value;
 		unset($args['groupby']);
 		return $this->countTable($args);

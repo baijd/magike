@@ -102,7 +102,7 @@ class CommentInsert extends MagikeModule
 			}
 			
 			//发送邮件提示
-			if($this->stack['static_var']['comment_email'])
+			if($this->stack['static_var']['comment_email'] && $input['comment_publish'] != 'spam')
 			{
 				$author = $userModel->fectchOneByKey($post['user_id']);
 				if($author['user_mail'])
@@ -110,9 +110,21 @@ class CommentInsert extends MagikeModule
 					$this->result['mailer']['subject'] = '"'.$this->stack['static_var']['blog_name'].'"回响提示';
 					$this->result['mailer']['body'] = $input['comment_user'].'在['.
 					date('Y-m-d H:i:s',$this->stack['static_var']['time_zone'] + $input['comment_date'])."]说:\r\n".
-					mgStripTags($input['comment_text']);
+					mgSubStr(mgStripTags($input['comment_text']),0,100)."\r\n".
+					($input['comment_email'] ? "\r\n电子邮箱:".$input['comment_email'] : '').
+					($input['comment_homepage'] ? "\r\n网址:".$input['comment_homepage'] : '');
 					$this->result['mailer']['send_to'] = $author['user_mail'];
 					$this->result['mailer']['send_to_user'] = $author['user_name'];
+					
+					if($input['comment_publish'] == 'waitting')
+					{
+						$this->result['mailer']['body'] .= "\r\n[这篇评论等待审核]";
+					}
+					
+					if($input['comment_email'])
+					{
+						$this->result['mailer']['reply'] = array($input['comment_user'],$input['comment_email']);
+					}
 				}
 			}
 		}

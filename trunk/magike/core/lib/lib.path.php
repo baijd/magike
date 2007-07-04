@@ -164,6 +164,7 @@ class Path extends MagikeModule
 			{
 				$request .= '?'.$_SERVER['QUERY_STRING'];
 			}
+			header('HTTP/1.1 301 Moved Permanently'); 
 			header("location: {$request}");
 		}
 	}

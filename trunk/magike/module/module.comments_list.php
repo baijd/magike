@@ -24,7 +24,7 @@ class CommentsList extends MagikeModule
 			}
 		}
 		$val['comment_text'] = nl2br(mgStripTags($data['substr'] ? mgSubStr($val['comment_text'],0,$data['substr'],$data['trim']) : $val['comment_text']));
-		$val['comment_date'] = date($data['datefmt'],$this->stack['static_var']['time_zone'] + $val['comment_date']);
+		$val['comment_date'] = date($data['time_format'],$this->stack['static_var']['time_zone'] + $val['comment_date']);
 		$val['comment_alt']	 = $num%2;
 		return $val;
 	}
@@ -35,7 +35,7 @@ class CommentsList extends MagikeModule
 						 'list'	  => 0,				//是否为列表形式,如果不是则还要从GET值中获取一个post_id或者post_name值作为条件索引
 						 'substr' => 0,				//摘要字数,0表示不摘要
 						 'trim'	  => '...',			//摘要显示
-						 'datefmt'=> $this->stack['static_var']['comment_date_format'],	//日期输出格式
+						 'time_format'=> $this->stack['static_var']['comment_date_format'],	//日期输出格式
 						 'orderby'=> 'id',//排序索引
 						 'sort'   => 'DESC',		//排序顺序
 						 'type'   => NULL);			//输出哪些状态,NULL表示都显示

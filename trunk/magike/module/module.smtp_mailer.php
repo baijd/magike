@@ -39,6 +39,13 @@ class SmtpMailer extends MagikeModule
 				
 				$this->phpmailer->AddAddress($this->stack[$getArgs['waitting_for']]['mailer']['send_to'],
 				$this->stack[$getArgs['waitting_for']]['mailer']['send_to_user']);
+				
+				if(isset($this->stack[$getArgs['waitting_for']]['mailer']['reply']) && $this->stack[$getArgs['waitting_for']]['mailer']['reply'])
+				{
+					$this->phpmailer->AddReplyTo($this->stack[$getArgs['waitting_for']]['mailer']['reply'][1],
+					$this->stack[$getArgs['waitting_for']]['mailer']['reply'][0]);
+				}
+				
 				$this->phpmailer->WordWrap = 50;
 				$this->phpmailer->Subject = $this->stack[$getArgs['waitting_for']]['mailer']['subject'];
 				$this->phpmailer->Body = $this->stack[$getArgs['waitting_for']]['mailer']['body'];

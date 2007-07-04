@@ -32,8 +32,7 @@ class TrackbackInsert extends MagikeModule
 			$this->result['word'] = 'success!';
 			
 			$input['comment_publish'] = 'approved';
-			$input['comment_date'] = time();
-			$input['comment_gmt'] = $this->stack['static_var']['server_timezone'];
+			$input['comment_date'] = time() - $this->stack['static_var']['server_timezone'];
 			$input['post_id'] = $post['post_id'];
 			$input['comment_type'] = 'ping';
 			$input['comment_agent'] = $_SERVER["HTTP_USER_AGENT"];
@@ -41,7 +40,7 @@ class TrackbackInsert extends MagikeModule
 			$input['comment_user'] = isset($_POST['blog_name']) ? $_POST['blog_name'] : NULL;
 			$input['comment_title'] = isset($_POST['title']) ? $_POST['title'] : NULL;
 			$input['comment_homepage'] = isset($_POST['url']) ? $_POST['url'] : NULL;
-			$input['comment_text'] = isset($_POST['excerpt']) ? $_POST['excerpt'] : NULL;
+			$input['comment_text'] = mgSubStr(isset($_POST['excerpt']) ? $_POST['excerpt'] : NULL,0,200,'[...]');
 			
 			if(NULL == $input['comment_homepage'])
 			{
@@ -75,7 +74,7 @@ class TrackbackInsert extends MagikeModule
 			}
 			
 			//发送邮件提示
-			if($this->stack['static_var']['comment_email'])
+			if($this->stack['static_var']['comment_email'] && $input['comment_publish'] != 'spam')
 			{
 				$userModel = $this->loadModel('users');
 				$author = $userModel->fectchOneByKey($post['user_id']);
@@ -84,7 +83,14 @@ class TrackbackInsert extends MagikeModule
 					$this->result['mailer']['subject'] = '"'.$this->stack['static_var']['blog_name'].'"回响提示';
 					$this->result['mailer']['body'] = $input['comment_user'].'在['.
 					date('Y-m-d H:i:s',$this->stack['static_var']['time_zone'] + $input['comment_date'])."]发布引用通告:\r\n".
-					mgStripTags($input['comment_text']);
+					mgSubStr(mgStripTags($input['comment_text']),0,100)."\r\n".
+					($input['comment_homepage'] ? "\r\n网址:".$input['comment_homepage'] : '');
+					
+					if($input['comment_publish'] == 'waitting')
+					{
+						$this->result['mailer']['body'] .= "\r\n[这篇引用通告等待审核]";
+					}
+					
 					$this->result['mailer']['send_to'] = $author['user_mail'];
 					$this->result['mailer']['send_to_user'] = $author['user_name'];
 				}

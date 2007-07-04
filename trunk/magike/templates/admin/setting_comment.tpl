@@ -18,7 +18,7 @@
 			<h2>评论日期格式</h2>
 			<p>
 				<input type="text" class="text validate-me" name="comment_date_format" value="{$static_var.comment_date_format}" size=60 /><span class="validate-word" id="comment_date_format-word"></span><br />
-				<span class="discribe">(评论显示时的格式)</span>
+				<span class="discribe">(请参考PHP日期格式)</span>
 			</p>
 		</div>
 		<div class="input">
@@ -35,7 +35,7 @@
 					<option value="1" <[if:$static_var.comment_email == 1]>selected=true<[/if]>>是</option>
 					<option value="0" <[if:$static_var.comment_email != 1]>selected=true<[/if]>>否</option>
 				</select><br />
-				<span class="discribe">(用户发表评论时发给撰写者一封邮件)</span>
+				<span class="discribe">(当网站有回响发布时发给撰写者一封邮件)</span>
 			</p>
 		</div>
 		<div class="input">
