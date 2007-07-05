@@ -6,7 +6,7 @@
  * License   : GNU General Public License 2.0
  *********************************/
 
-class MagikeObject
+abstract class MagikeObject
 {
 	public $stack;
 	public $debugData;
