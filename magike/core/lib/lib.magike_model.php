@@ -6,7 +6,7 @@
  * License   : GNU General Public License 2.0
  *********************************/
  
-class MagikeModel extends Database
+abstract class MagikeModel extends Database
 {
  	 protected $table;
  	 protected $key;

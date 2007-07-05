@@ -9,7 +9,7 @@
 define('E_MODELFILENOTEXISTS','Model File Not Exists');
 define('E_FORMISOUTOFDATE','Form Is Out Of Date');
 
-class MagikeModule extends MagikeObject
+abstract class MagikeModule extends MagikeObject
 {
 	protected $cacheDir;
 	protected $cacheFile;
