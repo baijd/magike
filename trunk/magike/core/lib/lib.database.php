@@ -56,6 +56,8 @@ class Database extends MagikeObject
 
 	private function filterQuotesSentence($value)
 	{
+		$result = array();
+		
 		if(NULL == $value)
 		{
 			return "''";
@@ -63,12 +65,19 @@ class Database extends MagikeObject
 		
 		foreach($value as $key => $val)
 		{
-			$val = str_replace("'","''",$val);
-			$val = (is_numeric($val) && (strlen(intval($val)) == strlen($val) || strlen(floatval($val)) == strlen($val))) ? $val : "'".$val."'";
-			$value[$key] = $val;
+			if('@' != $key[0])
+			{
+				$val = str_replace("'","''",$val);
+				$val = (is_numeric($val) && (strlen(intval($val)) == strlen($val) || strlen(floatval($val)) == strlen($val))) ? $val : "'".$val."'";
+				$result[$key] = $val;
+			}
+			else
+			{
+				$result[substr($key,1,strlen($key)-1)] = $val;
+			}
 		}
 
-		return $value;
+		return $result;
 	}
 
 	private function filterTablePrefix($args)
