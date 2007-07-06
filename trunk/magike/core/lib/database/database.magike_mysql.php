@@ -10,24 +10,25 @@ define('E_DATABASE','Database Error');
 class MagikeMysql extends MagikeObject
 {
 	private $resource;
+	private $dbLink;
 
 	function __construct()
 	{
-		$dblink=@mysql_connect(__DBHOST__,__DBUSER__,__DBPASS__) or die('Database Connect Error');
-		@mysql_select_db(__DBNAME__,$dblink) or die('Database Connect Error');
+		$this->dbLink = @mysql_connect(__DBHOST__,__DBUSER__,__DBPASS__) or die('Database Connect Error');
+		@mysql_select_db(__DBNAME__,$this->dbLink) or die('Database Connect Error');
 		$this->query('SET NAMES "utf8"');
 	}
 	
-	public function getInsertId($resource = NULL)
+	public function getInsertId($dbLink = NULL)
 	{
-		$resource = $resource ? $resource : $this->resource;
-		return mysql_insert_id($resource);
+		$dbLink = $dbLink ? $dbLink : $this->dbLink;
+		return mysql_insert_id($dbLink);
 	}
 	
-	public function getAffectedRows($resource = NULL)
+	public function getAffectedRows($dbLink = NULL)
 	{
-		$resource = $resource ? $resource : $this->resource;
-		return mysql_affected_rows($resource);
+		$dbLink = $dbLink ? $dbLink : $this->dbLink;
+		return mysql_affected_rows($dbLink);
 	}
 	
 	public function getRowsNumber($resource = NULL)
