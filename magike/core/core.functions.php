@@ -383,6 +383,25 @@ function mgGetGuidPath($guid)
 function mgPrintDebug($path,$debug)
 {
 	$str = '';
+	
+	if(__DEBUG_SORT_BY_TIME__)
+	{
+		$sum = count($debug);
+		for($i = 0;$i < $sum;$i++)
+		{
+			for($j = 0;$j < $sum;$j++)
+			{
+				if($debug[$i]['last'] > $debug[$j]['last'])
+				{
+					$tmp = $debug[$i];
+					$debug[$i] = $debug[$j];
+					$debug[$j] = $tmp;
+					reset($debug);
+				}
+			}
+		}
+	}
+	
 	foreach($debug as $val)
 	{
 		if(((__DEBUG_MESSAGE_FILTER__ && __DEBUG_MESSAGE_FILTER__ == $val['message']) || !__DEBUG_MESSAGE_FILTER__)
@@ -395,6 +414,7 @@ function mgPrintDebug($path,$debug)
 			$str .= "\r\n\r\n";
 		}
 	}
+	
 	file_put_contents($path,$str);
 }
 
