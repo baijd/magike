@@ -21,9 +21,9 @@ define('__CONFIG__','./config.php');				//定义初始配置文件
 define('__LIB__',__DIR__.'/lib');				//定义库文件目录
 
 //调试相关
-define('__DEBUG__',false);					//是否开启debug模式
+define('__DEBUG__',true);					//是否开启debug模式
 define('__DEBUG_LOG__','./data/debug.log');		//debug信息输出路径
-define('__DEBUG_SORT_BY_TIME__',false);		//是否按照时间排序
+define('__DEBUG_SORT_BY_TIME__',true);		//是否按照时间排序
 define('__DEBUG_TIME_FILTER__',0);			//时间过滤器
 define('__DEBUG_MESSAGE_FILTER__',NULL);		//消息过滤器
 

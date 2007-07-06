@@ -6,24 +6,17 @@
  * License   : GNU General Public License 2.0
  *********************************/
 
-//连接数据库
-define('E_DATABASE','Database Error');
-
-mgTrace();
-$dblink=@mysql_connect(__DBHOST__,__DBUSER__,__DBPASS__) or die('Database Connect Error');
-@mysql_select_db(__DBNAME__,$dblink) or die('Database Connect Error');
-mysql_query('SET NAMES "utf8"') or die('Database Connect Error');
-mgTrace(false);
-mgDebug('Connect Database',__DBHOST__);
-
-
+require(__LIB__.'/database/database.'.__DBOBJECT__.'.php');
 class Database extends MagikeObject
 {
 	private $usedTable;
+	private $dbObject;
 	
 	function __construct()
 	{
-		parent::__construct();
+		$dbObjectName = mgFileNameToClassName(__DBOBJECT__);
+		parent::__construct(array('public' => array($dbObjectName)));
+		eval('$this->dbObject = $this->'.$dbObjectName.';');
 		$this->usedTable = array();
 	}
 	
@@ -105,11 +98,6 @@ class Database extends MagikeObject
 		return $matches[1].__DBPREFIX__.$matches[2];
 	}
 
-	protected function databaseException($query = NULL)
-	{
-		$this->throwException(E_DATABASE,__DEBUG__ ? $query."<br />\n".mysql_error() : NULL);
-	}
-
  	public function fectch($args,$callback = NULL,$expection = false)
  	{
  		//替换查询前缀
@@ -160,13 +148,13 @@ class Database extends MagikeObject
 		//处理where子句
 		$where = self::praseWhereSentence($args);
 		$query = $fields.$table.$where.$groupby.$orderby.$offset.$limit;
-		$resource = $this->query($query);
-		$sum = mysql_num_rows($resource);
+		$resource = $this->dbObject->query($query,'r');
+		$sum = $this->dbObject->getRowsNumber($resource);
 		$result = array();
 		$num = 0;
 
 		//开始输出
-		while($rows = mysql_fetch_array($resource,MYSQL_ASSOC))
+		while($rows = $this->dbObject->fectchArray($resource))
 		{
 			if(isset($callback['function']))
 			{
@@ -212,8 +200,8 @@ class Database extends MagikeObject
  		$value = $value.implode(' , ',$columns);
 		$where = self::praseWhereSentence($args);
 		$query = $table.$value.$where;
-		$this->query($query);
-		return mysql_affected_rows();
+		$this->dbObject->query($query,'w');
+		return $this->dbObject->getAffectedRows();
  	}
  	
  	public function increaseField($args,$field,$num = 1)
@@ -222,8 +210,8 @@ class Database extends MagikeObject
  		$table = 'UPDATE '.$args['table'];
  		$increase = " SET {$field} = {$field} + {$num}";
  		$where = self::praseWhereSentence($args);
- 		$this->query($table.$increase.$where);
- 		return mysql_affected_rows();
+ 		$this->dbObject->query($table.$increase.$where,'w');
+ 		return $this->dbObject->getAffectedRows();
  	}
  		
  	public function decreaseField($args,$field,$num = 1)
@@ -232,8 +220,8 @@ class Database extends MagikeObject
  		$table = 'UPDATE '.$args['table'];
  		$increase = " SET {$field} = {$field} - {$num}";
  		$where = self::praseWhereSentence($args);
- 		$this->query($table.$increase.$where);
- 		return mysql_affected_rows();
+ 		$this->dbObject->query($table.$increase.$where,'w');
+ 		return $this->dbObject->getAffectedRows();
  	}
 
  	public function insert($args)
@@ -242,8 +230,8 @@ class Database extends MagikeObject
  		//替换查询前缀
  		$args = $this->filterTablePrefix($args);
 		$query = 'INSERT INTO '.$args['table'].' ('.implode(',',array_keys($args['value'])).') VALUES('.implode(',',$args['value']).')';
-		$this->query($query);
-		return mysql_insert_id();
+		$this->dbObject->query($query,'w');
+		return $this->dbObject->getInsertId();
  	}
 
  	public function delete($args)
@@ -253,8 +241,8 @@ class Database extends MagikeObject
  		$table = 'DELETE FROM '.$args['table'];
 		$where = self::praseWhereSentence($args);
 		$query = $table.$where;
-		$this->query($query) or $this->databaseException($query);
-		return mysql_affected_rows();
+		$this->dbObject->query($query,'w');
+		return $this->dbObject->getAffectedRows();
  	}
 
  	public function count($args)
@@ -267,8 +255,8 @@ class Database extends MagikeObject
  		$where = self::praseWhereSentence($args);
 		
 		$query = $fields.$table.$where.$groupby;
- 		$resource = $this->query($query);
- 		$result = mysql_fetch_array($resource,MYSQL_ASSOC);
+ 		$resource = $this->dbObject->query($query,'r');
+ 		$result = $this->dbObject->fectchArray($resource);
  		return $result['number'];
  	}
  	
@@ -282,17 +270,14 @@ class Database extends MagikeObject
  		$where = self::praseWhereSentence($args);
 
 		$query = $fields.$table.$where.$groupby;
- 		$resource = $this->query($query);
- 		$result = mysql_fetch_array($resource,MYSQL_ASSOC);
+ 		$resource = $this->dbObject->query($query,'r');
+ 		$result = $this->dbObject->fectchArray($resource);
  		return $result['number'];
  	}
 	
-	public function query($query)
+	public function query($query,$op = 'r')
 	{
-		mgTrace();
-		$result =  mysql_query($query) or $this->databaseException($query);
-		mgTrace(false);
-		mgDebug('Excute SQL',$query);
+		$result =  $this->dbObject->query($query,$op);
 		return $result;
 	}
 }
