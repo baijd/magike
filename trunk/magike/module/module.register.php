@@ -19,24 +19,34 @@ class Register extends MagikeModule
 									  'user_password'	=> md5($password),
 									  'user_mail'	=> $_POST['user_mail'],
 									  'user_url'	=> isset($_POST['user_url']) ? $_POST['user_url'] : NULL,
-									  'user_about'	=> isset($_POST['user_about']) ? $_POST['user_url'] : NULL));
+									  'user_about'	=> isset($_POST['user_about']) ? $_POST['user_about'] : NULL));
 		
-		if(isset($_POST['user_group']) && $_POST['user_group'])
-		{
-			$groupModel = $this->loadModel('groups');
-			foreach($_POST['user_group'] as $id)
-			{
-				$groupModel->insertUserGroup($insertId,$id);
-			}
-		}
+		$groupModel = $this->loadModel('groups');
+		$groupModel->insertUserGroup($insertId,$this->stack['static_var']['user_register_group']);
 		
-		$this->result['open'] = true;
-		$this->result['word'] = '您的用户 "'.$_POST['user_name'].'" 已经提交成功'.(isset($_POST['user_password']) && $_POST['user_password'] ? '' : ',密码为<strong>'.$password.'</strong>');
+		//发送注册邮件
+		$this->result['mailer']['subject'] = '"'.$this->stack['static_var']['blog_name'].'"注册提示';
+		$this->result['mailer']['body'] = $_POST['user_name'].",您好:\r\n欢迎您成为我们网站的用户.\r\n您注册的用户名是'".$_POST['user_name']."',密码是'".$password."'
+		感谢您的支持! ".$this->stack['static_var']['siteurl'];
+		$this->result['mailer']['send_to'] = $_POST['user_mail'];
+		$this->result['mailer']['send_to_user'] = $_POST['user_name'];
+		
+		//登录用户
+		$_SESSION['user_name'] = $_POST['user_name'];
+		$_SESSION['user_id'] = $insertId;
+		$_SESSION['user_group'] = array($this->stack['static_var']['user_register_group']);
+		$_SESSION['auth_data'] = mgCreateRandomString(128);
+		
+		setcookie('auth_data',$_SESSION['auth_data'],0,'/');
+		header('location: '.$this->stack['static_var']['siteurl']);
 	}
 	
 	public function runModule()
 	{
-		$this->onGet("do","insertUser","register");
+		if($this->stack['static_var']['user_allow_register'])
+		{
+			$this->onPost("do","insertUser","register");
+		}
 	}
 }
 ?>
