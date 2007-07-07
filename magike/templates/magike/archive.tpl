@@ -80,19 +80,19 @@ function magikeValidator(url,mod)
 	<div id="sidecontent">
 	<h1>{<a href="{$static_var.siteurl}">{$static_var.blog_name}</a>}</h1>
 	<[if:$post.post_access]>
-		<div class="entry" style="border:none">
+		<div class="entry" style="background:#EEE">
 			<h2><a href="{$static_var.index}/archives/{$post.post_id}/">{$post.post_title}</a></h2>
-			<div class="entry_tags"><strong>Tags:</strong>
+			<div class="entry_tags">
 			<[if:$post.post_tags]>
 			<[loop:$post.post_tags AS $tag]>
 			<a href="{$static_var.index}/tags/{$tag}/">{$tag}</a>
 			<[/loop]>
 			<[/if]>
 			<[if:!$post.post_tags]>
-			没有
+			没有标签
 			<[/if]>
 			</div>
-			<div class="entry_date">{{$post.post_time}}</div>
+			<div class="entry_date">{$post.post_time}</div>
 			<div class="entry_content">
 			{$post.post_content}
 			</div>
@@ -101,7 +101,7 @@ function magikeValidator(url,mod)
 		<ol class="comment" id="comment">
 		    <[loop:$comments_list AS $comment]>
 		    <li id="comment-{$comment.comment_id}" <[if:$comment.comment_alt]>class="alt"<[/if]>>
-		    <cite><[if:$comment.comment_homepage != NULL]><a href="{$comment.comment_homepage}"><[/if]>{$comment.comment_user}<[if:$comment.comment_homepage != NULL]></a><[/if]>:
+		    <cite><img src="{$static_var.siteurl}/templates/{$static_var.template}/images/comment.gif" /><[if:$comment.comment_homepage != NULL]><a href="{$comment.comment_homepage}"><[/if]>{$comment.comment_user}<[if:$comment.comment_homepage != NULL]></a><[/if]>:
 			<[if:$comment.comment_publish == "waitting"]>(等待管理员审核)<[/if]>
 			<[if:$comment.comment_publish == "spam"]>(被标记为垃圾评论,等待处理)<[/if]></cite><br />
 		    <small>{$comment.comment_date}</small>

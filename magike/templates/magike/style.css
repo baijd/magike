@@ -3,29 +3,28 @@ body
 	font-family:verdana, Helvetica, sans-serif;
 	padding:0;
 	margin:0;
-	background:#292D34;
+	background:#FFF;
 }
 
 h1
 {
-	font-family:Georgia, Helvetica, sans-serif;
+	font-family:'Trebuchet ms',Helvetica,sans-serif;
 	font-weight:normal;
-	color:#AAA;
+	color:#495A67;
 	font-size:42px;
 	margin:0 0 20px 0;
-	padding-left:40px;
-	background:url(images/rss.jpg) left center no-repeat;
 }
 
 h1 a
 {
-	color:#AAA;
+	color:#495A67;
+	text-decoration: none;
 }
 
 h1 a:hover
 {
-	color:#EEE;
-	text-decoration: none;
+	color:#000;
+	text-decoration: underline;
 }
 
 #content
@@ -56,9 +55,7 @@ h1 a:hover
 #sidebar
 {
 	float:left;
-	font-family:'Trebuchet ms',Helvetica,sans-serif;
 	width:240px;
-	background:#383D44;
 	margin-top:10px;
 }
 
@@ -78,16 +75,15 @@ h1 a:hover
 
 #sidebar h2
 {
-	font-size:10pt;
-	color:#777;
-	background:#383D44;
-	margin:0;
+	font-size:12pt;
+	color:#495A67;
+	margin:10px  0 0 0;
 	font-weight:normal;
 	padding:0 5px;
 	height:24px;
 	line-height:24px;
-	border-top:1px solid #464A52;
-	border-bottom:1px solid #2C2F32;
+	border-bottom:1px solid #AAA;
+	font-family:'Trebuchet ms',Helvetica,sans-serif;
 }
 
 #sidebar ul
@@ -102,15 +98,15 @@ h1 a:hover
 	height:24px;
 	line-height:24px;
 	font-size:9pt;
-	border-top:1px solid #464A52;
-	border-bottom:1px solid #2C2F32;
+	border-top:1px solid #FFF;
+	border-bottom:1px solid #BEC9D1;
 }
 
 #sidebar ul li a
 {
-	color:#CCC;
+	color:#666;
 	text-decoration: none;
-	background:#383D44;
+	background:#EEF0F2;
 	display:block;
 	padding:0 5px;
 	width:230px;
@@ -120,8 +116,8 @@ h1 a:hover
 
 #sidebar ul li a:hover,.entry_tags a:hover,.entry_nav a:hover
 {
-	color:#FFF;
-	background:#444;
+	color:#000;
+	background:#F5F7F9;
 }
 
 .entry_tags a,.entry_nav a
@@ -132,10 +128,10 @@ h1 a:hover
 
 .entry
 {
-	border-bottom:1px solid #383D44;
 	color:#6D7887;
 	font-family:'Trebuchet ms',Helvetica,sans-serif;
 	margin-bottom:20px;
+	padding:10px;
 }
 
 .entry h2,h2.response
@@ -148,7 +144,13 @@ h1 a:hover
 	font-weight:normal;
 }
 
-h2.response,.comment-form
+h2.response
+{
+	padding-left:10px;
+	color:#495A67;
+}
+
+.comment-form
 {
 	color:#6D7887;
 }
@@ -156,9 +158,9 @@ h2.response,.comment-form
 .comment-form
 {
 	font-size:9pt;
-	background:#0B0C0F url(images/quote.gif) top right no-repeat;
+	background:#EEE;
 	padding:10px;
-	border:2px solid #1E2128;
+	border:1px solid #DDD;
 	margin-top:20px;
 }
 
@@ -169,10 +171,10 @@ h2.response,.comment-form
 
 .comment-form input.text
 {
-	background:#111317;
-	border:1px solid #1E2128;
-	border-top:#111;
-	border-left:#111;
+	background:#F8F8F8;
+	border:1px solid #FFF;
+	border-top:#DDD;
+	border-left:#DDD;
 	color:#6D7887;
 	line-height:20px;
 	height:20px;
@@ -182,21 +184,21 @@ h2.response,.comment-form
 
 .comment-form input.button
 {
-	background:#111317;
-	border:1px solid #1E2128;
-	border-bottom:#111;
-	border-right:#111;
-	color:#6D7887;
+	background:#AAA;
+	border:1px solid #999;
+	border-bottom:#444;
+	border-right:#444;
+	color:#FFF;
 	line-height:20px;
 	font-weight:bold;
 }
 
 .comment-form textarea.text
 {
-	background:#111317;
-	border:1px solid #1E2128;
-	border-top:#111;
-	border-left:#111;
+	background:#F8F8F8;
+	border:1px solid #FFF;
+	border-top:#DDD;
+	border-left:#DDD;
 	color:#6D7887;
 	font-size:9pt;
 	padding:2px;
@@ -238,6 +240,12 @@ ol.comment cite{
     font-size:9pt; font-weight:bold; font-family:Verdana
 }
 
+ol.comment cite img
+{
+	margin-bottom:-4px;
+	margin-right:3px;
+}
+
 ol.comment li small{
 	color:#999;
 	font-size:7pt;
@@ -261,10 +269,10 @@ ol.comment li a:hover{
 
 ol.comment li{
     list-style:none;
-    padding:10px 20px;
+    padding:10px;
     margin:0;
     line-height:20px;
-	background:#202328 url(images/comment-alt.gif) left center no-repeat;
+    border-top:1px solid #EEE;
 }
 
 ol.comment li.alt
@@ -274,25 +282,44 @@ ol.comment li.alt
 
 .entry h2 a
 {
-	color:#777;
+	color:#495A67;
+}
+
+.alt
+{
+	background:#EEE;
 }
 
 .entry h2 a:hover
 {
-	color:#CCC;
+	color:#222;
 	text-decoration: none;
 }
 
 .entry_tags
 {
 	font-size:9pt;
+	padding-left:20px;
+	line-height:26px;
+	height:26px;
+	background:url(images/tag_blue.gif) left center no-repeat;
 }
 
 .entry_date
 {
 	font-size:9pt;
-	font-family:Georgia, Helvetica, sans-serif;
 	margin-bottom:10px;
+	padding-left:20px;
+	line-height:26px;
+	height:26px;
+	font-family:verdana, Helvetica, sans-serif;
+	background:url(images/clock.gif) left center no-repeat;
+}
+
+.entry_date img
+{
+	margin-bottom:-3px;
+	margin-right:5px;
 }
 
 .entry_nav
@@ -311,6 +338,7 @@ ol.comment li.alt
 	padding:5px 0;
 	font-size:10pt;
 	line-height:18px;
+	color:#333;
 }
 
 .page_nav
@@ -322,12 +350,15 @@ ol.comment li.alt
 .page_nav a
 {
 	font-size:9pt;
-	border:1px solid #6D7887;
+	border:1px solid #BBB;
+	border-bottom:1px solid #6D7887;
+	border-right:1px solid #6D7887;
 	padding:2px 5px;
-	color:#6D7887;
+	color:#FFF;
 	text-decoration: none;
 	height:16px;
 	line-height:16px;
+	background:#CCC;
 }
 
 .page_nav a.left
@@ -342,8 +373,7 @@ ol.comment li.alt
 
 .page_nav a:hover
 {
-	background:#6D7887;
-	border:1px solid #000;
+	background:#FFF;
 	color:#292D34;
 }
 
@@ -352,8 +382,8 @@ ol.comment li.alt
 	padding:0;
 	font-size:10pt;
 	height:24px;
-	background:#14161B url(images/top_menu.gif);
-	border-bottom:1px solid #111;
+	background:#DDD;
+	border-bottom:1px solid #BBB;
 }
 
 #menu_content ul
@@ -377,7 +407,7 @@ ol.comment li.alt
 #menu_content ul li a
 {
 	height:24px;
-	color:#AAA;
+	color:#555;
 	margin:0;
 	text-decoration: none;
 	font-weight:normal;
@@ -404,10 +434,10 @@ ol.comment li.alt
 
 #footer
 {
-    color:#AAA;
-    margin:0;
+	color:#555;
+	margin:0;
 	font-size:8pt;
-    float:left;
+	float:left;
 	width:100%;
 	text-align:center;
 	font-family:Trebuchet MS,verdana, Helvetica, sans-serif;
@@ -420,9 +450,7 @@ ol.comment li.alt
 
 #footer_content
 {
-	background:#111317;
 	height:60px;
-	border-top:1px solid #464A52;
 }
 
 #footer_content p

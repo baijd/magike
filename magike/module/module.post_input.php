@@ -34,7 +34,7 @@ class PostInput extends MagikeModule
 		$input['post_is_page'] = isset($_POST['post_is_page']) && $_POST['post_is_page'] ? $_POST['post_is_page'] : 0;
 		$input['post_edit_time'] = time() - $this->stack['static_var']['server_timezone'];
 		$input['post_time'] = time() - $this->stack['static_var']['server_timezone'];
-		$input['post_name'] = $input['post_is_page'] && NULL == $_POST['post_name'] ? urlencode($input['post_title']) : $input['post_name'];
+		$input['post_name'] = $input['post_is_page'] && NULL == $_POST['post_name'] ? str_replace('%','',urlencode($input['post_title'])) : $input['post_name'];
 		
 		//自动生成密码
 		$autoPassword = NULL;
@@ -46,8 +46,11 @@ class PostInput extends MagikeModule
 		
 		$postModel = $this->loadModel('posts');
 		$insertId = $postModel->insertTable($input);
-		$categoriesModel = $this->loadModel('categories');
-		$categoriesModel->increaseFieldByKey($input['category_id'],'category_count');
+		if(!$input['post_is_page'])
+		{
+			$categoriesModel = $this->loadModel('categories');
+			$categoriesModel->increaseFieldByKey($input['category_id'],'category_count');
+		}
 		
 		$trackback = 
 		mgSendTrackback($url,array("title" => $input['post_title'],
@@ -91,7 +94,7 @@ class PostInput extends MagikeModule
 		$input['post_is_page'] = isset($_POST['post_is_page']) && $_POST['post_is_page'] ? $_POST['post_is_page'] : 0;
 		$input['post_is_draft'] = isset($_POST['post_is_draft']) && $_POST['post_is_draft'] ? $_POST['post_is_draft'] : 0;
 		$input['post_edit_time'] = time() - $this->stack['static_var']['server_timezone'];
-		$input['post_name'] = $input['post_is_page'] && NULL == $_POST['post_name'] ? urlencode($input['post_title']) : $input['post_name'];
+		$input['post_name'] = $input['post_is_page'] && NULL == $_POST['post_name'] ? str_replace('%','',urlencode($input['post_title'])) : $input['post_name'];
 		
 		//自动生成密码
 		$autoPassword = NULL;
@@ -111,12 +114,16 @@ class PostInput extends MagikeModule
 								   "blog_name" => $this->stack['static_var']['blog_name'],
 								   "agent" => $this->stack['static_var']['version']));
 		
-		if($post['category_id'] != $input['category_id'])
+		$categoriesModel = $this->loadModel('categories');
+		if($post['category_id'] != $input['category_id'] && !$post['post_is_page'])
 		{
-			$categoriesModel = $this->loadModel('categories');
-			$categoriesModel->increaseFieldByKey($input['category_id'],'category_count');
 			$categoriesModel->decreaseFieldByKey($post['category_id'],'category_count');
 		}
+		if($post['category_id'] != $input['category_id'] && !$input['post_is_page'])
+		{
+			$categoriesModel->increaseFieldByKey($input['category_id'],'category_count');
+		}
+		
 		$postModel->updateByKey($_GET['post_id'],$input);
 		
 		if($input['post_tags'])
@@ -145,7 +152,10 @@ class PostInput extends MagikeModule
 			$post = $postModel->fectchOneByKey($id);
 			$postModel->deleteByKeys($id);
 			$commentsModel->deleteByFieldEqual('post_id',$id);
-			$categoriesModel->decreaseFieldByKey($post['category_id'],'category_count');
+			if(!$post['post_is_page'])
+			{
+				$categoriesModel->decreaseFieldByKey($post['category_id'],'category_count');
+			}
 			if($post['post_tags'])
 			{
 				$tagsModel = $this->loadModel('tags');
