@@ -75,6 +75,7 @@ function magikeValidator(url,mod)
 	<div id="incontent">
 	<div id="sidecontent">
 	<h1>{<a href="{$static_var.siteurl}">{$static_var.blog_name}</a>}</h1>
+		<[if:$static_var.user_allow_register]>
 		<div class="entry" style="border:none">
 			<h2>注册用户</h2>
 			<div class="entry_content">
@@ -105,8 +106,14 @@ function magikeValidator(url,mod)
 			$('.validate-word').hide();
 		</script>
 		</div>
-			</div>
 		</div>
+		</div>
+		<[/if]>
+		<[if:!$static_var.user_allow_register]>
+		<div class="entry" style="border:none">
+			<h2>对不起,用户注册已经关闭</h2>
+		</div>
+		<[/if]>
 	</div>
 	<[include:sidebar]>
 	</div>
