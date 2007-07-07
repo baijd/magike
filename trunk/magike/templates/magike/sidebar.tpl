@@ -8,7 +8,7 @@
 	<ul>
 		<li style="background:#EEF0F2">
 		<form method="get" style="margin:0;padding:0" action="{$static_var.index}/search/">
-			<input type="text" name="keywords" size="40" value="Please enter keywords here ..." style="height:16px;font-size:8pt;border:none;padding:0 5px;color:#AAA;background:#EEF0F2" />
+			<input type="text" name="keywords" size="40" value="Please enter keywords here ..." onfocus="this.setAttribute('value','');" style="margin-top:4px;font-family:verdana, Helvetica, sans-serif;height:16px;font-size:9pt;border:none;padding:0 5px;color:#AAA;background:#EEF0F2" />
 		</form>
 		</li>
 	</ul>
