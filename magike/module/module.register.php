@@ -8,6 +8,7 @@
 
 class Register extends MagikeModule
 {
+	private $result;
 	public function insertUser()
 	{
 		$this->requirePost(NULL,false);
@@ -26,8 +27,7 @@ class Register extends MagikeModule
 		
 		//发送注册邮件
 		$this->result['mailer']['subject'] = '"'.$this->stack['static_var']['blog_name'].'"注册提示';
-		$this->result['mailer']['body'] = $_POST['user_name'].",您好:\r\n欢迎您成为我们网站的用户.\r\n您注册的用户名是'".$_POST['user_name']."',密码是'".$password."'
-		感谢您的支持! ".$this->stack['static_var']['siteurl'];
+		$this->result['mailer']['body'] = $_POST['user_name'].",您好:\r\n欢迎您成为我们网站的用户.\r\n您注册的用户名是'".$_POST['user_name']."',密码是'".$password."'\r\n\r\n感谢您的支持! \r\n".$this->stack['static_var']['siteurl'];
 		$this->result['mailer']['send_to'] = $_POST['user_mail'];
 		$this->result['mailer']['send_to_user'] = $_POST['user_name'];
 		
@@ -38,15 +38,17 @@ class Register extends MagikeModule
 		$_SESSION['auth_data'] = mgCreateRandomString(128);
 		
 		setcookie('auth_data',$_SESSION['auth_data'],0,'/');
-		header('location: '.$this->stack['static_var']['siteurl']);
 	}
 	
 	public function runModule()
 	{
+		$this->result = array();
 		if($this->stack['static_var']['user_allow_register'])
 		{
 			$this->onPost("do","insertUser","register");
 		}
+		
+		return $this->result;
 	}
 }
 ?>

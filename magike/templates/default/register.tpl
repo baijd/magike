@@ -1,6 +1,8 @@
 <[include:header]>
 
 <[module:register]>
+<[module:smtp_mailer?waitting_for=register]>
+<[module:http_location]>
 <script language="javascript" type="text/javascript" src="{$static_var.siteurl}/templates/{$static_var.admin_template}/javascript/jquery.js"></script>
 <script>
 if (!Object.prototype.toJSONString) {
