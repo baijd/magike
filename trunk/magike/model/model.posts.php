@@ -105,7 +105,7 @@ class PostsModel extends MagikeModel
 	
 	public function fectchPostsByCategory($category,$limit,$offset,$func = NULL)
 	{
-		$where['template'] = 'table.posts.post_is_hidden = 0  AND category_postname = ?';
+		$where['template'] = 'table.posts.post_is_hidden = 0 AND table.posts.post_is_page = 0 AND category_postname = ?';
 		$where['value'] = array($category);
 		return $this->fectch($this->fixPostWhere($limit,$offset,$where),$func);
 	}
@@ -114,7 +114,7 @@ class PostsModel extends MagikeModel
 	{
 		$args = $this->fixPostWhere();
 		
-		$args['where']['template'] = 'table.posts.post_is_hidden = 0  AND category_postname = ?';
+		$args['where']['template'] = 'table.posts.post_is_hidden = 0  AND table.posts.post_is_page = 0 AND category_postname = ?';
 		$args['where']['value'] = array($category);
 		unset($args['groupby']);
 		return $this->countTable($args);

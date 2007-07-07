@@ -4,12 +4,11 @@
 <[module:categories_list]>
 
 <div id="sidebar">
-	<div class="top"></div>
 	<h2>Search</h2>
 	<ul>
-		<li>
+		<li style="background:#EEE">
 		<form method="get" style="margin:0;padding:0" action="{$static_var.index}/search/">
-			<input type="text" name="keywords" size="40" value="Please enter keywords here ..." style="height:16px;font-size:8pt;border:none;padding:0 5px;color:#CCC;background:#383D44" />
+			<input type="text" name="keywords" size="40" value="Please enter keywords here ..." style="height:16px;font-size:8pt;border:none;padding:0 5px;color:#AAA;background:#EEE" />
 		</form>
 		</li>
 	</ul>
@@ -39,5 +38,4 @@
 	<[/loop]>
 	</ul>
 	<[/loop]>
-	<div class="bottom"></div>
 </div>

@@ -32,7 +32,7 @@
 	<[if:$archives]>
 	<h1>{<a href="{$static_var.siteurl}">{$static_var.blog_name}</a>}</h1>
 	<[loop:$archives AS $post]>
-		<div class="entry">
+		<div class="entry <[if:!$post.post_alt]>alt<[/if]>">
 			<h2><a href="{$static_var.index}/archives/{$post.post_id}/">{$post.post_title}</a></h2>
 			<div class="entry_date">{$post.post_time}</div>
 			<div class="entry_content">

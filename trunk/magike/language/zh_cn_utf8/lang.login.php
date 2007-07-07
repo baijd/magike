@@ -12,6 +12,7 @@ $lang = array(
 	'user_name'=> '用户名',
 	'password' => '密码',
 	'foget_password' => '忘记密码',
+	'return_homepage' => '返回主页',
 	'register' => '注册',
 	'error'    => '用户名或密码错误',
 	'error_open' => '您已经登录,请先登出'
