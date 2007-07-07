@@ -21,7 +21,7 @@ class SmtpMailer extends MagikeModule
 		if($getArgs['waitting_for'] && isset($this->stack[$getArgs['waitting_for']]['mailer']))
 		{
 				$userModel = $this->loadModel('users');
-				$webMaster =  $userModel->fectchOneByKey(1);
+				$webMaster =  $userModel->fetchOneByKey(1);
 				$this->phpmailer->isSMTP();
 				$this->phpmailer->SMTPDebug = __DEBUG__;
 				$this->phpmailer->CharSet = $this->stack['static_var']['charset'];

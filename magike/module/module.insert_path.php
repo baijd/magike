@@ -13,7 +13,7 @@ class InsertPath extends MagikeModule
 		if(isset($_GET['path_id']))
 		{
 			$pathModel = $this->loadModel('paths');
-			$result = $pathModel->fectchOneByKey($_GET['path_id']);
+			$result = $pathModel->fetchOneByKey($_GET['path_id']);
 			if(isset($this->stack['admin_menu_list']['children']))
 			{
 				$this->stack['admin_menu_list']['children'][1]['menu_name'] = '编辑路径 "'.$result['path_describe'].'"';

@@ -10,7 +10,17 @@ class UsersModel extends MagikeModel
 {
 	public function listUsers()
 	{
-		return $this->fectch(array('table' => 'table.users','orderby' => 'id','sort' => 'ASC'));
+		return $this->fetch(array('table' => 'table.users','orderby' => 'id','sort' => 'ASC'));
+	}
+	
+	public function checkUserExists($userName)
+	{
+		return $this->fetchOneByFieldEqual('user_name',$userName) ? false : true;
+	}
+	
+	public function checkMailExists($email)
+	{
+		return $this->fetchOneByFieldEqual('user_mail',$email) ? false : true;
 	}
 }
 ?>

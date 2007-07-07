@@ -1,12 +1,12 @@
 <?php
 /**********************************
  * Created on: 2006-12-16
- * File Name : module.fectch_by_search.php
+ * File Name : module.fetch_by_search.php
  * Copyright : Magike Group
  * License   : GNU General Public License 2.0
  *********************************/
  
-class FectchBySearch extends Posts
+class fetchBySearch extends Posts
 {
 	private $result;
 	
@@ -31,7 +31,7 @@ class FectchBySearch extends Posts
 			$this->stack['static_var']['blog_title'] = '搜索关键字 "'.$_GET['keywords'].'"'.' &raquo; '.$this->stack['static_var']['blog_name'];
 		}
 		
-		$this->result = $this->model->fectchPostsByKeywords($keywords,$this->getArgs['limit'],$this->offset,array('function' => array($this,'prasePost')),$this->getArgs['supper']);
+		$this->result = $this->model->fetchPostsByKeywords($keywords,$this->getArgs['limit'],$this->offset,array('function' => array($this,'prasePost')),$this->getArgs['supper']);
 	}
 	public function runModule($args)
 	{

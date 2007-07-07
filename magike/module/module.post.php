@@ -66,11 +66,11 @@ class Post extends MagikeModule
 		$this->onPost('post_password','getAccess');
 		if(isset($_GET['post_id']))
 		{
-			return $this->post->fectchPostById($_GET['post_id'],array('function' => array($this,'prasePost')));
+			return $this->post->fetchPostById($_GET['post_id'],array('function' => array($this,'prasePost')));
 		}
 		else if(isset($_GET['post_name']))
 		{
-			return $this->post->fectchPostByName($_GET['post_name'],array('function' => array($this,'prasePost')));
+			return $this->post->fetchPostByName($_GET['post_name'],array('function' => array($this,'prasePost')));
 		}
 		else
 		{

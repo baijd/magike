@@ -173,36 +173,41 @@ h2.response
 {
 	background:#F8F8F8;
 	border:1px solid #FFF;
-	border-top:#DDD;
-	border-left:#DDD;
+	border-top:1px solid #DDD;
+	border-left:1px solid #DDD;
 	color:#6D7887;
 	line-height:20px;
 	height:20px;
 	font-size:9pt;
 	padding:2px;
+	font-family:verdana, Helvetica, sans-serif;
 }
 
 .comment-form input.button
 {
 	background:#AAA;
 	border:1px solid #999;
-	border-bottom:#444;
-	border-right:#444;
+	border-bottom:1px solid #444;
+	border-right:1px solid #444;
 	color:#FFF;
 	line-height:20px;
 	font-weight:bold;
+	font-family:verdana, Helvetica, sans-serif;
 }
 
 .comment-form textarea.text
 {
 	background:#F8F8F8;
 	border:1px solid #FFF;
-	border-top:#DDD;
-	border-left:#DDD;
+	border-top:1px solid #DDD;
+	border-left:1px solid #DDD;
 	color:#6D7887;
 	font-size:9pt;
 	padding:2px;
+	width:350px;
+	height:150px;
 	margin:0;
+	font-family:verdana, Helvetica, sans-serif;
 	overflow:auto;
 }
 

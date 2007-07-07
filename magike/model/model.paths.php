@@ -10,7 +10,7 @@ class PathsModel extends MagikeModel
 {
 	public function listPaths($func = NULL)
 	{
-		return $this->fectch(array('table' => 'table.paths','orderby' => 'id','sort' => 'ASC'),$func);
+		return $this->fetch(array('table' => 'table.paths','orderby' => 'id','sort' => 'ASC'),$func);
 	}
 }
 ?>

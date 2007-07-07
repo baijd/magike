@@ -14,7 +14,7 @@ class TagsModel extends MagikeModel
 		$args['fields'] = '*,COUNT(table.post_tag_mapping) AS tag_sum';
 		$args['table']	= 'table.tags LEFT JOIN table.post_tag_mapping ON table.tags.id = table.post_tag_mapping.id';
 		$args['groupby'] = 'table.tags.id';
-		return $this->fectch($args);
+		return $this->fetch($args);
 	}
 	
 	private function getTags($tags)
@@ -26,7 +26,7 @@ class TagsModel extends MagikeModel
 		{
 			$value = array();
 			$result = 
-			$this->fectch(array('table' => 'table.tags',
+			$this->fetch(array('table' => 'table.tags',
 								'where' => array('template' => implode(" OR ",$where),
 														   'value'	  => $tags
 									)

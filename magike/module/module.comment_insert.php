@@ -25,11 +25,11 @@ class CommentInsert extends MagikeModule
 		
 		if(isset($_GET['post_id']))
 		{
-			$post = $postModel->fectchPostById($_GET['post_id'],NULL,false);
+			$post = $postModel->fetchPostById($_GET['post_id'],NULL,false);
 		}
 		else if(isset($_GET['post_name']))
 		{
-			$post = $postModel->fectchPostByName($_GET['post_name'],NULL,false);
+			$post = $postModel->fetchPostByName($_GET['post_name'],NULL,false);
 		}
 		
 		if($post && $post['post_allow_comment'])
@@ -51,7 +51,7 @@ class CommentInsert extends MagikeModule
 			$userModel = $this->loadModel('users');
 			if($this->stack['access']['login'])
 			{
-				$user = $userModel->fectchOneByKey($this->stack['access']['user_id']);
+				$user = $userModel->fetchOneByKey($this->stack['access']['user_id']);
 				$input['comment_user'] = $user["user_name"];
 				$input['comment_email'] = $user["user_mail"];
 				$input['comment_homepage'] = $user["user_url"];
@@ -104,7 +104,7 @@ class CommentInsert extends MagikeModule
 			//发送邮件提示
 			if($this->stack['static_var']['comment_email'] && $input['comment_publish'] != 'spam')
 			{
-				$author = $userModel->fectchOneByKey($post['user_id']);
+				$author = $userModel->fetchOneByKey($post['user_id']);
 				if($author['user_mail'])
 				{
 					$this->result['mailer']['subject'] = '"'.$this->stack['static_var']['blog_name'].'"回响提示';

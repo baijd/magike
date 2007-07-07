@@ -50,7 +50,7 @@ class Access extends MagikeModule
 	{
 		$access = array();
 		$this->initPublicObject(array('database'));
-		$result = $this->database->fectch(array('table' => 'table.path_group_mapping'));
+		$result = $this->database->fetch(array('table' => 'table.path_group_mapping'));
 		
 		foreach($result as $val)
 		{

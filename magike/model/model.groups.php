@@ -10,12 +10,12 @@ class GroupsModel extends MagikeModel
 {
 	public function listGroups()
 	{
-		return $this->fectch(array('table' => 'table.groups','orderby' => 'id','sort' => 'ASC'));
+		return $this->fetch(array('table' => 'table.groups','orderby' => 'id','sort' => 'ASC'));
 	}
 	
 	public function getUserGroups($id)
 	{
-		return $this->fectch(array('table' => 'table.groups JOIN table.user_group_mapping ON table.groups.id = table.user_group_mapping.group_id',
+		return $this->fetch(array('table' => 'table.groups JOIN table.user_group_mapping ON table.groups.id = table.user_group_mapping.group_id',
 								   'where' => array('template' => 'table.user_group_mapping.user_id = ?','value' => array($id)),
 								   'groupby' => 'table.groups.id'
 									)
@@ -24,7 +24,7 @@ class GroupsModel extends MagikeModel
 	
 	public function getGroupPaths($id)
 	{
-		return $this->fectch(array('table' => 'table.groups JOIN table.path_group_mapping ON table.groups.id = table.path_group_mapping.group_id',
+		return $this->fetch(array('table' => 'table.groups JOIN table.path_group_mapping ON table.groups.id = table.path_group_mapping.group_id',
 								   'where' => array('template' => 'table.groups.id = ?','value' => array($id)),
 								   'groupby' => 'table.path_group_mapping.path_id'
 									)
@@ -33,7 +33,7 @@ class GroupsModel extends MagikeModel
 	
 	public function getPathGroups($id)
 	{
-		return $this->fectch(array('table' => 'table.groups JOIN table.path_group_mapping ON table.groups.id = table.path_group_mapping.group_id',
+		return $this->fetch(array('table' => 'table.groups JOIN table.path_group_mapping ON table.groups.id = table.path_group_mapping.group_id',
 								   'where' => array('template' => 'table.path_group_mapping.path_id = ?','value' => array($id)),
 								   'groupby' => 'table.path_group_mapping.group_id'
 									)

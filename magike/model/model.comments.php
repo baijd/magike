@@ -24,7 +24,7 @@ class CommentsModel extends MagikeModel
 			$args['where']['value'] = array($value);
 		}
 		
-		return $this->fectch($args,$func);
+		return $this->fetch($args,$func);
 	}
 	
 	public function getAllCommentsNum($field = NULL,$value = NULL)
@@ -59,7 +59,7 @@ class CommentsModel extends MagikeModel
 			$args['where']['value'] = array($value);
 		}
 		
-		return $this->fectch($args,$func);
+		return $this->fetch($args,$func);
 	}
 	
 	public function getAllPublishTrackbacksNum($field = NULL,$value = NULL)
@@ -95,7 +95,7 @@ class CommentsModel extends MagikeModel
 			$args['where']['value'] = array($value);
 		}
 		
-		return $this->fectch($args,$func);
+		return $this->fetch($args,$func);
 	}
 	
 	public function getAllPublishCommentsNum($field = NULL,$value = NULL)
@@ -131,7 +131,7 @@ class CommentsModel extends MagikeModel
 			$args['where']['value'] = array($value);
 		}
 		
-		return $this->fectch($args,$func);
+		return $this->fetch($args,$func);
 	}
 	
 	public function getAllPublishCommentsTrackbacksNum($field = NULL,$value = NULL)

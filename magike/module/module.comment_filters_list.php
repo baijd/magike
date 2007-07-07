@@ -27,7 +27,7 @@ class CommentFiltersList extends MagikeModule
 	
 	public function runModule()
 	{
-		return $this->database->fectch(array('table' => 'table.comment_filters'),array('function' => array($this,'praseFilter')));
+		return $this->database->fetch(array('table' => 'table.comment_filters'),array('function' => array($this,'praseFilter')));
 	}
 }
 ?>

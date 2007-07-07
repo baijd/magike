@@ -6,9 +6,9 @@
 <div id="sidebar">
 	<h2>Search</h2>
 	<ul>
-		<li style="background:#EEE">
+		<li style="background:#EEF0F2">
 		<form method="get" style="margin:0;padding:0" action="{$static_var.index}/search/">
-			<input type="text" name="keywords" size="40" value="Please enter keywords here ..." style="height:16px;font-size:8pt;border:none;padding:0 5px;color:#AAA;background:#EEE" />
+			<input type="text" name="keywords" size="40" value="Please enter keywords here ..." style="height:16px;font-size:8pt;border:none;padding:0 5px;color:#AAA;background:#EEF0F2" />
 		</form>
 		</li>
 	</ul>

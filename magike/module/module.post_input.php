@@ -105,7 +105,7 @@ class PostInput extends MagikeModule
 		}
 		
 		$postModel = $this->loadModel('posts');
-		$post = $postModel->fectchOneByKey($_GET['post_id']);
+		$post = $postModel->fetchOneByKey($_GET['post_id']);
 
 		$trackback = 
 		mgSendTrackback($url,array("title" => $input['post_title'],
@@ -149,7 +149,7 @@ class PostInput extends MagikeModule
 		$select = is_array($_GET['post_id']) ? $_GET['post_id'] : array($_GET['post_id']);
 		foreach($select as $id)
 		{
-			$post = $postModel->fectchOneByKey($id);
+			$post = $postModel->fetchOneByKey($id);
 			$postModel->deleteByKeys($id);
 			$commentsModel->deleteByFieldEqual('post_id',$id);
 			if(!$post['post_is_page'])

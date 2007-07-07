@@ -15,7 +15,7 @@ class InsertCommentFilter extends MagikeModule
 		if(isset($_GET['cf_id']))
 		{
 			$filterModel = $this->loadModel('comment_filters');
-			$result = $filterModel->fectchOneByKey($_GET['cf_id']);
+			$result = $filterModel->fetchOneByKey($_GET['cf_id']);
 			$this->stack['admin_menu_list']['children'][2]['menu_name'] = '编辑 "'.mgSubStr($this->getLanguage($result['comment_filter_name'],'comment_filter'),0,15,'...').'"';
 			$this->stack['admin_menu_list']['children'][2]['path_name'] = '/admin/comments/filter/?cf_id='.$_GET['cf_id'];
 			$this->stack['static_var']['admin_title'] = '编辑 "'.mgSubStr($this->getLanguage($result['comment_filter_name'],'comment_filter'),0,15,'...').'"';
