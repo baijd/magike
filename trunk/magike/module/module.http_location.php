@@ -10,15 +10,23 @@ class HttpLocation extends MagikeModule
 {
 	public function runModule($args)
 	{
-		$require = array('referer' => 'get');
+		$require = array('referer' => NULL);
 		$getArgs = $this->initArgs($args,$require);
-		if('get' == $getArgs['referer'])
+		
+		if(isset($_POST) && $_POST)
 		{
-			header('location: '.$_GET['referer']);
-		}
-		else if('post' == $getArgs['referer'])
-		{
-			header('location: '.$_POST['referer']);
+			if('get' == $getArgs['referer'])
+			{
+				header('location: '.$_GET['referer']);
+			}
+			else if('post' == $getArgs['referer'])
+			{
+				header('location: '.$_POST['referer']);
+			}
+			else
+			{
+				header('location: '.$this->stack['static_var']['siteurl']);
+			}
 		}
 	}
 }
