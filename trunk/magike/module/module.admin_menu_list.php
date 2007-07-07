@@ -50,7 +50,7 @@ class AdminMenuList extends MagikeModule
 
 	private function praseFocusChild($id)
 	{
-		$this->result['children'] = $this->database->fectch(array('table' => 'table.menus JOIN table.paths ON table.menus.path_id = table.paths.id',
+		$this->result['children'] = $this->database->fetch(array('table' => 'table.menus JOIN table.paths ON table.menus.path_id = table.paths.id',
 																  'groupby' => 'table.menus.id',
 																  'where' => array('template' => 'menu_parent = ?','value' => array($id))
 																  ),
@@ -67,7 +67,7 @@ class AdminMenuList extends MagikeModule
 
 	public function runModule()
 	{
-		$this->result['parents'] = $this->database->fectch(array('fields'=> '*,table.menus.id as menu_id',
+		$this->result['parents'] = $this->database->fetch(array('fields'=> '*,table.menus.id as menu_id',
 																 'table' => 'table.menus JOIN table.paths ON table.menus.path_id = table.paths.id',
 																 'groupby' => 'table.menus.id',
 																 'where' => array('template' => 'menu_parent = 0'

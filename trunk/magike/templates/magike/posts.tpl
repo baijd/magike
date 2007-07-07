@@ -1,28 +1,28 @@
 <[include:header]>
 
 
-<[module:posts.fectch_by_category]>
-<[module:page_navigator.posts_fectch_by_category]>
+<[module:posts.fetch_by_category]>
+<[module:page_navigator.posts_fetch_by_category]>
 
-<[if:$posts.fectch_by_category]>
-<[assign:$posts.fectch_by_category AS $archives]>
-<[assign:$page_navigator.posts_fectch_by_category AS $navigator]>
+<[if:$posts.fetch_by_category]>
+<[assign:$posts.fetch_by_category AS $archives]>
+<[assign:$page_navigator.posts_fetch_by_category AS $navigator]>
 <[/if]>
 
-<[module:posts.fectch_by_tag]>
-<[module:page_navigator.posts_fectch_by_tag]>
+<[module:posts.fetch_by_tag]>
+<[module:page_navigator.posts_fetch_by_tag]>
 
-<[if:$posts.fectch_by_tag]>
-<[assign:$posts.fectch_by_tag AS $archives]>
-<[assign:$page_navigator.posts_fectch_by_tag AS $navigator]>
+<[if:$posts.fetch_by_tag]>
+<[assign:$posts.fetch_by_tag AS $archives]>
+<[assign:$page_navigator.posts_fetch_by_tag AS $navigator]>
 <[/if]>
 
-<[module:posts.fectch_by_search]>
-<[module:page_navigator.posts_fectch_by_search]>
+<[module:posts.fetch_by_search]>
+<[module:page_navigator.posts_fetch_by_search]>
 
-<[if:$posts.fectch_by_search]>
-<[assign:$posts.fectch_by_search AS $archives]>
-<[assign:$page_navigator.posts_fectch_by_search AS $navigator]>
+<[if:$posts.fetch_by_search]>
+<[assign:$posts.fetch_by_search AS $archives]>
+<[assign:$page_navigator.posts_fetch_by_search AS $navigator]>
 <[/if]>
 
 <div id="content">

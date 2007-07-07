@@ -231,7 +231,8 @@ query("INSERT INTO `mg_path_group_mapping` (`id`, `path_id`, `group_id`) VALUES
 (72, 59, 1),
 (73, 59, 2),
 (74, 60, 1),
-(75, 60, 2)");
+(75, 60, 2),
+(76, 61, 2)");
 
 query("CREATE TABLE `mg_paths` (
   `id` int(10) unsigned NOT NULL auto_increment,
@@ -304,7 +305,8 @@ query("INSERT INTO `mg_paths` (`id`, `path_name`, `path_action`, `path_file`, `p
 (57, '/tags/[tag_name=%s]/[page=%d]/', 'template', '/{\$static_var.template}/posts.tpl', 0,'标签文章分页'),
 (58, '/admin/settings/setting_mail/', 'template', '/{\$static_var.template}/setting_mail.tpl', 0,'后台设置邮箱'),
 (59, '/search/', 'template', '/{\$static_var.template}/posts.tpl', 0,'文章搜索'),
-(60, '/rss/archives/[post_id=%d]/', 'template', '/{\$static_var.xml_template}/rss_archives.tpl', 0,'RSS文章输出')");
+(60, '/rss/archives/[post_id=%d]/', 'template', '/{\$static_var.xml_template}/rss_archives.tpl', 0,'RSS文章输出'),
+(61, '/register/', 'template', '/{\$static_var.template}/register.tpl', 0,'用户注册')");
 
 query("CREATE TABLE `mg_post_tag_mapping` (
   `id` int(10) unsigned NOT NULL auto_increment,

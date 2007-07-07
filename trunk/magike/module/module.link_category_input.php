@@ -54,7 +54,7 @@ class LinkCategoryInput extends MagikeModule
 	public function insertLinkCategory()
 	{
 		$this->requirePost();
-		$item = $this->model->fectchOne(array('fields'=> 'MAX(link_category_sort) AS max_sort',
+		$item = $this->model->fetchOne(array('fields'=> 'MAX(link_category_sort) AS max_sort',
 											  'table' => 'table.link_categories'));
 		$this->model->insertTable(array('link_category_name' 	=> $_POST['link_category_name'],
 										   'link_category_hide'		=> $_POST['link_category_hide'],

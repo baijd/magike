@@ -1,12 +1,12 @@
 <?php
 /**********************************
  * Created on: 2006-12-16
- * File Name : module.posts_fectch_by_search.php
+ * File Name : module.posts_fetch_by_search.php
  * Copyright : Magike Group
  * License   : GNU General Public License 2.0
  *********************************/
  
-class PostsFectchBySearch extends PageNavigator
+class PostsfetchBySearch extends PageNavigator
 {
 	private $getArgs;
 	private $result;

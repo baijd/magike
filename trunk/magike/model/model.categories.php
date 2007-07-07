@@ -10,14 +10,14 @@ class CategoriesModel extends MagikeModel
 {
 	public function listCategories()
 	{
-		return $this->fectch(array('table' => 'table.categories','orderby' => 'category_sort','sort' => 'ASC'));
+		return $this->fetch(array('table' => 'table.categories','orderby' => 'category_sort','sort' => 'ASC'));
 	}
 	
 	public function moveUpCategory($id)
 	{
-		$item = $this->fectchOneByKey($id);
+		$item = $this->fetchOneByKey($id);
 		$title = $item['category_name'];
-		$item = $this->fectchOne(array('table' 	=> 'table.categories',
+		$item = $this->fetchOne(array('table' 	=> 'table.categories',
 											  'where'	=> array('template' => 'category_sort < ?',
 																 'value'	=> array($item['category_sort'])
 																),
@@ -37,9 +37,9 @@ class CategoriesModel extends MagikeModel
 	
 	public function moveDownCategory($id)
 	{
-		$item = $this->fectchOneByKey($id);
+		$item = $this->fetchOneByKey($id);
 		$title = $item['category_name'];
-		$item = $this->fectchOne(array('table' 	=> 'table.categories',
+		$item = $this->fetchOne(array('table' 	=> 'table.categories',
 											  'where'	=> array('template' => 'category_sort > ?',
 																 'value'	=> array($item['category_sort'])
 																),

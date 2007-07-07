@@ -34,7 +34,7 @@ class PostsModel extends MagikeModel
 		return $args;
 	}
 	
-	public function fectchPostsByKeywords($keywords,$limit,$offset,$func = NULL,$supper = false)
+	public function fetchPostsByKeywords($keywords,$limit,$offset,$func = NULL,$supper = false)
 	{
 		$whereTpl = array();
 		$value = array();
@@ -52,7 +52,7 @@ class PostsModel extends MagikeModel
 			$where['template'] .= 'AND post_is_draft = 0 AND post_is_page = 0 AND post_is_hidden = 0 AND post_time < '.(time() - $this->stack['static_var']['server_timezone']);
 		}
 		$where['value'] = $value;
-		return $this->fectch($this->fixPostWhere($limit,$offset,$where),$func);
+		return $this->fetch($this->fixPostWhere($limit,$offset,$where),$func);
 	}
 	
 	public function countPostsByKeywords($keywords,$supper = false)
@@ -77,7 +77,7 @@ class PostsModel extends MagikeModel
 		return $this->countTable($args);
 	}
 	
-	public function fectchPostsByTag($tag,$limit,$offset,$func = NULL)
+	public function fetchPostsByTag($tag,$limit,$offset,$func = NULL)
 	{
 		$args['table'] = '((table.posts JOIN table.post_tag_mapping ON table.posts.id = table.post_tag_mapping.post_id)
 		 LEFT JOIN table.tags ON table.post_tag_mapping.tag_id = table.tags.id)';
@@ -90,7 +90,7 @@ class PostsModel extends MagikeModel
 		$args['orderby'] = 'table.posts.post_time';
 		$args['sort']	= 'DESC';
 		
-		return $this->fectch($args,$func,true);
+		return $this->fetch($args,$func,true);
 	}
 	
 	public function countPostsByTag($tag)
@@ -103,11 +103,11 @@ class PostsModel extends MagikeModel
 		return $this->countTable($args);
 	}
 	
-	public function fectchPostsByCategory($category,$limit,$offset,$func = NULL)
+	public function fetchPostsByCategory($category,$limit,$offset,$func = NULL)
 	{
 		$where['template'] = 'table.posts.post_is_hidden = 0 AND table.posts.post_is_page = 0 AND category_postname = ?';
 		$where['value'] = array($category);
-		return $this->fectch($this->fixPostWhere($limit,$offset,$where),$func);
+		return $this->fetch($this->fixPostWhere($limit,$offset,$where),$func);
 	}
 	
 	public function countPostsByCategory($category)
@@ -120,7 +120,7 @@ class PostsModel extends MagikeModel
 		return $this->countTable($args);
 	}
 	
-	public function fectchPostById($id,$func = NULL,$exception = true)
+	public function fetchPostById($id,$func = NULL,$exception = true)
 	{
 		$args = array('fields'=> '*,table.posts.id AS post_id',
 			  'table' => 'table.posts LEFT JOIN table.categories ON table.posts.category_id = table.categories.id',
@@ -128,10 +128,10 @@ class PostsModel extends MagikeModel
 			  );
 		$args['where']['template'] = 'table.posts.id = ?';
 		$args['where']['value'] = array($id);
-		return $this->fectchOne($args,$func,$exception);
+		return $this->fetchOne($args,$func,$exception);
 	}
 	
-	public function fectchPostByName($name,$func = NULL,$exception = true)
+	public function fetchPostByName($name,$func = NULL,$exception = true)
 	{
 		$args = array('fields'=> '*,table.posts.id AS post_id',
 			  'table' => 'table.posts LEFT JOIN table.categories ON table.posts.category_id = table.categories.id',
@@ -139,12 +139,12 @@ class PostsModel extends MagikeModel
 			  );
 		$args['where']['template'] = 'table.posts.post_name = ?';
 		$args['where']['value'] = array($name);
-		return $this->fectchOne($args,$func,$exception);
+		return $this->fetchOne($args,$func,$exception);
 	}
 	
 	public function listAllPosts($limit,$offset,$func = NULL)
 	{
-		return $this->fectch($this->fixPostWhere($limit,$offset),$func);
+		return $this->fetch($this->fixPostWhere($limit,$offset),$func);
 	}
 	
 	public function countAllPosts()
@@ -157,7 +157,7 @@ class PostsModel extends MagikeModel
 	public function listAllEntries($limit,$offset,$func = NULL)
 	{
 		$where = array('template'	=> 'post_is_draft = 0 AND post_is_page = 0 AND post_is_hidden = 0 AND post_time < '.(time() - $this->stack['static_var']['server_timezone']));
-		return $this->fectch($this->fixPostWhere($limit,$offset,$where),$func);
+		return $this->fetch($this->fixPostWhere($limit,$offset,$where),$func);
 	}
 	
 	public function countAllEntries()
@@ -171,7 +171,7 @@ class PostsModel extends MagikeModel
 	public function listAllEntriesIncludeHidden($limit,$offset,$func = NULL)
 	{
 		$where = array('template'	=> 'post_is_draft = 0 AND post_is_page = 0');
-		return $this->fectch($this->fixPostWhere($limit,$offset,$where),$func);
+		return $this->fetch($this->fixPostWhere($limit,$offset,$where),$func);
 	}
 	
 	public function countAllEntriesIncludeHidden()
@@ -185,7 +185,7 @@ class PostsModel extends MagikeModel
 	public function listAllPages($limit = false,$offset = false,$func = NULL)
 	{
 		$where = array('template'	=> 'post_is_page = 1 AND post_is_draft = 0 AND post_is_hidden = 0');
-		return $this->fectch($this->fixPostWhere($limit,$offset,$where),$func);
+		return $this->fetch($this->fixPostWhere($limit,$offset,$where),$func);
 	}
 	
 	public function countAllPages()

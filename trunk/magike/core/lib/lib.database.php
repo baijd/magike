@@ -98,7 +98,7 @@ class Database extends MagikeObject
 		return $matches[1].__DBPREFIX__.$matches[2];
 	}
 
- 	public function fectch($args,$callback = NULL,$expection = false)
+ 	public function fetch($args,$callback = NULL,$expection = false)
  	{
  		//替换查询前缀
  		$args = $this->filterTablePrefix($args);
@@ -154,7 +154,7 @@ class Database extends MagikeObject
 		$num = 0;
 
 		//开始输出
-		while($rows = $this->dbObject->fectchArray($resource))
+		while($rows = $this->dbObject->fetchArray($resource))
 		{
 			if(isset($callback['function']))
 			{
@@ -174,10 +174,10 @@ class Database extends MagikeObject
 		return $result;
  	}
  	
- 	public function fectchOne($args,$callback = NULL,$expection = false)
+ 	public function fetchOne($args,$callback = NULL,$expection = false)
  	{
  		$args['limit'] = 1;
- 		$result = $this->fectch($args,$callback,$expection);
+ 		$result = $this->fetch($args,$callback,$expection);
  		return $result ? $result[0] : array();
  	}
 
@@ -256,7 +256,7 @@ class Database extends MagikeObject
 		
 		$query = $fields.$table.$where.$groupby;
  		$resource = $this->dbObject->query($query,'r');
- 		$result = $this->dbObject->fectchArray($resource);
+ 		$result = $this->dbObject->fetchArray($resource);
  		return $result['number'];
  	}
  	
@@ -271,7 +271,7 @@ class Database extends MagikeObject
 
 		$query = $fields.$table.$where.$groupby;
  		$resource = $this->dbObject->query($query,'r');
- 		$result = $this->dbObject->fectchArray($resource);
+ 		$result = $this->dbObject->fetchArray($resource);
  		return $result['number'];
  	}
 	

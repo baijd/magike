@@ -74,31 +74,31 @@ abstract class MagikeModel extends Database
  					)));
  	 }
  	 
- 	 public function fectchOneByKey($key,$callback = NULL,$expection = false)
+ 	 public function fetchOneByKey($key,$callback = NULL,$expection = false)
  	 {
- 	 	 return $this->fectchOne(array('table' => $this->table,
+ 	 	 return $this->fetchOne(array('table' => $this->table,
  	 	 	 						   'groupby' => $this->group,
  	 	 							   'where' => array('template' => "{$this->key} = ?",
  	 	 												'value' => array($key))),$callback,$expection);
  	 }
  	 
- 	 public function fectchOneByFieldEqual($field,$value,$callback = NULL,$expection = false)
+ 	 public function fetchOneByFieldEqual($field,$value,$callback = NULL,$expection = false)
  	 {
- 	 	 return $this->fectchOne(array('table' => $this->table,
+ 	 	 return $this->fetchOne(array('table' => $this->table,
  	 	 	 						   'groupby' => $this->group,
  	 	 							   'where' => array('template' => "{$field} = ?",
  	 	 												'value' => array($value))),$callback,$expection);
  	 }
  	 
- 	 public function fectchOneByFieldLike($field,$value,$callback = NULL,$expection = false)
+ 	 public function fetchOneByFieldLike($field,$value,$callback = NULL,$expection = false)
  	 {
- 	 	 return $this->fectchOne(array('table' => $this->table,
+ 	 	 return $this->fetchOne(array('table' => $this->table,
  	 	 	 						   'groupby' => $this->group,
  	 	 							   'where' => array('template' => "{$field} LIKE ?",
  	 	 												'value' => array($value))),$callback,$expection);
  	 }
  	 
- 	 public function fectchByFieldEqual($field,$value,$offset = false,$limit = false,$callback = NULL,$expection = false)
+ 	 public function fetchByFieldEqual($field,$value,$offset = false,$limit = false,$callback = NULL,$expection = false)
  	 {
  	 	 $args = array('table' => $this->table,
  	 	 	 		   'groupby' => $this->group,
@@ -114,10 +114,10 @@ abstract class MagikeModel extends Database
  	 	 {
  	 	 	 $args['limit'] = $limit;
  	 	 }
- 	 	 return $this->fectch($args,$callback,$expection);
+ 	 	 return $this->fetch($args,$callback,$expection);
  	 }
  	 
- 	 public function fectchByFieldLike($field,$value,$offset = false,$limit = false,$callback = NULL,$expection = false)
+ 	 public function fetchByFieldLike($field,$value,$offset = false,$limit = false,$callback = NULL,$expection = false)
  	 {
  	 	 $args = array('table' => $this->table,
  	 	 	 		   'groupby' => $this->group,
@@ -133,7 +133,7 @@ abstract class MagikeModel extends Database
  	 	 {
  	 	 	 $args['limit'] = $limit;
  	 	 }
- 	 	 return $this->fectch($args,$callback,$expection);
+ 	 	 return $this->fetch($args,$callback,$expection);
  	 }
  	 
  	 public function increaseFieldByKey($key,$field,$num = 1)

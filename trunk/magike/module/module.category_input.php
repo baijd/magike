@@ -53,7 +53,7 @@ class CategoryInput extends MagikeModule
 	public function insertCategory()
 	{
 		$this->requirePost();
-		$item = $this->category->fectchOne(array('fields'=> 'MAX(category_sort) AS max_sort',
+		$item = $this->category->fetchOne(array('fields'=> 'MAX(category_sort) AS max_sort',
 											  'table' => 'table.categories'));
 		$this->category->insertTable(array('category_name' 		=> $_POST['category_name'],
 										   'category_postname'	=> urlencode($_POST['category_postname']),
@@ -79,7 +79,7 @@ class CategoryInput extends MagikeModule
 		
 		foreach($select as $id)
 		{
-			$categoryPosts = $postModel->fectchOneByFieldEqual('category_id',$id);
+			$categoryPosts = $postModel->fetchOneByFieldEqual('category_id',$id);
 			$deleteComments += $postModel->sumTable(array('key'	 => 'post_comment_num',
 													 'where' => 
 													 array('template' => 'category_id = ?',
@@ -95,7 +95,7 @@ class CategoryInput extends MagikeModule
 			
 			foreach($posts as $id)
 			{
-				$post = $postModel->fectchOneByKey($id);
+				$post = $postModel->fetchOneByKey($id);
 				$postModel->deleteByKeys($id);
 				$commentModel->deleteByFieldEqual('post_id',$id);
 				if($post['post_tags'])

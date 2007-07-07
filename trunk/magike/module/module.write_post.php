@@ -23,7 +23,7 @@ class WritePost extends MagikeModule
 	{
 		if(isset($_GET['post_id']))
 		{
-			$result = $this->post->fectchPostById($_GET['post_id']);
+			$result = $this->post->fetchPostById($_GET['post_id']);
 			//修改菜单的内容
 			if(isset($this->stack['admin_menu_list']['children']))
 			{

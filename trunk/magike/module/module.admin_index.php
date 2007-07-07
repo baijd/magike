@@ -19,7 +19,7 @@ class AdminIndex extends MagikeModule
 		$result['server_version'] = PHP_OS." PHP ".PHP_VERSION;
 		$result['magike_version'] = $this->stack['static_var']['version'];
 		$result['posts_num'] 	   = $this->database->count(array('table' => 'table.posts','key' => 'id'));
-		$getVersion = $this->database->fectch(array('fields' => 'VERSION() AS version'));
+		$getVersion = $this->database->fetch(array('fields' => 'VERSION() AS version'));
 		$result['database_version'] = 'Mysql '.$getVersion[0]['version'];
 		
 		return $result;

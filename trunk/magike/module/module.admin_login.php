@@ -30,7 +30,7 @@ class AdminLogin extends MagikeModule
 	{
 		$userModel = $this->loadModel('users');
 		$groupModel = $this->loadModel('groups');
-		$user = $userModel->fectchOne(array('table' => 'table.users',
+		$user = $userModel->fetchOne(array('table' => 'table.users',
 										 	  'where' => array('template' => 'user_name = ? AND user_password = ?',
 										  					   'value' => array($_POST['username'],
 										  					  				   md5($_POST['password'])

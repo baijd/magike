@@ -10,7 +10,7 @@ class LinksModel extends MagikeModel
 {
 	public function listLinks($limit = 20,$offset)
 	{
-		return $this->fectch(array('fields'=> '*,table.links.id AS link_id',
+		return $this->fetch(array('fields'=> '*,table.links.id AS link_id',
 								   'table' => 'table.links JOIN table.link_categories ON table.links.link_category_id = table.link_categories.id',
 								   'groupby' => 'table.links.id',
 								   'offset' => $offset,
@@ -31,7 +31,7 @@ class LinksModel extends MagikeModel
 		{
 			$this->sort = 'RAND()';
 		}
-		return $this->fectchByFieldEqual('link_category_id',$key,0,$limit);
+		return $this->fetchByFieldEqual('link_category_id',$key,0,$limit);
 	}
 }
 ?>

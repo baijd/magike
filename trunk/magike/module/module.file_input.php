@@ -46,7 +46,7 @@ class FileInput extends MagikeModule
 		$this->requireGet('file_id');
 		$select = is_array($_GET['file_id']) ? $_GET['file_id'] : array($_GET['file_id']);
 		$fileModel = $this->loadModel('files');
-		$file = $fileModel->fectchOneByKey($_GET['file_id']);
+		$file = $fileModel->fetchOneByKey($_GET['file_id']);
 		if($file)
 		{
 			$fileModel->deleteByKeys($_GET['file_id']);

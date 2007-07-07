@@ -22,7 +22,7 @@ class CommentFilter extends MagikeModule
 	public function buildCache()
 	{
 		$this->initPublicObject(array('database'));
-		$filter = $this->database->fectch(array('table' => 'table.comment_filters'));
+		$filter = $this->database->fetch(array('table' => 'table.comment_filters'));
 		$filterByType = array();
 		foreach($filter as $val)
 		{

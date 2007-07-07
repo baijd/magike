@@ -79,7 +79,7 @@ class CommentsList extends MagikeModule
 			$query['where']['value'][] = $getArgs['type'];
 		}
 	
-		return $this->model->fectch($query,array('function' => array($this,'praseComment'),'data' => $getArgs));
+		return $this->model->fetch($query,array('function' => array($this,'praseComment'),'data' => $getArgs));
 	}
 }
 ?>

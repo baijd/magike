@@ -208,7 +208,7 @@ class Path extends MagikeModule
 	{
 		$this->pathCache = array();
 		$this->initPublicObject(array('database'));
-		$this->database->fectch(array('table' => 'table.paths'),array('function' => array($this,'pushPathData')));
+		$this->database->fetch(array('table' => 'table.paths'),array('function' => array($this,'pushPathData')));
 		foreach($this->pathCache as $key => $val)
 		{
 			mgExportArrayToFile($this->cacheDir.'/'.$key.'.php',$val,'pathConfig',true);

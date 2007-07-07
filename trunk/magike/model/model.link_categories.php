@@ -10,14 +10,14 @@ class LinkCategoriesModel extends MagikeModel
 {
 	public function listLinkCategories()
 	{
-		return $this->fectch(array('table' => $this->table,
+		return $this->fetch(array('table' => $this->table,
 								   'orderby' => 'link_category_sort',
 								   'sort' => 'ASC'));
 	}
 	
 	public function listUnhiddenLinkCategories($func = NULL)
 	{
-		return $this->fectch(array('table' => $this->table,
+		return $this->fetch(array('table' => $this->table,
 								  'where'	=> array('template' => 'link_category_hide = 0'),
 								   'orderby' => 'link_category_sort',
 								   'sort' => 'ASC'),$func);
@@ -25,9 +25,9 @@ class LinkCategoriesModel extends MagikeModel
 	
 	public function moveUpCategory($id)
 	{
-		$item = $this->fectchOneByKey($id);
+		$item = $this->fetchOneByKey($id);
 		$title = $item['link_category_name'];
-		$item = $this->fectchOne(array('table' 	=> 'table.link_categories',
+		$item = $this->fetchOne(array('table' 	=> 'table.link_categories',
 											  'where'	=> array('template' => 'link_category_sort < ?',
 																 'value'	=> array($item['link_category_sort'])
 																),
@@ -47,9 +47,9 @@ class LinkCategoriesModel extends MagikeModel
 	
 	public function moveDownCategory($id)
 	{
-		$item = $this->fectchOneByKey($id);
+		$item = $this->fetchOneByKey($id);
 		$title = $item['link_category_name'];
-		$item = $this->fectchOne(array('table' 	=> 'table.link_categories',
+		$item = $this->fetchOne(array('table' 	=> 'table.link_categories',
 											  'where'	=> array('template' => 'link_category_sort > ?',
 																 'value'	=> array($item['link_category_sort'])
 																),

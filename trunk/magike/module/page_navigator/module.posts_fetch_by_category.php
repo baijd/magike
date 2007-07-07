@@ -1,12 +1,12 @@
 <?php
 /**********************************
  * Created on: 2006-12-16
- * File Name : module.posts_fectch_by_category.php
+ * File Name : module.posts_fetch_by_category.php
  * Copyright : Magike Group
  * License   : GNU General Public License 2.0
  *********************************/
  
-class PostsFectchByCategory extends PageNavigator
+class PostsfetchByCategory extends PageNavigator
 {
 	private $getArgs;
 	private $result;
@@ -16,7 +16,7 @@ class PostsFectchByCategory extends PageNavigator
 		$postModel = $this->loadModel('posts');
 		$categoryModel = $this->loadModel('categories');
 		$total = $postModel->countPostsByCategory($_GET['category_postname']);
-		$category = $categoryModel->fectchOneByFieldEqual('category_postname',$_GET['category_postname']);
+		$category = $categoryModel->fetchOneByFieldEqual('category_postname',$_GET['category_postname']);
 		$this->result = $this->makeClassicNavigator($this->getArgs['limit'],$total,'category/'.$_GET['category_postname'].'/');
 		$this->stack['static_var']['blog_title'] = $category['category_name'].' &raquo; 分类 &raquo; '.$this->stack['static_var']['blog_name'];
 	}

@@ -1,12 +1,12 @@
 <?php
 /**********************************
  * Created on: 2006-12-16
- * File Name : module.posts_fectch_by_tag.php
+ * File Name : module.posts_fetch_by_tag.php
  * Copyright : Magike Group
  * License   : GNU General Public License 2.0
  *********************************/
  
-class PostsFectchByTag extends PageNavigator
+class PostsfetchByTag extends PageNavigator
 {
 	private $getArgs;
 	private $result;

@@ -13,7 +13,7 @@ class InsertLinkCategory extends MagikeModule
 		if(isset($_GET['lc_id']))
 		{
 			$linkCategoryModel = $this->loadModel('link_categories');
-			$result = $linkCategoryModel->fectchOneByKey($_GET['lc_id']);
+			$result = $linkCategoryModel->fetchOneByKey($_GET['lc_id']);
 			if(isset($this->stack['admin_menu_list']['children']))
 			{
 				$this->stack['admin_menu_list']['children'][3]['menu_name'] = '编辑链接分类 "'.$result['link_category_name'].'"';

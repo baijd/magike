@@ -10,7 +10,7 @@ class FilesModel extends MagikeModel
 {
 	public function listFiles($limit = 5,$offset = 0,$func = NULL)
 	{
-		return $this->fectch(array('table' => 'table.files',
+		return $this->fetch(array('table' => 'table.files',
 								   'orderby' => 'id',
 								   'limit'	=> $limit,
 								   'offset' => $offset,

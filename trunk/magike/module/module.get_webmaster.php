@@ -13,7 +13,7 @@ class GetWebmaster extends MagikeModule
 		if(NULL != $this->stack['access']['user_id'])
 		{
 			$userModel = $this->loadModel('users');
-			return $userModel->fectchOneByKey(1);
+			return $userModel->fetchOneByKey(1);
 		}
 		else
 		{

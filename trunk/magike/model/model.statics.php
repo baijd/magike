@@ -26,7 +26,7 @@ class StaticsModel extends MagikeModel
 	
 	public function listStaticVars($func = NULL)
 	{
-		$this->fectch(array('table' => 'table.statics'),$func);
+		$this->fetch(array('table' => 'table.statics'),$func);
 	}
 }
 ?>
