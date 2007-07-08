@@ -34,18 +34,21 @@ class ExceptionCatcher extends MagikeModule
 			case E_ACCESSDENIED:
 			{
 				header('HTTP/1.1 403 Forbidden');
+				break;
 			}
 			case E_FORMISOUTOFDATE:
 			{
 				header('HTTP/1.1 405 Method Not Allowed');
+				break;
 			}
 			default:
 			{
-				$this->stack['static_var']['blog_title'] = '错误 &raquo; '.$this->stack['static_var']['blog_name'];
-				return array('data' => $this->stack['action']['data'],'message' => $this->stack['action']['message']);
 				break;
 			}
 		}
+		
+		$this->stack['static_var']['blog_title'] = '错误 &raquo; '.$this->stack['static_var']['blog_name'];
+		return array('data' => $this->stack['action']['data'],'message' => $this->stack['action']['message']);
 	}
 }
 ?>
