@@ -141,14 +141,20 @@ class CommentInsert extends MagikeModule
 		$require = array('key' => 'do','val' => 'insert');
 		$getArgs = $this->initArgs($args,$require);
 
-		$this->onPost($getArgs['key'],'insertComment',$getArgs['val']);
-		if($this->showWord)
+		if($this->onPost($getArgs['key'],'insertComment',$getArgs['val']))
 		{
-			unset($_POST['referer']);
-			reset($_POST);
+			if($this->showWord)
+			{
+				unset($_POST['referer']);
+				reset($_POST);
+			}
+			
+			return $this->result;
 		}
-		
-		return $this->result;
+		else
+		{
+			header('location: '.$this->stack['static_var']['siteurl']);
+		}
 	}
 }
 ?>

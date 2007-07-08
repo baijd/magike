@@ -105,6 +105,7 @@ class Path extends MagikeModule
 				$pathArray = explode('/',$this->path);
 				array_pop($pathArray);
 				header('location: '.implode('/',$pathArray).'/');
+				die();
 			}
 			$this->throwException(E_PATH_PATHNOTEXISTS,$this->path,'/exception' == $this->path);
 		}
@@ -156,6 +157,7 @@ class Path extends MagikeModule
 			}
 			header('HTTP/1.1 301 Moved Permanently'); 
 			header("location: {$request}");
+			die();
 		}
 		if($this->isFile & $this->last)
 		{
@@ -167,6 +169,7 @@ class Path extends MagikeModule
 			}
 			header('HTTP/1.1 301 Moved Permanently'); 
 			header("location: {$request}");
+			die();
 		}
 	}
 
