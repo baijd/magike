@@ -346,6 +346,16 @@ ol.comment li.alt
 	color:#333;
 }
 
+.entry_content a
+{
+	color:#333;
+}
+
+.entry_content a:hover
+{
+	text-decoration: none;
+}
+
 .page_nav
 {
 	height:26px;

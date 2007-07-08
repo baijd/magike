@@ -25,6 +25,7 @@ class PostInput extends MagikeModule
 		
 		$url = isset($_POST['post_trackback']) ? $_POST['post_trackback'] : NULL;
 		unset($input["post_trackback"]);
+		unset($input["post_id"]);
 		$input['post_title'] = isset($_POST['post_title']) && $_POST['post_title'] ? $_POST['post_title'] : ($input['post_is_draft'] ? '无标题文档' : NULL);
 		$input['post_content'] = isset($_POST['post_content'])  && $_POST['post_content'] ? $_POST['post_content'] : NULL;
 		$input['post_allow_ping'] = isset($_POST['post_allow_ping']) && $_POST['post_allow_ping'] ? $_POST['post_allow_ping'] : 0;
@@ -67,6 +68,11 @@ class PostInput extends MagikeModule
 		{
 			$tagsModel = $this->loadModel('tags');
 			$tagsModel->insertTags($insertId,$input['post_tags']);
+			$tags = $tagsModel->getTags($input['post_tags']);
+			foreach($tags as $key => $val)
+			{
+				$tagsModel->increaseFieldByKey($key,'tag_count');
+			}
 		}
 		
 		$this->result['open'] = true;
@@ -85,6 +91,7 @@ class PostInput extends MagikeModule
 		
 		$url = isset($_POST['post_trackback']) ? $_POST['post_trackback'] : NULL;
 		unset($input["post_trackback"]);
+		unset($input["post_id"]);
 		$input['post_title'] = isset($_POST['post_title']) && $_POST['post_title'] ? $_POST['post_title'] : ($input['post_is_draft'] ? '无标题文档' : NULL);
 		$input['post_content'] = isset($_POST['post_content'])  && $_POST['post_content'] ? $_POST['post_content'] : NULL;
 		$input['post_allow_ping'] = isset($_POST['post_allow_ping']) && $_POST['post_allow_ping'] ? $_POST['post_allow_ping'] : 0;
@@ -126,11 +133,19 @@ class PostInput extends MagikeModule
 		
 		$postModel->updateByKey($_GET['post_id'],$input);
 		
-		if($input['post_tags'])
+
+		$tagsModel = $this->loadModel('tags');
+		$tagsModel->deleteTagsByPostId($_GET['post_id']);
+		$tags = $tagsModel->getTags($post['post_tags']);
+		foreach($tags as $key => $val)
 		{
-			$tagsModel = $this->loadModel('tags');
-			$tagsModel->deleteTagsByPostId($_GET['post_id']);
-			$tagsModel->insertTags($_GET['post_id'],$input['post_tags']);
+			$tagsModel->decreaseFieldByKey($key,'tag_count');
+		}
+		$tagsModel->insertTags($_GET['post_id'],$input['post_tags']);
+		$tags = $tagsModel->getTags($input['post_tags']);
+		foreach($tags as $key => $val)
+		{
+			$tagsModel->increaseFieldByKey($key,'tag_count');
 		}
 		
 		$this->result['open'] = true;
@@ -160,6 +175,11 @@ class PostInput extends MagikeModule
 			{
 				$tagsModel = $this->loadModel('tags');
 				$tagsModel->deleteTagsByPostId($id);
+				$tags = $tagsModel->getTags($post['post_tags']);
+				foreach($tags as $key => $val)
+				{
+					$tagsModel->decreaseFieldByKey($key,'tag_count');
+				}
 			}
 		}
 		

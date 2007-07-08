@@ -29,8 +29,8 @@
 	<div id="side">
 	<div id="incontent">
 	<div id="sidecontent">
-	<[if:$archives]>
 	<h1>{<a href="{$static_var.siteurl}">{$static_var.blog_name}</a>}</h1>
+	<[if:$archives]>
 	<[loop:$archives AS $post]>
 		<div class="entry <[if:!$post.post_alt]>alt<[/if]>">
 			<h2><a href="{$static_var.index}/archives/{$post.post_id}/">{$post.post_title}</a></h2>
@@ -46,7 +46,9 @@
 			<[if:$navigator.prev]><a class="left" href="{$static_var.index}/{$navigator.query}{$navigator.prev}">上一页</a><[/if]>
 	</div>
 	<[else]>
-	<h1>没有任何内容</h1>
+	<div class="entry alt">
+		<h2>没有任何内容</h2>
+	</div>
 	<[/if]>
 	</div>
 	<[include:sidebar]>

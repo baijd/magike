@@ -133,6 +133,16 @@ class Format extends MagikeModule
 								}
 							}
 						}
+						if(ereg("^modelIngore\(([_0-9a-zA-Z]+),([_0-9a-zA-Z]+),([_0-9a-zA-Z]+)\)$",$inval,$reg))
+						{
+							if(!$this->viaModelCheckIgnoreKey($reg[1],$reg[2],$data[$key],$reg[3]))
+							{
+								if(!isset($error[$key]))
+								{
+									$error[$key] = $inval;
+								}
+							}
+						}
 						else if(ereg("^func\(([_a-z0-9A-Z-]+)\)$",$inval,$reg))
 						{
 							if(method_exists($object,$reg[1]))	$func = array($object,$reg[1]);
@@ -227,6 +237,12 @@ class Format extends MagikeModule
 	{
 		$model = $this->loadModel($modelName);
 		return call_user_func(array($model,$methodName),$data);
+	}
+	
+	public function viaModelCheckIgnoreKey($modelName,$methodName,$data,$key)
+	{
+		$model = $this->loadModel($modelName);
+		return call_user_func(array($model,$methodName),$data,$key);
 	}
 }
 ?>

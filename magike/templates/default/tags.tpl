@@ -1,17 +1,17 @@
 <[include:header]>
 
-
-<[module:post]>
+<[module:tags]>
 <div id="content">
 	<div id="side">
 	<div id="incontent">
 	<div id="sidecontent">
-		<h1>{<a href="{$static_var.siteurl}">{$static_var.blog_name}</a>}</h1>
+	<h1>{<a href="{$static_var.siteurl}">{$static_var.blog_name}</a>}</h1>
 		<div class="entry alt">
-			<h2><a href="{$static_var.index}/{$post.post_name}/">{$post.post_title}</a></h2>
-			<div class="entry_date">{$post.post_time}</div>
+			<h2>标签云</h2>
 			<div class="entry_content">
-			{$post.post_content}
+			<[loop:$tags AS $tag]>
+				<a href="{$static_var.index}/tags/{$tag.tag_name}/">{$tag.tag_name}[{$tag.tag_count}]</a>
+			<[/loop]>
 			</div>
 		</div>
 	</div>

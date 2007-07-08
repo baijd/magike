@@ -101,6 +101,11 @@ class CategoryInput extends MagikeModule
 				if($post['post_tags'])
 				{
 					$tagsModel->deleteTagsByPostId($id);
+					$tags = $tagsModel->getTags($post['post_tags']);
+					foreach($tags as $key => $val)
+					{
+						$tagsModel->decreaseFieldByKey($key,'tag_count');
+					}
 				}
 			}
 			

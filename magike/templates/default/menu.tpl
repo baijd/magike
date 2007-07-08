@@ -16,6 +16,9 @@
 		{$page.post_title}
 		</a></li>
 		<[/loop]>
+		<li><a href="{$static_var.index}/tags/">
+		Tags
+		</a></li>
 		<li><a href="{$static_var.siteurl}" class="focus">
 		Homepage
 		</a></li>

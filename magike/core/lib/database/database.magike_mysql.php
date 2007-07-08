@@ -37,7 +37,7 @@ class MagikeMysql extends MagikeObject
 		return mysql_num_rows($resource);
 	}
 	
-	public function databaseException()
+	public function databaseException($query)
 	{
 		$this->throwException(E_DATABASE,__DEBUG__ ? $query."<br />\n".mysql_error() : NULL);
 	}
