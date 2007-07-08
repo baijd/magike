@@ -43,6 +43,7 @@ class Register extends MagikeModule
 	public function runModule()
 	{
 		$this->result = array();
+		$this->stack['static_var']['blog_title'] = '注册 &raquo; '.$this->stack['static_var']['blog_name'];
 		if($this->stack['static_var']['user_allow_register'])
 		{
 			$this->onPost("do","insertUser","register");

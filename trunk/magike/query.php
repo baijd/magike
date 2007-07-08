@@ -19,7 +19,7 @@ query("CREATE TABLE `mg_categories` (
   `category_postname` varchar(100) default NULL,
   `category_describe` varchar(200) default NULL,
   `category_sort` int(10) unsigned default '0',
-  `category_count` int(11) unsigned NOT NULL default '0',
+  `category_count` int(6) unsigned NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `category_sort` (`category_sort`),
   KEY `category_postname` (`category_postname`(16))
@@ -232,7 +232,9 @@ query("INSERT INTO `mg_path_group_mapping` (`id`, `path_id`, `group_id`) VALUES
 (73, 59, 2),
 (74, 60, 1),
 (75, 60, 2),
-(76, 61, 2)");
+(76, 61, 2),
+(77, 62, 1),
+(78, 62, 2)");
 
 query("CREATE TABLE `mg_paths` (
   `id` int(10) unsigned NOT NULL auto_increment,
@@ -306,7 +308,8 @@ query("INSERT INTO `mg_paths` (`id`, `path_name`, `path_action`, `path_file`, `p
 (58, '/admin/settings/setting_mail/', 'template', '/{\$static_var.template}/setting_mail.tpl', 0,'后台设置邮箱'),
 (59, '/search/', 'template', '/{\$static_var.template}/posts.tpl', 0,'文章搜索'),
 (60, '/rss/archives/[post_id=%d]/', 'template', '/{\$static_var.xml_template}/rss_archives.tpl', 0,'RSS文章输出'),
-(61, '/register/', 'template', '/{\$static_var.template}/register.tpl', 0,'用户注册')");
+(61, '/register/', 'template', '/{\$static_var.template}/register.tpl', 0,'用户注册'),
+(62, '/tags/', 'template', '/{\$static_var.template}/tags.tpl', 0,'标签云')");
 
 query("CREATE TABLE `mg_post_tag_mapping` (
   `id` int(10) unsigned NOT NULL auto_increment,
@@ -359,7 +362,7 @@ query("INSERT INTO `mg_statics` (`id`, `static_name`, `static_value`) VALUES
 (2, 'admin_template', 'admin'),
 (3, 'xml_template', 'xml'),
 (4, 'siteurl', '{$_POST['siteurl']}'),
-(5, 'version', 'Magike 1.0 RC1'),
+(5, 'version', 'Magike 1.0 Release 1'),
 (6, 'describe', '{$_POST['describe']}'),
 (7, 'blog_name', '{$_POST['blogname']}'),
 (8, 'language', 'zh_cn_utf8'),
@@ -399,6 +402,7 @@ query("INSERT INTO `mg_statics` (`id`, `static_name`, `static_value`) VALUES
 query("CREATE TABLE `mg_tags` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `tag_name` varchar(32) default NULL,
+  `tag_count` int(6) unsigned NOT NULL default '0',
   PRIMARY KEY  (`id`),
   FULLTEXT KEY `tag_name` (`tag_name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8");

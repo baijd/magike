@@ -80,7 +80,7 @@ function magikeValidator(url,mod)
 	<div id="sidecontent">
 	<h1>{<a href="{$static_var.siteurl}">{$static_var.blog_name}</a>}</h1>
 	<[if:$post.post_access]>
-		<div class="entry" style="background:#EEE">
+		<div class="entry alt">
 			<h2><a href="{$static_var.index}/archives/{$post.post_id}/">{$post.post_title}</a></h2>
 			<div class="entry_tags">
 			<[if:$post.post_tags]>

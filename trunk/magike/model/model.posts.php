@@ -81,7 +81,7 @@ class PostsModel extends MagikeModel
 	{
 		$args['table'] = '((table.posts JOIN table.post_tag_mapping ON table.posts.id = table.post_tag_mapping.post_id)
 		 LEFT JOIN table.tags ON table.post_tag_mapping.tag_id = table.tags.id)';
-		$args['where']['template'] = 'table.posts.post_is_hidden = 0  AND table.tags.tag_name = ?';
+		$args['where']['template'] = 'table.posts.post_is_hidden = 0  AND table.tags.tag_name = BINARY ?';
 		$args['where']['value'] = array($tag);
 		$args['limit'] = $limit;
 		$args['offset'] = $offset;
@@ -90,7 +90,7 @@ class PostsModel extends MagikeModel
 		$args['orderby'] = 'table.posts.post_time';
 		$args['sort']	= 'DESC';
 		
-		return $this->fetch($args,$func,true);
+		return $this->fetch($args,$func);
 	}
 	
 	public function countPostsByTag($tag)
@@ -98,7 +98,7 @@ class PostsModel extends MagikeModel
 		$args['table'] = '((table.posts JOIN table.post_tag_mapping ON table.posts.id = table.post_tag_mapping.post_id)
 		 LEFT JOIN table.tags ON table.post_tag_mapping.tag_id = table.tags.id)';
 		
-		$args['where']['template'] = 'table.posts.post_is_hidden = 0  AND table.tags.tag_name = ?';
+		$args['where']['template'] = 'table.posts.post_is_hidden = 0  AND table.tags.tag_name = BINARY ?';
 		$args['where']['value'] = array($tag);
 		return $this->countTable($args);
 	}
@@ -194,6 +194,18 @@ class PostsModel extends MagikeModel
 		$args = $this->fixPostWhere(false,false,$where);
 		unset($args['groupby']);
 		return $this->countTable($args);
+	}
+	
+	public function checkPostNameExists($postName,$postId)
+	{
+		if($this->fetchOneByKey($postId))
+		{
+			return true;
+		}
+		else
+		{
+			return $this->fetchOneByFieldEqual('post_name',$postName) ? false : true;
+		}
 	}
 }
 ?>

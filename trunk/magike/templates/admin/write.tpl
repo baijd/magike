@@ -179,7 +179,7 @@
 				<div class="input">
 					<h2>{lang.admin_write.post_name}</h2> 
 					<p>
-					<input type="text" name="post_name" class="text"  value="{$write_post.post_name}" />
+					<input type="text" name="post_name" class="text validate-me"  value="{$write_post.post_name}" /><span class="validate-word" id="post_name-word"></span>
 					<br />
 					<span class="discribe">({lang.admin_write.post_name_describe})</span>
 					</p>
@@ -197,7 +197,7 @@
 		<div style="float:left;height:40px;padding-top:5px;">
 		<span class="button" id="draft_button" onclick="unloadConfirm = true;$('#post_is_draft').val(1);document.getElementById('write').submit();">{lang.admin_write.draft}</span>
 		<span class="button" onclick="unloadConfirm = true;$('#post_is_draft').val(0);magikeValidator('{$static_var.index}/helper/validator/','write_post');">{lang.admin_write.publish}</span>
-		<input type="hidden" name="post_is_draft" id="post_is_draft" value="0" />
+		<input type="hidden" name="post_is_draft" id="post_is_draft" value="0" /><input type="hidden" name="post_id" class="validate-me" value="{$write_post.post_id}" />
 		<span class="hit_message"></span>
 		</div>
 	</form>

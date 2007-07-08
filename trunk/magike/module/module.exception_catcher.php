@@ -10,6 +10,7 @@ class ExceptionCatcher extends MagikeModule
 {
 	public function runModule()
 	{
+		$this->stack['static_var']['blog_title'] = '错误 &raquo; '.$this->stack['static_var']['blog_name'];
 		return array('data' => $this->stack['action']['data'],
 					 'message' => $this->stack['action']['message']);
 	}

@@ -17,14 +17,13 @@ class TagsModel extends MagikeModel
 		return $this->fetch($args);
 	}
 	
-	private function getTags($tags)
+	public function getTags($tags)
 	{
 		$tags = explode(",",$tags);
-
-		$where = array_fill(0,count($tags),'tag_name = ?');
+		$value = array();
+		$where = array_fill(0,count($tags),'tag_name = BINARY ?');
 		if($tags)
 		{
-			$value = array();
 			$result = 
 			$this->fetch(array('table' => 'table.tags',
 								'where' => array('template' => implode(" OR ",$where),
@@ -40,7 +39,7 @@ class TagsModel extends MagikeModel
 				if(!in_array($val,$value))
 				{
 					$insertId = 
-					$this->insertTable(array('tag_name' => $val));
+					$this->insertTable(array('tag_name' => $val,'tag_count' => 0));
 					$value[$insertId] = $val;
 				}
 			}
@@ -67,6 +66,21 @@ class TagsModel extends MagikeModel
 													   'value'	  => array($id)
 								)
 								));
+	}
+	
+	public function tagClouds($limit,$order)
+	{
+		$args = array('table' => 'table.tags');
+		if($limit)
+		{
+			$args['limit'] = $limit;
+		}
+		if($order)
+		{
+			$args['orderby'] = 'tag_count';
+			$args['sort']      = 'DESC';
+		}
+		return $this->fetch($args);
 	}
 }
 ?>
