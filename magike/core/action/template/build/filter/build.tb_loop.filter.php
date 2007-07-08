@@ -6,8 +6,6 @@
  * License   : GNU General Public License 2.0
  *********************************/
 
-define('E_ACTION_TEMPLATEBUILD_LOOPSYNTAXERROR','There Is An Template Error Near');
-
 class TbLoop extends TemplateBuild
 {
 	public function filterLoopSyntax($matches)

@@ -6,7 +6,6 @@
  * License   : GNU General Public License 2.0
  *********************************/
 
-define('E_ACCESSDENIED','Your Access Denied');
 class Access extends MagikeModule
 {
 	private $result;

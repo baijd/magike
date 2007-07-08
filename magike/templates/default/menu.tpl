@@ -6,7 +6,7 @@
 		<li><a href="{$static_var.index}/admin/">Dashborad</a></li>
 		<[/if]>
 		<[if:!$access.login]>
-		<li><a href="{$static_var.index}/admin/login">Login</a></li>
+		<li><a href="{$static_var.index}/admin/login/">Login</a></li>
 		<[if:$static_var.user_allow_register]>
 		<li><a href="{$static_var.index}/register/">Register</a></li>
 		<[/if]>

@@ -6,7 +6,6 @@
  * License   : GNU General Public License 2.0
  *********************************/
 
-define('E_PATH_PATHNOTEXISTS','Path Is Not Exists');
 class Path extends MagikeModule
 {
 	private $pathConfig;
@@ -149,11 +148,13 @@ class Path extends MagikeModule
 
 		if(!$this->isFile & !$this->last)
 		{
-			$request = array_shift(explode('?',$_SERVER['REQUEST_URI'])).'/';
+			$requestURI = explode('?',$_SERVER['REQUEST_URI']);
+			$request = array_shift($requestURI).'/';
 			if(isset($_SERVER['QUERY_STRING']) && NULL != $_SERVER['QUERY_STRING'])
 			{
 				$request .= '?'.$_SERVER['QUERY_STRING'];
 			}
+			header('HTTP/1.1 301 Moved Permanently'); 
 			header("location: {$request}");
 		}
 		if($this->isFile & $this->last)

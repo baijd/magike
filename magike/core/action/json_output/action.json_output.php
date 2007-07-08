@@ -6,7 +6,6 @@
  * License   : GNU General Public License 2.0
  *********************************/
 
-define('E_ACTION_JSONOUTPUT_FILENOTEXISTS','Json Module File Is Not Exists');
 class JsonOutput extends MagikeObject
 {
 	private $fileName;

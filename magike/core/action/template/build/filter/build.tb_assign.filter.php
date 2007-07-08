@@ -6,8 +6,6 @@
  * License   : GNU General Public License 2.0
  *********************************/
 
-define('E_ACTION_TEMPLATEBUILD_ASSIGNSYNTAXERROR','There Is An Template Error Near');
-
 class TbAssign extends TemplateBuild
 {
 	public function filterAssignSyntax($matches)

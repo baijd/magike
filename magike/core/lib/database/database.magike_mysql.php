@@ -6,7 +6,6 @@
  * License   : GNU General Public License 2.0
  *********************************/
  
-define('E_DATABASE','Database Error');
 class MagikeMysql extends MagikeObject
 {
 	private $resource;

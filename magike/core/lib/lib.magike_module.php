@@ -6,9 +6,6 @@
  * License   : GNU General Public License 2.0
  *********************************/
 
-define('E_MODELFILENOTEXISTS','Model File Not Exists');
-define('E_FORMISOUTOFDATE','Form Is Out Of Date');
-
 abstract class MagikeModule extends MagikeObject
 {
 	protected $cacheDir;

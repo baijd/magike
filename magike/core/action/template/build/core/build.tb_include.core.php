@@ -6,8 +6,6 @@
  * License   : GNU General Public License 2.0
  *********************************/
 
-define('E_ACTION_TEMPLATEBUILD_INCLUDEFILENOTEXISTS','Include Template File Is Not Exists');
-
 //处理include语法
 class TbInclude extends TemplateBuild
 {
