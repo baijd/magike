@@ -15,6 +15,25 @@ if(__DEBUG__) set_error_handler('errorHandler');
 //打开会话
 session_start();
 
+//定义异常
+define('E_DATABASE','Database Error');
+define('E_MODELFILENOTEXISTS','Model File Not Exists');
+define('E_FORMISOUTOFDATE','Form Is Out Of Date');
+define('E_PATH_PATHNOTEXISTS','Path Is Not Exists');
+define('E_ACTION_ACTIONNOTEXISTS','Action Is Not Exists');
+define('E_ACTION_KERNELOBJECTSNOTEXISTS','Kerenl Objects Is Not Exists');
+define('E_ACTION_BUILD_MODULECLASSNOTEXISTS','Module Class Is Not Exists');
+define('E_ACTION_BUILD_MODULEFILENOTEXISTS','Module File Is Not Exists');
+define('E_ACTION_JSONOUTPUT_FILENOTEXISTS','Json Module File Is Not Exists');
+define('E_ACTION_MODULEOUTPUT_FILENOTEXISTS','Module File Is Not Exists');
+define('E_ACTION_TEMPLATE_FILENOTEXISTS','Template File Is Not Exists');
+define('E_ACTION_TEMPLATEBUILD_CANTFINDTAG','Cant Not Find Tag');
+define('E_ACTION_TEMPLATEBUILD_INCLUDEFILENOTEXISTS','Include Template File Is Not Exists');
+define('E_ACTION_TEMPLATEBUILD_ASSIGNSYNTAXERROR','There Is An Template Error Near');
+define('E_ACTION_TEMPLATEBUILD_LOOPSYNTAXERROR','There Is An Template Error Near');
+define('E_ACTION_TEMPLATEBUILD_MODULEFILENOTEXISTS','Module File Is Not Exists');
+define('E_ACCESSDENIED','Your Access Denied');
+
 //自定义异常类
 class MagikeException extends Exception
 {

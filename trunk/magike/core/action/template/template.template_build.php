@@ -5,9 +5,7 @@
  * Copyright : Magike Group
  * License   : GNU General Public License 2.0
  *********************************/
-
-define('E_ACTION_TEMPLATEBUILD_CANTFINDTAG',"Cant't Find Tag");
-//模板解析基类
+ 
 class TemplateBuild extends ActionBuild
 {
 	private $callback;

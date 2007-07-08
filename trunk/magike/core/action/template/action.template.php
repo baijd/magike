@@ -6,9 +6,6 @@
  * License   : GNU General Public License 2.0
  *********************************/
 
-//define custom exception
-define('E_ACTION_TEMPLATE_FILENOTEXISTS','Template File Is Not Exists');
-
 class Template extends MagikeObject
 {
 	private $compileFile;

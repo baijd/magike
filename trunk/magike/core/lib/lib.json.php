@@ -2,8 +2,8 @@
 /**********************************
  * Created on: 2007-2-2
  * File Name : lib.json.php
- * Copyright : Magike Group
- * License   : GNU General Public License 2.0
+ * Copyright : 2005 Michal Migursk
+ * License   :  http://www.opensource.org/licenses/bsd-license.php
  *********************************/
 
 if(!function_exists('json_encode'))

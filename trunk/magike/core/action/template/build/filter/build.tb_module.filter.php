@@ -6,8 +6,6 @@
  * License   : GNU General Public License 2.0
  *********************************/
 
-define('E_ACTION_TEMPLATEBUILD_MODULEFILENOTEXISTS','Module File Is Not Exists');
-
 class TbModule extends TemplateBuild
 {
 	private $module;

@@ -6,7 +6,6 @@
  * License   : GNU General Public License 2.0
  *********************************/
 
-define('E_ACTION_MODULEOUTPUT_FILENOTEXISTS','Module File Is Not Exists');
 class ModuleOutput extends MagikeObject
 {
 	private $fileName;

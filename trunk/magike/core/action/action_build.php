@@ -6,9 +6,6 @@
  * License   : GNU General Public License 2.0
  *********************************/
 
-define('E_ACTION_BUILD_MODULECLASSNOTEXISTS','Module Class Is Not Exists');
-define('E_ACTION_BUILD_MODULEFILENOTEXISTS','Module File Is Not Exists');
-
 class ActionBuild extends MagikeObject
 {
 	public $moduleSource;

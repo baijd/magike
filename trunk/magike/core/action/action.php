@@ -6,8 +6,6 @@
  * License   : GNU General Public License 2.0
  *********************************/
 
-define('E_ACTION_ACTIONNOTEXISTS','Action Is Not Exists');
-define('E_ACTION_KERNELOBJECTSNOTEXISTS','Kerenl Objects Is Not Exists');
 class Action extends Path
 {
 	function __construct($location = NULL,$message = NULL,$data = NULL)
