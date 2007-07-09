@@ -449,6 +449,12 @@ function mgDate($fmt,$UTC = 0,$timestamp = NULL)
 	}
 }
 
+//是否是ajax表单提交
+function mgIsAjaxForm()
+{
+	return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && 'XMLHttpRequest' == $_SERVER['HTTP_X_REQUESTED_WITH'] ? true : false;
+}
+
 //tackback提交函数
 function mgSendTrackback($url,$args)
 {
