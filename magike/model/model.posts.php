@@ -157,7 +157,10 @@ class PostsModel extends MagikeModel
 	public function listAllEntries($limit,$offset,$func = NULL)
 	{
 		$where = array('template'	=> 'post_is_draft = 0 AND post_is_page = 0 AND post_is_hidden = 0 AND post_time < '.(time() - $this->stack['static_var']['server_timezone']));
-		return $this->fetch($this->fixPostWhere($limit,$offset,$where),$func);
+		$this->beginCache();
+		$result = $this->fetch($this->fixPostWhere($limit,$offset,$where),$func);
+		$this->endCache();
+		return $result;
 	}
 	
 	public function countAllEntries()
