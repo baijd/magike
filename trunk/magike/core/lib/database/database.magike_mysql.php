@@ -31,7 +31,7 @@ class MagikeMysql extends MagikeObject
 		
 		if(__SQL_CACHE__)
 		{
-			$this->cacheLink = new Memcache();
+			$this->cacheLink = new Memcache;
 			$this->cacheLink->connect(__SQL_CACHE_SERVER__, __SQL_CACHE_PORT__) or $this->databaseException('Memcache Server Connect Error');
 		}
 	}
@@ -97,7 +97,8 @@ class MagikeMysql extends MagikeObject
 			$this->resource =  mysql_query($query) or $this->databaseException($query);
 			if($this->cacheOpen && 'r' == $op)
 			{
-				$this->cacheLink->set('sql-'.md5($query), mysql_num_rows($this->resource),false,$this->cacheExpire) or $this->databaseException('Memcache Set Error');
+				$this->cacheLink->set('sql-'.md5($query), mysql_num_rows($this->resource), false, $this->cacheExpire)
+				or $this->databaseException('Memcache Set Error');
 			}
 		}
 		
@@ -121,7 +122,8 @@ class MagikeMysql extends MagikeObject
 			$result = mysql_fetch_array($resource,MYSQL_ASSOC);
 			if($this->cacheOpen && $result)
 			{
-				$this->cacheLink->set('sql-'.md5($this->lastQuery).'-'.$this->cachePos, $result,false,$this->cacheExpire) or $this->databaseException('Memcache Set Error');
+				$this->cacheLink->set('sql-'.md5($this->lastQuery).'-'.$this->cachePos, $result, false, $this->cacheExpire)
+				or $this->databaseException('Memcache Set Error');
 				$this->cachePos ++;
 			}
 			return $result;
