@@ -286,9 +286,9 @@ class Database extends MagikeObject
 		$this->dbObject->beginCache($expire);
 	}
 	
-	public function endCache($expire = 60)
+	public function endCache()
 	{
-		$this->dbObject->endCache($expire);
+		$this->dbObject->endCache();
 	}
 }
 ?>
