@@ -11,10 +11,21 @@ class JsonOutput extends MagikeObject
 	private $fileName;
 	private $objName;
 	private $path;
+	private $args;
 	
 	function __construct($fileName)
 	{
 		parent::__construct(array('private' => array('cache')));
+		$this->args = array();
+		
+		$urlStr = explode('?',$fileName);
+		$fileName = $urlStr[0];
+		
+		if(isset($urlStr[1]))
+		{
+			parse_str($urlStr[1],$this->args);
+		}
+		
 		$this->path = $fileName;
 		$this->cache->checkCacheFile(
 			array(__RUNTIME__.'/json_output/'.$fileName.'.mod.php' 
@@ -51,7 +62,7 @@ class JsonOutput extends MagikeObject
 		require($this->fileName);
 		$tmp = null;
 		eval('$tmp = new '.$this->objName.'();');
-		$output = call_user_func(array($tmp,'runModule'),$args);
+		$output = call_user_func(array($tmp,'runModule'),$this->args);
 		$this->stack['action']['content_type'] = "content-Type: text/html; charset={$this->stack['static_var']['charset']}";
 		header($this->stack['action']['content_type']);
 		echo Json::json_encode($output);
