@@ -45,10 +45,11 @@ class TemplateBuild extends ActionBuild
 	}
 	
 	//寻找闭合文件段
-	protected function findCloseSection($sectionName,$callback,$closeCallback)
+	protected function findCloseSection($sectionName,$callback,$closeCallback,$contentCallback = NULL)
 	{
 		$this->callback = $callback;
 		$this->closeCallback = $closeCallback;
+		$this->contentCallback = $contentCallback;
 		while(false !== ($pos = strpos($this->str,"<[/{$sectionName}]>")))
 		{
 			$out = array();
@@ -67,7 +68,19 @@ class TemplateBuild extends ActionBuild
 		{
 			$section = array_pop($out[1]);
 			$sectionAll = array_pop($out[0]);
+			
+			if($this->contentCallback)
+			{
+				$pos = strrpos($matches[1],$sectionAll) + strlen($sectionAll);
+				$str = substr($matches[1],$pos,strlen($matches[1]) - $pos);
+			}
+			
 			$matches[1] = str_replace($sectionAll,call_user_func(array($this,$this->callback),array($sectionAll,$section)),$matches[1]);
+
+			if($this->contentCallback)
+			{
+				$matches[1] = str_replace($str,call_user_func(array($this,$this->contentCallback),$str),$matches[1]);
+			}
 			$matches[2] = call_user_func(array($this,$this->closeCallback),array($sectionAll,$section));
 			return $matches[1].$matches[2].$matches[3];
 		}

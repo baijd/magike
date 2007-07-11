@@ -280,15 +280,5 @@ class Database extends MagikeObject
 		$result =  $this->dbObject->query($query,$op);
 		return $result;
 	}
-	
-	public function beginCache($expire = 60)
-	{
-		$this->dbObject->beginCache($expire);
-	}
-	
-	public function endCache()
-	{
-		$this->dbObject->endCache();
-	}
 }
 ?>
