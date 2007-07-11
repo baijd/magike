@@ -30,7 +30,4 @@ define('__DEBUG_MESSAGE_FILTER__',NULL);		//消息过滤器
 //缓存相关
 define('__GZIP__',false);							//是否开启gzip模式
 define('__HTML_CACHE__','./data/html');					//静态页面缓存存放地址
-define('__SQL_CACHE__',true);						//是否开启sql缓存
-define('__SQL_CACHE_SERVER__','192.168.0.50');			//sql缓存数据源
-define('__SQL_CACHE_PORT__',11211);					//sql缓存端口
 ?>
