@@ -11,10 +11,21 @@ class ModuleOutput extends MagikeObject
 	private $fileName;
 	private $objName;
 	private $path;
+	private $args;
 	
 	function __construct($fileName)
 	{
 		parent::__construct(array('private' => array('cache')));
+		$this->args = array();
+		
+		$urlStr = explode('?',$fileName);
+		$fileName = $urlStr[0];
+		
+		if(isset($urlStr[1]))
+		{
+			parse_str($urlStr[1],$this->args);
+		}
+		
 		$this->path = $fileName;
 		$this->cache->checkCacheFile(
 			array(__RUNTIME__.'/module_output/'.$fileName.'.mod.php' 
@@ -46,12 +57,10 @@ class ModuleOutput extends MagikeObject
 	
 	public function runAction()
 	{
-		$args = isset($_POST['args']) && is_array($_POST['args']) ? $_POST['args'] : array();
-		
 		require($this->fileName);
 		$tmp = null;
 		eval('$tmp = new '.$this->objName.'();');
-		$output = call_user_func(array($tmp,'runModule'),$args);
+		$output = call_user_func(array($tmp,'runModule'),$this->args);
 		$this->stack['action']['content_type'] = "content-Type: {$this->stack['static_var']['content_type']}; charset={$this->stack['static_var']['charset']}";
 		header($this->stack['action']['content_type']);
 		echo $output;
