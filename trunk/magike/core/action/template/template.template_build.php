@@ -79,7 +79,8 @@ class TemplateBuild extends ActionBuild
 
 			if($this->contentCallback)
 			{
-				$matches[1] = str_replace($str,call_user_func(array($this,$this->contentCallback),$str),$matches[1]);
+				$currentPos = strrpos($matches[1],$str);
+				$matches[1] = substr($matches[1],0,$currentPos).call_user_func(array($this,$this->contentCallback),$str);
 			}
 			$matches[2] = call_user_func(array($this,$this->closeCallback),array($sectionAll,$section));
 			return $matches[1].$matches[2].$matches[3];
