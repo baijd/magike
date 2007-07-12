@@ -76,6 +76,7 @@
 		</p>
 	</div>
 	<div class="submit">
+		<input type="hidden" class="validate-me" name="user_id" value="{$insert_user.id}" />
 		<span class="button" onclick="magikeValidator('{$static_var.index}/helper/validator/','add_user');">提交信息</span>
 		<script>
 			function validateSuccess()

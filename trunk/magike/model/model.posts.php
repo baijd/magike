@@ -198,14 +198,13 @@ class PostsModel extends MagikeModel
 	
 	public function checkPostNameExists($postName,$postId)
 	{
-		if($this->fetchOneByKey($postId))
+		$result = $this->fetchOneByKey($postId);
+		
+		if($result && $result['post_name'] == $postName)
 		{
 			return true;
 		}
-		else
-		{
-			return $this->fetchOneByFieldEqual('post_name',$postName) ? false : true;
-		}
+		return $this->fetchOneByFieldEqual('post_name',$postName) ? false : true;
 	}
 }
 ?>

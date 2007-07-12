@@ -6264,7 +6264,7 @@ query("INSERT INTO `".__DBPREFIX__."paths` (`id`, `path_name`, `path_action`, `p
 (47, '/admin/posts/write/delete_file/', 'json_output', 'file_input', 0,'后台删除文件'),
 (48, '/admin/posts/write/files_list_page_nav/', 'json_output', 'files_list_page_nav', 0,'后台文件列表分页'),
 (49, '/archives/[post_id=%d]/', 'template', '/{\$static_var.template}/archive.tpl', 0,'根据ID查看文章'),
-(50, '/[post_name=%s]/', 'template', '/{\$static_var.template}/page.tpl', 0,'页面查看'),
+(50, '/[post_name=%s].html', 'template', '/{\$static_var.template}/page.tpl', 0,'页面查看'),
 (51, '/rss/', 'template', '/{\$static_var.xml_template}/rss_all_posts.tpl', 0,'RSS输出所有文章'),
 (52, '/page/[page=%d]/', 'template', '/{\$static_var.template}/index.tpl', 0,'文章分页'),
 (53, '/post_comment/[post_id=%d]/', 'template', '/{\$static_var.template}/post_comment.tpl', 0,'提交评论'),
