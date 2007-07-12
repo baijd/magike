@@ -20,7 +20,7 @@ class TbLoop extends TemplateBuild
 		{
 			$varLeft = $this->praseVar($finish[0]);
 			$varRight = $this->praseVar($finish[1]);
-			return "<?php if(isset({$varRight})){\$tmp = {$varRight};} foreach({$varLeft} as {$varRight}) { ?>";
+			return "<?php if(isset({$varRight})){\$tmp = {$varRight};} if(isset({$varLeft}) && is_array({$varLeft})){foreach({$varLeft} as {$varRight}) { ?>";
 		}
 	}
 	
@@ -36,7 +36,7 @@ class TbLoop extends TemplateBuild
 		{
 			$varLeft = $this->praseVar($finish[0]);
 			$varRight = $this->praseVar($finish[1]);
-			return "<?php } if(isset(\$tmp)){{$varRight}= \$tmp;unset(\$tmp);} ?>";
+			return "<?php }} if(isset(\$tmp)){{$varRight}= \$tmp;unset(\$tmp);} ?>";
 		}
 	}
 	

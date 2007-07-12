@@ -79,8 +79,8 @@ class PostsModel extends MagikeModel
 	
 	public function fetchPostsByTag($tag,$limit,$offset,$func = NULL)
 	{
-		$args['table'] = '((table.posts JOIN table.post_tag_mapping ON table.posts.id = table.post_tag_mapping.post_id)
-		 LEFT JOIN table.tags ON table.post_tag_mapping.tag_id = table.tags.id)';
+		$args['table'] = '(((table.posts JOIN table.post_tag_mapping ON table.posts.id = table.post_tag_mapping.post_id)
+		 LEFT JOIN table.tags ON table.post_tag_mapping.tag_id = table.tags.id) LEFT JOIN table.categories ON table.posts.category_id = table.categories.id)';
 		$args['where']['template'] = 'table.posts.post_is_hidden = 0  AND table.tags.tag_name = BINARY ?';
 		$args['where']['value'] = array($tag);
 		$args['limit'] = $limit;
@@ -95,8 +95,8 @@ class PostsModel extends MagikeModel
 	
 	public function countPostsByTag($tag)
 	{
-		$args['table'] = '((table.posts JOIN table.post_tag_mapping ON table.posts.id = table.post_tag_mapping.post_id)
-		 LEFT JOIN table.tags ON table.post_tag_mapping.tag_id = table.tags.id)';
+		$args['table'] = '(((table.posts JOIN table.post_tag_mapping ON table.posts.id = table.post_tag_mapping.post_id)
+		 LEFT JOIN table.tags ON table.post_tag_mapping.tag_id = table.tags.id) LEFT JOIN table.categories ON table.posts.category_id = table.categories.id)';
 		
 		$args['where']['template'] = 'table.posts.post_is_hidden = 0  AND table.tags.tag_name = BINARY ?';
 		$args['where']['value'] = array($tag);
