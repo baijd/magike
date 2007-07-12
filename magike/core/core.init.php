@@ -32,7 +32,6 @@ define('E_ACTION_TEMPLATEBUILD_INCLUDEFILENOTEXISTS','Include Template File Is N
 define('E_ACTION_TEMPLATEBUILD_ASSIGNSYNTAXERROR','There Is An Template Error Near');
 define('E_ACTION_TEMPLATEBUILD_LOOPSYNTAXERROR','There Is An Template Error Near');
 define('E_ACTION_TEMPLATEBUILD_MODULEFILENOTEXISTS','Module File Is Not Exists');
-define('E_ACCESSDENIED','Your Access Denied');
 
 //自定义异常类
 class MagikeException extends Exception
@@ -130,11 +129,32 @@ function errorHandler($errno, $errstr, $errfile, $errline)
 //自定义自动加载函数
 function __autoload($className)
 {
+	global $stack;
+	$found = false;
 	$fileName = strtolower(__LIB__.'/lib.'.mgClassNameToFileName($className).'.php');
 	if(file_exists($fileName))
 	{
 		require_once($fileName);
-		return;
+		$found = true;
+	}
+	
+	if(!$found)
+	{
+		$fileName = strtolower(__MODEL__.'/model.'.mgClassNameToFileName($className).'.php');
+		if(file_exists($fileName))
+		{
+			require_once($fileName);
+			$found = true;
+		}
+		
+		if(isset($stack['action']['application_cache_path']) && isset($stack['action']['application_config_path']) && $found)
+		{
+			file_put_contents($stack['action']['application_cache_path'],file_get_contents($stack['action']['application_cache_path']).php_strip_whitespace($fileName));
+			$files = array();
+			require($stack['action']['application_config_path']);
+			$files[$fileName] = filemtime($fileName);
+			mgExportArrayToFile($stack['action']['application_config_path'],$files,'files');
+		}
 	}
 }
 
