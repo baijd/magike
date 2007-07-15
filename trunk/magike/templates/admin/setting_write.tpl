@@ -28,7 +28,8 @@
 				<select name="write_default_name">
 					<option value="username" <[if:$static_var.write_default_name == "username"]>selected=true<[/if]>>用户名</option>
 					<option value="nickname" <[if:$static_var.write_default_name == "nickname"]>selected=true<[/if]>>用户昵称</option>
-					<option value="realname" <[if:$static_var.write_default_name == "realname"]>selected=true<[/if]>>用户真名</option>
+					<option value="firstname" <[if:$static_var.write_default_name == "firstname"]>selected=true<[/if]>>用户真名(姓在前)</option>
+					<option value="lastname" <[if:$static_var.write_default_name == "lastname"]>selected=true<[/if]>>用户真名(名在前)</option>
 				</select><br />
 				<span class="discribe">(撰写文章时默认显示的作者名)</span>
 			</p>
@@ -52,6 +53,26 @@
 					<option value="0" <[if:$static_var.write_auto_save != 1]>selected=true<[/if]>>否</option>
 				</select><br />
 				<span class="discribe">(每隔一段时间自动保存您的文章到草稿)</span>
+			</p>
+		</div>
+		<div class="input">
+			<h2>默认允许评论</h2>
+			<p>
+				<select name="default_allow_comment">
+					<option value="1" <[if:$static_var.default_allow_comment == 1]>selected=true<[/if]>>是</option>
+					<option value="0" <[if:$static_var.default_allow_comment != 1]>selected=true<[/if]>>否</option>
+				</select><br />
+				<span class="discribe">(您发表的文章是否默认可以被评论)</span>
+			</p>
+		</div>
+		<div class="input">
+			<h2>默认允许引用</h2>
+			<p>
+				<select name="default_allow_ping">
+					<option value="1" <[if:$static_var.default_allow_ping == 1]>selected=true<[/if]>>是</option>
+					<option value="0" <[if:$static_var.default_allow_ping != 1]>selected=true<[/if]>>否</option>
+				</select><br />
+				<span class="discribe">(您发表的文章是否默认可以被引用)</span>
 			</p>
 		</div>
 		<div class="submit">

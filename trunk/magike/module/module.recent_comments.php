@@ -32,7 +32,7 @@ class RecentComments extends MagikeModule
 		$getArgs = $this->initArgs($args,$require);
 		$commentsModel = $this->loadModel('comments');
 		
-		return $commentsModel->getAllPublishCommentsTrackbacks($getArgs['limit'],0,'DESC','comment_date',array('function' => array($this,'praseComment'),'data' => $getArgs));
+		return $commentsModel->getAllPublishCommentsTrackbacksPingbacks($getArgs['limit'],0,'DESC','comment_date',array('function' => array($this,'praseComment'),'data' => $getArgs));
 	}
 }
 ?>

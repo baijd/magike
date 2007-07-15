@@ -46,10 +46,17 @@
 		</p>
 	</div>
 	<div class="input">
-		<h2>真实名称</h2>
+		<h2>姓</h2>
 		<p>
-			<input type="text" class="text" value="{$insert_user.user_realname}" name="user_realname" size=30 /><br />
-			<span class="discribe">(这个用户的真实名称,系统不会暴露这个名称)</span>
+			<input type="text" class="text" value="{$insert_user.user_firstname}" name="user_firstname" size=30 /><br />
+			<span class="discribe">(这个用户的名,系统不会暴露这个名称)</span>
+		</p>
+	</div>
+	<div class="input">
+		<h2>名</h2>
+		<p>
+			<input type="text" class="text" value="{$insert_user.user_lastname}" name="user_lastname" size=30 /><br />
+			<span class="discribe">(这个用户的姓,系统不会暴露这个名称)</span>
 		</p>
 	</div>
 	<div class="input">

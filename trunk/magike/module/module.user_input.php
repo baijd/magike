@@ -23,7 +23,8 @@ class UserInput extends MagikeModule
 		$this->requireGet('user_id');
 		$userModel = $this->loadModel('users');
 		$args = array('user_name' => $_POST['user_name'],
-					  'user_realname'	=> $_POST['user_realname'],
+					  'user_firstname'	=> $_POST['user_firstname'],
+					  'user_lastname'	=> $_POST['user_lastname'],
 					  'user_mail'	=> $_POST['user_mail'],
 					  'user_url'	=> $_POST['user_url'],
 					  'user_nick' => $_POST['user_nick'],
@@ -56,7 +57,8 @@ class UserInput extends MagikeModule
 		$password = isset($_POST['user_password']) && $_POST['user_password'] ? $_POST['user_password'] : mgCreateRandomString(7);
 		$insertId = 
 		$userModel->insertTable(array('user_name' => $_POST['user_name'],
-									  'user_realname'	=> $_POST['user_realname'],
+									  'user_firstname'	=> $_POST['user_firstname'],
+									  'user_lastname'	=> $_POST['user_lastname'],
 									  'user_password'	=> md5($password),
 									  'user_mail'	=> $_POST['user_mail'],
 									  'user_url'	=> $_POST['user_url'],

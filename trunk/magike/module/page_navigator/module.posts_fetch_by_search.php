@@ -27,6 +27,7 @@ class PostsfetchBySearch extends PageNavigator
 	{
 		$require = array('limit'  => $this->stack['static_var']['post_page_num']	,'supper' => 0);
 		$this->getArgs = $this->initArgs($args,$require);
+		$this->onGet('keywords','outputPageNav');
 		return $this->result;
 	}
 }

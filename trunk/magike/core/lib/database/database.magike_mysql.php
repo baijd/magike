@@ -9,13 +9,7 @@
 class MagikeMysql extends MagikeObject
 {
 	private $resource;
-	private $lastQuery;
 	private $dbLink;
-	private $cacheLink;
-	private $cacheOpen;
-	private $cacheResource;
-	private $cacheExpire;
-	private $cachePos;
 
 	function __construct()
 	{
