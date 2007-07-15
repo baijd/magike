@@ -12,8 +12,8 @@
 <[else]>
 <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="{$static_var.index}/rss/" />
 <[/if]>
-
-<link href="{$static_var.siteurl}/templates/{$static_var.template}/style.css" rel="stylesheet" type="text/css" />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="{$static_var.index}/xmlrpc.api?rsd" />
+<link rel="stylesheet" href="{$static_var.siteurl}/templates/{$static_var.template}/style.css" type="text/css" media="screen" />
 </head>
 <body>
 <[include:menu]>
