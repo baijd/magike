@@ -19,8 +19,8 @@
 				<td width=10%>发表者</td>
 				<td width=8%></td>
 				<td widht=10%>IP地址</td>
-				<td width=40%>摘要</td>
-				<td width=12%>发表日期</td>
+				<td width=35%>摘要</td>
+				<td width=17%>发表日期</td>
 				<td width=15%>操作</td>
 			</tr>
 			<[loop:$comments_list_all AS $comment]>
@@ -29,7 +29,8 @@
 				<td>{$comment.comment_user}
 				</td>
 				<td>
-				<[if:$comment.comment_type == "ping"]><img class="describe" src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/trackback.gif" title="这是一条引用通告" alt="这是一条引用通告"/><[/if]>
+				<[if:$comment.comment_type == "pingback"]><img class="describe" src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/pingback.gif" title="这是一条引用通告(pingback)" alt="这是一条引用通告(pingback)"/><[/if]>
+				<[if:$comment.comment_type == "trackback"]><img class="describe" src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/trackback.gif" title="这是一条引用通告(trackback)" alt="这是一条引用通告(trackback)"/><[/if]>
 				<[if:$comment.comment_type == "comment"]><img class="describe" src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/comment.gif" title="这是一条评论" alt="这是一条评论"/><[/if]>
 				<[if:$comment.comment_homepage]><a class="img" title="{$comment.comment_homepage}" href="{$comment.comment_homepage}"><img src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/homepage.gif" style="float:none" title="{$comment.comment_homepage}" alt="{$comment.comment_homepage}"/></a><[/if]>
 				<[if:$comment.comment_email]><a class="img" title="{$comment.comment_email}" href="mailto:{$comment.comment_email}"><img src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/email.gif" style="float:none" title="{$comment.comment_email}" alt="{$comment.comment_email}"/></a><[/if]>

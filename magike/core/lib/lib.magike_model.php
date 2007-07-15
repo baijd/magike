@@ -43,7 +43,7 @@ abstract class MagikeModel extends Database
  	 public function deleteByKeys($keys,$except = array())
  	 {
  	 	 $sum = 0;
- 	 	 if(is_string($keys))
+ 	 	 if(!is_array($keys))
  	 	 {
  	 	 	 $keys = explode(',',$keys);
  	 	 }

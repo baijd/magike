@@ -52,7 +52,7 @@ class CommentsModel extends MagikeModel
 					  'orderby'=> $orderby);
 		
 		$args['where'] = array();
-		$args['where']['template'] = "comment_publish = 'approved' AND comment_type = 'ping' AND post_is_hidden = 0";
+		$args['where']['template'] = "comment_publish = 'approved' AND comment_type = 'trackback' AND post_is_hidden = 0";
 		if(NULL !== $field && NULL !== $value)
 		{
 			$args['where']['template'] .= " AND {$field} = ?";
@@ -66,7 +66,7 @@ class CommentsModel extends MagikeModel
 	{
 		$args = array('table' => 'table.comments JOIN table.posts ON table.comments.post_id = table.posts.id');
 		$args['where'] = array();
-		$args['where']['template'] = "comment_publish = 'approved' AND comment_type = 'ping' AND post_is_hidden = 0";
+		$args['where']['template'] = "comment_publish = 'approved' AND comment_type = 'trackback' AND post_is_hidden = 0";
 		if(NULL !== $field && NULL !== $value)
 		{
 			$args['where']['template'] .= " AND {$field} = ?";
@@ -112,7 +112,7 @@ class CommentsModel extends MagikeModel
 		return $this->countTable($args);
 	}
 	
-	public function getAllPublishCommentsTrackbacks($limit,$offset,$sort,$orderby,$func = NULL,$field = NULL,$value = NULL)
+	public function getAllPublishCommentsTrackbacksPingbacks($limit,$offset,$sort,$orderby,$func = NULL,$field = NULL,$value = NULL)
 	{
 		$args = array('fields'=> '*,table.comments.id AS comment_id',
 					  'table' => 'table.comments JOIN table.posts ON table.comments.post_id = table.posts.id',
@@ -134,7 +134,7 @@ class CommentsModel extends MagikeModel
 		return $this->fetch($args,$func);
 	}
 	
-	public function getAllPublishCommentsTrackbacksNum($field = NULL,$value = NULL)
+	public function getAllPublishCommentsTrackbacksPingbacksNum($field = NULL,$value = NULL)
 	{
 		$args = array('table' => 'table.comments JOIN table.posts ON table.comments.post_id = table.posts.id');
 		$args['where'] = array();

@@ -70,7 +70,7 @@ class PostsModel extends MagikeModel
 		$args['where']['template'] = '('.implode(' OR ',$whereTpl).')';
 		if(!$supper)
 		{
-			$where['template'] .= 'AND post_is_draft = 0 AND post_is_page = 0 AND post_is_hidden = 0 AND post_time < '.(time() - $this->stack['static_var']['server_timezone']);
+			$args['where']['template'] .= 'AND post_is_draft = 0 AND post_is_page = 0 AND post_is_hidden = 0 AND post_time < '.(time() - $this->stack['static_var']['server_timezone']);
 		}
 		$args['where']['value'] = $value;
 		unset($args['groupby']);
@@ -194,6 +194,18 @@ class PostsModel extends MagikeModel
 		$args = $this->fixPostWhere(false,false,$where);
 		unset($args['groupby']);
 		return $this->countTable($args);
+	}
+	
+	public function listAllPagesIncludeHidden($limit = false,$offset = false,$func = NULL)
+	{
+		$where = array('template'	=> 'post_is_page = 1');
+		return $this->fetch($this->fixPostWhere($limit,$offset,$where),$func);
+	}
+	
+	public function listAllPostsIncludeHidden($limit = false,$offset = false,$func = NULL)
+	{
+		$where = array('template'	=> 'post_is_page = 0');
+		return $this->fetch($this->fixPostWhere($limit,$offset,$where),$func);
 	}
 	
 	public function checkPostNameExists($postName,$postId)

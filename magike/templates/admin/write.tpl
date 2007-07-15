@@ -116,8 +116,9 @@
 						<[if:$get_current_user.user_nick]>
 						<option value="{$get_current_user.user_nick}" <[if:$get_current_user.user_nick == $write_post.post_user_name]>selected=true<[/if]>>{$get_current_user.user_nick}</option>
 						<[/if]>
-						<[if:$get_current_user.user_realname]>
-						<option value="{$get_current_user.user_realname}" <[if:$get_current_user.user_realname == $write_post.post_user_name]>selected=true<[/if]>>{$get_current_user.user_realname}</option>
+						<[if:$get_current_user.user_firstname && $get_current_user.user_lastname]>
+						<option value="{$get_current_user.user_firstname} {$get_current_user.user_lastname}" <[if:$get_current_user.user_firstname . " " . $get_current_user.user_lastname == $write_post.post_user_name]>selected=true<[/if]>>{$get_current_user.user_firstname} {$get_current_user.user_lastname}</option>
+						<option value="{$get_current_user.user_lastname} {$get_current_user.user_firstname}" <[if:$get_current_user.user_lastname . " " . $get_current_user.user_firstname == $write_post.post_user_name]>selected=true<[/if]>>{$get_current_user.user_lastname} {$get_current_user.user_firstname}</option>
 						<[/if]>
 					<[/if]>
 					<[if:$write_post.do == "insert"]>
@@ -127,8 +128,9 @@
 						<[if:$get_current_user.user_nick]>
 						<option value="{$get_current_user.user_nick}" <[if:$static_var.write_default_name == "nickname"]>selected=true<[/if]>>{$get_current_user.user_nick}</option>
 						<[/if]>
-						<[if:$get_current_user.user_realname]>
-						<option value="{$get_current_user.user_realname}" <[if:$static_var.write_default_name == "realname"]>selected=true<[/if]>>{$get_current_user.user_realname}</option>
+						<[if:$get_current_user.user_firstname && $get_current_user.user_lastname]>
+						<option value="{$get_current_user.user_firstname} {$get_current_user.user_lastname}" <[if:$static_var.write_default_name == "firstname"]>selected=true<[/if]>>{$get_current_user.user_firstname} {$get_current_user.user_lastname}</option>
+						<option value="{$get_current_user.user_lastname} {$get_current_user.user_firstname}" <[if:$static_var.write_default_name == "lastname"]>selected=true<[/if]>>{$get_current_user.user_lastname} {$get_current_user.user_firstname}</option>
 						<[/if]>
 					<[/if]>
 					</select> <br />
@@ -168,8 +170,14 @@
 				<div class="input">
 					<h2>{lang.admin_write.write_access}</h2> 
 					<p>
+					<[if:$write_post.do == "update"]>
 					<input type="checkbox" name="post_allow_comment" class="checkbox" value="1" <[if:$write_post.post_allow_comment]>checked=true<[/if]>/> {lang.admin_write.write_allowcomment} 
 					<input type="checkbox" name="post_allow_ping" class="checkbox" value="1" <[if:$write_post.post_allow_ping]>checked=true<[/if]>/> {lang.admin_write.write_allowtrackback} 
+					<[/if]>
+					<[if:$write_post.do == "insert"]>
+					<input type="checkbox" name="post_allow_comment" class="checkbox" value="1" <[if:$static_var.default_allow_comment]>checked=true<[/if]>/> {lang.admin_write.write_allowcomment} 
+					<input type="checkbox" name="post_allow_ping" class="checkbox" value="1" <[if:$static_var.default_allow_ping]>checked=true<[/if]>/> {lang.admin_write.write_allowtrackback} 
+					<[/if]>
 					<input type="checkbox" name="post_allow_feed" class="checkbox" value="1" <[if:$write_post.post_allow_feed]>checked=true<[/if]>/> {lang.admin_write.write_allowfeed} 
 					<input type="checkbox" id="post_is_hidden_check" onclick="checkPasswordInput(this);" name="post_is_hidden" class="checkbox" value="1" <[if:$write_post.post_is_hidden]>checked=true<[/if]>/> {lang.admin_write.write_hidden} 
 					<br />
@@ -247,7 +255,7 @@ function initEditor()
 	elements : "post_content",
 	language :"{$static_var.language}",
 	plugins : "flash,magike,inlinepopups",
-	theme_advanced_buttons1 : "bold,italic,underline,strikethrough, separator, forecolor ,magike_more,magike_page",
+	theme_advanced_buttons1 : "bold,italic,underline,strikethrough, separator, forecolor ,magike_more",
 	theme_advanced_buttons1_add_before: "undo,redo,code,separator,hr,link,unlink,image,flash,separator,bullist,numlist,outdent,indent,justifyleft,justifycenter,justifyright",
 	theme_advanced_buttons2 :"",
 	theme_advanced_buttons3 : "",

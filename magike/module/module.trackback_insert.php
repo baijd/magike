@@ -34,7 +34,7 @@ class TrackbackInsert extends MagikeModule
 			$input['comment_publish'] = 'approved';
 			$input['comment_date'] = time() - $this->stack['static_var']['server_timezone'];
 			$input['post_id'] = $post['post_id'];
-			$input['comment_type'] = 'ping';
+			$input['comment_type'] = 'trackback';
 			$input['comment_agent'] = $_SERVER["HTTP_USER_AGENT"];
 			$input['comment_ip'] = $_SERVER["REMOTE_ADDR"];
 			$input['comment_user'] = isset($_POST['blog_name']) ? $_POST['blog_name'] : NULL;

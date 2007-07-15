@@ -20,6 +20,7 @@ define('E_DATABASE','Database Error');
 define('E_MODELFILENOTEXISTS','Model File Not Exists');
 define('E_FORMISOUTOFDATE','Form Is Out Of Date');
 define('E_PATH_PATHNOTEXISTS','Path Is Not Exists');
+define('E_ACCESSDENIED','Access Denied');
 define('E_ACTION_ACTIONNOTEXISTS','Action Is Not Exists');
 define('E_ACTION_KERNELOBJECTSNOTEXISTS','Kerenl Objects Is Not Exists');
 define('E_ACTION_BUILD_MODULECLASSNOTEXISTS','Module Class Is Not Exists');

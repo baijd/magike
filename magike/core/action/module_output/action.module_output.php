@@ -39,6 +39,7 @@ class ModuleOutput extends MagikeObject
 		$this->fileName =  __RUNTIME__.'/module_output/'.$fileName.'.mod.php' ;
 		$this->stack['action']['application_cache_path'] = __RUNTIME__.'/module_output/'.$fileName.'.mod.php' ;
 		$this->stack['action']['application_config_path'] = __RUNTIME__.'/module_output/'.$fileName.'.cnf.php' ;
+		$this->stack['action']['auto_header'] = true;
 		if(!file_exists($this->fileName))
 		{
 			$this->throwException(E_ACTION_JSONOUTPUT_FILENOTEXISTS,$this->fileName);
@@ -62,7 +63,11 @@ class ModuleOutput extends MagikeObject
 		eval('$tmp = new '.$this->objName.'();');
 		$output = call_user_func(array($tmp,'runModule'),$this->args);
 		$this->stack['action']['content_type'] = "content-Type: {$this->stack['static_var']['content_type']}; charset={$this->stack['static_var']['charset']}";
-		header($this->stack['action']['content_type']);
+		
+		if($this->stack['action']['auto_header'])
+		{
+			header($this->stack['action']['content_type']);
+		}
 		echo $output;
 	}
 }
