@@ -5982,6 +5982,10 @@ $dblink=@mysql_connect(__DBHOST__, __DBUSER__,__DBPASS__) or die("数据库连�
 
 query("SET NAMES 'utf8'");
 
+query("DROP TABLE IF EXISTS `".__DBPREFIX__."categories` , `".__DBPREFIX__."comment_filters` , `".__DBPREFIX__."comments` , `".__DBPREFIX__."files` , `".__DBPREFIX__."groups` , 
+`".__DBPREFIX__."link_categories` , `".__DBPREFIX__."links` , `".__DBPREFIX__."menus` , `".__DBPREFIX__."path_group_mapping` , `".__DBPREFIX__."paths`, `".__DBPREFIX__."post_tag_mapping`, 
+`".__DBPREFIX__."posts`, `".__DBPREFIX__."statics`, `".__DBPREFIX__."tags`, `".__DBPREFIX__."user_group_mapping`, `".__DBPREFIX__."users`");
+
 query("CREATE TABLE `".__DBPREFIX__."categories` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `category_name` varchar(100) default NULL,
@@ -6417,17 +6421,17 @@ if (($list = $zip->listContent()) == 0) {die("解压错误: ".$zip->errorInfo(tr
 $basedir = '.';
 for ($i=0; $i<sizeof($list); $i++) 
 {
-	if ($list[$i][folder]=='1') 
+	if ($list[$i]['folder']=='1') 
 	{
 		$fold++;
-		$dirs[$fold] = $list[$i][stored_filename];
-		$dirname = $list[$i][stored_filename];
+		$dirs[$fold] = $list[$i]['stored_filename'];
+		$dirname = $list[$i]['stored_filename'];
 		$dirname = substr($dirname,0,strlen($dirname)-1);
 		mkdir($basedir.'/'.$dirname); 
 	}
 	chmod($basedir.'/'.$dirname,0777);
-	$tot_comp += $list[$i][compressed_size];
-	$tot_uncomp += $list[$i][size];
+	$tot_comp += $list[$i]['compressed_size'];
+	$tot_uncomp += $list[$i]['size'];
 }
 
 $zip->extract('');
