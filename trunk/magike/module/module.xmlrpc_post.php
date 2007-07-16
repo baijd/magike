@@ -1111,13 +1111,13 @@
 	{
 		if(!isset($HTTP_RAW_POST_DATA))
 		{
-			$HTTP_RAW_POST_DATA = file_get_contents( 'php://input' );
+			$GLOBALS['HTTP_RAW_POST_DATA'] = file_get_contents("php://input");
 		}
 		if(isset($HTTP_RAW_POST_DATA))
 		{
-			$HTTP_RAW_POST_DATA = trim($HTTP_RAW_POST_DATA);
+			$GLOBALS['HTTP_RAW_POST_DATA'] = file_get_contents("php://input");
 		}
-		
+
 		$this->stack['action']['auto_header'] = false;
 		
 		if(isset($_GET['rsd']))
