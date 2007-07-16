@@ -184,63 +184,13 @@ if(__DEBUG__)
 //关闭魔术变量功能
 if (get_magic_quotes_gpc()) 
 {
- 	if (is_array($_GET)) 
- 	{
-         foreach ($_GET as $key => $val) 
-         {
-             if (is_array($_GET[$key])) 
-             {
-                 foreach ($_GET[$key] as $inkey => $inval) 
-                 {
-                         $_GET[$key][$inkey] = stripslashes($inval);
-                 }
-                 @reset($_GET[$key]);
-             }
-             else $_GET[$key] = stripslashes($val);
-         }
-         @reset($_GET);
- 	}
- 	
- 	if (is_array($_POST)) 
- 	{
-         foreach ($_POST as $key => $val) 
-         {
-             if (is_array($_POST[$key])) 
-             {
-                 foreach ($_POST[$key] as $inkey => $inval) 
-                 {
-                         $_POST[$key][$inkey] = stripslashes($inval);
-                 }
-                 @reset($_POST[$key]);
-             }
-             else $_POST[$key] = stripslashes($val);
-         }
-         @reset($_POST);
- 	}
- 
- 	if (is_array($_COOKIE)) 
- 	{
-         foreach ($_COOKIE as $key => $val) 
-         {
-             if (is_array($_COOKIE[$key])) 
-             {
-                 foreach ($_COOKIE[$key] as $inkey => $inval) 
-                 {
-                         $_COOKIE[$key][$inkey] = stripslashes($inval);
-                 }
-                 @reset($_COOKIE[$key]);
-             }
-             else $_COOKIE[$key] = stripslashes($val);
-         }
-         @reset($_COOKIE);
- 	}
+	$_GET = mgAddslashesDeep($_GET);
+	$_POST = mgAddslashesDeep($_POST);
+	$_COOKIE = mgAddslashesDeep($_COOKIE);
+	
+	reset($_GET);
+	reset($_POST);
+	reset($_COOKIE);
 }
 
-
-//设定系统默认时区
-if(function_exists('date_default_timezone_get') && function_exists('date_default_timezone_set'))
-{
-	date_default_timezone_get();
-	date_default_timezone_set(date_default_timezone_get());
-}
 ?>

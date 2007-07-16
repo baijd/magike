@@ -502,25 +502,25 @@ function mgSendTrackback($url,$args)
 
 				//send ping
 				fputs( $socket, $request );
-				$reponse = "";
+				$response = "";
 
 				//get response
 				while ( ! feof ( $socket ) )
 				{
-					$reponse .= fgets( $socket, 4096 );
+					$response .= fgets( $socket, 4096 );
 				}
 				fclose($socket);
-				//here is reponse
-				if ( strstr($reponse,'<error>1</error>') )
+				//here is response
+				if ( strstr($response,'<error>1</error>') )
 				{
 					continue;
 				}
-				if ( strstr($reponse,'<error>0</error>') )
+				if ( strstr($response,'<error>0</error>') )
 				{
 					$result[] = $val;
 					continue;
 				}
-				if ( !strstr($reponse,'<error>') )
+				if ( !strstr($response,'<error>') )
 				{
 					continue;
 				}
@@ -529,5 +529,18 @@ function mgSendTrackback($url,$args)
 	}
 
 	return array();
+}
+
+//this function is powered by others
+function mgAddslashesDeep($value)
+{
+    if (empty($value))
+    {
+        return $value;
+    }
+    else
+    {
+        return is_array($value) ? array_map('addslashes_deep', $value) : addslashes($value);
+    }
 }
 ?>
