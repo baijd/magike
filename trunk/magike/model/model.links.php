@@ -29,7 +29,7 @@ class LinksModel extends MagikeModel
 		}
 		else
 		{
-			$this->sort = 'RAND()';
+			$this->sort = ' RAND()';
 		}
 		return $this->fetchByFieldEqual('link_category_id',$key,0,$limit);
 	}
