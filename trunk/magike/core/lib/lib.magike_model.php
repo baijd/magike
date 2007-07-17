@@ -28,7 +28,7 @@ abstract class MagikeModel extends Database
  	 
  	 private function findPrimaryKey()
  	 {
- 	 	 $res = mysql_query("SHOW INDEX FROM {$this->table} WHERE Key_name = 'PRIMARY'") or $this->databaseException();
+ 	 	 $res = $this->query("SHOW INDEX FROM {$this->table} WHERE Key_name = 'PRIMARY'");
  	 	 $row = mysql_fetch_array($res);
  	 	 return $row ? $this->table.".".$row['Column_name'] : NULL;
  	 }
