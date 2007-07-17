@@ -184,9 +184,9 @@ if(__DEBUG__)
 //关闭魔术变量功能
 if (get_magic_quotes_gpc()) 
 {
-	$_GET = mgAddslashesDeep($_GET);
-	$_POST = mgAddslashesDeep($_POST);
-	$_COOKIE = mgAddslashesDeep($_COOKIE);
+	$_GET = mgStripslashesDeep($_GET);
+	$_POST = mgStripslashesDeep($_POST);
+	$_COOKIE = mgStripslashesDeep($_COOKIE);
 	
 	reset($_GET);
 	reset($_POST);

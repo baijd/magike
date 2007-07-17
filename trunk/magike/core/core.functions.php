@@ -534,13 +534,16 @@ function mgSendTrackback($url,$args)
 //this function is powered by others
 function mgAddslashesDeep($value)
 {
-    if (empty($value))
-    {
-        return $value;
-    }
-    else
-    {
-        return is_array($value) ? array_map('addslashes_deep', $value) : addslashes($value);
-    }
+    return    is_array($value) ?
+                array_map('mgAddslashesDeep', $value) :
+                addslashes($value);
+}
+
+//this function is powered by others
+function mgStripslashesDeep($value)
+{
+    return    is_array($value) ?
+                array_map('mgStripslashesDeep', $value) :
+                stripslashes($value);
 }
 ?>
