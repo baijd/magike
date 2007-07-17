@@ -113,7 +113,7 @@ class Database extends MagikeObject
 		$fields = isset($args['fields']) && NULL !== $args['fields'] ? 'SELECT '.$args['fields'] : 'SELECT *';
 
 		//处理order子句
-		$orderby = isset($args['orderby']) && NULL !== $args['orderby'] ? ' ORDER BY '.$args['orderby'] : 'ORDER BY';
+		$orderby = isset($args['orderby']) && NULL !== $args['orderby'] ? ' ORDER BY '.$args['orderby'] : ' ORDER BY';
 		
 		//处理sort子句
 		$orderby = isset($args['sort']) && NULL !== $args['sort'] ? $orderby.' '.$args['sort'] : '';
