@@ -585,6 +585,7 @@
 		$input["user_id"] = $result["id"];
 		$input["post_title"] = $content['title'];
 		$input["post_is_draft"] = !$publish;
+		$input['post_allow_feed'] = 1;
 		$input["post_content"] = isset($content['mt_text_more']) && $content['mt_text_more'] ? $content['description']."\n<!--more-->\n".$content['mt_text_more'] 
 		: $content['description'];
 		
@@ -728,6 +729,7 @@
 		$input["user_id"] = $result["id"];
 		$input["post_title"] = $content['title'];
 		$input["post_is_draft"] = !$publish;
+		$input['post_allow_feed'] = 1;
 		$input["post_content"] = isset($content['mt_text_more']) && $content['mt_text_more'] ? $content['description']."\n<!--more-->\n".$content['mt_text_more'] 
 		: $content['description'];
 		
@@ -1109,13 +1111,13 @@
 	
 	public function runModule()
 	{
-		if(!isset($HTTP_RAW_POST_DATA))
+		if(!isset($GLOBALS['HTTP_RAW_POST_DATA']))
 		{
 			$GLOBALS['HTTP_RAW_POST_DATA'] = file_get_contents("php://input");
 		}
-		if(isset($HTTP_RAW_POST_DATA))
+		if(isset($GLOBALS['HTTP_RAW_POST_DATA']))
 		{
-			$GLOBALS['HTTP_RAW_POST_DATA'] = file_get_contents("php://input");
+			$GLOBALS['HTTP_RAW_POST_DATA'] = trim($GLOBALS['HTTP_RAW_POST_DATA']);
 		}
 
 		$this->stack['action']['auto_header'] = false;

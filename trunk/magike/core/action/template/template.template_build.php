@@ -68,14 +68,11 @@ class TemplateBuild extends ActionBuild
 		{
 			$section = array_pop($out[1]);
 			$sectionAll = array_pop($out[0]);
+			$posStart = strrpos($matches[1],$sectionAll);
+			$pos = $posStart + strlen($sectionAll);
+			$str = substr($matches[1],$pos,strlen($matches[1]) - $pos);
 			
-			if($this->contentCallback)
-			{
-				$pos = strrpos($matches[1],$sectionAll) + strlen($sectionAll);
-				$str = substr($matches[1],$pos,strlen($matches[1]) - $pos);
-			}
-			
-			$matches[1] = str_replace($sectionAll,call_user_func(array($this,$this->callback),array($sectionAll,$section)),$matches[1]);
+			$matches[1] = substr($matches[1],0,$posStart).call_user_func(array($this,$this->callback),array($sectionAll,$section)).$str;
 
 			if($this->contentCallback)
 			{
