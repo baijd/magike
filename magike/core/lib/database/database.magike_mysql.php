@@ -60,7 +60,7 @@ class MagikeMysql extends MagikeObject
 	public function fetchArray($resource = NULL)
 	{
 		$resource = $resource ? $resource : $this->resource;
-		return mysql_fetch_array($resource,MYSQL_ASSOC);
+		return mysql_fetch_assoc($resource);
 	}
 }
 ?>
