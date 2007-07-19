@@ -44,7 +44,7 @@ class TbVariable extends TemplateBuild
 	
 	public function prase()
 	{
-		return preg_replace_callback("/\{(\\$[_0-9a-zA-Z-\.\'\"\(\)\,\|\:\\$]+)\}/is",array($this,'filterVarSyntaxCallback'),$this->str);
+		return preg_replace_callback("/\{(\\$[_0-9a-zA-Z-\ \.\'\"\(\)\,\|\:\\$]+)\}/is",array($this,'filterVarSyntaxCallback'),$this->str);
 	}
 }
 ?>

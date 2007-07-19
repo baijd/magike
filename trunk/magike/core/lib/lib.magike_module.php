@@ -107,7 +107,7 @@ abstract class MagikeModule extends MagikeObject
 		{
 			if(isset($_POST[$key]) && $_POST[$key] == $val)
 			{
-				call_user_func(array($this,$callback));
+				$this->$callback();
 				return true;
 			}
 		}
@@ -115,7 +115,7 @@ abstract class MagikeModule extends MagikeObject
 		{
 			if(isset($_POST[$key]))
 			{
-				call_user_func(array($this,$callback));
+				$this->$callback();
 				return true;
 			}
 		}
@@ -223,7 +223,7 @@ abstract class MagikeModule extends MagikeObject
 		{
 			if(isset($_GET[$key]) && $_GET[$key] == $val)
 			{
-				call_user_func(array($this,$callback));
+				$this->$callback();
 				return true;
 			}
 		}
@@ -231,7 +231,7 @@ abstract class MagikeModule extends MagikeObject
 		{
 			if(isset($_GET[$key]))
 			{
-				call_user_func(array($this,$callback));
+				$this->$callback();
 				return true;
 			}
 		}
