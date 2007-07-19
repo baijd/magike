@@ -181,17 +181,25 @@ class PostInput extends MagikeModule
 		
 
 		$tagsModel = $this->loadModel('tags');
-		$tagsModel->deleteTagsByPostId($postId);
-		$tags = $tagsModel->getTags($post['post_tags']);
-		foreach($tags as $key => $val)
+		
+		if($post['post_tags'])
 		{
-			$tagsModel->decreaseFieldByKey($key,'tag_count');
+			$tagsModel->deleteTagsByPostId($postId);
+			$tags = $tagsModel->getTags($post['post_tags']);
+			foreach($tags as $key => $val)
+			{
+				$tagsModel->decreaseFieldByKey($key,'tag_count');
+			}
 		}
-		$tagsModel->insertTags($postId,$input['post_tags']);
-		$tags = $tagsModel->getTags($input['post_tags']);
-		foreach($tags as $key => $val)
+		
+		if(isset($input['post_tags']) && $input['post_tags'])
 		{
-			$tagsModel->increaseFieldByKey($key,'tag_count');
+			$tagsModel->insertTags($postId,$input['post_tags']);
+			$tags = $tagsModel->getTags($input['post_tags']);
+			foreach($tags as $key => $val)
+			{
+				$tagsModel->increaseFieldByKey($key,'tag_count');
+			}
 		}
 		
 		$this->result['open'] = true;
