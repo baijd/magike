@@ -1,5 +1,24 @@
 <?php
 header("content-Type: text/html; charset=UTF-8");
+
+function mgStripslashesDeep($value)
+{
+    return    is_array($value) ?
+                array_map('mgStripslashesDeep', $value) :
+                stripslashes($value);
+}
+
+//关闭魔术引号
+if (get_magic_quotes_gpc()) 
+{
+	$_GET = mgStripslashesDeep($_GET);
+	$_POST = mgStripslashesDeep($_POST);
+	$_COOKIE = mgStripslashesDeep($_COOKIE);
+	
+	reset($_GET);
+	reset($_POST);
+	reset($_COOKIE);
+}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
