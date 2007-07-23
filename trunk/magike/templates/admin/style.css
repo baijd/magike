@@ -328,6 +328,7 @@ body
 
 #element table
 {
+	table-layout:fixed;
 }
 
 #element table tr td
@@ -339,6 +340,15 @@ body
 	background:#EEF0F2;
 	border-bottom:#BEC9D1 solid 1px;
     border-top:#FFF solid 1px;
+	empty-cells:show;
+	white-space:nowrap;
+	word-wrap: break-all;
+}
+
+#element table tr
+{
+	line-height:24px;
+	overflow:hidden;
 }
 
 #element table tr td img.describe
