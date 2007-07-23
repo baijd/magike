@@ -168,6 +168,20 @@ class PostsModel extends MagikeModel
 		return $this->countTable($args);
 	}
 	
+	public function listAllFeedEntries($limit,$offset,$func = NULL)
+	{
+		$where = array('template'	=> 'post_allow_feed = 1 AND post_is_draft = 0 AND post_is_page = 0 AND post_is_hidden = 0 AND post_time < '.(time() - $this->stack['static_var']['server_timezone']));
+		return $this->fetch($this->fixPostWhere($limit,$offset,$where),$func);
+	}
+	
+	public function countAllFeedEntries()
+	{
+		$where = array('template'	=> 'post_allow_feed = 1 AND post_is_draft = 0 AND post_is_page = 0 AND post_is_hidden = 0 AND post_time < '.(time() - $this->stack['static_var']['server_timezone']));
+		$args = $this->fixPostWhere(false,false,$where);
+		unset($args['groupby']);
+		return $this->countTable($args);
+	}
+	
 	public function listAllEntriesIncludeHidden($limit,$offset,$func = NULL)
 	{
 		$where = array('template'	=> 'post_is_draft = 0 AND post_is_page = 0');

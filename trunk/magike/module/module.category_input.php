@@ -42,7 +42,7 @@ class CategoryInput extends MagikeModule
 		$this->requirePost();
 		$this->requireGet('c');
 		$this->category->updateByKey($_GET['c'], array('category_name' 		=> $_POST['category_name'],
-													   'category_postname'	=> urlencode($_POST['category_postname']),
+													   'category_postname'	=> str_replace('%','',urlencode($_POST['category_postname'])),
 													   'category_describe'	=> $_POST['category_describe'])
 									  );
 		
@@ -56,7 +56,7 @@ class CategoryInput extends MagikeModule
 		$item = $this->category->fetchOne(array('fields'=> 'MAX(category_sort) AS max_sort',
 											  'table' => 'table.categories'));
 		$this->category->insertTable(array('category_name' 		=> $_POST['category_name'],
-										   'category_postname'	=> urlencode($_POST['category_postname']),
+										   'category_postname'	=> str_replace('%','',urlencode($_POST['category_postname'])),
 										   'category_describe'	=> $_POST['category_describe'],
 										   'category_count'		=> 0,
 										   'category_sort'		=> $item['max_sort']+1));
