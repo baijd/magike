@@ -2,7 +2,7 @@
 <rss version="2.0">
 <channel>
 <[module:get_webmaster]>
-<[module:posts.is_archive?limit=10&time_format=r]>
+<[module:posts.is_feed?limit=10&time_format=r]>
 <[module:http_header?content_type=text/xml]>
 <title><![CDATA[{$static_var.blog_name}]]></title>
 <link>{$static_var.siteurl}</link>
@@ -11,7 +11,7 @@
 <docs>http://blogs.law.harvard.edu/tech/rss</docs>
 <generator>{$static_var.version}</generator>
 <webMaster>{$get_webmaster.user_name}</webMaster>
-<[loop:$posts.is_archive AS $post]>
+<[loop:$posts.is_feed AS $post]>
 <item>
 <title><![CDATA[{$post.post_title}]]></title>
 <link>{$static_var.index}/archives/{$post.post_id}/</link>
