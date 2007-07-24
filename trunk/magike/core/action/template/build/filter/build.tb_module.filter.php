@@ -45,7 +45,7 @@ class TbModule extends TemplateBuild
 			if(!isset($this->moduleFile[$file]))
 			{
 				$this->moduleFile[$file] = filemtime($file);
-				$this->moduleSource .= $this->replaceClassName(php_strip_whitespace($file),$this->className);
+				$this->moduleSource .= $this->replaceClassName(trim(php_strip_whitespace($file)),$this->className);
 			}
 		}
 		else

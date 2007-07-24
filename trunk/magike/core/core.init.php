@@ -150,7 +150,7 @@ function __autoload($className)
 		
 		if(isset($stack['action']['application_cache_path']) && isset($stack['action']['application_config_path']) && $found)
 		{
-			file_put_contents($stack['action']['application_cache_path'],file_get_contents($stack['action']['application_cache_path']).php_strip_whitespace($fileName));
+			file_put_contents($stack['action']['application_cache_path'],file_get_contents($stack['action']['application_cache_path']).trim(php_strip_whitespace($fileName)));
 			$files = array();
 			require($stack['action']['application_config_path']);
 			$files[$fileName] = filemtime($fileName);
