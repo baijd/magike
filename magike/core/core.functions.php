@@ -127,6 +127,13 @@ function mgStripTags($string)
 	return $string;
 }
 
+function mgGetScript($string)
+{
+	$start = strpos($string,"<?php");
+	$stop	= strrpos($string,"?>");
+	return substr($string,$start,$stop - $start + 2);
+}
+
 //一次创建一个目录树
 function mgMkdir($inpath,$mode = 0777)
 {
