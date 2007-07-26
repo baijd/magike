@@ -69,7 +69,7 @@ class ActionBuild extends MagikeObject
 				{
 					$this->moduleFile[$file] = filemtime($file);
 					$this->className = array($matches[2],$inpath);
-					$this->extendsSrouce .= $this->replaceClassName(trim(php_strip_whitespace($file)),$this->className);
+					$this->extendsSrouce .= $this->replaceClassName(mgGetScript(php_strip_whitespace($file)),$this->className);
 					return "class {$class} extends {$inpath} {{$matches[3]}}\r\n";
 					break;
 				}
@@ -88,7 +88,7 @@ class ActionBuild extends MagikeObject
 			if(!isset($this->moduleFile[$file]))
 			{
 				$this->moduleFile[$file] = filemtime($file);
-				$this->moduleSource = $this->replaceClassName(trim(php_strip_whitespace($file)),$this->className);
+				$this->moduleSource = $this->replaceClassName(mgGetScript(php_strip_whitespace($file)),$this->className);
 				$this->moduleSource .= $this->extendsSrouce;
 			}
 		}

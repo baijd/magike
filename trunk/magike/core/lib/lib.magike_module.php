@@ -51,8 +51,8 @@ abstract class MagikeModule extends MagikeObject
 					if(isset($this->stack['action']['application_cache_path']))
 					{
 						file_put_contents($this->stack['action']['application_cache_path'],
-						__DEBUG__ ? trim(file_get_contents($this->stack['action']['application_cache_path'])).trim(file_get_contents($modelFile)) : 
-						trim(file_get_contents($this->stack['action']['application_cache_path'])).trim(php_strip_whitespace($modelFile)));
+						__DEBUG__ ? file_get_contents($this->stack['action']['application_cache_path']).mgGetScript(file_get_contents($modelFile)) : 
+						file_get_contents($this->stack['action']['application_cache_path']).mgGetScript(php_strip_whitespace($modelFile)));
 					}
 					if(isset($this->stack['action']['application_config_path']))
 					{
