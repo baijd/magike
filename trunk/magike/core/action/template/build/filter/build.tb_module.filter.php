@@ -35,6 +35,10 @@ class TbModule extends TemplateBuild
 		{
 			$this->className = $this->getClassName($query[0]);
 			$nameSpace = isset($moduleVar[1]) ? $moduleVar[1] : $query[0];
+			if(isset($this->module[$nameSpace]))
+			{
+				$this->throwException(E_ACTION_BUILD_NAMESPACEBEENUSED,$nameSpace);
+			}
 			$this->module[$nameSpace] = $this->className[1];
 			
 			if(isset($query[1]))

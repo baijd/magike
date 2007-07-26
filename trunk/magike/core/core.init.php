@@ -24,6 +24,7 @@ define('E_ACCESSDENIED','Access Denied');
 define('E_ACTION_ACTIONNOTEXISTS','Action Is Not Exists');
 define('E_ACTION_KERNELOBJECTSNOTEXISTS','Kerenl Objects Is Not Exists');
 define('E_ACTION_BUILD_MODULECLASSNOTEXISTS','Module Class Is Not Exists');
+define('E_ACTION_BUILD_NAMESPACEBEENUSED','Namespace Has Been Used');
 define('E_ACTION_BUILD_MODULEFILENOTEXISTS','Module File Is Not Exists');
 define('E_ACTION_JSONOUTPUT_FILENOTEXISTS','Json Module File Is Not Exists');
 define('E_ACTION_MODULEOUTPUT_FILENOTEXISTS','Module File Is Not Exists');
