@@ -269,6 +269,23 @@ function registerTab(btn,tab)
 	$(btn).children().each(
 		function()
 		{
+			b = $(document.createElement("b"));
+			b.css("border-top","none");
+			b.css("border-bottom","none");
+			b.css("width",$(this).width() - 4 + "px");
+			b.css("margin","0 1px");
+			b.css("height","1px");
+			b.css("font-size","1px");
+			$(this).prepend(b);
+			
+			b = $(document.createElement("b"));
+			b.css("border-top","none");
+			b.css("border-left","none");
+			b.css("border-right","none");
+			b.css("width",$(this).width() - 4 + "px");
+			b.css("margin","0 2px");
+			$(this).prepend(b);
+			
 			$(this).click(
 				function()
 				{
@@ -277,6 +294,20 @@ function registerTab(btn,tab)
 					$("#"+focusTab.attr("rel")).hide();
 					$("#"+$(this).attr("rel")).show();
 					focusTab = $(this);
+				}
+			);
+			
+			$(this).mouseover(
+				function()
+				{
+					$(this).addClass("hover");
+				}
+			);
+			
+			$(this).mouseout(
+				function()
+				{
+					$(this).removeClass("hover");
 				}
 			);
 		}
