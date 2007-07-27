@@ -63,11 +63,11 @@
 	<form method="post" id="write" action="{$static_var.index}/admin/posts/all/?do={$write_post.do}<[if:$write_post.do == "update"]>&post_id={$write_post.post_id}<[/if]>">
 		<div class="tab_nav">
 			<ul id="tab">
-				<li id="first" rel="write_content"><span><img src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/pencil.gif" alt="pencil" >{lang.admin_write.write}</span></li>
-				<li rel="write_option"><span><img src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/setting.gif" alt="setting" >{lang.admin_write.option}</span></li>
-				<li rel="write_tools"><span><img src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/edit.gif" alt="publish" >{lang.admin_write.publish}</span></li>
-				<li rel="write_upload"><span><img src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/folder_picture.gif" alt="files" >{lang.admin_write.upload}</span></li>
-				<li><span><img src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/cog.gif" alt="tools" >{lang.admin_write.tools}</span></li>
+				<li id="first" rel="write_content"><span>{lang.admin_write.write}</span></li>
+				<li rel="write_option"><span>{lang.admin_write.option}</span></li>
+				<li rel="write_tools"><span>{lang.admin_write.publish}</span></li>
+				<li rel="write_upload"><span>{lang.admin_write.upload}</span></li>
+				<li><span>{lang.admin_write.tools}</span></li>
 			</ul>
 		</div>
 		<div class="tab_content" id="write_tab">
