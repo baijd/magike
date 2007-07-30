@@ -17,6 +17,13 @@ class TbInclude extends TemplateBuild
 		return preg_replace("/\<\[include:\s*(.+?)\s*\]\>/is","<[include:".$dirName."/\\1]>",$fileString);
 	}
 	
+	private function clearBOM($contents) 
+	{
+		return strlen($contents) >= 3 && (ord(substr($contents,0,1))==239 && ord(substr($contents,1,1))==187 && ord(substr($contents,2,1))==191) ?
+		substr($contents, 3) : $contents;
+	}
+
+	
 	public function linkInclude($matches)
 	{
 		$this->found = true;
@@ -29,7 +36,7 @@ class TbInclude extends TemplateBuild
 		else
 		{
 			$this->include[$includeFile] = filemtime($includeFile);
-			return $this->praseLinkPath(file_get_contents($includeFile),$dirName);
+			return $this->praseLinkPath($this->clearBOM(file_get_contents($includeFile)),$dirName);
 		}
 	}
 	
@@ -47,7 +54,7 @@ class TbInclude extends TemplateBuild
 		
 		//生成配置文件
 		mgExportArrayToFile(__RUNTIME__.'/template/'.mgPathToFileName($this->fileName).'.cnf.php',$this->include,'files');
-		return $this->str;
+		return $this->clearBOM($this->str);
 	}
 }
 ?>
