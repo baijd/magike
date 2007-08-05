@@ -139,7 +139,7 @@
 				</div>
 				<div class="input">
 				<h2>{lang.admin_write.tag}</h2>
-				<p><input type="text" class="text" name="post_tags" value="{$write_post.post_tags}" size=60 /> <br />
+				<p><input type="text" class="text" id="post_tags" name="post_tags" value="{$write_post.post_tags}" size=60 /> <br />
 				<span class="discribe">({lang.admin_write.tag_describe})</span></p>
 				</div>
 				<div class="input">
@@ -214,6 +214,7 @@
 
 <script>
 registerTab("#tab","#write_tab");
+registerAutocomplete("#post_tags");
 function validateSuccess()
 {
 	document.getElementById('write').submit();

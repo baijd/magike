@@ -552,6 +552,28 @@ body
 	margin-bottom:10px;
 }
 
+#element ul.magike_autoc
+{
+	background:#EEE;
+	border:1px solid #AAA;
+	border-bottom:none;
+	border-top:1px dotted #AAA;
+	margin:0;
+	padding:0;
+	display:none;
+	position:absolute;
+	z-index:100;
+}
+
+#element ul.magike_autoc li
+{
+	height:24px;
+	line-height:24px;
+	padding:0 5px;
+	border-bottom:1px solid #AAA;
+	list-style:none;
+}
+
 .tab_nav ul
 {
 	margin:0;

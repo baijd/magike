@@ -72,6 +72,9 @@ function getPageSize(){
 	return arrayPageSize;
 }
 
+function findPosX(obj){var curleft = 0;if (obj && obj.offsetParent) {while (obj.offsetParent) {	curleft += obj.offsetLeft;obj = obj.offsetParent;}} else if (obj && obj.x) curleft += obj.x;return curleft;}
+function findPosY(obj){var curtop = 0;if (obj && obj.offsetParent) {	while (obj.offsetParent) {	curtop += obj.offsetTop;obj = obj.offsetParent;}} else if (obj && obj.y) curtop += obj.y;return curtop;}
+
 var ajaxFinish = true;
 function ajaxLoadingStart()
 {
@@ -162,6 +165,44 @@ function selectTableOther(table,className)
 				$(this).attr("checked",true);
 				$(this.parentNode.parentNode).attr("className","select");
 			}
+		}
+	);
+}
+
+function registerAutocomplete(element)
+{
+	$(element).focus(
+		function()
+		{
+			e = $(document.createElement("ul"));
+			e.addClass("magike_autoc");
+			e.width($(this).width()+4);
+			e.css("left",findPosX(this)+"px");
+			e.css("top",findPosY(this) + $(this).height() + 4 +"px");
+			e.attr("id",$(this).attr("id")+"_autoc");
+			e.insertAfter($(this));
+		}
+	);
+	
+	$(element).blur(
+		function()
+		{
+			$("#"+$(this).attr("id")+"_autoc").remove();
+		}
+	);
+	
+	$(element).keyup(
+		function()
+		{
+			el = $("#"+$(this).attr("id")+"_autoc");
+			el.html("");
+			e = $(document.createElement("li"));
+			e.html("<strong>M</strong>agike");
+			el.append(e);
+			e = $(document.createElement("li"));
+			e.html("<strong>M</strong>icrosoft");
+			el.append(e);
+			el.show();
 		}
 	);
 }
