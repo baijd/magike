@@ -45,18 +45,11 @@
 		</div>
 		<div class="input">
 			<h2>静态链接</h2>
-			<[php]>if(function_exists('apache_get_modules') && in_array('mod_rewrite',apache_get_modules())){<[/php]>
 			<p>
 				<input type="radio" name="index" value="{$static_var.siteurl}" <[if:$static_var.index == $static_var.siteurl]>checked=true<[/if]>/>是 
 				<input type="radio" name="index" value="{$static_var.siteurl}/index.php" <[if:$static_var.index != $static_var.siteurl]>checked=true<[/if]>/>否<br />
-				<span class="discribe">(请选择是否为您的网站启用静态链接功能)</span>
+				<span class="discribe"><strong>(注意:打开此选项前请向您的空间服务商确认您的服务器支持rewrite,否则可能遇到严重错误)</strong></span>
 			</p>
-			<[php]>}else{<[/php]>
-			<p>
-				<strong>由于您的服务器不支持Apache配置,所以我们为您关闭了这一选项<strong>
-				<input type="hidden" name="index" value="{$static_var.siteurl}/index.php" />
-			</p>
-			<[php]>}<[/php]>
 		</div>
 		<div class="input">
 			<h2>语言</h2>
