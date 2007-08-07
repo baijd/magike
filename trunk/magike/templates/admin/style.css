@@ -554,10 +554,9 @@ body
 
 #element ul.magike_autoc
 {
-	background:#EEE;
+	background:#DDD;
 	border:1px solid #AAA;
 	border-bottom:none;
-	border-top:1px dotted #AAA;
 	margin:0;
 	padding:0;
 	display:none;
@@ -570,8 +569,15 @@ body
 	height:24px;
 	line-height:24px;
 	padding:0 5px;
+	border-top:1px solid #FFF;
 	border-bottom:1px solid #AAA;
 	list-style:none;
+	cursor:pointer;
+}
+
+#element ul.magike_autoc li.hover
+{
+	background:#CCC;
 }
 
 .tab_nav ul

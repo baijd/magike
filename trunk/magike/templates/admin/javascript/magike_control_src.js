@@ -198,6 +198,29 @@ function registerAutocomplete(element)
 			el.html("");
 			e = $(document.createElement("li"));
 			e.html("<strong>M</strong>agike");
+			
+			e.mouseover(
+				function()
+				{
+					$(this).addClass("hover");
+				}
+			);
+			
+			e.mouseout(
+				function()
+				{
+					$(this).removeClass("hover");
+				}
+			);
+			
+			e.click(
+				function()
+				{
+					alert('ddd');
+					$(element).val(this.nodeValue);
+				}
+			);
+			
 			el.append(e);
 			e = $(document.createElement("li"));
 			e.html("<strong>M</strong>icrosoft");
