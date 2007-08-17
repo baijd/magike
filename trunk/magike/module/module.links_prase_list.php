@@ -19,7 +19,7 @@ class LinksPraseList extends MagikeModule
 	
 	public function runModule($args)
 	{
-		$require = array('limit'  => 10);
+		$require = array('limit'  => NULL);
 		$this->getArgs = $this->initArgs($args,$require);
 		
 		$this->linkModel = $this->loadModel('links');

@@ -95,6 +95,18 @@ class TemplateBuild extends ActionBuild
 		$var = $this->foundVar;
 		return $input;
 	}
+	
+	protected function replaceWord($str)
+	{
+		$word = "from|by|as";
+		$splidWord = explode('|',$word);
+		foreach($splidWord as $val)
+		{
+			$str = eregi_replace(' '.$val.' ',' '.$val.' ',$str);
+		}
+		
+		return $str;
+	}
 
 	private function praseVarCallback($matches)
 	{

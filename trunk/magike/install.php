@@ -5937,9 +5937,8 @@ RewriteEngine On
 RewriteBase {$basepath}
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule   ^(.*)$  index.php/$1 [L]
-</IfModule>
-Options -Indexes FollowSymLinks";
+RewriteRule ^(.*)$ {$basepath}index.php/$1 [L]
+</IfModule>";
 
 //初始化数据库
 $check = false;
@@ -6103,7 +6102,7 @@ query("CREATE TABLE `".__DBPREFIX__."menus` (
   `path_id` int(10) unsigned default NULL,
   `menu_parent` int(10) unsigned default NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8");
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=500 ");
 
 query("INSERT INTO `".__DBPREFIX__."menus` (`id`, `menu_name`, `path_id`, `menu_parent`) VALUES 
 (1, 'lang.admin_menu.all', 3, 0),
@@ -6148,7 +6147,7 @@ query("CREATE TABLE `".__DBPREFIX__."path_group_mapping` (
   PRIMARY KEY  (`id`),
   KEY `path_id` (`path_id`),
   KEY `group_id` (`group_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8");
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=500 ");
 
 query("INSERT INTO `".__DBPREFIX__."path_group_mapping` (`id`, `path_id`, `group_id`) VALUES 
 (1, 31, 1),
@@ -6241,7 +6240,7 @@ query("CREATE TABLE `".__DBPREFIX__."paths` (
   `path_describe` varchar(32) default NULL,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `path_name` (`path_name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8");
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=500 ");
 
 query("INSERT INTO `".__DBPREFIX__."paths` (`id`, `path_name`, `path_action`, `path_file`, `path_cache`,`path_describe`) VALUES 
 (1, '/', 'template', '/{\$static_var.template}/index.tpl', 0,'网站主页'),

@@ -553,4 +553,42 @@ function mgStripslashesDeep($value)
                 array_map('mgStripslashesDeep', $value) :
                 stripslashes($value);
 }
+
+function mgSprintf($args , $format)
+{
+	if(is_array($args))
+	{
+		$result = array();
+		foreach($args as $val)
+		{
+			$tmp = "";
+			eval('$tmp = sprintf($format,"'.$val.'");');
+			$result[] = $tmp;
+		}
+		return $result;
+	}
+	else
+	{
+		$tmp = "";
+		eval('$tmp = sprintf($format,'.$args.');');
+		return $tmp;
+	}
+}
+
+function mgStringRelplace($src , $dst, $str)
+{
+	if(is_array($dst))
+	{
+		$result = array();
+		foreach($dst as $val)
+		{
+			$result[] = str_replace($src,$val,$str);
+		}
+		return $result;
+	}
+	else
+	{
+		return str_replace($src,$dst,$str);
+	}
+}
 ?>

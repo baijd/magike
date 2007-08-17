@@ -104,6 +104,7 @@ class Path extends MagikeModule
 			{
 				$pathArray = explode('/',$this->path);
 				array_pop($pathArray);
+				header('HTTP/1.1 301 Moved Permanently');
 				header('location: '.implode('/',$pathArray).'/');
 				die();
 			}
@@ -155,7 +156,7 @@ class Path extends MagikeModule
 			{
 				$request .= '?'.$_SERVER['QUERY_STRING'];
 			}
-			header('HTTP/1.1 301 Moved Permanently'); 
+			header('HTTP/1.1 301 Moved Permanently');
 			header("location: {$request}");
 			die();
 		}
@@ -167,7 +168,7 @@ class Path extends MagikeModule
 			{
 				$request .= '?'.$_SERVER['QUERY_STRING'];
 			}
-			header('HTTP/1.1 301 Moved Permanently'); 
+			header('HTTP/1.1 301 Moved Permanently');
 			header("location: {$request}");
 			die();
 		}

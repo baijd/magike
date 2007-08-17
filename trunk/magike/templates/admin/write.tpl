@@ -72,19 +72,11 @@
 		</div>
 		<div class="tab_content" id="write_tab">
 			<div id="write_content">
-				<div class="input">
-				<h2>{lang.admin_write.title}</h2>
-				<p><input type="text" class="text validate-me" name="post_title" size=60 value="{$write_post.post_title}" /><span class="validate-word" id="post_title-word"></span> <br />
-				<span class="discribe">({lang.admin_write.title_describe})</span></p>
-				</div>
-				<div class="input">
-					<h2>{lang.admin_write.content}</h2>
+				<p style="margin-bottom:10px;"><input type="text" class="validate-me text" name="post_title" size=60 value="{$write_post.post_title}" /><span class="validate-word" id="post_title-word"></span></p>
 					<p>
-						<textarea name="post_content" rows="{$static_var.write_editor_rows}" class="validate-me" style="background:url({$static_var.siteurl}/templates/{$static_var.admin_template}/images/editor_loading.gif) center no-repeat;width:600px">{$write_post.post_content}</textarea><br />
-						<span class="validate-word" id="post_content-word"></span>&nbsp;
-						<span class="discribe">({lang.admin_write.content_describe})</span>
+						<textarea name="post_content" rows="{$static_var.write_editor_rows}" class="validate-me" style="background:url({$static_var.siteurl}/templates/{$static_var.admin_template}/images/editor_loading.gif) center no-repeat;width:100%">{$write_post.post_content}</textarea><br />
+						<span class="validate-word" id="post_content-word"></span>
 					</p>
-				</div>
 			</div>
 			<div id="write_tools">
 				<div class="input">
@@ -214,7 +206,6 @@
 
 <script>
 registerTab("#tab","#write_tab");
-registerAutocomplete("#post_tags");
 function validateSuccess()
 {
 	document.getElementById('write').submit();
@@ -235,7 +226,7 @@ function checkPasswordInput(ele)
 
 checkPasswordInput("#post_is_hidden_check");
 
-$.getScript("{$static_var.siteurl}/templates/{$static_var.admin_template}/javascript/tiny_mce/tiny_mce.js", function(){
+$.getScript("{$static_var.siteurl}/templates/{$static_var.admin_template}/javascript/tiny_mce/tiny_mce_src.js", function(){
 	window.setTimeout("initEditor();",0);
  });
 
@@ -264,7 +255,8 @@ function initEditor()
 	theme_advanced_toolbar_align : "left",
 	content_css : "{$static_var.siteurl}/templates/{$static_var.admin_template}/editor.css",
 	relative_urls : false,
-	remove_script_host : false
+	remove_script_host : false,
+	extended_valid_elements : "coolcode"
 	});
  window.setTimeout("showEditor();",500);
 }
