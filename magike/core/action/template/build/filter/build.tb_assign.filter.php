@@ -10,7 +10,7 @@ class TbAssign extends TemplateBuild
 {
 	public function filterAssignSyntax($matches)
 	{
-		$finish = strtolower(str_replace('  ',' ',trim($matches[1])));
+		$finish = $this->replaceWord(str_replace('  ',' ',trim($matches[1])));
 		$finish = explode(' as ',$finish);
 		if(2 != count($finish))
 		{
