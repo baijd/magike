@@ -6361,7 +6361,7 @@ query("INSERT INTO `".__DBPREFIX__."statics` (`id`, `static_name`, `static_value
 (2, 'admin_template', 'admin'),
 (3, 'xml_template', 'xml'),
 (4, 'siteurl', '{$_POST['siteurl']}'),
-(5, 'version', 'Magike 1.0 Release 1'),
+(5, 'version', 'Magike 1.0.1'),
 (6, 'describe', '{$_POST['describe']}'),
 (7, 'blog_name', '{$_POST['blogname']}'),
 (8, 'language', 'zh_cn_utf8'),
@@ -6399,7 +6399,8 @@ query("INSERT INTO `".__DBPREFIX__."statics` (`id`, `static_name`, `static_value
 (40, 'smtp_ssl', '0'),
 (41, 'default_allow_comment', '1'),
 (42, 'default_allow_ping', '1'),
-(43, 'write_editor_custom_tags', '')");
+(43, 'write_editor_custom_tags', ''),
+(44, 'build_version', '290')");
 
 query("CREATE TABLE `".__DBPREFIX__."tags` (
   `id` int(10) unsigned NOT NULL auto_increment,
