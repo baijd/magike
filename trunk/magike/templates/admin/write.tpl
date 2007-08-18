@@ -241,7 +241,7 @@ checkPasswordInput("#post_is_hidden_check");
 	content_css : "{$static_var.siteurl}/templates/{$static_var.admin_template}/editor.css",
 	relative_urls : false,
 	remove_script_host : false,
-	extended_valid_elements : "{$static_var.write_editor_rows}"
+	extended_valid_elements : "{$static_var.write_editor_custom_tags}"
 	});
 
 function insertContent()
