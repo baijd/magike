@@ -66,11 +66,24 @@ class ThumbnailOutput extends MagikeModule
 		if($file && $file['file_name'] == $_GET['file_name'])
 		{
 			$path = __UPLOAD__.mgGetGuidPath($file['file_guid']).'/'.$file['file_guid'];
-			if(file_exists($path))
+			if(file_exists($path) && function_exists("gd_info"))
 			{
 				$this->stack['static_var']['content_type'] = $file['file_type'];
-				$fileType = array('image/jpeg','image/png','image/gif');
+				$fileType = array();
 				
+				$supportItem = gd_info();
+				if($supportItem["GIF Read Support"] && $supportItem["GIF Create Support"])
+				{
+					$fileType[] = 'image/gif';
+				}
+				if($supportItem["JPG Support"])
+				{
+					$fileType[] = 'image/jpeg';
+				}
+				if($supportItem["PNG Support"])
+				{
+					$fileType[] = 'image/png';
+				}
 				
 				if(in_array($file['file_type'],$fileType))
 				{
