@@ -23,6 +23,13 @@
 			</p>
 		</div>
 		<div class="input">
+			<h2>编辑器自定义标签</h2>
+			<p>
+				<input type="text" class="text validate-me" name="write_editor_custom_tags" value="{$static_var.write_editor_custom_tags}" size=60 /><br />
+				<span class="discribe">(请将您需要在所见即所得编辑器中被识别的标签填入这里并用逗号隔开,例如:player,code)</span>
+			</p>
+		</div>
+		<div class="input">
 			<h2>默认撰写者名称</h2>
 			<p>
 				<select name="write_default_name">
