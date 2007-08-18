@@ -226,21 +226,6 @@ function checkPasswordInput(ele)
 
 checkPasswordInput("#post_is_hidden_check");
 
-/*
-$.getScript("{$static_var.siteurl}/templates/{$static_var.admin_template}/javascript/tiny_mce/tiny_mce_src.js", function(){
-	window.setTimeout("initEditor();",0);
- });
-
-function showEditor()
-{
-	if(!$(".mceEditor").html())
-	{
-		tinyMCE.execCommand('mceAddControl', false, 'post_content');
-	}
-}
-
-*/
-
  tinyMCE.init({
 	mode : "exact",
 	theme : "advanced",
