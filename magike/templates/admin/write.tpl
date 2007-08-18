@@ -9,8 +9,7 @@
 <style>
 #files_grid
 {
-	margin:0 0 10px 10px !important;
-	margin:10px 0 10px 10px;
+	margin:0 0 0 10px;
 	padding:0;
 	width:550px !important;
 	width:560px;
@@ -72,7 +71,7 @@
 		</div>
 		<div class="tab_content" id="write_tab">
 			<div id="write_content">
-				<p style="margin-bottom:10px;"><input type="text" class="validate-me text" name="post_title" size=60 value="{$write_post.post_title}" /><span class="validate-word" id="post_title-word"></span></p>
+				<p style="margin-bottom:10px;"><input type="text" onfocus="this.select();" class="validate-me text" name="post_title" size=60 value="<[if:$write_post.post_title]>{$write_post.post_title}<[else]>无标题文档<[/if]>" /><span class="validate-word" id="post_title-word"></span></p>
 					<p>
 						<textarea name="post_content" rows="{$static_var.write_editor_rows}" class="validate-me" style="background:url({$static_var.siteurl}/templates/{$static_var.admin_template}/images/editor_loading.gif) center no-repeat;width:100%">{$write_post.post_content}</textarea><br />
 						<span class="validate-word" id="post_content-word"></span>
@@ -143,8 +142,8 @@
 			</div>
 			<div id="write_upload">
 				<iframe frameborder=0 width=100% height=200 src="{$static_var.index}/admin/posts/upload/"></iframe>
-				<div class="input" style="padding-bottom:0 !important;padding-bottom:10px;margin-bottom:0 !important;margin-bottom:6px;">
-					<h2>文件列表</h2>
+				<div class="input" style="padding:10px 0;margin-bottom:0 !important;margin-bottom:6px;">
+					<h2 style="padding-top:0">文件列表</h2>
 						<ul id="files_grid">
 						</ul>
 						<p style="padding:0 !important;padding:10px 0 0 0;width:35px;"><input type="button" id="next-button" onclick="getFilesList(filePage + 1);" style="width:20px;height:75px;float:left;padding:0;" value="&raquo;"/> <input type="button" id="prev-button" onclick="getFilesList(filePage - 1);" style="width:20px;height:75px;float:left;padding:0;" value="&laquo;"/></p>
@@ -204,6 +203,7 @@
 	</div>
 </div>
 
+<script language="javascript" type="text/javascript" src="{$static_var.siteurl}/templates/{$static_var.admin_template}/javascript/tiny_mce/tiny_mce.js"></script>
 <script>
 registerTab("#tab","#write_tab");
 function validateSuccess()
@@ -226,6 +226,7 @@ function checkPasswordInput(ele)
 
 checkPasswordInput("#post_is_hidden_check");
 
+/*
 $.getScript("{$static_var.siteurl}/templates/{$static_var.admin_template}/javascript/tiny_mce/tiny_mce_src.js", function(){
 	window.setTimeout("initEditor();",0);
  });
@@ -238,9 +239,8 @@ function showEditor()
 	}
 }
 
-function initEditor()
-{
- tinyMCE.scriptUrl = "{$static_var.siteurl}/templates/{$static_var.admin_template}/javascript/tiny_mce/tiny_mce.js";
+*/
+
  tinyMCE.init({
 	mode : "exact",
 	theme : "advanced",
@@ -258,11 +258,10 @@ function initEditor()
 	remove_script_host : false,
 	extended_valid_elements : "coolcode"
 	});
- window.setTimeout("showEditor();",500);
-}
 
 function insertContent()
 {
+	tinyMCE.execCommand('mceFocus',false,'post_content');
 	if($(".sidebar").attr("type") == "true")
 	{
 		tinyMCE.execCommand('mceInsertContent',true,'<img src=' + $(".sidebar").attr("rel") + ' alt=' + $(".sidebar").attr("alt") + ' />');
@@ -312,7 +311,7 @@ function getFilesList(page)
 					if(typeof(json[i]["id"]) != "undefined")
 					{
 						li = $(document.createElement("li"));
-						src = "{$static_var.index}/res/" + json[i]["id"]+"/"+json[i]["file_name"];
+						src = "{$static_var.index}/thumb/" + json[i]["id"]+"/"+json[i]["file_name"];
 						li.attr("className","normal");
 						li.attr("rel",src);
 						li.attr("alt",json[i]["file_describe"] ? json[i]["file_describe"] : json[i]["file_name"]);
@@ -349,8 +348,8 @@ function getFilesList(page)
 						li.click(
 							function()
 							{
-								$("#sidebar_word").html($(this).attr("rel"));
-								$(".sidebar").attr("rel",$(this).attr("rel"));
+								$("#sidebar_word").html($(this).attr("rel").replace('/thumb/','/res/'));
+								$(".sidebar").attr("rel",$(this).attr("rel").replace('/thumb/','/res/'));
 								$(".sidebar").attr("alt",$(this).attr("alt"));
 								$(".sidebar").attr("type",$(this).attr("type"));
 								$(".sidebar").attr("id",$(this).attr("id"));

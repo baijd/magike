@@ -373,6 +373,9 @@ body
 	color:#AAA;
 }
 
+#element table.mceEditor tr td{border-top:none;border-bottom:none}
+#element table.mceEditor tr td.mceToolbarTop{border-bottom:1px solid #BEC9D1}
+
 #element table tr.heading td
 {
 	color:#3F515C;

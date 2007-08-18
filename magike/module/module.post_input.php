@@ -133,10 +133,6 @@ class PostInput extends MagikeModule
 		{
 			$input['post_edit_time'] = time() - $this->stack['static_var']['server_timezone'];
 		}
-		if(!isset($input['post_time']) || !$input['post_time'])
-		{
-			$input['post_time'] = time() - $this->stack['static_var']['server_timezone'];
-		}
 		
 		$input['post_name'] = $input['post_is_page'] && NULL == $input['post_name'] ? str_replace('%','',urlencode($input['post_title'])) : $input['post_name'];
 		

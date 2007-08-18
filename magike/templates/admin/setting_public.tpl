@@ -113,6 +113,14 @@
 				{
 					document.getElementById('setting_public').submit();
 				}
+				
+				$('#setting_public').submit(
+					function()
+					{
+						magikeValidator('{$static_var.index}/helper/validator/','setting_public');
+						return false;
+					}
+				);
 			</script>
 		</div>
 	</form>

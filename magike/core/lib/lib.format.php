@@ -125,7 +125,7 @@ class Format extends MagikeModule
 						}
 						if(ereg("^model\(([_0-9a-zA-Z]+),([_0-9a-zA-Z]+)\)$",$inval,$reg))
 						{
-							if(!$this->viaModelCheck($reg[1],$reg[2],$data[$key]))
+							if($this->checkNull($val) && !$this->viaModelCheck($reg[1],$reg[2],$data[$key]))
 							{
 								if(!isset($error[$key]))
 								{
@@ -135,7 +135,7 @@ class Format extends MagikeModule
 						}
 						if(ereg("^modelIngore\(([_0-9a-zA-Z]+),([_0-9a-zA-Z]+),([_0-9a-zA-Z]+)\)$",$inval,$reg))
 						{
-							if(!$this->viaModelCheckIgnoreKey($reg[1],$reg[2],$data[$key],$reg[3]))
+							if($this->checkNull($val) && !$this->viaModelCheckIgnoreKey($reg[1],$reg[2],$data[$key],$reg[3]))
 							{
 								if(!isset($error[$key]))
 								{

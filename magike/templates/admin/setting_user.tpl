@@ -44,6 +44,14 @@
 				{
 					document.getElementById('setting_user').submit();
 				}
+				
+				$('#setting_user').submit(
+					function()
+					{
+						magikeValidator('{$static_var.index}/helper/validator/','setting_user');
+						return false;
+					}
+				);
 			</script>
 		</div>
 	</form>

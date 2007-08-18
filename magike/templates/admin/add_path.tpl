@@ -66,6 +66,14 @@
 				{
 					document.getElementById('insert_path').submit();
 				}
+				
+				$('#insert_path').submit(
+					function()
+					{
+						magikeValidator('{$static_var.index}/helper/validator/','add_path');
+						return false;
+					}
+				);
 			</script>
 		</div>
 	</form>
