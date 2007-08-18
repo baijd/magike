@@ -56,6 +56,14 @@
 			{
 				document.getElementById('insert_link').submit();
 			}
+			
+			$('#insert_link').submit(
+				function()
+				{
+					magikeValidator('{$static_var.index}/helper/validator/','add_link');
+					return false;
+				}
+			);
 		</script>
 	</div>
 	</div>

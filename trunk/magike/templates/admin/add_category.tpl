@@ -37,6 +37,14 @@
 				{
 					document.getElementById('insert_category').submit();
 				}
+				
+				$('#insert_category').submit(
+					function()
+					{
+						magikeValidator('{$static_var.index}/helper/validator/','add_category');
+						return false;
+					}
+				);
 			</script>
 		</div>
 	</form>

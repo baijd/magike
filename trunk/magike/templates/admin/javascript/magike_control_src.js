@@ -169,67 +169,6 @@ function selectTableOther(table,className)
 	);
 }
 
-function registerAutocomplete(element)
-{
-	$(element).focus(
-		function()
-		{
-			e = $(document.createElement("ul"));
-			e.addClass("magike_autoc");
-			e.width($(this).width()+4);
-			e.css("left",findPosX(this)+"px");
-			e.css("top",findPosY(this) + $(this).height() + 4 +"px");
-			e.attr("id",$(this).attr("id")+"_autoc");
-			e.insertAfter($(this));
-		}
-	);
-	
-	$(element).blur(
-		function()
-		{
-			$("#"+$(this).attr("id")+"_autoc").remove();
-		}
-	);
-	
-	$(element).keyup(
-		function()
-		{
-			el = $("#"+$(this).attr("id")+"_autoc");
-			el.html("");
-			e = $(document.createElement("li"));
-			e.html("<strong>M</strong>agike");
-			
-			e.mouseover(
-				function()
-				{
-					$(this).addClass("hover");
-				}
-			);
-			
-			e.mouseout(
-				function()
-				{
-					$(this).removeClass("hover");
-				}
-			);
-			
-			e.click(
-				function()
-				{
-					alert('ddd');
-					$(element).val(this.nodeValue);
-				}
-			);
-			
-			el.append(e);
-			e = $(document.createElement("li"));
-			e.html("<strong>M</strong>icrosoft");
-			el.append(e);
-			el.show();
-		}
-	);
-}
-
 function registerInputFocus(element)
 {
 	$("input",element).focus

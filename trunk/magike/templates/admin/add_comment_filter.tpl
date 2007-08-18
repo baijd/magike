@@ -44,6 +44,14 @@
 				{
 					document.getElementById('insert_comment_filter').submit();
 				}
+				
+				$('#insert_comment_filter').submit(
+					function()
+					{
+						magikeValidator('{$static_var.index}/helper/validator/','add_comment_filter');
+						return false;
+					}
+				);
 			</script>
 		</div>
 	</form>

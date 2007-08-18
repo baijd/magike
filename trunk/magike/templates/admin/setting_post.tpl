@@ -50,6 +50,14 @@
 				{
 					document.getElementById('setting_post').submit();
 				}
+				
+				$('#setting_post').submit(
+					function()
+					{
+						magikeValidator('{$static_var.index}/helper/validator/','setting_post');
+						return false;
+					}
+				);
 			</script>
 		</div>
 	</form>

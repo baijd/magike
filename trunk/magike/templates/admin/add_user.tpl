@@ -90,6 +90,14 @@
 			{
 				document.getElementById('insert_user').submit();
 			}
+			
+			$('#insert_user').submit(
+				function()
+				{
+					magikeValidator('{$static_var.index}/helper/validator/','add_user');
+					return false;
+				}
+			);
 		</script>
 	</div>
 	</div>

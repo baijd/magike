@@ -48,6 +48,14 @@
 				{
 					document.getElementById('insert_link_category').submit();
 				}
+				
+				$('#insert_link_category').submit(
+					function()
+					{
+						magikeValidator('{$static_var.index}/helper/validator/','add_link_category');
+						return false;
+					}
+				);
 			</script>
 		</div>
 	</form>

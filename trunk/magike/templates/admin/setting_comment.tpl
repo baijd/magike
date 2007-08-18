@@ -86,6 +86,14 @@
 				{
 					document.getElementById('setting_comment').submit();
 				}
+				
+				$('#setting_comment').submit(
+					function()
+					{
+						magikeValidator('{$static_var.index}/helper/validator/','setting_comment');
+						return false;
+					}
+				);
 			</script>
 		</div>
 	</form>

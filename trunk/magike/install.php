@@ -6044,7 +6044,7 @@ query("CREATE TABLE `".__DBPREFIX__."comments` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8");
 
 query("INSERT INTO `".__DBPREFIX__."comments` (`id`, `comment_user`, `comment_date`, `comment_email`, `comment_homepage`, `comment_agent`, `comment_ip`, `comment_text`, `comment_title`, `post_id`, `comment_type`, `comment_publish`) VALUES 
-(1, 'magike' , 1172842951, 'magike.net@gmail.com', 'http://www.magike.net', 'Magike/1.0', '127.0.0.1', '欢迎您选择Magike', NULL, 1, 'comment', 'approved')");
+(1, 'magike' , 1172842951, 'magike.net@gmail.com', 'http://www.magike.net', 'Magike/1.0', '127.0.0.1', '终于抢到沙发了!', NULL, 1, 'comment', 'approved')");
 
 query("CREATE TABLE `".__DBPREFIX__."files` (
   `id` int(10) NOT NULL auto_increment,
@@ -6229,7 +6229,9 @@ query("INSERT INTO `".__DBPREFIX__."path_group_mapping` (`id`, `path_id`, `group
 (77, 62, 1),
 (78, 62, 2),
 (79, 63, 1),
-(80, 63, 2)");
+(80, 63, 2),
+(80, 64, 1),
+(80, 64, 2)");
 
 query("CREATE TABLE `".__DBPREFIX__."paths` (
   `id` int(10) unsigned NOT NULL auto_increment,
@@ -6305,7 +6307,8 @@ query("INSERT INTO `".__DBPREFIX__."paths` (`id`, `path_name`, `path_action`, `p
 (60, '/rss/archives/[post_id=%d]/', 'template', '/{\$static_var.xml_template}/rss_archives.tpl', 0,'RSS文章输出'),
 (61, '/register/', 'template', '/{\$static_var.template}/register.tpl', 0,'用户注册'),
 (62, '/tags/', 'template', '/{\$static_var.template}/tags.tpl', 0,'标签云'),
-(63, '/xmlrpc.api', 'module_output', 'xmlrpc_post', 0,'xmlrpc接口')");
+(63, '/xmlrpc.api', 'module_output', 'xmlrpc_post', 0,'xmlrpc接口'),
+(64, '/thumb/[file_id=%d]/[file_name=%p]', 'module_output', 'thumbnail_output', 0,'缩略图输出')");
 
 query("CREATE TABLE `".__DBPREFIX__."post_tag_mapping` (
   `id` int(10) unsigned NOT NULL auto_increment,

@@ -70,6 +70,14 @@
 				{
 					document.getElementById('setting_mail').submit();
 				}
+				
+				$('#setting_mail').submit(
+					function()
+					{
+						magikeValidator('{$static_var.index}/helper/validator/','setting_mail');
+						return false;
+					}
+				);
 			</script>
 		</div>
 	</form>

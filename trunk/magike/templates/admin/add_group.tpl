@@ -42,6 +42,14 @@
 				{
 					document.getElementById('insert_group').submit();
 				}
+				
+				$('#insert_group').submit(
+					function()
+					{
+						magikeValidator('{$static_var.index}/helper/validator/','add_group');
+						return false;
+					}
+				);
 			</script>
 		</div>
 	</form>

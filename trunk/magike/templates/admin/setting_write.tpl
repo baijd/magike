@@ -83,6 +83,14 @@
 				{
 					document.getElementById('setting_write').submit();
 				}
+				
+				$('#setting_write').submit(
+					function()
+					{
+						magikeValidator('{$static_var.index}/helper/validator/','setting_write');
+						return false;
+					}
+				);
 			</script>
 		</div>
 	</form>
