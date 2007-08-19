@@ -24,7 +24,7 @@ if (get_magic_quotes_gpc())
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
-	<title>Magike 1.0 Release 1 安装程序</title>
+	<title>Magike 1.0.1 安装程序</title>
 	<style>
 		body
 		{
