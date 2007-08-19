@@ -116,11 +116,27 @@ class Path extends MagikeModule
 
 	private function getPath()
 	{
-		if((isset($_SERVER['PATH_INFO']) && $_SERVER['PATH_INFO']) || (isset($_SERVER['ORIG_PATH_INFO']) && $_SERVER['ORIG_PATH_INFO']))
+		$path = "";
+		
+		if(isset($_SERVER['PATH_INFO']) && $_SERVER['PATH_INFO'])
 		{
-			$path = isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : $_SERVER['ORIG_PATH_INFO'];
+			$path = $_SERVER['PATH_INFO'];
 		}
-		else
+		else if(isset($_SERVER['ORIG_PATH_INFO']) && $_SERVER['ORIG_PATH_INFO'])
+		{
+			if(strpos($_SERVER['ORIG_PATH_INFO'],$_SERVER['PHP_SELF']) === 0)
+			{
+				$len = strlen($_SERVER['PHP_SELF']);
+				$path = substr($_SERVER['ORIG_PATH_INFO'],$len+1,strlen($_SERVER['ORIG_PATH_INFO']) - $len);
+			}
+			else
+			{
+				$path = $_SERVER['ORIG_PATH_INFO'];
+			}
+		}
+		
+		
+		if($path == "")
 		{
 			$path = '/';
 		}
