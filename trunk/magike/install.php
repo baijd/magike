@@ -6231,7 +6231,8 @@ query("INSERT INTO `".__DBPREFIX__."path_group_mapping` (`id`, `path_id`, `group
 (79, 63, 1),
 (80, 63, 2),
 (81, 64, 1),
-(82, 64, 2)");
+(82, 64, 2),
+(83, 65, 1)");
 
 query("CREATE TABLE `".__DBPREFIX__."paths` (
   `id` int(10) unsigned NOT NULL auto_increment,
@@ -6308,7 +6309,8 @@ query("INSERT INTO `".__DBPREFIX__."paths` (`id`, `path_name`, `path_action`, `p
 (61, '/register/', 'template', '/{\$static_var.template}/register.tpl', 0,'用户注册'),
 (62, '/tags/', 'template', '/{\$static_var.template}/tags.tpl', 0,'标签云'),
 (63, '/xmlrpc.api', 'module_output', 'xmlrpc_post', 0,'xmlrpc接口'),
-(64, '/thumb/[file_id=%d]/[file_name=%p]', 'module_output', 'thumbnail_output', 0,'缩略图输出')");
+(64, '/thumb/[file_id=%d]/[file_name=%p]', 'module_output', 'thumbnail_output', 0,'缩略图输出'),
+(65, '/admin/posts/tags_search/', 'json_output', 'tags_search', 0,'后台标签搜索接口')");
 
 query("CREATE TABLE `".__DBPREFIX__."post_tag_mapping` (
   `id` int(10) unsigned NOT NULL auto_increment,

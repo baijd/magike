@@ -284,6 +284,27 @@ body
 	float:left;
 }
 
+#element .auto-completer
+{
+	border:1px solid #98BBF5;
+	background:#FFF;
+	width:404px;
+}
+
+#element .auto-completer-hover
+{
+	background:#98BBF5;
+	padding:3px;
+	color:#FFF;
+}
+
+#element .auto-completer-blur
+{
+	background:#FFF;
+	padding:3px;
+	color:#333;
+}
+
 #element .validate-word
 {
 	background:url(images/exclamation.gif) left center no-repeat;
@@ -292,6 +313,7 @@ body
 	font-weight:bold;
 	color:#990000;
 	font-size:9pt;
+	display:none;
 }
 
 #element form
