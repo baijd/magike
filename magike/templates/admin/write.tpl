@@ -32,6 +32,13 @@
 	cursor:pointer;
 }
 
+#files_grid li p
+{
+	white-space:nowrap;
+	word-wrap: break-all;
+	overflow:hidden
+}
+
 .sidebar input
 {
 	border:1px solid #555;
@@ -146,7 +153,7 @@
 					<h2 style="padding-top:0">文件列表</h2>
 						<ul id="files_grid">
 						</ul>
-						<p style="padding:0 !important;padding:10px 0 0 0;width:35px;"><input type="button" id="next-button" onclick="getFilesList(filePage + 1);" style="width:20px;height:75px;float:left;padding:0;" value="&raquo;"/> <input type="button" id="prev-button" onclick="getFilesList(filePage - 1);" style="width:20px;height:75px;float:left;padding:0;" value="&laquo;"/></p>
+						<p style="padding:0 !important;padding:10px 0 0 0;width:35px;"><input type="button" id="next-button" onclick="getFilesList(filePage + 1);" style="border:1px solid #CCC;border-left:none;background:#EEE;width:20px;height:76px;float:left;padding:0;" value="&raquo;"/> <input type="button" id="prev-button" onclick="getFilesList(filePage - 1);" style="border:1px solid #CCC;border-left:none;background:#EEE;width:20px;height:76px;float:left;padding:0;" value="&laquo;"/></p>
 				</div>
 			</div>
 			<div id="write_option">
@@ -225,24 +232,6 @@ function checkPasswordInput(ele)
 }
 
 checkPasswordInput("#post_is_hidden_check");
-
- tinyMCE.init({
-	mode : "exact",
-	theme : "advanced",
-	elements : "post_content",
-	language :"{$static_var.language}",
-	plugins : "flash,magike,inlinepopups",
-	theme_advanced_buttons1 : "bold,italic,underline,strikethrough, separator, forecolor ,magike_more",
-	theme_advanced_buttons1_add_before: "undo,redo,code,separator,hr,link,unlink,image,flash,separator,bullist,numlist,outdent,indent,justifyleft,justifycenter,justifyright",
-	theme_advanced_buttons2 :"",
-	theme_advanced_buttons3 : "",
-	theme_advanced_toolbar_location : "top",
-	theme_advanced_toolbar_align : "left",
-	content_css : "{$static_var.siteurl}/templates/{$static_var.admin_template}/editor.css",
-	relative_urls : false,
-	remove_script_host : false,
-	extended_valid_elements : "{$static_var.write_editor_custom_tags}"
-	});
 
 function insertContent()
 {
@@ -473,3 +462,22 @@ $('a').click(
 </script>
 
 <[include:footer]>
+<script>
+ tinyMCE.init({
+	mode : "exact",
+	theme : "advanced",
+	elements : "post_content",
+	language :"{$static_var.language}",
+	plugins : "flash,magike,inlinepopups",
+	theme_advanced_buttons1 : "bold,italic,underline,strikethrough, separator, forecolor ,magike_more",
+	theme_advanced_buttons1_add_before: "undo,redo,code,separator,hr,link,unlink,image,flash,separator,bullist,numlist,outdent,indent,justifyleft,justifycenter,justifyright",
+	theme_advanced_buttons2 :"",
+	theme_advanced_buttons3 : "",
+	theme_advanced_toolbar_location : "top",
+	theme_advanced_toolbar_align : "left",
+	content_css : "{$static_var.siteurl}/templates/{$static_var.admin_template}/editor.css",
+	relative_urls : false,
+	remove_script_host : false,
+	extended_valid_elements : "{$static_var.write_editor_custom_tags}"
+	});
+</script>

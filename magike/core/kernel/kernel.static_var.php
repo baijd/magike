@@ -30,6 +30,9 @@ class StaticVar extends MagikeModule
 		$staticVar = array();
 		require($this->cacheFile);
 		$staticVar['server_timezone'] = mgGetTimeZoneDiff();
+		
+		//add pingback header support
+		header("X-Pingback:".$staticVar['index']."/xmlrpc.api");
 		return $staticVar;
 	}
 

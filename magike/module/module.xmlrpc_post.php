@@ -1106,7 +1106,13 @@
 	
 	public function pingbackPing($args)
 	{
+		$source = $args[0];
+		$target = $args[1];
 		
+		if(strpos($target,$this->stack['static_var']['siteurl']) !== 0)
+		{
+			return new IXR_Error(0, __('这个链接地址错误.'));
+		}
 	}
 	
 	public function runModule()
