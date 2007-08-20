@@ -82,5 +82,22 @@ class TagsModel extends MagikeModel
 		}
 		return $this->fetch($args);
 	}
+	
+	public function getTagsByKeywords($keywords)
+	{
+		$this->clearArgs();
+		$this->orderby = 'tag_count';
+		$this->sort = 'DESC';
+		
+		$items = $this->fetchByFieldLike('tag_name',$keywords.'%',0,10);
+		$result = array();
+		
+		foreach($items as $item)
+		{
+			$result[] = $item['tag_name'];
+		}
+		
+		return $result;
+	}
 }
 ?>

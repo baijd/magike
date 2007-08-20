@@ -137,7 +137,7 @@
 				</div>
 				<div class="input">
 				<h2>{lang.admin_write.tag}</h2>
-				<p><input type="text" class="text" id="post_tags" name="post_tags" value="{$write_post.post_tags}" size=60 /> <br />
+				<p><input type="text" class="text" id="post_tags" name="post_tags" value="{$write_post.post_tags}" style="width:400px" /> <br />
 				<span class="discribe">({lang.admin_write.tag_describe})</span></p>
 				</div>
 				<div class="input">
@@ -232,6 +232,8 @@ function checkPasswordInput(ele)
 }
 
 checkPasswordInput("#post_is_hidden_check");
+
+new AutoCompleter("#post_tags","{$static_var.index}/admin/posts/tags_search/","auto-completer","auto-completer-hover","auto-completer-blur","auto-completer-hover");
 
 function insertContent()
 {
@@ -463,7 +465,7 @@ $('a').click(
 
 <[include:footer]>
 <script>
- tinyMCE.init({
+tinyMCE.init({
 	mode : "exact",
 	theme : "advanced",
 	elements : "post_content",
