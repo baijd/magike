@@ -435,11 +435,12 @@ function AutoCompleter(textbox, url , boxclass, selectclass, unselectclass, hove
 	this.url = url;
 	
 	
-	if(!boxclass) this.box.style.cssText = AutoCompleter.defaultBoxStyle;
+	if(!boxclass) 
+	this.box.style.cssText = AutoCompleter.defaultBoxStyle;
 	else this.box.className = boxclass;
 	
 	this.box.style.position = "absolute";
-    this.box.innerHTML = "Auto complete: Loading...";
+	this.box.innerHTML = "Loading...";
 	this.hide();
 	this.textbox[0].parentNode.insertBefore(this.box, this.textbox[0]);
 	
@@ -451,14 +452,14 @@ function AutoCompleter(textbox, url , boxclass, selectclass, unselectclass, hove
 	this.box.onkeydown = function(e){
 	    e = e ? e : event;
 		return _completer.keydown(e);
-	}
+	};
 	this.textbox.bind("keydown", this.box.onkeydown);
 	this.textbox.bind("keyup", function(e){
 		_completer.start(e);
 	});
 	
 	if($.browser.opera) {
-		this.textbox.bind("keypress", function(e){return e.keyCode!=13 || this.visible == false});
+		this.textbox.bind("keypress", function(e){return e.keyCode!=13 || this.visible == false;});
 	}
     if (!this.textbox[0].setSelectionRange && this.textbox[0].createTextRange){  
 	    function getcate(){
@@ -495,7 +496,7 @@ function AutoCompleter(textbox, url , boxclass, selectclass, unselectclass, hove
         _completer.hide();
 	});
 }
-AutoCompleter.spliters = ",， 　\n\r.。；;!！";
+AutoCompleter.spliters = ",";
 //得到一个元素在页面上的绝对位置，p为想得到位置的元素，返回结果为Object{left:<int>, top:<int>}，r为是否只求到其定位元素
 AutoCompleter.getPos = function(tag, r){
     var p = tag;
@@ -524,7 +525,7 @@ AutoCompleter.getPos = function(tag, r){
         p = p.offsetParent;
     }while(p);
     return res;
-}
+};
 AutoCompleter.defaultBoxStyle = "border:1px solid #369;background:#fff;color:#000;cursor:pointer";
 AutoCompleter.defaultUnSelectStyle = "padding:2px 10px";
 AutoCompleter.defaultSelectStyle = "padding:2px 10px;background:#B8D6D6;color:#fff";
@@ -737,17 +738,17 @@ AutoCompleter.prototype =
 	        d.onclick = function(e){
 	            _completer.focus(this);
 	            _completer.select();
-	        }
+	        };
 	        d.onmouseover = function(e){
 	            if(this.innerHTML == _completer.word) return;
 	            if(_completer.hoverclass) this.className = _completer.hoverclass;
 	            else this.style.cssText = AutoCompleter.defaultHoverStyle;
-	        }
+	        };
 	        d.onmouseout = function(e){
 	            if(this.innerHTML == _completer.word) return;
 	            if(!_completer.unselectclass) this.style.cssText = AutoCompleter.defaultUnSelectStyle;
 	            else this.className = _completer.unselectclass;
-	        }
+	        };
 	        d.onmouseout();
 	    }
 	},
