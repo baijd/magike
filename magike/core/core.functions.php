@@ -53,7 +53,7 @@ function mgGetObjectClass($object)
 //将路径名转化为一个经过压缩的唯一文件名
 function mgPathToFileName($path)
 {
-	return strtolower(preg_replace("/([\/\\\.])/is",'%',$path));
+	return strtolower(str_replace(array("/","\\","."),'%',$path));
 }
 
 //替换字符串中的变量
@@ -228,17 +228,16 @@ function mgCreateObjects($objects,$method = null,$args = array())
 {
 	foreach($objects as $object)
 	{
-		$tmp = null;
-		eval('$tmp = new '.$object.'();');
+		$tmp = new $object();
 		if($method)
 		{
 			if(isset($args[$object]))
 			{
-				call_user_func(array($tmp,$method),$args[$object]);
+				$tmp->$method($args[$object]);
 			}
 			else
 			{
-				call_user_func(array($tmp,$method));
+				$tmp->$method();
 			}
 		}
 	}
@@ -310,6 +309,37 @@ function mgExportArrayToFile($file,$array,$name,$quotes = false)
 	}
 
 	file_put_contents($file,"<?php\n\$".$name." = ".$var.";\n?>");
+}
+
+//获取当前path
+function mgGetPathInfo()
+{
+	$path = "";
+	
+	if(isset($_SERVER['PATH_INFO']) && $_SERVER['PATH_INFO'])
+	{
+		$path = $_SERVER['PATH_INFO'];
+	}
+	else if(isset($_SERVER['ORIG_PATH_INFO']) && $_SERVER['ORIG_PATH_INFO'])
+	{
+		if(strpos($_SERVER['ORIG_PATH_INFO'],$_SERVER['PHP_SELF']) === 0)
+		{
+			$len = strlen($_SERVER['PHP_SELF']);
+			$path = substr($_SERVER['ORIG_PATH_INFO'],$len+1,strlen($_SERVER['ORIG_PATH_INFO']) - $len);
+		}
+		else
+		{
+			$path = $_SERVER['ORIG_PATH_INFO'];
+		}
+	}
+	
+	
+	if($path == "")
+	{
+		$path = '/';
+	}
+	
+	return $path;
 }
 
 //将ip转化为长整型字符串

@@ -8,6 +8,11 @@
 
 class LinkCategoriesModel extends MagikeModel
 {
+	function __construct()
+	{
+		parent::__construct('table.link_categories','id');
+	}
+	
 	public function listLinkCategories()
 	{
 		return $this->fetch(array('table' => $this->table,

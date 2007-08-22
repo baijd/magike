@@ -16,24 +16,21 @@ abstract class MagikeModule extends MagikeObject
 	public $waittingFor;
 	public $globalModel;
 	
-	function __construct($args = array())
+	function __construct()
 	{
-		parent::__construct($args);
+		parent::__construct();
 		
 		global $globalModel;
 		$this->moduleName = mgClassNameToFileName(get_class($this));
 		$this->cacheDir = __CACHE__.'/'.$this->moduleName;
 		$this->cacheFile = $this->cacheDir.'/'.$this->moduleName.'.php';
-		$this->model = $this->loadModel($this->moduleName,false);
 		$this->getLanguage = array();
 		$this->waittingFor = NULL;
 		$this->globalModel = &$globalModel;
 	}
 	
 	protected function loadModel($model,$triggerException = true)
-	{
-		$model = strtolower($model);
-		
+	{		
 		if(isset($this->globalModel[$model]))
 		{
 			return $this->globalModel[$model];
@@ -75,7 +72,8 @@ abstract class MagikeModule extends MagikeObject
 				}
 			}
 			
-			eval('$tmp = new '.$object.'Model();');
+			$object = $object.'Model';
+			$tmp = new $object();
 			$this->globalModel[$model] = $tmp;
 			mgTrace(false);
 			mgDebug('Load Model',$tmp);

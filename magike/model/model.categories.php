@@ -8,6 +8,11 @@
 
 class CategoriesModel extends MagikeModel
 {
+	function __construct()
+	{
+		parent::__construct('table.categories','id');
+	}
+	
 	public function listCategories()
 	{
 		return $this->fetch(array('table' => 'table.categories','orderby' => 'category_sort','sort' => 'ASC'));

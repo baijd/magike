@@ -1,16 +1,16 @@
 <?php
 /**********************************
  * Created on: 2006-12-3
- * File Name : model.comment_filters.php
+ * File Name : model.menus.php
  * Copyright : Magike Group
  * License   : GNU General Public License 2.0
  *********************************/
 
-class CommentFiltersModel extends MagikeModel
+class MenusModel extends MagikeModel
 {
 	function __construct()
 	{
-		parent::__construct('table.comment_filters','id');
+		parent::__construct('table.menus','id');
 	}
 }
 ?>

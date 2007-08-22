@@ -12,7 +12,7 @@ class Template extends MagikeObject
 	
 	function __construct($fileName)
 	{
-		parent::__construct(array('private' => array('cache')));
+		parent::__construct();
 		$fileName = __TEMPLATE__.$fileName;
 		if(__DEBUG__ && !file_exists($fileName))
 		{
@@ -22,7 +22,8 @@ class Template extends MagikeObject
 		else
 		{
 			$this->compileFile = $fileName;
-			$this->cache->checkCacheFile(
+			$cache = new Cache();
+			$cache->checkCacheFile(
 			array(__COMPILE__.'/'.mgPathToFileName($fileName).'.php' 
 					=> array('listener' => 'fileExists',
 							 'callback' => array($this,'buildCache')),
@@ -65,8 +66,8 @@ class Template extends MagikeObject
 		foreach($objects as $object)
 		{
 			$tmp = null;
-			eval('$tmp = new '.$object.'($str,$this->compileFile);');
-			$str = call_user_func(array($tmp,'prase'));
+			$tmp = new $object($str,$this->compileFile);
+			$str = $tmp->prase();
 		}
 		
 		if(!is_dir(__COMPILE__))
@@ -90,9 +91,8 @@ class Template extends MagikeObject
 		foreach($module as $nameSpace => $object)
 		{
 			//创建module
-			$tmp = null;
 			mgTrace();
-			eval('$tmp = new '.$object.'();');
+			$tmp = new $object();
 			mgTrace(false);
 			mgDebug('Create Module',$tmp);
 			
@@ -104,7 +104,7 @@ class Template extends MagikeObject
 			
 			//运行模块入口函数runModule并将运行结果保存到临时堆栈中
 			mgTrace();
-			$stack = call_user_func(array($tmp,'runModule'),isset($args[$nameSpace]) ? $args[$nameSpace] : array());
+			$stack = $tmp->runModule(isset($args[$nameSpace]) ? $args[$nameSpace] : array());
 			mgTrace(false);
 			mgDebug('Run Module',$tmp);
 			
@@ -118,7 +118,7 @@ class Template extends MagikeObject
 		{
 			//运行模块入口函数runModule并将运行结果保存到临时堆栈中
 			mgTrace();
-			$stack = call_user_func(array($object,'runModule'),isset($args[$key]) ? $args[$key] : array());
+			$stack = $object->runModule(isset($args[$key]) ? $args[$key] : array());
 			mgTrace(false);
 			mgDebug('Run Module',$tmp);
 			

@@ -7,12 +7,7 @@
  *********************************/
 
 class CommentFiltersList extends MagikeModule
-{
-	function __construct()
-	{
-		parent::__construct(array('public' => array('database')));
-	}
-	
+{	
 	public function praseFilter($val)
 	{
 		if($filterName = $this->getLanguage($val['comment_filter_name'],'comment_filter'))
@@ -27,7 +22,8 @@ class CommentFiltersList extends MagikeModule
 	
 	public function runModule()
 	{
-		return $this->database->fetch(array('table' => 'table.comment_filters'),array('function' => array($this,'praseFilter')));
+		$filterModel = $this->loadModel('comment_filters');
+		return $filterModel->fetch(array('table' => 'table.comment_filters'),array('function' => array($this,'praseFilter')));
 	}
 }
 ?>

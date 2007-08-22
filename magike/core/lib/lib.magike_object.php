@@ -17,49 +17,6 @@ abstract class MagikeObject
 		//载入全局堆栈
 		global $stack;
 		$this->stack = &$stack;
-		
-		//载入公用对象
-		if(isset($args['public']))
-		{
-			$this->initPublicObject($args['public']);
-		}
-
-		//载入私有对象
-		if(isset($args['private']))
-		{
-			$this->initPrivateObject($args['private']);
-		}
-	}
-
-	protected function initPublicObject($public)
-	{
-		foreach($public as $objName)
-		{
-			eval("global \${$objName};");
-			$isObject = false;
-			$className = NULL;
-
-			eval("\$className = get_class(\${$objName});");
-			eval("if(NULL != \$className)" .
-					"{" .
-					"if(\${$objName} instanceof \$className) " .
-					"{
-						\$isObject = true;
-					}}");
-			if(!$isObject)
-			{
-					eval("\${$objName} = new ".ucfirst($objName)."();");
-			}
-			eval("\$this->{$objName} = \${$objName};");
-		}
-	}
-
-	protected function initPrivateObject($private)
-	{
-		foreach($private as $objName)
-		{
-			eval("\$this->{$objName} = new ".ucfirst($objName)."();");
-		}
 	}
 
 	protected static function throwException($message,$data = NULL,$code = 0,$callback = NULL)

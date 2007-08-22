@@ -8,6 +8,11 @@
 
 class PathsModel extends MagikeModel
 {
+	function __construct()
+	{
+		parent::__construct('table.paths','id');
+	}
+	
 	public function listPaths($func = NULL)
 	{
 		return $this->fetch(array('table' => 'table.paths','orderby' => 'id','sort' => 'ASC'),$func);

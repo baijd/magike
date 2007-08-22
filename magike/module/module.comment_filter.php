@@ -13,16 +13,17 @@ class CommentFilter extends MagikeModule
 	
 	function __construct()
 	{
-		parent::__construct(array('private' => array('cache')));
-		$this->cache->checkCacheFile(array($this->cacheFile => array('listener' => 'fileExists',
-																	 'callback' => array($this,'buildCache')
-																	 )));
+		parent::__construct();
+		$cache = new Cache();
+		$cache->checkCacheFile(array($this->cacheFile => array('listener' => 'fileExists',
+													'callback' => array($this,'buildCache')
+								)));
 	}
 	
 	public function buildCache()
 	{
-		$this->initPublicObject(array('database'));
-		$filter = $this->database->fetch(array('table' => 'table.comment_filters'));
+		$filterModel = $this->loadModel('comment_filters');
+		$filter = $filterModel->fetch(array('table' => 'table.comment_filters'));
 		$filterByType = array();
 		foreach($filter as $val)
 		{

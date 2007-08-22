@@ -8,6 +8,11 @@
 
 class LinksModel extends MagikeModel
 {
+	function __construct()
+	{
+		parent::__construct('table.links','id');
+	}
+	
 	public function listLinks($limit = 20,$offset)
 	{
 		return $this->fetch(array('fields'=> '*,table.links.id AS link_id',

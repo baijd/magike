@@ -26,44 +26,23 @@ class Action extends Path
 	{
 		$requireObjects = array();
 		require(__DIR__.'/action/require_objects.php');
-		$objects = mgRequireObjects(__DIR__.'/kernel','/kernel\.([_a-zA-Z0-9-]+)\.php/i');
 		
-		if($diff = array_diff($requireObjects,$objects))
+		foreach($requireObjects as $file => $object)
 		{
-			$this->throwException(E_ACTION_KERNELOBJECTSNOTEXISTS,$diff);
-		}
-		else
-		{
-			$objects = array_merge($requireObjects,array_diff($objects,$requireObjects));
-		}
-		
-		foreach($objects as $object)
-		{
+			require(__DIR__.'/kernel/'.$file);
 			//创建核心模块
-			$tmp = null;
 			
 			mgTrace();
-			eval('$tmp = new '.$object.'();');
+			$tmp = new $object();
 			mgTrace(false);
 			mgDebug('Create Kernel Module',$tmp);
 			
 			//运行入口函数
+			$moduleName = mgClassNameToFileName($object);
 			mgTrace();
-			$stack = call_user_func(array($tmp,'runModule'));
+			$this->stack[$moduleName] = $tmp->runModule();
 			mgTrace(false);
 			mgDebug('Run Kernel Module',$tmp);
-			
-			//将临时堆栈中的数据转移到全局堆栈中
-			//将类名转化为模块名(文件名)
-			$moduleName = mgClassNameToFileName($object);
-			if(isset($this->stack[$moduleName]))
-			{
-				$this->stack[$moduleName] = array_merge($this->stack[$moduleName],$stack);
-			}
-			else
-			{
-				$this->stack[$moduleName] = $stack;
-			}
 		}
 	}
 	
@@ -106,7 +85,7 @@ class Action extends Path
 				require_once(__DIR__.'/action/'.$this->stack[$this->moduleName]['action'].'/action.'.$this->stack[$this->moduleName]['action'].'.php');
 				eval('$tmp = new '.mgFileNameToClassName($this->stack[$this->moduleName]['action'])
 				.'("'.str_replace('{','{$',$this->stack[$this->moduleName]["file"]).'");');
-				call_user_func(array($tmp,'runAction'));
+				$tmp->runAction();
 			}
 
 			$contents = ob_get_contents();

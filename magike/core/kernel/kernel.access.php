@@ -12,11 +12,12 @@ class Access extends MagikeModule
 
 	function __construct()
 	{
-		parent::__construct(array('private' => array('cache')));
+		parent::__construct();
 		$this->result = array();
-		$this->cache->checkCacheFile(array($this->cacheFile => array('listener' => 'fileExists',
-																	 'callback' => array($this,'buildCache')
-																	 )));
+		$cache = new Cache();
+		$cache->checkCacheFile(array($this->cacheFile => array('listener' => 'fileExists',
+													 'callback' => array($this,'buildCache')
+													)));
 	}
 	
 	private function initUserVar()
@@ -48,8 +49,8 @@ class Access extends MagikeModule
 	public function buildCache()
 	{
 		$access = array();
-		$this->initPublicObject(array('database'));
-		$result = $this->database->fetch(array('table' => 'table.path_group_mapping'));
+		$accessModel = new Database();
+		$result = $accessModel->fetch(array('table' => 'table.path_group_mapping'));
 		
 		foreach($result as $val)
 		{

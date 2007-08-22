@@ -8,6 +8,11 @@
 
 class FilesModel extends MagikeModel
 {
+	function __construct()
+	{
+		parent::__construct('table.files','id');
+	}
+	
 	public function listFiles($limit = 5,$offset = 0,$func = NULL)
 	{
 		return $this->fetch(array('table' => 'table.files',

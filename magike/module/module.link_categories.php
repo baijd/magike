@@ -10,7 +10,8 @@ class LinkCategories extends MagikeModule
 {
 	public function runModule()
 	{
-		return $this->model->listLinkCategories();
+		$linkCategoriesModel = $this->loadModel("link_categories");
+		return $linkCategoriesModel->listLinkCategories();
 	}
 }
 ?>
