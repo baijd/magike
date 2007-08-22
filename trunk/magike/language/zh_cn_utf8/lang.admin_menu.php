@@ -9,6 +9,7 @@
 $lang = array(
 	'all' 		=> '概要',
 	'panel'		=> '面板',
+	'upgrade'		=> '升级',
 	'stats'		=> '访问统计',
 	'module'	=> '模块',
 	'posts' 	=> '文章',
