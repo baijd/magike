@@ -8,6 +8,11 @@
 
 class CommentsModel extends MagikeModel
 {	
+	function __construct()
+	{
+		parent::__construct('table.comments','id');
+	}
+	
 	public function getAllComments($limit,$offset,$sort,$orderby,$func = NULL,$field = NULL,$value = NULL)
 	{
 		$args = array('fields'=> '*,table.comments.id AS comment_id',

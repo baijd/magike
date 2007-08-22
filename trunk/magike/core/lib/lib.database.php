@@ -15,8 +15,7 @@ class Database extends MagikeObject
 	function __construct()
 	{
 		$dbObjectName = mgFileNameToClassName(__DBOBJECT__);
-		parent::__construct(array('public' => array($dbObjectName)));
-		eval('$this->dbObject = $this->'.$dbObjectName.';');
+		$this->dbObject = new $dbObjectName();
 		$this->usedTable = array();
 	}
 	
@@ -160,14 +159,14 @@ class Database extends MagikeObject
 			{
 				$callback['data'] = isset($callback['data']) ? $callback['data'] : NULL;
 				$last = ($num == $sum - 1) ? true : false;
-				$rows = call_user_func($callback['function'],$rows,$num,$last,$callback['data']);
+				$rows = $callback['function'][0]->$callback['function'][1]($rows,$num,$last,$callback['data']);
 			}
 			
 			if(false !== $rows)
 			{
             			$result[$num] = $rows;
             			$num++;
-		}
+			}
 		}
 
 		if($num == 0 && $expection) $this->throwException(E_PATH_PATHNOTEXISTS,$this->stack['action']['path']);

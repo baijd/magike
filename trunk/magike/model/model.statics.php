@@ -8,6 +8,11 @@
 
 class StaticsModel extends MagikeModel
 {
+	function __construct()
+	{
+		parent::__construct('table.statics','id');
+	}
+	
 	public function increaseValueByName($name,$num = 1)
 	{
  	 	 return $this->increaseField(array('table' => $this->table,

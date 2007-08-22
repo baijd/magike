@@ -7,7 +7,7 @@
  *********************************/
 
 $requireObjects = array(
-	0 => 'StaticVar',
-	1 => 'Access',
+	'kernel.static_var.php' => 'StaticVar',
+	'kernel.access.php' => 'Access',
 );
 ?>

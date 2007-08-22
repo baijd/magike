@@ -15,7 +15,7 @@ class JsonOutput extends MagikeObject
 	
 	function __construct($fileName)
 	{
-		parent::__construct(array('private' => array('cache')));
+		parent::__construct();
 		$this->args = array();
 		
 		$urlStr = explode('?',$fileName);
@@ -27,7 +27,8 @@ class JsonOutput extends MagikeObject
 		}
 		
 		$this->path = $fileName;
-		$this->cache->checkCacheFile(
+		$cache = new Cache();
+		$cache->checkCacheFile(
 			array(__RUNTIME__.'/json_output/'.$fileName.'.mod.php' 
 					=> array('listener' => 'fileExists',
 						     'callback' => array($this,'buildCache')),
@@ -56,13 +57,19 @@ class JsonOutput extends MagikeObject
 	}
 	
 	public function runAction()
-	{
-		$args = isset($_POST['args']) && is_array($_POST['args']) ? $_POST['args'] : array();
-		
+	{		
 		require($this->fileName);
-		$tmp = null;
-		eval('$tmp = new '.$this->objName.'();');
-		$output = call_user_func(array($tmp,'runModule'),$this->args);
+		$o = $this->objName;
+		
+		mgTrace();
+		$tmp = new $o();
+		mgTrace(false);
+		mgDebug('Create Module',$tmp);
+		
+		mgTrace();
+		$output = $tmp->runModule($this->args);
+		mgTrace(false);
+		mgDebug('Run Module',$tmp);
 		$this->stack['action']['content_type'] = "content-Type: text/html; charset={$this->stack['static_var']['charset']}";
 		header($this->stack['action']['content_type']);
 		echo Json::json_encode($output);

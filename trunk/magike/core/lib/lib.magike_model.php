@@ -14,16 +14,12 @@ abstract class MagikeModel extends Database
  	 protected $orderby;
  	 protected $sort;
  	 
- 	 function __construct($table = NULL)
+ 	 function __construct($table = NULL,$key = NULL)
  	 {
  	 	 parent::__construct();
- 	 	 if(!$table)
- 	 	 {
- 	 	 	 $table = 'table.'.str_replace('_model','',mgClassNameToFileName(get_class($this)));
- 	 	 }
- 	 	 $this->table = str_replace('table.',__DBPREFIX__,$table);
+ 	 	 $this->table = str_replace('table.',__DBPREFIX__,$table ? $table : 'table.'.str_replace('_model','',mgClassNameToFileName(get_class($this))));
  	 	 $this->clearArgs();
- 	 	 $this->key = $this->findPrimaryKey();
+ 	 	 $this->key = $key ?  $this->table.".".$key : $this->findPrimaryKey();
  	 }
  	 
  	 private function findPrimaryKey()

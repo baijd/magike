@@ -8,6 +8,11 @@
 
 class GroupsModel extends MagikeModel
 {
+	function __construct()
+	{
+		parent::__construct('table.groups','id');
+	}
+	
 	public function listGroups()
 	{
 		return $this->fetch(array('table' => 'table.groups','orderby' => 'id','sort' => 'ASC'));

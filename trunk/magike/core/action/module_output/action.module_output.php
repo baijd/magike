@@ -15,7 +15,7 @@ class ModuleOutput extends MagikeObject
 	
 	function __construct($fileName)
 	{
-		parent::__construct(array('private' => array('cache')));
+		parent::__construct();
 		$this->args = array();
 		
 		$urlStr = explode('?',$fileName);
@@ -27,7 +27,8 @@ class ModuleOutput extends MagikeObject
 		}
 		
 		$this->path = $fileName;
-		$this->cache->checkCacheFile(
+		$cache = new Cache();
+		$cache->checkCacheFile(
 			array(__RUNTIME__.'/module_output/'.$fileName.'.mod.php' 
 					=> array('listener' => 'fileExists',
 						     'callback' => array($this,'buildCache')),
@@ -59,15 +60,19 @@ class ModuleOutput extends MagikeObject
 	public function runAction()
 	{
 		require($this->fileName);
-		$tmp = null;
-		eval('$tmp = new '.$this->objName.'();');
-		$output = call_user_func(array($tmp,'runModule'),$this->args);
-		$this->stack['action']['content_type'] = "content-Type: {$this->stack['static_var']['content_type']}; charset={$this->stack['static_var']['charset']}";
+		$o = $this->objName;
 		
-		if($this->stack['action']['auto_header'])
-		{
-			header($this->stack['action']['content_type']);
-		}
+		mgTrace();
+		$tmp = new $o();
+		mgTrace(false);
+		mgDebug('Create Module',$tmp);
+		
+		mgTrace();
+		$output = $tmp->runModule($this->args);
+		mgTrace(false);
+		mgDebug('Run Module',$tmp);
+		
+		$this->stack['action']['content_type'] = "content-Type: {$this->stack['static_var']['content_type']}; charset={$this->stack['static_var']['charset']}";
 		echo $output;
 	}
 }

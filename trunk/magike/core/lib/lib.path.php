@@ -19,9 +19,10 @@ class Path extends MagikeModule
 	
 	function __construct($location = NULL)
 	{
-		parent::__construct(array('private'=> array('cache')));
+		parent::__construct();
 		$this->globalModel = array();
-		$this->cache->checkCacheFile(array($this->cacheDir  => array('listener' => 'dirExists',
+		$cache = new Cache();
+		$cache->checkCacheFile(array($this->cacheDir  => array('listener' => 'dirExists',
 									     'callback' => array($this,'buildCache')
 									    )));
 		$this->location = $location;
@@ -116,30 +117,7 @@ class Path extends MagikeModule
 
 	private function getPath()
 	{
-		$path = "";
-		
-		if(isset($_SERVER['PATH_INFO']) && $_SERVER['PATH_INFO'])
-		{
-			$path = $_SERVER['PATH_INFO'];
-		}
-		else if(isset($_SERVER['ORIG_PATH_INFO']) && $_SERVER['ORIG_PATH_INFO'])
-		{
-			if(strpos($_SERVER['ORIG_PATH_INFO'],$_SERVER['PHP_SELF']) === 0)
-			{
-				$len = strlen($_SERVER['PHP_SELF']);
-				$path = substr($_SERVER['ORIG_PATH_INFO'],$len+1,strlen($_SERVER['ORIG_PATH_INFO']) - $len);
-			}
-			else
-			{
-				$path = $_SERVER['ORIG_PATH_INFO'];
-			}
-		}
-		
-		
-		if($path == "")
-		{
-			$path = '/';
-		}
+		$path = mgGetPathInfo();
 		
 		$this->doRedirect($path);
 		return $path;
@@ -228,8 +206,8 @@ class Path extends MagikeModule
 	public function buildCache()
 	{
 		$this->pathCache = array();
-		$this->initPublicObject(array('database'));
-		$this->database->fetch(array('table' => 'table.paths'),array('function' => array($this,'pushPathData')));
+		$pathModel = new Database();
+		$pathModel->fetch(array('table' => 'table.paths'),array('function' => array($this,'pushPathData')));
 		foreach($this->pathCache as $key => $val)
 		{
 			mgExportArrayToFile($this->cacheDir.'/'.$key.'.php',$val,'pathConfig',true);

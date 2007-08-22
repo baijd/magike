@@ -12,8 +12,8 @@ class Validator extends MagikeModule
 	
 	function __construct()
 	{
+		parent::__construct();
 		$this->result = array();
-		parent::__construct(array('private' => array('format')));
 	}
 	
 	private function praseElements($elements)
@@ -55,6 +55,8 @@ class Validator extends MagikeModule
 		$_SESSION['validator_val'] = md5(serialize($input));
 		$_SESSION['validator_key'] = array_keys($input);
 		
+		$formatValidator = new Format();
+		
 		if($mod)
 		{
 			$mod = $requireDir.'validator.'.$mod.'.php';
@@ -62,7 +64,7 @@ class Validator extends MagikeModule
 			{
 				$elements = array();
 				require($mod);
-				$result = $this->praseResult($this->format->checkFormat($this->praseElements($elements),$_POST),$elements);
+				$result = $this->praseResult($formatValidator->checkFormat($this->praseElements($elements),$_POST),$elements);
 			}
 		}
 		

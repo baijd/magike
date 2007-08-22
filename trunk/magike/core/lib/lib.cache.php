@@ -20,11 +20,11 @@ class Cache extends MagikeObject
  		{
 			if(is_string($val['listener']))
 			{
-				$result = call_user_func(array($this,$val['listener']),$key);
+				$result = $this->$val['listener']($key);
 			}
 			else
 			{
-				$result = call_user_func($val['listener'],$key);
+				$result = $val['listener'][0]->$val['listener'][1]($key);
 			}
 
 			if(is_string($val['callback']))
@@ -32,14 +32,14 @@ class Cache extends MagikeObject
 
 				if(!$result)
 				{
-					call_user_func(array($this,$val['callback']));
+					$this->$val['callback']();
 				}
 			}
 			else
 			{
 				if(!$result)
 				{
-					call_user_func($val['callback']);
+					$val['callback'][0]->$val['callback'][1]();
 				}
 			}
 
@@ -49,14 +49,14 @@ class Cache extends MagikeObject
 				{
 					if($result)
 					{
-						call_user_func(array($this,$val['else']));
+						$this->$val['else']();
 					}
 				}
 				else
 				{
 					if($result)
 					{
-						call_user_func($val['else']);
+						$val['else'][0]->$val['else'][1]();
 					}
 				}
 			}

@@ -8,6 +8,11 @@
 
 class TagsModel extends MagikeModel
 {
+	function __construct()
+	{
+		parent::__construct('table.tags','id');
+	}
+	
 	public function listTags()
 	{
 		$args = array();

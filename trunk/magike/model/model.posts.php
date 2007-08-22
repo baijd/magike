@@ -8,6 +8,11 @@
 
 class PostsModel extends MagikeModel
 {
+	function __construct()
+	{
+		parent::__construct('table.posts','id');
+	}
+	
 	private function fixPostWhere($limit = false,$offset = false,$where = NULL)
 	{
 		$args = array('table'	=> 'table.posts LEFT JOIN table.categories ON table.posts.category_id = table.categories.id',

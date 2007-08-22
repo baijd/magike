@@ -8,6 +8,11 @@
 
 class UsersModel extends MagikeModel
 {
+	function __construct()
+	{
+		parent::__construct('table.users','id');
+	}
+	
 	public function listUsers()
 	{
 		return $this->fetch(array('table' => 'table.users','orderby' => 'id','sort' => 'ASC'));

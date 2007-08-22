@@ -12,11 +12,13 @@ class Tags extends MagikeModule
 	{
 		$require = array('limit' => 0,'order' => 0,'title' => 1);
 		$getArgs = $this->initArgs($args,$require);
+		$tagModel = $this->loadModel("tags");
+		
 		if($getArgs['title'])
 		{
 			$this->stack['static_var']['blog_title'] = '标签 &raquo; '.$this->stack['static_var']['blog_name'];
 		}
-		return $this->model->tagClouds($getArgs['limit'],$getArgs['order']);
+		return $tagModel->tagClouds($getArgs['limit'],$getArgs['order']);
 	}
 }
 ?>
