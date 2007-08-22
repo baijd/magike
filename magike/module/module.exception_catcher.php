@@ -12,6 +12,7 @@ class ExceptionCatcher extends MagikeModule
 	{
 		switch ($this->stack['action']['message'])
 		{
+			case E_DATABASE:
 			case E_MODELFILENOTEXISTS:
 			case E_PATH_PATHNOTEXISTS:
 			case E_ACTION_ACTIONNOTEXISTS:

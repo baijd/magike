@@ -1,4 +1,6 @@
-<?xml version="1.0" encoding="{$static_var.charset}"?>
+<[php]>
+echo '<?xml version="1.0" encoding="'.$data["static_var"]["charset"].'"?>';
+<[/php]>
 <rss version="2.0">
 <channel>
 <[module:get_webmaster]>
