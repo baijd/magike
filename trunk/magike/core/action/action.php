@@ -29,7 +29,7 @@ class Action extends Path
 		
 		foreach($requireObjects as $file => $object)
 		{
-			require(__DIR__.'/kernel/'.$file);
+			require_once(__DIR__.'/kernel/'.$file);
 			//创建核心模块
 			
 			mgTrace();
