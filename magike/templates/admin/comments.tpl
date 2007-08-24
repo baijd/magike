@@ -18,10 +18,10 @@
 				<td width=5%>&nbsp;</td>
 				<td width=10%>发表者</td>
 				<td width=8%></td>
-				<td widht=10%>IP地址</td>
+				<td width=15%>IP地址</td>
 				<td width=35%>摘要</td>
 				<td width=17%>发表日期</td>
-				<td width=15%>操作</td>
+				<td width=10%>操作</td>
 			</tr>
 			<[loop:$comments_list_all AS $comment]>
 			<tr id="drag-{$comment.comment_id}">
