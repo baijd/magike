@@ -6,7 +6,7 @@
  * License   : GNU General Public License 2.0
  *********************************/
  
-class fetchBySearch extends Posts
+class FetchBySearch extends Posts
 {
 	private $result;
 	

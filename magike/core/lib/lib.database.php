@@ -14,9 +14,16 @@ class Database extends MagikeObject
 	
 	function __construct()
 	{
+		global $globalDbObject;
 		parent::__construct();
-		$dbObjectName = mgFileNameToClassName(__DBOBJECT__);
-		$this->dbObject = new $dbObjectName();
+		
+		if(!$globalDbObject)
+		{
+			$dbObjectName = mgFileNameToClassName(__DBOBJECT__);
+			$globalDbObject = new $dbObjectName();
+		}
+		
+		$this->dbObject = $globalDbObject;
 		$this->usedTable = array();
 	}
 	

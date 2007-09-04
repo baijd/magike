@@ -15,9 +15,15 @@ class CategoriesList extends MagikeModule
 		$this->model = $this->loadModel('categories');
 	}
 	
+	public function praseCategory($val)
+	{
+		$val["permalink"] = $this->stack['static_var']['index'].vsprintf($this->stack['permalink']['category']['path'],mgArrayIntersectKey($val,$this->stack['permalink']['category']['value']));
+		return $val;
+	}
+	
 	public function runModule()
 	{
-		return $this->model->listCategories();
+		return $this->model->listCategories(array('function' => array($this,'praseCategory')));
 	}
 }
 ?>

@@ -32,10 +32,13 @@ $lang = array(
 	'write_hidden' => '隐藏文章',
 	'publish'	=> '立即发布',
 	'draft'	=> '草稿',
-	'option'	=> '选项',
+	'option'	=> '参数选项',
 	'upload'	=> '我的文件',
 	'media'	=> '媒体文件',
 	'publish'	=> '发布',
 	'tools'		=> '工具',
+	'insert_image'  => '插入',
+	'delete_image' => '删除',
+	'cancel_image' => '取消',
 );
 ?>

@@ -15,7 +15,7 @@ define('__OPTIMIZER__','./data/optimizer');		//定义优化器缓存目录
 define('__RUNTIME__','./data/runtime');			//定义运行时文件目录
 define('__MODULE__','./module');				//定义模块目录
 define('__MODEL__','./model');				//定义模型目录
-define('__TEMPLATE__','./templates');			//定义模板目录
+define('__TEMPLATE__','templates');			//定义模板目录
 define('__LANGUAGE__','./language');			//定义语言目录
 define('__UPLOAD__','./data/upload');			//定义上传目录
 define('__CONFIG__','./config.php');			//定义初始配置文件

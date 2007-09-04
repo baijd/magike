@@ -13,9 +13,9 @@ class CategoriesModel extends MagikeModel
 		parent::__construct('table.categories','id');
 	}
 	
-	public function listCategories()
+	public function listCategories($func = NULL)
 	{
-		return $this->fetch(array('table' => 'table.categories','orderby' => 'category_sort','sort' => 'ASC'));
+		return $this->fetch(array('table' => 'table.categories','orderby' => 'category_sort','sort' => 'ASC'),$func);
 	}
 	
 	public function moveUpCategory($id)

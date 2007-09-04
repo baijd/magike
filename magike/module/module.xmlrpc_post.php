@@ -15,7 +15,7 @@
 	function __construct()
 	{
 		parent::__construct();
-
+		
 		$this->methods = array(
 			// WordPress API
 			'wp.getPage'			=> array($this,'wpGetPage'),
@@ -68,7 +68,6 @@
 	private function checkAccess($userName,$password)
 	{
 		$userModel = $this->loadModel('users');
-		$groupModel = $this->loadModel('groups');
 		$pathModel = $this->loadModel('paths');
 		$user = $userModel->fetchOne(array('table' => 'table.users',
 								   'where' => array('template' => 'user_name = ? AND user_password = ?',
@@ -78,14 +77,7 @@
 										  	  ));
 		if($user)
 		{
-			$group = $groupModel->getUserGroups($user['id']);
-			$userGroup = array();
-			foreach($group as $val)
-			{
-				$userGroup[] = $val['group_id'];
-			}
-			
-			if($pathModel->checkPathAccess($userGroup,'/admin/posts/all/'))
+			if($user["user_group"] <= $this->stack['static_var']['group']['editor'])
 			{
 				return $user;
 			}
@@ -123,6 +115,32 @@
 		return $result;
 	}
 	
+	private function prasePost($val)
+	{
+		$val["post_alt"] = $num%2;
+		$val["post_tags"] = $val["post_tags"] ? explode(",",$val["post_tags"]) : array();
+		$val["post_utc"] = $this->stack['static_var']['time_zone']+$val["post_time"];
+		$val["post_time"] = date($this->stack['static_var']['post_date_format'],$val["post_utc"]);
+		$val["post_year"] = date("Y",$val["post_utc"]);
+		$val["post_month"] = date("n",$val["post_utc"]);
+		$val["post_day"] = date("j",$val["post_utc"]);
+		$val["post_is_last"] = $last;
+		
+		if($val['post_is_page'])
+		{
+			$val["permalink"] = $this->stack['static_var']['index'].vsprintf($this->stack['permalink']['pages']['path'],mgArrayIntersectKey($val,$this->stack['permalink']['pages']['value']));
+		}
+		else
+		{
+			$val["permalink"] = $this->stack['static_var']['index'].vsprintf($this->stack['permalink']['archives']['path'],mgArrayIntersectKey($val,$this->stack['permalink']['archives']['value']));
+		}
+		
+		$val["category_permalink"] = $this->stack['static_var']['index'].vsprintf($this->stack['permalink']['category']['path'],mgArrayIntersectKey($val,$this->stack['permalink']['category']['value']));
+		$val["trackback_permalink"] = $this->stack['static_var']['index'].vsprintf($this->stack['permalink']['trackbacks']['path'],mgArrayIntersectKey($val,$this->stack['permalink']['trackbacks']['value']));
+		$val["rss_permalink"] = $this->stack['static_var']['index'].vsprintf($this->stack['permalink']['archives_rss']['path'],mgArrayIntersectKey($val,$this->stack['permalink']['archives_rss']['value']));
+		return $val;
+	}
+	
 	public function wpGetPage($args)
 	{
 		$blogId	= intval($args[0]);
@@ -130,9 +148,9 @@
 		$userName	= $args[2];
 		$password	= $args[3];
 		
-		if(!$this->checkAccess($userName, $password)) 
+		if(!$this->checkAccess($userName, $password))
 		{
-			return($this->result);
+			return($this->error);
 		}
 		
 		$postModel = $this->loadModel('posts');
@@ -143,7 +161,8 @@
 		
 		if($page && $page['post_is_page'])
 		{
-			$link = $this->stack['static_var']['index'].'/'.$page["post_name"].'.html';
+			$prasedPost = $this->prasePost($page);
+			$link = $prasedPost['permalink'];
 			$pageStruct = array(
 				"dateCreated"			=> new IXR_Date($this->stack['static_var']['time_zone']+$page["post_time"]),
 				"userid"				=> $page["user_id"],
@@ -193,7 +212,9 @@
 		
 		foreach($pages as $page)
 		{
-			$link = $this->stack['static_var']['index'].'/'.$page["post_name"].'.html';
+			$prasedPost = $this->prasePost($page);
+			$link = $prasedPost['permalink'];
+			
 			$content = $this->getPostExtended($page['post_content']);
 			$pagesStruct[] = array(
 				"dateCreated"			=> new IXR_Date($this->stack['static_var']['time_zone']+$page["post_time"]),
@@ -871,7 +892,9 @@
 		
 		if($post && !$post['post_is_page'])
 		{
-			$link = $post['post_name'] ? $this->stack['static_var']['index'].'/'.$post["post_name"].'.html' : $this->stack['static_var']['index'].'/archives/'.$post["post_id"].'/';
+			$prasedPost = $this->prasePost($post);
+			$link = $prasedPost['permalink'];
+			
 			$pageStruct = array(
 				"dateCreated"			=> new IXR_Date($this->stack['static_var']['time_zone']+$post["post_time"]),
 				"userid"				=> $post["user_id"],
@@ -918,7 +941,9 @@
 		foreach($posts as $post)
 		{
 			$content = $this->getPostExtended($post['post_content']);
-			$link = $post['post_name'] ? $this->stack['static_var']['index'].'/'.$post["post_name"].'.html' : $this->stack['static_var']['index'].'/archives/'.$post["post_id"].'/';
+			
+			$prasedPost = $this->prasePost($post);
+			$link = $prasedPost['permalink'];
 			$postsStruct[] = array(
 				"dateCreated"			=> new IXR_Date($this->stack['static_var']['time_zone']+$post["post_time"]),
 				"userid"				=> $post["user_id"],

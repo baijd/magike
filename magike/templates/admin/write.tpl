@@ -59,9 +59,9 @@
 		<div class="sidebar">
 			您选定了
 			<strong id="sidebar_word"></strong>&nbsp;
-			<input type="button" id="insert-button" value="插入" onclick="$('#first').trigger('click');setTimeout('insertContent();',0);"/> 
-			<input type="button" id="delete-button" value="删除" onclick="deleteFile();"/> 
-			<input type="button" value="取消" onclick="$('.sidebar').hide();" />
+			<input type="button" id="insert-button" value="{lang.admin_write.insert_image}" onclick="$('#first').trigger('click');setTimeout('insertContent();',0);"/> 
+			<input type="button" id="delete-button" value="{lang.admin_write.delete_image}" onclick="deleteFile();"/> 
+			<input type="button" value="{lang.admin_write.cancel_image}" onclick="$('.sidebar').hide();" />
 		</div>
 		<div class="proc">
 			正在处理您的请求
@@ -77,14 +77,14 @@
 			</ul>
 		</div>
 		<div class="tab_content" id="write_tab">
-			<div id="write_content">
+			<div id="write_content" class="tab_element first">
 				<p style="margin-bottom:10px;"><input type="text" onfocus="this.select();" class="validate-me text" name="post_title" size=60 value="<[if:$write_post.post_title]>{$write_post.post_title}<[else]>无标题文档<[/if]>" /><span class="validate-word" id="post_title-word"></span></p>
 					<p>
-						<textarea name="post_content" rows="{$static_var.write_editor_rows}" class="validate-me" style="background:url({$static_var.siteurl}/templates/{$static_var.admin_template}/images/editor_loading.gif) center no-repeat;width:100%">{$write_post.post_content}</textarea><br />
+						<textarea name="post_content" rows="{$static_var.write_editor_rows}" class="validate-me" style="border:1px solid #CCC;border-right:1px solid #777;border-bottom:1px solid #777;background:#EEE url({$static_var.siteurl}/templates/{$static_var.admin_template}/images/editor_loading.gif) center no-repeat;width:100%;">{$write_post.post_content}</textarea>
 						<span class="validate-word" id="post_content-word"></span>
 					</p>
 			</div>
-			<div id="write_tools">
+			<div id="write_tools" class="tab_element">
 				<div class="input">
 				<h2>文章分类</h2>
 				<p>
@@ -147,7 +147,7 @@
 				<span class="discribe">({lang.admin_write.trackback_describe})</span></p>
 				</div>
 			</div>
-			<div id="write_upload">
+			<div id="write_upload" class="tab_element">
 				<iframe frameborder=0 width=100% height=200 src="{$static_var.index}/admin/posts/upload/"></iframe>
 				<div class="input" style="padding:10px 0;margin-bottom:0 !important;margin-bottom:6px;">
 					<h2 style="padding-top:0">文件列表</h2>
@@ -156,7 +156,7 @@
 						<p style="padding:0 !important;padding:10px 0 0 0;width:35px;"><input type="button" id="next-button" onclick="getFilesList(filePage + 1);" style="border:1px solid #CCC;border-left:none;background:#EEE;width:20px;height:76px;float:left;padding:0;" value="&raquo;"/> <input type="button" id="prev-button" onclick="getFilesList(filePage - 1);" style="border:1px solid #CCC;border-left:none;background:#EEE;width:20px;height:76px;float:left;padding:0;" value="&laquo;"/></p>
 				</div>
 			</div>
-			<div id="write_option">
+			<div id="write_option" class="tab_element">
 				<div class="input">
 					<h2>{lang.admin_write.write_type}</h2> 
 					<p>
@@ -203,7 +203,7 @@
 		<div style="float:left;height:40px;padding-top:5px;">
 		<span class="button" id="draft_button" onclick="unloadConfirm = true;$('#post_is_draft').val(1);document.getElementById('write').submit();">{lang.admin_write.draft}</span>
 		<span class="button" onclick="unloadConfirm = true;$('#post_is_draft').val(0);magikeValidator('{$static_var.index}/helper/validator/','write_post');">{lang.admin_write.publish}</span>
-		<input type="hidden" name="post_is_draft" id="post_is_draft" value="0" /><input type="hidden" name="post_id" class="validate-me" value="{$write_post.post_id}" />
+		<input type="hidden" name="post_is_draft" id="post_is_draft" value="0" /><input type="hidden" id="post_id" name="post_id" class="validate-me" value="{$write_post.post_id}" />
 		<span class="hit_message"></span>
 		</div>
 	</form>
@@ -415,6 +415,7 @@ function refreshDraftButton()
 					success: function(data){
 						js = data.parseJSON();
 						insertId = insertId ? insertId : js['insert_id'];
+						$('#post_id').val(insertId);
 						$('#write').attr('action','{$static_var.index}/admin/posts/all/?do=update&post_id='+insertId);
 						$('.hit_message').html('上次保存发生在'+js['time']);
 						window.document.title = draftTitle;

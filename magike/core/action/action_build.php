@@ -55,7 +55,7 @@ class ActionBuild extends MagikeObject
 			$path = explode('__',$this->className[1]);
 			while(array_pop($path))
 			{
-				$file = __MODULE__.'/'.implode('/',$path).'/module.'.mgClassNameToFileName($matches[2]).'.php';
+				$file = __MODULE__.'/'.implode('/',$path).'module.'.mgClassNameToFileName($matches[2]).'.php';
 				$class = $this->className[1];
 				$inpath = $path;
 				array_push($inpath,$matches[2]);

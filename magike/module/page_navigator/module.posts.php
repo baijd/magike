@@ -14,7 +14,7 @@ class Posts extends PageNavigator
 		$getArgs = $this->initArgs($args,$require);
 		$postModel = $this->loadModel('posts');
 		$total = $postModel->countAllPosts();
-		return $this->makeClassicNavigator($getArgs['limit'],$total);
+		return $this->makeClassicNavigator($getArgs['limit'],$total,'page/');
 	}
 }
 ?>
