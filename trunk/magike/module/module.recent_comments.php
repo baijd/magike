@@ -7,12 +7,7 @@
  *********************************/
 
 class RecentComments extends MagikeModule
-{
-	function __construct()
-	{
-		parent::__construct(array('public' => array('database')));
-	}
-	
+{	
 	public function praseComment($val,$num,$last,$data)
 	{
 		$val['comment_text'] = mgStripTags($data['substr'] ? mgSubStr($val['comment_text'],0,$data['substr'],$data['trim']) : $val['comment_text']);
@@ -32,7 +27,7 @@ class RecentComments extends MagikeModule
 		$getArgs = $this->initArgs($args,$require);
 		$commentsModel = $this->loadModel('comments');
 		
-		return $commentsModel->getAllPublishCommentsTrackbacksPingbacks($getArgs['limit'],0,'DESC','comment_date',array('function' => array($this,'praseComment'),'data' => $getArgs));
+		return $commentsModel->getAllPublishCommentsTrackbacksPingbacks($getArgs['limit'],0,'DESC','comment_date',array('function' => array($this,'praseComment'),'data' => $getArgs),'post_is_page',0);
 	}
 }
 ?>

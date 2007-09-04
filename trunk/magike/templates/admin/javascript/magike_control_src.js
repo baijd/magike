@@ -94,14 +94,7 @@ function registerTableCheckbox(table,className)
 	(
 		function()
 		{
-			if($(this.parentNode.parentNode).attr("className") == "select")
-			{
-				$(this.parentNode.parentNode).attr("className","");
-			}
-			else
-			{
-				$(this.parentNode.parentNode).attr("className","select");
-			}
+			$(this.parentNode.parentNode).toggleClass("select");
 		}
 	);
 	
@@ -111,7 +104,7 @@ function registerTableCheckbox(table,className)
 		{
 			if($("."+className,$(this)).attr("checked") != true && $(this).attr("className") != "heading")
 			{
-				$(this).attr("className","hover");
+				$(this).addClass("hover");
 			}
 		}
 	);
@@ -122,7 +115,7 @@ function registerTableCheckbox(table,className)
 		{
 			if($("."+className,$(this)).attr("checked") != true && $(this).attr("className") != "heading")
 			{
-				$(this).attr("className","");
+				$(this).removeClass("hover");
 			}
 		}
 	);
@@ -134,7 +127,7 @@ function selectTableAll(table,className)
 		function()
 		{
 			$(this).attr("checked",true);
-			$(this.parentNode.parentNode).attr("className","select");
+			$(this.parentNode.parentNode).addClass("select");
 		}
 	);
 }
@@ -145,7 +138,7 @@ function selectTableNone(table,className)
 		function()
 		{
 			$(this).attr("checked",false);
-			$(this.parentNode.parentNode).attr("className","");
+			$(this.parentNode.parentNode).removeClass("select");
 		}
 	);
 }
@@ -158,13 +151,13 @@ function selectTableOther(table,className)
 			if($(this).attr("checked") == true)
 			{
 				$(this).attr("checked",false);
-				$(this.parentNode.parentNode).attr("className","");
 			}
 			else
 			{
 				$(this).attr("checked",true);
-				$(this.parentNode.parentNode).attr("className","select");
 			}
+			
+			$(this.parentNode.parentNode).toggleClass("select");
 		}
 	);
 }
@@ -178,8 +171,7 @@ function registerInputFocus(element)
 			e = $(this);
 			if(e.attr("type") == "text" || e.attr("type") == "password")
 			{
-				c = e.attr("className");
-				e.attr("className",c+" focus");
+				e.addClass("focus");
 			}
 		}
 	);
@@ -188,9 +180,7 @@ function registerInputFocus(element)
 	(
 		function()
 		{
-			e = $(this);
-			c = e.attr("className");
-			e.attr("className",c+" focus");
+			$(this).addClass("focus");
 		}
 	);
 	
@@ -201,8 +191,7 @@ function registerInputFocus(element)
 			e = $(this);
 			if(e.attr("type") == "text" || e.attr("type") == "password")
 			{
-				c = e.attr("className");
-				e.attr("className",c.replace(" focus",""));
+				e.removeClass("focus");
 			}
 		}
 	);
@@ -211,9 +200,7 @@ function registerInputFocus(element)
 	(
 		function()
 		{
-			e = $(this);
-			c = e.attr("className");
-			e.attr("className",c.replace(" focus",""));
+			$(this).removeClass("focus");
 		}
 	);
 	
@@ -221,8 +208,7 @@ function registerInputFocus(element)
 	(
 		function()
 		{
-			e = $(this);
-			e.attr("className",e.attr("className") + " focus");
+			$(this).addClass("focus");
 		}
 	);
 	
@@ -230,9 +216,8 @@ function registerInputFocus(element)
 	(
 		function()
 		{
-			e = $(this);
-			e.attr("className",e.attr("className").replace(" focus",""));
-			e.attr("className",e.attr("className").replace(" click",""));
+			$(this).removeClass("focus");
+			$(this).removeClass("click");
 		}
 	);
 	
@@ -240,8 +225,7 @@ function registerInputFocus(element)
 	(
 		function()
 		{
-			e = $(this);
-			e.attr("className",e.attr("className") + " click");
+			$(this).removeClass("click");
 		}
 	);
 	
@@ -249,8 +233,7 @@ function registerInputFocus(element)
 	(
 		function()
 		{
-			e = $(this);
-			e.attr("className",e.attr("className").replace(" click",""));
+			$(this).removeClass("click");
 		}
 	);
 }
@@ -260,15 +243,7 @@ function registerTab(btn,tab)
 {
 	$(btn).children("#first").attr("className","focus");
 	focusTab = $(btn).children("#first");
-	
-	$(tab).children().each(
-		function()
-		{
-			$(this).hide();
-		}
-	);
 
-	$("#"+$(btn).children("#first").attr("rel")).show();
 	$(btn).children().each(
 		function()
 		{
@@ -358,7 +333,6 @@ function fixCssHack()
 	$(".message").fadeIn(1000);
 	$(".message").click(function(){$(this).hide();});
 	$(".proc").click(function(){$(this).hide();});
-	$(".validate-word").hide();
 }
 
 var validateElements;
@@ -366,7 +340,7 @@ var showLoading;
 function magikeValidator(url,mod)
 {
 	validateElements = null;
-	$(".validate-word").hide();
+	$(".validate-word").html("");
 	showLoading = true;
 	
 	if(typeof(tinyMCE) != "undefined")
@@ -385,7 +359,6 @@ function magikeValidator(url,mod)
 			{
 				for(var i in js)
 				{
-					$("#" + i + "-word").show();
 					$("#" + i + "-word").html(js[i]);
 				}
 				$(".proc").fadeOut();
@@ -496,7 +469,7 @@ function AutoCompleter(textbox, url , boxclass, selectclass, unselectclass, hove
         _completer.hide();
 	});
 }
-AutoCompleter.spliters = ",";
+AutoCompleter.spliters = ",， 　";
 //得到一个元素在页面上的绝对位置，p为想得到位置的元素，返回结果为Object{left:<int>, top:<int>}，r为是否只求到其定位元素
 AutoCompleter.getPos = function(tag, r){
     var p = tag;

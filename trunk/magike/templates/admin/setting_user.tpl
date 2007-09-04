@@ -29,9 +29,10 @@
 			<h2>默认注册用户组</h2>
 			<p>
 				<select name="user_register_group">
-					<[loop:$groups_list AS $group]>
-						<option value="{$group.id}" <[if:$group.id == $static_var.user_register_group]>selected=true<[/if]>>{$group.group_name}</option>
-					<[/loop]>
+					<option value="0" <[if:$static_var.user_register_group == "0"]>selected=true<[/if]>>{lang.group.administrator}</option>
+					<option value="1" <[if:$static_var.user_register_group == "1"]>selected=true<[/if]>>{lang.group.editor}</option>
+					<option value="2" <[if:$static_var.user_register_group == "2"]>selected=true<[/if]>>{lang.group.contributor}</option>
+					<option value="3" <[if:$static_var.user_register_group == "3"]>selected=true<[/if]>>{lang.group.visitor}</option>
 				</select><br />
 				<span class="discribe">(注册后默认的用户组)</span>
 			</p>

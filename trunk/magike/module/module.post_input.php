@@ -17,11 +17,39 @@ class PostInput extends MagikeModule
 		$this->result['open'] = false;
 	}
 	
+	private function praseTags($tags)
+	{
+		//去掉头尾空格
+		$tags = trim($tags);
+		
+		//转换全半角空格
+		$tags = str_replace("　"," ",$tags);
+		
+		//过滤多空格
+		$tags = str_replace("  "," ",$tags);
+		
+		//过滤分割符
+		return str_replace(array("，"," "),",",$tags);
+	}
+	
+	private function praseUrl($url)
+	{
+		$url = str_replace(array("'",":","\\","/"),"",$url);
+		$url = str_replace(array("+",","," ",".","，","　"),"-",$url);
+		
+		return urlencode(Translate::prase("chinese","english",$url));
+	}
+	
 	public function insertPost($postInput = NULL)
 	{
 		
 		$input = $postInput ? $postInput : $_POST;
 		$input['post_is_draft'] = isset($input['post_is_draft']) && $input['post_is_draft'] ? $input['post_is_draft'] : 0;
+		
+		if($this->stack['access']['user_group'] > $this->stack['static_var']['group']['editor'])
+		{
+			$input['post_is_draft'] = 1;
+		}
 		
 		if(!$postInput)
 		{
@@ -33,6 +61,7 @@ class PostInput extends MagikeModule
 		unset($input["post_id"]);
 		$input['post_title'] = isset($input['post_title']) && $input['post_title'] ? trim($input['post_title']) : ($input['post_is_draft'] ? '无标题文档' : NULL);
 		$input['post_content'] = isset($input['post_content'])  && $input['post_content'] ? $input['post_content'] : NULL;
+		$input['post_tags'] = isset($input['post_tags']) ? $this->praseTags($input['post_tags']) : NULL;
 		$input['post_allow_ping'] = isset($input['post_allow_ping']) && $input['post_allow_ping'] ? $input['post_allow_ping'] : 0;
 		$input['post_allow_comment'] = isset($input['post_allow_comment']) && $input['post_allow_comment'] ? $input['post_allow_comment'] : 0;
 		$input['post_allow_feed'] = isset($input['post_allow_feed']) && $input['post_allow_feed'] ? $input['post_allow_feed'] : 0;
@@ -46,10 +75,19 @@ class PostInput extends MagikeModule
 		}
 		if(!isset($input['post_time']) || !$input['post_time'])
 		{
-			$input['post_time'] = time() - $this->stack['static_var']['server_timezone'];
+			$input['post_time'] = $input['post_edit_time'];
 		}
 		
-		$input['post_name'] = $input['post_is_page'] && NULL == $input['post_name'] ? str_replace('%','',urlencode($input['post_title'])) : $input['post_name'];
+		$postModel = $this->loadModel('posts');
+		//自动生成post_name
+		$input['post_name'] = (NULL == $input['post_name']) ? $input['post_title'] : $input['post_name'];
+		$input['post_name'] = $this->praseUrl($input['post_name']);
+		if(($count = count($postModel->fetchByFieldEqual('post_name',$input['post_name']))) > 0)
+		{
+			$timePre = 
+			date("Y-n-j-His",$this->stack['static_var']['time_zone']+$input["post_time"]);
+			$input['post_name'] = $input['post_name'].'-'.$timePre;
+		}
 		
 		//自动生成密码
 		$autoPassword = NULL;
@@ -64,7 +102,6 @@ class PostInput extends MagikeModule
 			$input['post_is_hidden'] = 1;
 		}
 		
-		$postModel = $this->loadModel('posts');
 		$insertId = $postModel->insertTable($input);
 		if(!$input['post_is_page'] && !$input['post_is_hidden'])
 		{
@@ -83,7 +120,7 @@ class PostInput extends MagikeModule
 		$staticModel->increaseValueByName('count_posts');
 		$this->deleteCache('static_var');
 		
-		if(isset($input['post_tags']) && $input['post_tags'])
+		if(NULL !== $input['post_tags'])
 		{
 			$tagsModel = $this->loadModel('tags');
 			$tagsModel->insertTags($insertId,$input['post_tags']);
@@ -107,6 +144,11 @@ class PostInput extends MagikeModule
 	{
 		$input = $postInput ? $postInput : $_POST;
 		$input['post_is_draft'] = isset($input['post_is_draft']) && $input['post_is_draft'] ? $input['post_is_draft'] : 0;
+		
+		if($this->stack['access']['user_group'] > $this->stack['static_var']['group']['editor'])
+		{
+			$input['post_is_draft'] = 1;
+		}
 		$postId = $postId ? $postId : $_GET['post_id'];
 		
 		if(!$postInput)
@@ -120,7 +162,7 @@ class PostInput extends MagikeModule
 		unset($input["post_id"]);
 		$input['post_title'] = isset($input['post_title']) && $input['post_title'] ? trim($input['post_title']) : ($input['post_is_draft'] ? '无标题文档' : NULL);
 		$input['post_content'] = isset($input['post_content'])  && $input['post_content'] ? $input['post_content'] : NULL;
-		$input['post_tags'] = isset($input['post_tags'])  && $input['post_tags'] ? $input['post_tags'] : NULL;
+		$input['post_tags'] = isset($input['post_tags']) ? $this->praseTags($input['post_tags']) : NULL;
 		$input['post_allow_ping'] = isset($input['post_allow_ping']) && $input['post_allow_ping'] ? $input['post_allow_ping'] : 0;
 		$input['post_allow_comment'] = isset($input['post_allow_comment']) && $input['post_allow_comment'] ? $input['post_allow_comment'] : 0;
 		$input['post_allow_feed'] = isset($input['post_allow_feed']) && $input['post_allow_feed'] ? $input['post_allow_feed'] : 0;
@@ -134,7 +176,18 @@ class PostInput extends MagikeModule
 			$input['post_edit_time'] = time() - $this->stack['static_var']['server_timezone'];
 		}
 		
-		$input['post_name'] = $input['post_is_page'] && NULL == $input['post_name'] ? str_replace('%','',urlencode($input['post_title'])) : $input['post_name'];
+		$postModel = $this->loadModel('posts');
+		//自动生成post_name
+		$input['post_name'] = (NULL == $input['post_name']) ? $input['post_title'] : $input['post_name'];
+		$input['post_name'] = $this->praseUrl($input['post_name']);
+		$post = $postModel->fetchOneByKey($postId);
+		
+		if($post['post_name'] != $input['post_name'] && ($count = count($postModel->fetchByFieldEqual('post_name',$input['post_name']))) > 0)
+		{
+			$timePre = 
+			date("Y-n-j-His",$this->stack['static_var']['time_zone']+$input["post_time"]);
+			$input['post_name'] = $input['post_name'].'-'.$timePre;
+		}
 		
 		//自动生成密码
 		$autoPassword = NULL;
@@ -149,11 +202,22 @@ class PostInput extends MagikeModule
 			$input['post_is_hidden'] = 1;
 		}
 		
-		$postModel = $this->loadModel('posts');
-		$post = $postModel->fetchOneByKey($postId);
 		if(!$post)
 		{
 			return false;
+		}
+		
+		if($post["user_id"] != $this->stack['access']['user_id'])
+		{
+			if($this->stack['access']['user_group'] <= $this->stack['static_var']['group']['editor'])
+			{
+				unset($input['user_id']);
+				unset($input['post_user_name']);
+			}
+			else
+			{
+				$this->throwException(E_ACCESSDENIED,$this->stack['action']['path']);
+			}
 		}
 
 		$trackback = 
@@ -178,17 +242,28 @@ class PostInput extends MagikeModule
 
 		$tagsModel = $this->loadModel('tags');
 		
-		if($post['post_tags'])
+		if(NULL !== $post['post_tags'])
 		{
 			$tagsModel->deleteTagsByPostId($postId);
 			$tags = $tagsModel->getTags($post['post_tags']);
+			
+			$deleteTags = array();
 			foreach($tags as $key => $val)
 			{
 				$tagsModel->decreaseFieldByKey($key,'tag_count');
+				
+				//删除空tag
+				$finalTag = $tagsModel->fetchOneByKey($key);
+				if($finalTag['tag_count'] <= 0)
+				{
+					$deleteTags[] = $key;
+				}
 			}
+			
+			$tagsModel->deleteByKeys($deleteTags);
 		}
 		
-		if(isset($input['post_tags']) && $input['post_tags'])
+		if(NULL !== $post['post_tags'])
 		{
 			$tagsModel->insertTags($postId,$input['post_tags']);
 			$tags = $tagsModel->getTags($input['post_tags']);
@@ -200,7 +275,7 @@ class PostInput extends MagikeModule
 		
 		$this->result['open'] = true;
 		$this->result['trackback'] = $trackback;
-		$this->result['time'] = date("H点i分");
+		$this->result['time'] = date("H点i分",$input['post_edit_time']);
 		$this->result['word'] = '文章 "'.$post['post_title'].'" 已经被更新'.$autoPassword;
 		
 		return $updated;
@@ -235,6 +310,19 @@ class PostInput extends MagikeModule
 				continue;
 			}
 			
+			if($post["user_id"] != $this->stack['access']['user_id'])
+			{
+				if($this->stack['access']['user_group'] <= $this->stack['static_var']['group']['editor'])
+				{
+					unset($input['user_id']);
+					unset($input['post_user_name']);
+				}
+				else
+				{
+					$this->throwException(E_ACCESSDENIED,$this->stack['action']['path']);
+				}
+			}
+			
 			$commentsModel->deleteByFieldEqual('post_id',$id);
 			if(!$post['post_is_page'] && !$post['post_is_hidden'])
 			{
@@ -245,10 +333,21 @@ class PostInput extends MagikeModule
 				$tagsModel = $this->loadModel('tags');
 				$tagsModel->deleteTagsByPostId($id);
 				$tags = $tagsModel->getTags($post['post_tags']);
+				
+				$deleteTags = array();
 				foreach($tags as $key => $val)
 				{
 					$tagsModel->decreaseFieldByKey($key,'tag_count');
+					
+					//删除空tag
+					$finalTag = $tagsModel->fetchOneByKey($key);
+					if($finalTag['tag_count'] <= 0)
+					{
+						$deleteTags[] = $key;
+					}
 				}
+				
+				$tagsModel->deleteByKeys($deleteTags);
 			}
 		}
 		

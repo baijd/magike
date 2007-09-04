@@ -288,7 +288,9 @@ body
 {
 	border:1px solid #98BBF5;
 	background:#FFF;
-	width:404px;
+	width:164px;
+	z-index:100;
+	font-size:9pt;
 }
 
 #element .auto-completer-hover
@@ -296,6 +298,8 @@ body
 	background:#98BBF5;
 	padding:3px;
 	color:#FFF;
+	height:20px;
+	line-height:20px;
 }
 
 #element .auto-completer-blur
@@ -303,16 +307,17 @@ body
 	background:#FFF;
 	padding:3px;
 	color:#333;
+	height:20px;
+	line-height:20px;
 }
 
 #element .validate-word
 {
-	background:url(images/exclamation.gif) left center no-repeat;
 	margin-left:10px;
-	padding-left:20px;
 	font-weight:bold;
 	color:#990000;
 	font-size:9pt;
+	empty-cells:hide;
 }
 
 #element form
@@ -362,7 +367,6 @@ body
 	background:#EEF0F2;
 	border-bottom:#BEC9D1 solid 1px;
     border-top:#FFF solid 1px;
-	empty-cells:show;
 	white-space:nowrap;
 	word-wrap: break-all;
 }
@@ -410,15 +414,14 @@ body
 	border:none;
 }
 
+#element  table tr.hover td
+{
+	background-color:#F4F4F4;
+}
 
 #element  table tr.select td
 {
 	background-color:#FFFFAA;
-}
-
-#element  table tr.hover td
-{
-	background-color:#F4F4F4;
 }
 
 #element .table_nav
@@ -453,6 +456,38 @@ body
 	float:right;
 	color:#464A52;
 	text-decoration: underline;
+}
+
+#element b.btop,#element b.bbottom,#element b.bmiddle
+{
+	height:1px;
+	font-size:1px;
+	empty-cells:show;
+	display:block;
+	float:left;
+	background:#EEF0F2;
+}
+
+#element b.btop
+{
+	background:#BEC9D1;
+	width:248px;
+	margin:0 2px;
+}
+
+#element b.bmiddle
+{
+	border-left:1px solid #BEC9D1;
+	border-right:1px solid #BEC9D1;
+	margin:0 1px;
+	width:248px;
+}
+
+#element b.bbottom
+{
+	border-left:1px solid #BEC9D1;
+	border-right:1px solid #BEC9D1;
+	width:250px;
 }
 
 #element .message
@@ -577,6 +612,23 @@ body
 	margin-bottom:10px;
 }
 
+#element .tab_nav
+{
+	border-bottom:1px solid #CCC;
+	height:30px;
+	margin-bottom:10px;
+}
+
+#element .tab_element
+{
+	display:none;
+}
+
+#element .first
+{
+	display:block;
+}
+
 #element ul.magike_autoc
 {
 	background:#DDD;
@@ -591,8 +643,8 @@ body
 
 #element ul.magike_autoc li
 {
-	height:24px;
-	line-height:24px;
+	height:20px;
+	line-height:20px;
 	padding:0 5px;
 	border-top:1px solid #FFF;
 	border-bottom:1px solid #AAA;

@@ -79,6 +79,7 @@ class Path extends MagikeModule
 			$result['cache'] = $this->pathConfig[$eregPath]['cache'];
 			$result['action'] = $this->pathConfig[$eregPath]['action'];
 			$result['file'] = $this->pathConfig[$eregPath]['file'];
+			$result['group'] = $this->pathConfig[$eregPath]['group'];
 			$found = true;
 		}
 		else
@@ -93,6 +94,7 @@ class Path extends MagikeModule
 					$result['cache'] = $val['cache'];
 					$result['action'] = $val['action'];
 					$result['file'] = $val['file'];
+					$result['group'] = $val['group'];
 					$found = true;
 					break;
 				}
@@ -141,6 +143,7 @@ class Path extends MagikeModule
 		$this->last = $path[strlen($path) - 1] == '/';
 		$path = $this->last ? substr($path,0,strlen($path) - 1) : $path;
 		$this->isFile = strrpos($path,'.') === false ? false : strrpos($path,'/') < strrpos($path,'.');
+		$doLocation = false;
 
 		if(!$this->isFile & !$this->last)
 		{
@@ -150,9 +153,8 @@ class Path extends MagikeModule
 			{
 				$request .= '?'.$_SERVER['QUERY_STRING'];
 			}
-			header('HTTP/1.1 301 Moved Permanently');
-			header("location: {$request}");
-			die();
+			
+			$doLocation = true;
 		}
 		if($this->isFile & $this->last)
 		{
@@ -162,6 +164,12 @@ class Path extends MagikeModule
 			{
 				$request .= '?'.$_SERVER['QUERY_STRING'];
 			}
+			
+			$doLocation = true;
+		}
+		
+		if($doLocation && NULL == $_POST)
+		{
 			header('HTTP/1.1 301 Moved Permanently');
 			header("location: {$request}");
 			die();
@@ -180,6 +188,11 @@ class Path extends MagikeModule
 		$path = preg_replace("/\[([_0-9a-zA-Z-\\\]+)\=\%s\]/i","([_\+0-9a-zA-Z\ \x80-\xff-]+)",$path);
 		$path = preg_replace("/\[([_0-9a-zA-Z-\\\]+)\=\%p\]/i","([_\+\.0-9a-zA-Z\x80-\xff-]+)",$path);
 		$path = preg_replace("/\[([_0-9a-zA-Z-\\\]+)\=\%a\]/i","([_\+0-9a-zA-Z-]+)",$path);
+		
+		if($path[strlen($path) - 1] == "/")
+		{
+			$path = substr($path,0,strlen($path) - 1);
+		}
 		$path = '^'.$path.'[/]?$';
 
 		return $path;
@@ -217,12 +230,26 @@ class Path extends MagikeModule
 	public function pushPathData($val)
 	{
 		$deep = count(explode("/",$val['path_name']));
-		$this->pathCache[$deep][$this->praseEregPath($val['path_name'])] = array('id'  => $val['id'],
+		
+		$eregPath = $this->praseEregPath($val['path_name']);
+		$this->pathCache[$deep][$eregPath] = array('id'  => $val['id'],
 		'action' => $val['path_action'],
 		'cache' => $val['path_cache'],
 		'file'   => mgPraseVar($val['path_file'],'this->stack'),
-		'value'  => $this->prasePathValue($val['path_name'])
+		'value'  => $this->prasePathValue($val['path_name']),
+		'group' => $val['path_group']
 		);
+		
+		if(false !== strpos($eregPath,"[/]?"))
+		{
+			$this->pathCache[$deep - 1][$eregPath] = array('id'  => $val['id'],
+			'action' => $val['path_action'],
+			'cache' => $val['path_cache'],
+			'file'   => mgPraseVar($val['path_file'],'this->stack'),
+			'value'  => $this->prasePathValue($val['path_name']),
+			'group' => $val['path_group']
+			);
+		}
 	}
 	
 	public function runModule()

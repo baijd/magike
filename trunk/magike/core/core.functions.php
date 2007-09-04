@@ -16,13 +16,7 @@ function mgClassNameToFileName($className)
 //将按照下划线法则命名的文件名转化为以骆驼法则命名的类名
 function mgFileNameToClassName($fileName,$isObject = true)
 {
-	return $isObject ? ucfirst(preg_replace_callback("/[\_]([a-z])/i",'mgFileNameToClassNameCallback',$fileName))
-	: preg_replace_callback("/[\_]([a-z])/i",'mgFileNameToClassNameCallback',$fileName);
-}
-
-function mgFileNameToClassNameCallback($matches)
-{
-	return strtoupper($matches[1]);
+	return str_replace("_","",$fileName);
 }
 
 function mgFileNameToUniqueClassName($className)
@@ -122,7 +116,7 @@ function mgStripTags($string)
 {
 	$string = strip_tags($string);
 	$string = trim($string);
-	$string = str_replace("\r\n\r\n","",$string);
+	$string = str_replace(array("\r\n\r\n","\n\n"),"",$string);
 
 	return $string;
 }
@@ -547,6 +541,7 @@ function mgSendTrackback($url,$args)
 					$response .= fgets( $socket, 4096 );
 				}
 				fclose($socket);
+				
 				//here is response
 				if ( strstr($response,'<error>1</error>') )
 				{
@@ -620,5 +615,30 @@ function mgStringRelplace($src , $dst, $str)
 	{
 		return str_replace($src,$dst,$str);
 	}
+}
+
+if (!function_exists('array_intersect_key')) {
+	function array_intersect_key($arr1, $arr2) 
+	{
+		$res = array();
+		foreach($arr1 as $key=>$value) 
+		{
+			if(array_key_exists($arr2[$key])) 
+			{
+				$res[$key] = $arr1[$key];
+			}
+		}
+		return $res;
+	}
+}
+
+function mgArrayIntersectKey($arr1, $arr2) 
+{
+	$res = array();
+	foreach($arr2 as $key=>$value) 
+	{
+		$res[$key] = $arr1[$key];
+	}
+	return $res;
 }
 ?>

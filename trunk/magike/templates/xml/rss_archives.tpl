@@ -5,7 +5,7 @@ echo '<?xml version="1.0" encoding="'.$data["static_var"]["charset"].'"?>';
 <channel>
 <[module:get_webmaster]>
 <[module:post?time_format=r]>
-<[module:comments_list?time_format=r&sort=ASC]>
+<[module:comments.fetch_by_post?time_format=r&sort=ASC]>
 <[module:http_header?content_type=text/xml]>
 <title><![CDATA["{$post.post_title}" 的评论]]></title>
 <link>{$static_var.index}/archives/{$post.post_id}/</link>
@@ -14,10 +14,10 @@ echo '<?xml version="1.0" encoding="'.$data["static_var"]["charset"].'"?>';
 <docs>http://blogs.law.harvard.edu/tech/rss</docs>
 <generator>{$static_var.version}</generator>
 <webMaster>{$get_webmaster.user_name}</webMaster>
-<[loop:$comments_list AS $comment]>
+<[loop:$comments.fetch_by_post AS $comment]>
 <item>
 <title><![CDATA[by {$comment.comment_user}:]]></title>
-<link>{$static_var.index}/archives/{$post.post_id}/</link>
+<link>{$comment.permalink}</link>
 <author>{$comment.comment_user}</author>
 <pubDate>{$comment.comment_date}</pubDate>
 <description><![CDATA[{$comment.comment_text}]]></description>

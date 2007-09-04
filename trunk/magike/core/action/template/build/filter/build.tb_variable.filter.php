@@ -29,7 +29,7 @@ class TbVariable extends TemplateBuild
 		
 		foreach($elements as $val)
 		{
-			$pos = strpos($val,':');
+			$pos = (strpos($val,':') === false ? strlen($val) : strpos($val,':'));
 			$method = substr($val,0,$pos);
 
 			$parm = explode(',',substr($val,$pos+1,strlen($val) - $pos));
@@ -61,6 +61,11 @@ class TbVariable extends TemplateBuild
 				case 'format':
 				{
 					$result = 'mgStringRelplace("%s",'.$result.',"'.$this->myPraseVar(addslashes($parms)).'")';
+					break;
+				}
+				case 'md5':
+				{
+					$result = 'md5('.$result.')';
 					break;
 				}
 				default:

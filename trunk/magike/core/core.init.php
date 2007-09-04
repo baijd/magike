@@ -9,7 +9,7 @@
 //初始化服务器参数及状态
 //设定异常截获函数以及错误截获函数
 set_exception_handler('exceptionHandler');
-error_reporting(__DEBUG__ ? E_ALL : E_ERROR);
+error_reporting(true ? E_ALL : E_ERROR);
 if(__DEBUG__) set_error_handler('errorHandler');
 
 //打开会话
@@ -51,7 +51,7 @@ class MagikeException extends Exception
    public function __toString()
    {
        	$data = '';
-	
+
        	if(is_array($this->data))
        	{
        		foreach($this->data as $key => $val)

@@ -6,7 +6,7 @@
  * License   : GNU General Public License 2.0
  *********************************/
  
-class PostsfetchBySearch extends PageNavigator
+class PostsFetchBySearch extends PageNavigator
 {
 	private $getArgs;
 	private $result;

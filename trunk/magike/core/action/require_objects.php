@@ -9,5 +9,6 @@
 $requireObjects = array(
 	'kernel.static_var.php' => 'StaticVar',
 	'kernel.access.php' => 'Access',
+	'kernel.permalink.php' => 'Permalink',
 );
 ?>

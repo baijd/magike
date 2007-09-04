@@ -15,7 +15,7 @@ class PostsModel extends MagikeModel
 	
 	private function fixPostWhere($limit = false,$offset = false,$where = NULL)
 	{
-		$args = array('table'	=> 'table.posts LEFT JOIN table.categories ON table.posts.category_id = table.categories.id',
+		$args = array('table'	=> 'table.posts JOIN table.categories ON table.posts.category_id = table.categories.id',
 					  'groupby' => 'table.posts.id',
 					  'fields'	=> '*,table.posts.id AS post_id',
 					  'orderby' => 'table.posts.post_time',
@@ -82,10 +82,56 @@ class PostsModel extends MagikeModel
 		return $this->countTable($args);
 	}
 	
+	public function fetchPostsByKeywordsAndAuthor($keywords,$author,$limit,$offset,$func = NULL,$supper = false)
+	{
+		$whereTpl = array();
+		$value = array();
+		$where = array();
+		
+		foreach($keywords as $key => $val)
+		{
+			$whereTpl[] = "{$key} LIKE ?";
+			$value[] = '%'.$val.'%';
+		}
+		
+		$where['template'] = '('.implode(' OR ',$whereTpl).') AND user_id = ? ';
+		$value[] = $author;
+		if(!$supper)
+		{
+			$where['template'] .= 'AND post_is_draft = 0 AND post_is_page = 0 AND post_is_hidden = 0 AND post_time < '.(time() - $this->stack['static_var']['server_timezone']);
+		}
+		$where['value'] = $value;
+		return $this->fetch($this->fixPostWhere($limit,$offset,$where),$func);
+	}
+	
+	public function countPostsByKeywordsAndAuthor($keywords,$author,$supper = false)
+	{
+		$args = $this->fixPostWhere();
+		
+		$whereTpl = array();
+		$value = array();
+		foreach($keywords as $key => $val)
+		{
+			$whereTpl[] = "{$key} LIKE ?";
+			$value[] = '%'.$val.'%';
+		}
+		
+		$args['where']['template'] = '('.implode(' OR ',$whereTpl).') AND user_id = ? ';
+		$value[] = $author;
+		
+		if(!$supper)
+		{
+			$args['where']['template'] .= 'AND post_is_draft = 0 AND post_is_page = 0 AND post_is_hidden = 0 AND post_time < '.(time() - $this->stack['static_var']['server_timezone']);
+		}
+		$args['where']['value'] = $value;
+		unset($args['groupby']);
+		return $this->countTable($args);
+	}
+	
 	public function fetchPostsByTag($tag,$limit,$offset,$func = NULL)
 	{
 		$args['table'] = '(((table.posts JOIN table.post_tag_mapping ON table.posts.id = table.post_tag_mapping.post_id)
-		 LEFT JOIN table.tags ON table.post_tag_mapping.tag_id = table.tags.id) LEFT JOIN table.categories ON table.posts.category_id = table.categories.id)';
+		 JOIN table.tags ON table.post_tag_mapping.tag_id = table.tags.id) JOIN table.categories ON table.posts.category_id = table.categories.id)';
 		$args['where']['template'] = 'table.posts.post_is_hidden = 0  AND table.tags.tag_name = BINARY ?';
 		$args['where']['value'] = array($tag);
 		$args['limit'] = $limit;
@@ -101,7 +147,7 @@ class PostsModel extends MagikeModel
 	public function countPostsByTag($tag)
 	{
 		$args['table'] = '(((table.posts JOIN table.post_tag_mapping ON table.posts.id = table.post_tag_mapping.post_id)
-		 LEFT JOIN table.tags ON table.post_tag_mapping.tag_id = table.tags.id) LEFT JOIN table.categories ON table.posts.category_id = table.categories.id)';
+		 JOIN table.tags ON table.post_tag_mapping.tag_id = table.tags.id) JOIN table.categories ON table.posts.category_id = table.categories.id)';
 		
 		$args['where']['template'] = 'table.posts.post_is_hidden = 0  AND table.tags.tag_name = BINARY ?';
 		$args['where']['value'] = array($tag);
@@ -128,7 +174,7 @@ class PostsModel extends MagikeModel
 	public function fetchPostById($id,$func = NULL,$exception = true)
 	{
 		$args = array('fields'=> '*,table.posts.id AS post_id',
-			  'table' => 'table.posts LEFT JOIN table.categories ON table.posts.category_id = table.categories.id',
+			  'table' => 'table.posts JOIN table.categories ON table.posts.category_id = table.categories.id',
 			  'groupby' => 'table.posts.id',
 			  );
 		$args['where']['template'] = 'table.posts.id = ?';
@@ -139,7 +185,7 @@ class PostsModel extends MagikeModel
 	public function fetchPostByName($name,$func = NULL,$exception = true)
 	{
 		$args = array('fields'=> '*,table.posts.id AS post_id',
-			  'table' => 'table.posts LEFT JOIN table.categories ON table.posts.category_id = table.categories.id',
+			  'table' => 'table.posts JOIN table.categories ON table.posts.category_id = table.categories.id',
 			  'groupby' => 'table.posts.id',
 			  );
 		$args['where']['template'] = 'table.posts.post_name = ?';
@@ -159,9 +205,23 @@ class PostsModel extends MagikeModel
 		return $this->countTable($args);
 	}
 	
+	public function listAllPostsByAuthor($author,$limit,$offset,$func = NULL)
+	{
+		$where = array('template'	=> 'user_id = '.$author);
+		return $this->fetch($this->fixPostWhere($limit,$offset,$where),$func);
+	}
+	
+	public function countAllPostsByAuthor($author)
+	{
+		$where = array('template'	=> 'user_id = '.$author);
+		$args = $this->fixPostWhere(false,false,$where);
+		unset($args['groupby']);
+		return $this->countTable($args);
+	}
+	
 	public function listAllEntries($limit,$offset,$func = NULL)
 	{
-		$where = array('template'	=> 'post_is_draft = 0 AND post_is_page = 0 AND post_is_hidden = 0 AND post_time < '.(time() - $this->stack['static_var']['server_timezone']));
+		$where = array('template'	=> 'post_is_page = 0 AND post_is_draft = 0 AND post_is_hidden = 0 AND post_time < '.(time() - $this->stack['static_var']['server_timezone']));
 		return $this->fetch($this->fixPostWhere($limit,$offset,$where),$func);
 	}
 	

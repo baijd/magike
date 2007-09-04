@@ -76,9 +76,12 @@
 	<div class="input">
 		<h2>所属群组</h2>
 		<p>
-			<[loop:$groups_list AS $group]>
-				<input type="checkbox" name="user_group[]" class="checkbox validate-me" value="{$group.id}" <[if:in_array($group.id,$insert_user.user_group)]>checked=true<[/if]> /> {$group.group_name} <span class="discribe">{$group.group_describe}</span><br />
-			<[/loop]>
+			<select name="user_group">
+				<option value="0" <[if:$insert_user.user_group == "0"]>selected=true<[/if]>>{lang.group.administrator}</option>
+				<option value="1" <[if:$insert_user.user_group == "1"]>selected=true<[/if]>>{lang.group.editor}</option>
+				<option value="2" <[if:$insert_user.user_group == "2"]>selected=true<[/if]>>{lang.group.contributor}</option>
+				<option value="3" <[if:$insert_user.user_group == "3"]>selected=true<[/if]>>{lang.group.visitor}</option>
+			</select><br />
 			<span class="validate-word" id="user_group-word"></span><span class="discribe">(为这个用户分配一个用户组)</span>
 		</p>
 	</div>

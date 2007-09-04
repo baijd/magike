@@ -3,7 +3,7 @@
 
 <[module:admin_index]>
 <[module:posts?sub=20&striptags=1&limit=5]>
-<[module:comments_list_all?limit=5&striptags=1&substr=20]>
+<[module:comments?limit=5&striptags=1&substr=20]>
 <[module:get_current_user]>
 <style>
 	#element
@@ -134,7 +134,7 @@
 			</ul>
 			<h2>最新评论</h2>
 			<ul class="info">
-			<[loop:$comments_list_all AS $comment]>
+			<[loop:$comments AS $comment]>
 				<li>{$comment.comment_user} 在 <a href="{$static_var.index}/admin/posts/write/?post_id={$comment.post_id}">{$comment.post_title}</a> <span class="describe">{$comment.comment_text}</span></li>
 			<[/loop]>
 			</ul>

@@ -27,7 +27,12 @@ class TbModule extends TemplateBuild
 	{
 		$matches[1] = str_replace(' AS ',' as ',$matches[1]);
 		$moduleVar = explode(' as ',$matches[1]);
-		array_walk($moduleVar,'trim');
+		
+		$moduleVar[0] = trim($moduleVar[0]);
+		if(isset($moduleVar[1]))
+		{
+			$moduleVar[1] = trim($moduleVar[1]);
+		}
 		
 		$query = explode('?',$moduleVar[0]);
 		$file = __MODULE__.'/'.$this->getModulePath($query[0]);

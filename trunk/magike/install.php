@@ -6040,7 +6040,9 @@ query("CREATE TABLE `".__DBPREFIX__."comments` (
   `post_id` int(10) unsigned default '0',
   `comment_type` enum('comment','pingback','trackback') default 'comment',
   `comment_publish` enum('approved','spam','waitting') default 'approved',
-  PRIMARY KEY  (`id`)
+  PRIMARY KEY  (`id`),
+  KEY `post_id` (`post_id`),
+  KEY `comment_date` (`comment_date`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8");
 
 query("INSERT INTO `".__DBPREFIX__."comments` (`id`, `comment_user`, `comment_date`, `comment_email`, `comment_homepage`, `comment_agent`, `comment_ip`, `comment_text`, `comment_title`, `post_id`, `comment_type`, `comment_publish`) VALUES 
@@ -6206,8 +6208,8 @@ query("INSERT INTO `".__DBPREFIX__."path_group_mapping` (`id`, `path_id`, `group
 (54, 52, 2),
 (55, 53, 2),
 (56, 53, 1),
-(57, 54, 2),
-(58, 54, 1),
+(57, 54, 1),
+(58, 54, 2),
 (59, 36, 1),
 (60, 36, 2),
 (61, 55, 1),
@@ -6236,13 +6238,15 @@ query("INSERT INTO `".__DBPREFIX__."path_group_mapping` (`id`, `path_id`, `group
 
 query("CREATE TABLE `".__DBPREFIX__."paths` (
   `id` int(10) unsigned NOT NULL auto_increment,
-  `path_name` varchar(64) default NULL,
+  `path_name` varchar(128) default NULL,
   `path_action` varchar(20) default NULL,
   `path_file` varchar(64) default NULL,
   `path_cache` int(11) default '0',
-  `path_describe` varchar(32) default NULL,
+  `path_meta` varchar(32) default NULL,
+  `path_group` tinyint(4) default '0',
   PRIMARY KEY  (`id`),
-  UNIQUE KEY `path_name` (`path_name`)
+  UNIQUE KEY `pt_name` (`path_name`),
+  UNIQUE KEY `path_meta` (`path_meta`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=500 ");
 
 query("INSERT INTO `".__DBPREFIX__."paths` (`id`, `path_name`, `path_action`, `path_file`, `path_cache`,`path_describe`) VALUES 

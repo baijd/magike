@@ -43,22 +43,15 @@ class AdminLogin extends MagikeModule
 			$this->result['message'] = $this->getLanguage('error','login');
 		}
 		else
-		{
-			$group = $groupModel->getUserGroups($user['id']);
-			$userGroup = array();
-			foreach($group as $val)
-			{
-				$userGroup[] = $val['group_id'];
-			}
-			
+		{			
 			$_SESSION['user_name'] = $user['user_name'];
 			$_SESSION['user_id'] = $user['id'];
-			$_SESSION['user_group'] = $userGroup;
+			$_SESSION['user_group'] = $user['user_group'];
 			$_SESSION['auth_data'] = mgCreateRandomString(128);
 			
 			setcookie('auth_data',$_SESSION['auth_data'],0,'/');
 			
-			if($userGroup == array($this->stack['static_var']['user_register_group']))
+			if($user['user_group'] == $this->stack['static_var']['user_register_group'])
 			{
 				header('location: '.$this->stack['static_var']['siteurl']);
 			}

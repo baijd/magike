@@ -2,8 +2,8 @@
 <[include:menu]>
 
 <[module:comment_input]>
-<[module:comments_list_all?limit=20&striptags=1&substr=30]>
-<[module:comments_list_all_page_nav?limit=20]>
+<[module:comments?limit=20&striptags=1&substr=30]>
+<[module:page_navigator.comments?limit=20]>
 <div id="content">
 	<div id="element">
 	<[if:$comment_input.open]>
@@ -23,7 +23,7 @@
 				<td width=17%>发表日期</td>
 				<td width=10%>操作</td>
 			</tr>
-			<[loop:$comments_list_all AS $comment]>
+			<[loop:$comments AS $comment]>
 			<tr id="drag-{$comment.comment_id}">
 				<td><input type="checkbox" class="checkbox_element" name="comment_id[]" value="{$comment.comment_id}"/></td>
 				<td>{$comment.comment_user}
@@ -60,9 +60,9 @@
 			<span onclick="if(confirm('您确定将这些评论展现吗?')) {$('#do').val('approved'); document.getElementById('all_comments').submit();}">展现</span><b>,</b>
 			<span onclick="if(confirm('您确定将这些评论标记为待审核吗?')) {$('#do').val('waitting'); document.getElementById('all_comments').submit();}">待审核</span><b>,</b>
 			<span onclick="if(confirm('您确定将这些评论标记为垃圾吗?')) {$('#do').val('spam'); document.getElementById('all_comments').submit();}">垃圾评论</span>
-			<[if:$comments_list_all_page_nav.next]><a href="{$static_var.index}/admin/comments/all/?comment_page={$comments_list_all_page_nav.next}">下一页</a><[/if]>
-			<[if:$comments_list_all_page_nav.next and $comments_list_all_page_nav.prev]><u>,</u><[/if]>
-			<[if:$comments_list_all_page_nav.prev]><a href="{$static_var.index}/admin/comments/all/?comment_page={$comments_list_all_page_nav.prev}">上一页</a><[/if]>
+			<[if:$page_navigator.comments.next]><a href="{$page_navigator.comments.next_permalink}">下一页</a><[/if]>
+			<[if:$page_navigator.comments.next and $page_navigator.comments.prev]><u>,</u><[/if]>
+			<[if:$page_navigator.comments.prev]><a href="{$page_navigator.comments.prev_permalink}">上一页</a><[/if]>
 		</div>
 	</div>
 </div>

@@ -1,7 +1,7 @@
 <?php
 /**********************************
  * Created on: 2006-12-16
- * File Name : module.posts_list_page_nav.php
+ * File Name : module.posts_is_archive.php
  * Copyright : Magike Group
  * License   : GNU General Public License 2.0
  *********************************/
@@ -14,7 +14,7 @@ class PostsIsArchive extends PageNavigator
 		$getArgs = $this->initArgs($args,$require);
 		$postModel = $this->loadModel('posts');
 		$total = $postModel->countAllEntries();
-		return $this->makeClassicNavigator($getArgs['limit'],$total);
+		return $this->makeClassicNavigator($getArgs['limit'],$total,'page/');
 	}
 }
 ?>

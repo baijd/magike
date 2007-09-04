@@ -28,22 +28,13 @@ class UserInput extends MagikeModule
 					  'user_mail'	=> $_POST['user_mail'],
 					  'user_url'	=> $_POST['user_url'],
 					  'user_nick' => $_POST['user_nick'],
-					  'user_about'	=> $_POST['user_about']);
+					  'user_about'	=> $_POST['user_about'],
+					  'user_group'	=> $_POST['user_group']);
 		if(isset($_POST['user_password']) && $_POST['user_password'])
 		{
 			$args['user_password'] = md5($_POST['user_password']);
 		}
 		$userModel->updateByKey($_GET['user_id'],$args);
-		
-		$groupModel = $this->loadModel('groups');
-		$groupModel->deleteUserGroup($_GET['user_id']);
-		if(isset($_POST['user_group']) && $_POST['user_group'])
-		{
-			foreach($_POST['user_group'] as $id)
-			{
-				$groupModel->insertUserGroup($_GET['user_id'],$id);
-			}
-		}
 		
 		$this->result['open'] = true;
 		$this->result['word'] = '您的用户"'.$_POST['user_name'].'" 已经更新成功';
@@ -63,16 +54,8 @@ class UserInput extends MagikeModule
 									  'user_mail'	=> $_POST['user_mail'],
 									  'user_url'	=> $_POST['user_url'],
 									  'user_nick' => $_POST['user_nick'],
-									  'user_about'	=> $_POST['user_about']));
-		
-		if(isset($_POST['user_group']) && $_POST['user_group'])
-		{
-			$groupModel = $this->loadModel('groups');
-			foreach($_POST['user_group'] as $id)
-			{
-				$groupModel->insertUserGroup($insertId,$id);
-			}
-		}
+									  'user_about'	=> $_POST['user_about'],
+									  'user_group'	=> $_POST['user_group']));
 		
 		$this->result['open'] = true;
 		$this->result['word'] = '您的用户 "'.$_POST['user_name'].'" 已经提交成功'.(isset($_POST['user_password']) && $_POST['user_password'] ? '' : ',密码为<strong>'.$password.'</strong>');
@@ -83,15 +66,7 @@ class UserInput extends MagikeModule
 		$this->requireGet('user_id');
 		$select = is_array($_GET['user_id']) ? $_GET['user_id'] : array($_GET['user_id']);
 		$userModel = $this->loadModel('users');
-		$groupModel = $this->loadModel('groups');
 		$userModel->deleteByKeys($select,array(1));
-		foreach($select as $id)
-		{
-			if($id != 1)
-			{
-				$groupModel->deleteUserGroup($id);
-			}
-		}
 		
 		$this->result['open'] = true;
 		$this->result['word'] = '您删除的用户已经生效';

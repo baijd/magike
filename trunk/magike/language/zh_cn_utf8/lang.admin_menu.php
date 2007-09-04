@@ -29,11 +29,15 @@ $lang = array(
 	'users'		=> '用户',
 	'all_users'	=> '所有用户',
 	'add_user'	=> '增加用户',
+	'my_profile'	=> '我的资料',
 	'add_user_group'=> '增加用户组',
 	'user_group'=> '用户组',
 	'paths'		=> '路径',
 	'all_paths' => '路径列表',
 	'add_path'	=> '增加路径',
+	'plugins'		=> '插件',
+	'all_plugins' => '插件列表',
+	'search_plugin' => '查找插件',
 	'styles'	=> '外观',
 	'all_styles'=> '所有外观',
 	'custom_style'=> '自定义外观',
@@ -44,5 +48,6 @@ $lang = array(
 	'setting_comments_output' => '回响',
 	'setting_users'	=> '用户',
 	'setting_mail'	=> '邮件',
+	'setting_permalink' => '静态链接',
 );
 ?>

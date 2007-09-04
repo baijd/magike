@@ -17,6 +17,9 @@ class PageNavigator extends MagikeModule
 		: intval($total/$limit);
 		$result['query'] = $query;
 		
+		$result['next_permalink'] = $this->stack['static_var']['index']."/".$query.$result['next'];
+		$result['prev_permalink'] = $this->stack['static_var']['index']."/".$query.$result['prev'];
+		
 		return $result;
 	}
 }

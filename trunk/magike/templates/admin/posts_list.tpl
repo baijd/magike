@@ -2,8 +2,8 @@
 <[include:menu]>
 
 <[module:post_input]>
-<[module:posts?&sub=20&striptags=1&limit=20]>
-<[module:page_navigator.posts?limit=20]>
+<[module:posts.is_admin?&sub=20&striptags=1&limit=20 as posts]>
+<[module:page_navigator.posts_is_admin?limit=20 as page_navigator.posts]>
 <div id="content">
 	<div id="element">
 	<[if:$post_input.open]>
@@ -56,9 +56,9 @@
 			<span onclick="selectTableOther('post_list','checkbox_element')">{lang.admin_db_grid.select_other}</span><b>,</b>
 			<span onclick="if(confirm('您确定删除这些文章吗?')) document.getElementById('all_posts').submit();">{lang.admin_db_grid.select_delete}</span><b>,</b>
 			<span id="search_btn">搜索</span>
-			<[if:$page_navigator.posts.next]><a href="{$static_var.index}/admin/posts/all/?page={$posts_list_page_nav.next}">下一页</a><[/if]>
+			<[if:$page_navigator.posts.next]><a href="{$static_var.index}/admin/posts/all/?page={$page_navigator.posts.next}">下一页</a><[/if]>
 			<[if:$page_navigator.posts.next and $page_navigator.posts.prev]><u>,</u><[/if]>
-			<[if:$page_navigator.posts.prev]><a href="{$static_var.index}/admin/posts/all/?page={$posts_list_page_nav.prev}">上一页</a><[/if]>
+			<[if:$page_navigator.posts.prev]><a href="{$static_var.index}/admin/posts/all/?page={$page_navigator.posts.prev}">上一页</a><[/if]>
 	</div>
 </div>
 <script>

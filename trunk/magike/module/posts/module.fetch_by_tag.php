@@ -1,12 +1,12 @@
 <?php
 /**********************************
  * Created on: 2006-12-16
- * File Name : module.is_recent_archive.php
+ * File Name : module.fetch_by_tag.php
  * Copyright : Magike Group
  * License   : GNU General Public License 2.0
  *********************************/
  
- class fetchByTag extends Posts
+ class FetchByTag extends Posts
  {
  	private $result;
 	
