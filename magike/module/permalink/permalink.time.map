@@ -1,0 +1,6 @@
+#<strong class="title">按日期归档</strong>
+#<strong class="description">http://yourdomain/[post_year=%d]/[post_month=%d]/[post_day=%d]/[post_name=%s].html</strong>
+trackbacks /[post_year=%d]/[post_month=%d]/[post_day=%d]/[post_name=%s].html/trackback/ 0
+archives /[post_year=%d]/[post_month=%d]/[post_day=%d]/[post_name=%s].html 0
+rss /feed/ 0
+archives_rss /[post_year=%d]/[post_month=%d]/[post_day=%d]/[post_name=%s].html/feed/ 0

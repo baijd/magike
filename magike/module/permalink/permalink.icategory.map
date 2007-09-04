@@ -1,0 +1,6 @@
+#<strong class="title">按分类归档</strong>
+#<strong class="description">http://yourdomain/[category_postname=%a]/[post_name=%s].html</strong>
+trackbacks /[category_postname=%a]/[post_name=%s].html/trackback/ 0
+archives /[category_postname=%a]/[post_name=%s].html 0
+rss /feed/ 0
+archives_rss /[category_postname=%s]/[post_name=%s].html/feed/ 0
