@@ -1,0 +1,20 @@
+#<strong class="title">默认风格</strong>
+#<strong class="description">http://yourdomain/archives/[post_id=%d]/</strong>
+trackbacks /archives/[post_id=%d]/trackback/ 0
+validator /helper/validator/ 0
+file_output /res/[file_id=%d]/[file_name=%p] 0
+archives /archives/[post_id=%d]/ 0
+pages /[post_name=%s] 0
+rss /rss/ 0
+archives_page /page/[page=%d]/ 0
+post_comment /post_comment/[post_id=%d]/ 0
+category /category/[category_postname=%a]/ 0
+category_page /category/[category_postname=%a]/[page=%d]/ 0
+tag_archives /tags/[tag_name=%s]/ 0
+tag_archives_page /tags/[tag_name=%s]/[page=%d]/ 0
+search_archives /search/ 0
+archives_rss /rss/archives/[post_id=%d]/ 0
+register /register/ 0
+tags /tags/ 0
+xmlrpc /xmlrpc.api 0
+thumbnail /thumb/[file_id=%d]/[file_name=%p] 0

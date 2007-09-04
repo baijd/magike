@@ -1,0 +1,6 @@
+#<strong class="title">Wordpress风格</strong>
+#<strong class="description">http://yourdomain/archives/[post_name=%s].html</strong>
+trackbacks /archives/[post_name=%s].html/trackback/ 0
+archives /archives/[post_name=%s].html 0
+rss /feed/ 0
+archives_rss /archives/[post_name=%s].html/feed/ 0
