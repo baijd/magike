@@ -18,3 +18,4 @@ register /register/ 0
 tags /tags/ 0
 xmlrpc /xmlrpc.api 0
 thumbnail /thumb/[file_id=%d]/[file_name=%p] 0
+view_thumbnail /view_thumb/[file_id=%d]/[file_name=%p] 0

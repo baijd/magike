@@ -89,9 +89,16 @@ class ThumbnailOutput extends MagikeModule
 				if(in_array($file['file_type'],$fileType))
 				{
 					$size = getimagesize($path);
-					$image = imagecreatefromstring(file_get_contents($path));
-					$dst = $this->getResampledImg($image,$size,array($getArgs['width'],$getArgs['height']),0);
-					imagejpeg($dst, null, 100);
+					if($size[0] > $getArgs['width'])
+					{
+						$image = imagecreatefromstring(file_get_contents($path));
+						$dst = $this->getResampledImg($image,$size,array($getArgs['width'],$getArgs['height']),0);
+						imagejpeg($dst, null, 100);
+					}
+					else
+					{
+						return file_get_contents($path);
+					}
 					return;
 				}
 				else
