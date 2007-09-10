@@ -80,6 +80,7 @@
 		{$admin_login.message}
 	</div>
 	<[/if]>
+	<[if:$admin_login.login_open]>
 	<form method="post">
 	<h2>{lang.login.user_name}</h2>
 	<p><input type="text" name="username" style="width:260px" class="text" /></p>
@@ -90,6 +91,7 @@
 	<input type="button" value="{lang.login.return_homepage}" onclick="setTimeout('window.location.href = homePage;',0);" class="button" />
 	<input type="hidden" name="do" value="login" /></p>
 	</form>
+	<[/if]>
 	</div>
 </div>
 <script>

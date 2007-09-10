@@ -1,7 +1,10 @@
 <[php]>
 echo '<?xml version="1.0" encoding="'.$data["static_var"]["charset"].'"?>';
 <[/php]>
-<rss version="2.0">
+<rss version="2.0"
+xmlns:content="http://purl.org/rss/1.0/modules/content/"
+xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+xmlns:dc="http://purl.org/dc/elements/1.1/">
 <channel>
 <[module:get_webmaster]>
 <[module:post?time_format=r]>

@@ -85,11 +85,13 @@ class CommentInsert extends MagikeModule
 			{
 				$this->result['word'] = '您的评论正在等待审核';
 				$input['comment_publish'] = 'waitting';
+				$this->showWord = true;
 			}
 			if(isset($this->stack['comment_filter']) && $this->stack['comment_filter'])
 			{
 				$this->result['word'] = $this->stack['comment_filter']['word'];
 				$input['comment_publish'] = $this->stack['comment_filter']['publish'];
+				$this->showWord = true;
 			}
 			
 			$commentModel->insertTable($input);

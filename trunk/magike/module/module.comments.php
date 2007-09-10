@@ -18,7 +18,7 @@ class Comments extends Posts
 	{
 		$val = $this->prasePost($val,$num,$last);
 		
-		if($val['comment_publish'] == 'waitting' || $val['comment_publish'] == 'spam')
+		if(($val['comment_publish'] == 'waitting' || $val['comment_publish'] == 'spam') && $this->getArgs['private'])
 		{
 			if($_SERVER["REMOTE_ADDR"] != $val['comment_ip'] || $_SERVER["HTTP_USER_AGENT"] != $val['comment_agent'])
 			{
@@ -39,6 +39,7 @@ class Comments extends Posts
 	{
 		$require = array('limit'  => null,		//每页显示多少,0表示都显示
 					  'substr' => 0,			//摘要字数,0表示不摘要
+					  'private' => 1,
 					  'sub' => $this->stack['static_var']['post_sub'],
 					  'time_format' => $this->stack['static_var']['comment_date_format'],	//日期输出格式
 					  'orderby' => 'table.comments.id',		//排序索引

@@ -13,10 +13,10 @@ class Action extends Path
 		$time = mgGetMicrotime();	//初始化解析时间
 		parent::__construct($location);
 		$this->stack = array();
-		$this->stack[$this->moduleName] = $this->runModule();
-		$this->stack[$this->moduleName]['prase_time'] = $time;  //初始化解析时间
-		$this->stack[$this->moduleName]['data'] = $data;
-		$this->stack[$this->moduleName]['message'] = $message;
+		$this->stack['action'] = $this->runModule();
+		$this->stack['action']['prase_time'] = $time;  //初始化解析时间
+		$this->stack['action']['data'] = $data;
+		$this->stack['action']['message'] = $message;
 		$this->runKernelModule();
 		$this->runAction();
 	}
@@ -50,7 +50,7 @@ class Action extends Path
 	private function runAction()
 	{
 		//分析path模块传递的数据
-		$cacheTime = intval($this->stack[$this->moduleName]['cache']);
+		$cacheTime = intval($this->stack['action']['cache']);
 		$pastTime = false;
 		if($cacheTime)
 		{
@@ -75,16 +75,16 @@ class Action extends Path
 		
 		if(!$cacheTime || $pastTime || __DEBUG__)
 		{
-			if(__DEBUG__ && !is_dir(__DIR__.'/action/'.$this->stack[$this->moduleName]['action']))
+			if(__DEBUG__ && !is_dir(__DIR__.'/action/'.$this->stack['action']['action']))
 			{
-				$this->throwException(E_ACTION_ACTIONNOTEXISTS,$this->stack[$this->moduleName]['action']);
+				$this->throwException(E_ACTION_ACTIONNOTEXISTS,$this->stack['action']['action']);
 			}
 			else
 			{
 				$tmp = null;
-				require_once(__DIR__.'/action/'.$this->stack[$this->moduleName]['action'].'/action.'.$this->stack[$this->moduleName]['action'].'.php');
-				eval('$tmp = new '.mgFileNameToClassName($this->stack[$this->moduleName]['action'])
-				.'("'.str_replace('{','{$',$this->stack[$this->moduleName]["file"]).'");');
+				require_once(__DIR__.'/action/'.$this->stack['action']['action'].'/action.'.$this->stack['action']['action'].'.php');
+				eval('$tmp = new '.mgFileNameToClassName($this->stack['action']['action'])
+				.'("'.str_replace('{','{$',$this->stack['action']["file"]).'");');
 				$tmp->runAction();
 			}
 
@@ -96,7 +96,7 @@ class Action extends Path
 				{
 					mgMkdir($path);
 				}
-				file_put_contents($mimePath,$this->stack[$this->moduleName]['content_type']);
+				file_put_contents($mimePath,$this->stack['action']['content_type']);
 				file_put_contents($filePath,$contents);
 			}
 			

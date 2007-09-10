@@ -55,8 +55,8 @@ class ThumbnailOutput extends MagikeModule
 	
 	public function runModule($args)
 	{
-		$require = array('width' => 88,
-					'height' => 88);
+		$require = array('width' => 80,
+					'height' => 80);
 		$getArgs = $this->initArgs($args,$require);
 		
 

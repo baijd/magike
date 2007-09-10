@@ -5,7 +5,6 @@
 <[module:get_current_user]>
 <[module:write_post]>
 
-<script language="javascript" type="text/javascript" src="{$static_var.siteurl}/templates/{$static_var.admin_template}/javascript/interface.js"></script>
 <style>
 #files_grid
 {
@@ -54,6 +53,10 @@
 }
 </style>
 
+<[php]>
+$data['custom_tags'] = $data['static_var']['write_editor_custom_tags'] ? explode(",",$data['static_var']['write_editor_custom_tags']) : array();
+<[/php]>
+
 <div id="content">
 	<div id="element">
 		<div class="sidebar">
@@ -67,22 +70,40 @@
 			正在处理您的请求
 		</div>
 	<form method="post" id="write" action="{$static_var.index}/admin/posts/all/?do={$write_post.do}<[if:$write_post.do == "update"]>&post_id={$write_post.post_id}<[/if]>">
-		<div class="tab_nav">
-			<ul id="tab">
-				<li id="first" rel="write_content"><span>{lang.admin_write.write}</span></li>
-				<li rel="write_option"><span>{lang.admin_write.option}</span></li>
-				<li rel="write_tools"><span>{lang.admin_write.publish}</span></li>
-				<li rel="write_upload"><span>{lang.admin_write.upload}</span></li>
-				<li><span>{lang.admin_write.tools}</span></li>
-			</ul>
-		</div>
 		<div class="tab_content" id="write_tab">
 			<div id="write_content" class="tab_element first">
-				<p style="margin-bottom:10px;"><input type="text" onfocus="this.select();" class="validate-me text" name="post_title" size=60 value="<[if:$write_post.post_title]>{$write_post.post_title}<[else]>无标题文档<[/if]>" /><span class="validate-word" id="post_title-word"></span></p>
-					<p>
-						<textarea name="post_content" rows="{$static_var.write_editor_rows}" class="validate-me" style="border:1px solid #CCC;border-right:1px solid #777;border-bottom:1px solid #777;background:#EEE url({$static_var.siteurl}/templates/{$static_var.admin_template}/images/editor_loading.gif) center no-repeat;width:100%;">{$write_post.post_content}</textarea>
+				<p style="margin-bottom:10px;font-size:11pt;line-height:26px"><input type="text" onfocus="this.select();" class="validate-me text" name="post_title" size=60 value="<[if:$write_post.post_title]>{$write_post.post_title}<[else]>无标题文档<[/if]>" />
+				 <select name="category_id" class="text">
+					<[if:$write_post.do == "update"]>
+					<[loop:$categories_list AS $category]>
+						<option value="{$category.id}" <[if:$category.id == $write_post.category_id]>selected=true<[/if]>>{$category.category_name}</option>
+					<[/loop]>
+					<[/if]>
+					<[if:$write_post.do == "insert"]>
+					<[loop:$categories_list AS $category]>
+						<option value="{$category.id}" <[if:$category.id == $static_var.write_default_category]>selected=true<[/if]>>{$category.category_name}</option>
+					<[/loop]>
+					<[/if]>
+					</select>
+				</p>
+					<div class="toolbar">
+					<button type="button" accesskey="b" onclick="editorAdd('<strong>','</strong>');"><strong>B</strong></button>
+					<button type="button" accesskey="i" onclick="editorAdd('<em>','</em>');"><em>i</em></button>
+					<button type="button" accesskey="d" onclick="editorAdd('<del>','</del>');"><del>del</del></button>
+					<button type="button" accesskey="ctrl+b" onclick="editorAdd('<blockquote>','</blockquote>');">blockquote</button>
+					<button type="button" accesskey="u" onclick="editorAdd('<ul>','</ul>');">ul</button>
+					<button type="button" accesskey="o" onclick="editorAdd('<ol>','</ol>');">ol</button>
+					<button type="button" accesskey="l" onclick="editorAdd('<li>','</li>');">li</button>
+					<button type="button" accesskey="a" onclick="editorInsertLink('插入链接','链接地址:','链接标题:','打开方式:','确定','取消');">link</button>
+					<button type="button" accesskey="ctrl+i" onclick="editorInsertImage('插入文件','{$static_var.index}/admin/posts/upload/','确定','取消');">img</button>
+					<button type="button" accesskey="c" onclick="editorAdd('<code>','</code>');">code</button>
+					<button type="button" accesskey="m" onclick="editorAdd('<!--more-->','');">more</button>
+					<[loop:$custom_tags AS $custom_tag]>
+					<button type="button" onclick="editorAdd('<{$custom_tag}>','</{$custom_tag}>');">{$custom_tag}</button>
+					<[/loop]>
+					</div>
+						<textarea name="post_content" id="post_content" class="validate-me textarea" style="width:710px;height:<[php]>echo $data['static_var']['write_editor_rows']*18<[/php]>px">{$write_post.post_content}</textarea>
 						<span class="validate-word" id="post_content-word"></span>
-					</p>
 			</div>
 			<div id="write_tools" class="tab_element">
 				<div class="input">
@@ -200,18 +221,20 @@
 				</div>
 			</div>
 		</div>
-		<div style="float:left;height:40px;padding-top:5px;">
+		<div style="float:left;height:40px;padding-top:5px;width:720px">
 		<span class="button" id="draft_button" onclick="unloadConfirm = true;$('#post_is_draft').val(1);document.getElementById('write').submit();">{lang.admin_write.draft}</span>
 		<span class="button" onclick="unloadConfirm = true;$('#post_is_draft').val(0);magikeValidator('{$static_var.index}/helper/validator/','write_post');">{lang.admin_write.publish}</span>
 		<input type="hidden" name="post_is_draft" id="post_is_draft" value="0" /><input type="hidden" id="post_id" name="post_id" class="validate-me" value="{$write_post.post_id}" />
 		<span class="hit_message"></span>
+		<span style="float:right;font-size:10pt;text-decoration:underline;cursor:pointer">+ 打开发布选项</span>
 		</div>
 	</form>
 	</div>
 </div>
 
-<script language="javascript" type="text/javascript" src="{$static_var.siteurl}/templates/{$static_var.admin_template}/javascript/tiny_mce/tiny_mce.js"></script>
+<script language="javascript" type="text/javascript" src="{$static_var.siteurl}/templates/{$static_var.admin_template}/javascript/magike_editor.js"></script>
 <script>
+initEditor("post_content");
 registerTab("#tab","#write_tab");
 function validateSuccess()
 {
@@ -234,133 +257,6 @@ function checkPasswordInput(ele)
 checkPasswordInput("#post_is_hidden_check");
 
 new AutoCompleter("#post_tags","{$static_var.index}/admin/posts/tags_search/","auto-completer","auto-completer-hover","auto-completer-blur","auto-completer-hover");
-
-function insertContent()
-{
-	tinyMCE.execCommand('mceFocus',false,'post_content');
-	if($(".sidebar").attr("type") == "true")
-	{
-		tinyMCE.execCommand('mceInsertContent',true,'<img src=' + $(".sidebar").attr("rel") + ' alt=' + $(".sidebar").attr("alt") + ' />');
-	}
-	else
-	{
-		tinyMCE.execCommand('mceInsertContent',true,'<a href=' + $(".sidebar").attr("rel") + ' title=' + $(".sidebar").attr("alt") + ' >'+$(".sidebar").attr("alt")+'</a>');
-	}
-}
-
-var filePage;
-
-function getFilesList(page)
-{
-	showLoading = true;
-	$("#files_grid").html("");
-	
-	filePage = page;
-	
-	$.getJSON("{$static_var.index}/admin/posts/write/files_list_page_nav/?page="+page,
-	function(json)
-	{
-		if(json["next"] == 0)
-		{
-			$("#next-button").attr("disabled","disabled");
-		}
-		else
-		{
-			$("#next-button").removeAttr("disabled");
-		}
-		
-		if(json["prev"] == 0)
-		{
-			$("#prev-button").attr("disabled","disabled");
-		}
-		else
-		{
-			$("#prev-button").removeAttr("disabled");
-		}
-	});
-	
-	$.getJSON("{$static_var.index}/admin/posts/files_list/?page="+page,
-				function(json)
-				{
-					for(var i in json)
-					{
-					if(typeof(json[i]["id"]) != "undefined")
-					{
-						li = $(document.createElement("li"));
-						src = "{$static_var.index}/thumb/" + json[i]["id"]+"/"+json[i]["file_name"];
-						li.attr("className","normal");
-						li.attr("rel",src);
-						li.attr("alt",json[i]["file_describe"] ? json[i]["file_describe"] : json[i]["file_name"]);
-						li.attr("type",json[i]["is_image"]);
-						li.attr("id",json[i]["id"]);
-						img = $(document.createElement("img"));
-						if(json[i]["is_image"])
-						{
-							img.attr("src",src);
-						}
-						else
-						{
-							img.attr("src","{$static_var.siteurl}/templates/{$static_var.admin_template}/images/file_default.gif");
-						}
-						img.attr("width",88);
-						img.attr("alt",json[i]["file_describe"]);
-						p = $(document.createElement("p"));
-						p.css("font-size","8pt");
-						p.css("padding","5px");
-						p.html(li.attr("alt"));
-						li.append(img);
-						li.append(p);
-						$("#files_grid").append(li);
-						li.hover(
-							function()
-							{
-								$(this).attr("className",$(this).attr("className")+" hover");
-							},
-							function()
-							{
-								$(this).attr("className",$(this).attr("className").replace(" hover",""));
-							}
-						);
-						li.click(
-							function()
-							{
-								$("#sidebar_word").html($(this).attr("rel").replace('/thumb/','/res/'));
-								$(".sidebar").attr("rel",$(this).attr("rel").replace('/thumb/','/res/'));
-								$(".sidebar").attr("alt",$(this).attr("alt"));
-								$(".sidebar").attr("type",$(this).attr("type"));
-								$(".sidebar").attr("id",$(this).attr("id"));
-						  		$("#insert-button").removeAttr("disabled");
-						  		$("#delete-button").removeAttr("disabled");
-								
-								if($(".sidebar").css("display") == "none")
-								{
-									$(".sidebar").slideDown();
-								}
-							}
-						);
-					}
-					}
-					showLoading = false;
-					$(".proc").fadeOut();
-				});
-}
-
-function deleteFile()
-{
-	showLoading = true;
-	$.getJSON("{$static_var.index}/admin/posts/write/delete_file/?do=del&file_id="+$(".sidebar").attr("id"),
-			  function(json)
-			  {
-			  	if(json['open'])
-			  	{
-			  		$("#sidebar_word").html(json['word']);
-			  		$("#insert-button").attr("disabled","disabled");
-			  		$("#delete-button").attr("disabled","disabled");
-			  	}
-			  	getFilesList(1);
-			  });
-}
-
 
 var draftChange = 0;
 
@@ -465,22 +361,3 @@ $('a').click(
 </script>
 
 <[include:footer]>
-<script>
-tinyMCE.init({
-	mode : "exact",
-	theme : "advanced",
-	elements : "post_content",
-	language :"{$static_var.language}",
-	plugins : "flash,magike,inlinepopups",
-	theme_advanced_buttons1 : "bold,italic,underline,strikethrough, separator, forecolor ,magike_more",
-	theme_advanced_buttons1_add_before: "undo,redo,code,separator,hr,link,unlink,image,flash,separator,bullist,numlist,outdent,indent,justifyleft,justifycenter,justifyright",
-	theme_advanced_buttons2 :"",
-	theme_advanced_buttons3 : "",
-	theme_advanced_toolbar_location : "top",
-	theme_advanced_toolbar_align : "left",
-	content_css : "{$static_var.siteurl}/templates/{$static_var.admin_template}/editor.css",
-	relative_urls : false,
-	remove_script_host : false,
-	extended_valid_elements : "{$static_var.write_editor_custom_tags}"
-	});
-</script>

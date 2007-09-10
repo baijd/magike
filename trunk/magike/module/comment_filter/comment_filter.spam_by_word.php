@@ -12,15 +12,28 @@ class SpamByWord
 	
 	function __construct($val)
 	{
-		$this->settingWord = '/'.implode('|',array_filter(explode(',',$val),'preg_quote')).'/i';
+		$this->settingWord = explode(",",$val);
+	}
+	
+	private function hasWord($items,$str)
+	{
+		foreach($items as $val)
+		{
+			if(false !== strpos($str,trim($val)))
+			{
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 	public function runFilter()
 	{
 		$content = isset($_POST['comment_text']) ? $_POST['comment_text'] : NULL;
 		$content = isset($_POST['excerpt']) ? $_POST['excerpt'] : $content;
-		
-		if(preg_match($this->settingWord,$content))
+
+		if($this->hasWord($this->settingWord,$content))
 		{
 			return array('publish' => 'spam','word' => '您的言论由于含有敏感词汇,将在管理员审核通过后展现');
 		}

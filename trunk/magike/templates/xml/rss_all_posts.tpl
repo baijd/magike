@@ -1,7 +1,10 @@
 <[php]>
 echo '<?xml version="1.0" encoding="'.$data["static_var"]["charset"].'"?>';
 <[/php]>
-<rss version="2.0">
+<rss version="2.0"
+xmlns:content="http://purl.org/rss/1.0/modules/content/"
+xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+xmlns:dc="http://purl.org/dc/elements/1.1/">
 <channel>
 <[module:get_webmaster]>
 <[module:posts.is_feed?limit=10&time_format=r&content=1]>
@@ -17,7 +20,11 @@ echo '<?xml version="1.0" encoding="'.$data["static_var"]["charset"].'"?>';
 <item>
 <title><![CDATA[{$post.post_title}]]></title>
 <link>{$post.permalink}</link>
+<comments>{$post.permalink}#comments</comments>
+<category>{$post.category_name}</category>
+<guid>{$post.permalink}</guid>
 <author>{$post.post_user_name}</author>
+<dc:creator>{$post.post_user_name}</dc:creator>
 <pubDate>{$post.post_time}</pubDate>
 <description><![CDATA[{$post.post_content}]]></description>
 </item>

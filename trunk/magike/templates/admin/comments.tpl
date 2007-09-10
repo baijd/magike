@@ -2,7 +2,7 @@
 <[include:menu]>
 
 <[module:comment_input]>
-<[module:comments?limit=20&striptags=1&substr=30]>
+<[module:comments?private=0&limit=20&striptags=1&substr=30]>
 <[module:page_navigator.comments?limit=20]>
 <div id="content">
 	<div id="element">

@@ -22,7 +22,7 @@ class Path extends MagikeModule
 		parent::__construct();
 		$this->globalModel = array();
 		$cache = new Cache();
-		$cache->checkCacheFile(array($this->cacheDir  => array('listener' => 'dirExists',
+		$cache->checkCacheFile(array(__CACHE__.'/action'  => array('listener' => 'dirExists',
 									     'callback' => array($this,'buildCache')
 									    )));
 		$this->location = $location;
@@ -35,8 +35,8 @@ class Path extends MagikeModule
 		$this->pathConfig = array();
 		$pathConfig = array();
 		$pathDeep = count(explode('/',$this->path));
-		$pathFile = $this->cacheDir.'/'.$pathDeep.'.php';
-		$pathFileUp = $this->cacheDir.'/'.($pathDeep - 1).'.php';
+		$pathFile = __CACHE__.'/action/'.$pathDeep.'.php';
+		$pathFileUp = __CACHE__.'/action/'.($pathDeep - 1).'.php';
 		$pathFileExists = file_exists($pathFile);
 		$pathFileUpExists = file_exists($pathFileUp) & $this->last;
 
@@ -223,7 +223,7 @@ class Path extends MagikeModule
 		$pathModel->fetch(array('table' => 'table.paths'),array('function' => array($this,'pushPathData')));
 		foreach($this->pathCache as $key => $val)
 		{
-			mgExportArrayToFile($this->cacheDir.'/'.$key.'.php',$val,'pathConfig',true);
+			mgExportArrayToFile(__CACHE__.'/action/'.$key.'.php',$val,'pathConfig',true);
 		}
 	}
 
