@@ -163,6 +163,7 @@ function editorInsertImage(popupTitle,frameUrl,okText,cancelText)
 	magikeUI.createPopup({title: popupTitle,center: true,block:true,shadow:true,width: 600,height: 460,text:div,ok:okText,cancel:cancelText,handle:editorInsertImageHandle});
 }
 
+var editorInsertImageIsImage = true;
 function editorInsertImageHandle()
 {
 	obj = document.getElementById('image_frame').contentWindow.document;
@@ -172,7 +173,14 @@ function editorInsertImageHandle()
 	
 	if(url)
 	{
-		editorAdd('<img src="' + url + '"' + (ititle ? ' title="' + ititle + '"' : '') + (link ? ' align="' + link + '"' : '') + '/>','');
+		if(editorInsertImageIsImage)
+		{
+			editorAdd('<img src="' + url + '"' + (ititle ? ' alt="' + ititle + '"' : '') + (link ? ' align="' + link + '"' : '') + '/>','');
+		}
+		else
+		{
+			editorAdd('<a href="' + url + '"' + (ititle ? ' title="' + ititle + '"' : '') + '/>','</a>');
+		}
 		parent.$('.magikeShadow').remove();
 		parent.$('.magikePopup').remove();
 	}

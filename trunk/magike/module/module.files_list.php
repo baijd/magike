@@ -13,6 +13,10 @@ class FilesList extends MagikeModule
 		$trim = array('png','jpg','jpeg','gif','bmp','tiff');
 		$match = eregi("^([_@0-9a-zA-Z\x80-\xff\^\.\%-]{0,})[\.]([0-9a-zA-Z]{1,})$",$val['file_name'],$file_name);
 		$val['is_image'] = in_array(strtolower($file_name[2]),$trim);
+		$val['file_id'] = $val['id'];
+		$val["permalink"] = $this->stack['static_var']['index'].vsprintf($this->stack['permalink']['file_output']['path'],mgArrayIntersectKey($val,$this->stack['permalink']['file_output']['value']));
+		$val["thumbnail_permalink"] = $this->stack['static_var']['index'].vsprintf($this->stack['permalink']['thumbnail']['path'],mgArrayIntersectKey($val,$this->stack['permalink']['thumbnail']['value']));
+		$val["view_thumbnail_permalink"] = $this->stack['static_var']['index'].vsprintf($this->stack['permalink']['view_thumbnail']['path'],mgArrayIntersectKey($val,$this->stack['permalink']['view_thumbnail']['value']));
 		return $val;
 	}
 	

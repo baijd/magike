@@ -142,7 +142,11 @@
 	</div>
 	<div id="file_content">
 		<[loop:$files_list AS $file]>
-		<div title="{$file.file_describe}" style="background-image:url({$static_var.index}/thumb/{$file.id}/{$file.file_name}); background-position:center; background-repeat:no-repeat;" class="file_element" onmousemove="$(this).addClass('file_hover');" onmouseout="$(this).removeClass('file_hover');" onclick="fileInsertImage('{$static_var.index}/res/{$file.id}/{$file.file_name}',this);">
+		<div title="{$file.file_describe}" style="background-image:url(<[if:$file.is_image]>{$file.thumbnail_permalink}<[else]>{$static_var.siteurl}/templates/{$static_var.admin_template}/images/plugin.gif<[/if]>); background-position:center; background-repeat:no-repeat;" 
+		class="file_element" 
+		onmousemove="$(this).addClass('file_hover');" 
+		onmouseout="$(this).removeClass('file_hover');" 
+		onclick="parent.editorInsertImageIsImage = <[if:$file.is_image]>true<[else]>false<[/if]>;fileInsertImage('{$file.permalink}',this);">
 		</div>
 		<[/loop]>
 	</div>

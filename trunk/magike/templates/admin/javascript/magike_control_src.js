@@ -553,7 +553,14 @@ MagikeUI.prototype = {
 			}
 		);
 		
-		okButton.click(args.handle ? args.handle : null);
+		okButton.click(args.handle ? args.handle : function()
+		{
+			popupWindow.remove();
+			if(popupWindow.shadow)
+			{
+				$('.magikeShadow').remove();
+			}
+		});
 	},
 	
 	//创建一个阴影
