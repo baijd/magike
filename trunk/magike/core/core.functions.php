@@ -106,10 +106,9 @@ if(function_exists('mb_substr'))
 	{
 		global $stack;
 		$charset = isset($stack['static_var']['charset']) ? $stack['static_var']['charset'] : 'UTF-8';
-		$str = mb_substr($str,$start,$end - $start,$charset);
-		return ($end < mb_strlen($str,$charset)) ? $str.$trim : $str;
+		return mb_strimwidth($str,$start,($end - $start)*2 + mb_strlen($trim,$charset),$trim,$charset);
 	}
-	
+
 	function mgStrLen($str)
 	{
 		global $stack;
