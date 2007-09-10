@@ -12,7 +12,6 @@ class ExceptionCatcher extends MagikeModule
 	{
 		switch ($this->stack['action']['message'])
 		{
-			case E_DATABASE:
 			case E_MODELFILENOTEXISTS:
 			case E_PATH_PATHNOTEXISTS:
 			case E_ACTION_ACTIONNOTEXISTS:
@@ -32,9 +31,18 @@ class ExceptionCatcher extends MagikeModule
 				header('Status: 404  Not  Found');
 				break;
 			}
+			case E_DATABASE:
+			{
+				header('HTTP/1.1 500 Internal Server Error');
+				break;
+			}
 			case E_ACCESSDENIED:
 			{
 				header('HTTP/1.1 403 Forbidden');
+				if(!$this->stack['access']['login'])
+				{
+					header('location: '.$this->stack['static_var']['login_url'].'?referer='.urlencode($_SERVER['REQUEST_URI']));
+				}
 				break;
 			}
 			case E_FORMISOUTOFDATE:

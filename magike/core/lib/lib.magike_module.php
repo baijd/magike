@@ -21,9 +21,6 @@ abstract class MagikeModule extends MagikeObject
 		parent::__construct();
 		
 		global $globalModel;
-		$this->moduleName = mgClassNameToFileName(get_class($this));
-		$this->cacheDir = __CACHE__.'/'.$this->moduleName;
-		$this->cacheFile = $this->cacheDir.'/'.$this->moduleName.'.php';
 		$this->getLanguage = array();
 		$this->waittingFor = NULL;
 		$this->globalModel = &$globalModel;

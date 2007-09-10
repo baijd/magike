@@ -16,11 +16,13 @@ class FilesList extends MagikeModule
 		return $val;
 	}
 	
-	public function runModule()
+	public function runModule($args)
 	{
+		$require = array('limit' => 20);
+		$getArgs = $this->initArgs($args,$require);
 		$page = isset($_GET['page']) ? $_GET['page'] : 1;
 		$fileModel = $this->loadModel('files');
-		return $fileModel->listFiles(5,($page-1)*5,array('function' => array($this,'praseFile')));
+		return $fileModel->listFiles($getArgs['limit'],($page-1)*$getArgs['limit'],array('function' => array($this,'praseFile')));
 	}
 }
 ?>

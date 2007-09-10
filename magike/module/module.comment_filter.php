@@ -39,15 +39,15 @@ class CommentFilter extends MagikeModule
 			}
 		}
 		
-		mgExportArrayToFile($this->cacheFile,$filterByType,'filter');
+		mgExportArrayToFile(__CACHE__.'/comment_filter/comment_filter.php',$filterByType,'filter');
 	}
 	
 	public function filterComment()
 	{
 		$filter = array();
-		require($this->cacheFile);
+		require(__CACHE__.'/comment_filter/comment_filter.php');
 		$filterByType = isset($filter[$this->filterType]) ? $filter[$this->filterType] : array();
-		$requireDir = __MODULE__.'/'.$this->moduleName.'/';
+		$requireDir = __MODULE__.'/comment_filter/';
 
 		foreach($filterByType as $key => $val)
 		{
@@ -57,10 +57,11 @@ class CommentFilter extends MagikeModule
 				$tmp = null;
 				require_once($currentFile);
 				$object = mgFileNameToClassName($key);
-				eval('$tmp = new '.$object.'($val);');
+				$tmp = new $object($val);
 				
 				//result返回一个数组,包含两个键值publish和word
-				$this->result = call_user_func(array($tmp,'runFilter'));
+				$this->result = $tmp->runFilter();
+				
 				if($this->result)
 				{
 					break;

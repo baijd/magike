@@ -37,6 +37,10 @@ class WritePost extends MagikeModule
 				$this->stack['static_var']['admin_title'] = '编辑 "'.$result['post_title'].'"';
 			}
 			
+			$result['post_content'] = preg_replace("/\s*<p>/is","",$result['post_content']);
+			$result['post_content'] = preg_replace("/\s*<\/p>\s*/is","\n\n",$result['post_content']);
+			$result['post_content'] = trim($result['post_content']);
+			
 			$result['do'] = 'update';
 			return $result;
 		}

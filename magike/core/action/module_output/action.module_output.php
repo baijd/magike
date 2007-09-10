@@ -73,6 +73,7 @@ class ModuleOutput extends MagikeObject
 		mgDebug('Run Module',$tmp);
 		
 		$this->stack['action']['content_type'] = "content-Type: {$this->stack['static_var']['content_type']}; charset={$this->stack['static_var']['charset']}";
+		header($this->stack['action']['content_type']);
 		echo $output;
 	}
 }

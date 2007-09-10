@@ -43,12 +43,12 @@ class Permalink extends MagikeModule
 		$this->pathCache = array();
 		$pathModel = new Database();
 		$pathModel->fetch(array('table' => 'table.paths'),array('function' => array($this,'pushPathData')));
-		mgExportArrayToFile($this->cacheFile,$this->pathCache,'permalink');
+		mgExportArrayToFile(__CACHE__.'/permalink/permalink.php',$this->pathCache,'permalink');
 	}
 
 	public function pushPathData($val)
 	{
-		if(false === strpos($val['path_name'],'/admin/') && 'exception' != $val['path_meta'] && 'index' != $val['path_meta'])
+		if((false === strpos($val['path_name'],'/admin/') || 'login' == $val['path_meta']) && 'exception' != $val['path_meta'] && 'index' != $val['path_meta'])
 		{
 			$this->pathCache[$val['path_meta']] = $this->prasePathValue($val['path_name']);
 		}
@@ -57,7 +57,7 @@ class Permalink extends MagikeModule
 	public function runModule()
 	{
 		$permalink = array();
-		require($this->cacheFile);
+		require(__CACHE__.'/permalink/permalink.php');
 		
 		//初始化一些静态链接
 		$this->stack['static_var']['template_url'] = $this->stack['static_var']['siteurl'].'/'.__TEMPLATE__.'/'.$this->stack['static_var']['template'];
@@ -67,6 +67,7 @@ class Permalink extends MagikeModule
 		$this->stack['static_var']['search_url'] = $this->stack['static_var']['index'].$permalink['search_archives']['path'];
 		$this->stack['static_var']['register_url'] = $this->stack['static_var']['index'].$permalink['register']['path'];
 		$this->stack['static_var']['tags_url'] = $this->stack['static_var']['index'].$permalink['tags']['path'];
+		$this->stack['static_var']['login_url'] = $this->stack['static_var']['index'].$permalink['login']['path'];
 		
 		return $permalink;
 	}

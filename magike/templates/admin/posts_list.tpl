@@ -10,8 +10,8 @@
 		<div class="message">
 			{$post_input.word}
 			<[if:$post_input.trackback]>
-				<[loop:$post_input.trackback AS $trackback]>
-					<br/>"{$trackback}" 已经成功发送
+				<[loop:$post_input.trackback AS $trackback BY $key]>
+					<br/>"{$key}" <[if:$trackback]>已经成功发送<[else]>发送失败<[/if]>
 				<[/loop]>
 			<[/if]>
 		</div>

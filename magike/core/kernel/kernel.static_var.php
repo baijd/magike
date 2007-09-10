@@ -29,7 +29,7 @@ class StaticVar extends MagikeModule
 	public function runModule()
 	{
 		$staticVar = array();
-		require($this->cacheFile);
+		require(__CACHE__.'/static_var/static_var.php');
 		$staticVar['server_timezone'] = mgGetTimeZoneDiff();
 		$staticVar['blog_title'] = $staticVar['blog_name'];
 		$staticVar['group'] = array(
@@ -47,7 +47,7 @@ class StaticVar extends MagikeModule
 	public function buildCache()
 	{
 		$this->initStaticValue();
-		mgExportArrayToFile($this->cacheFile,$this->staticVar,'staticVar');
+		mgExportArrayToFile(__CACHE__.'/static_var/static_var.php',$this->staticVar,'staticVar');
 	}
 	
 	public function pushStaticValue($val)

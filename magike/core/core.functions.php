@@ -99,17 +99,38 @@ function mgPraseVar($str,$var,$explode = '.')
 
 
 //适用于utf8的字符串函数
-function mgSubStr($str,$start,$end,$trim = "...")
-{
-	preg_match_all("/[\x01-\x7f]|[\xc2-\xdf][\x80-\xbf]|\xe0[\xa0-\xbf][\x80-\xbf]|[\xe1-\xef][\x80-\xbf][\x80-\xbf]|\xf0[\x90-\xbf][\x80-\xbf][\x80-\xbf]|[\xf1-\xf7][\x80-\xbf][\x80-\xbf][\x80-\xbf]/", $str, $info);
-	$str = join("",array_slice($info[0],$start,$end));
-	return ($end < (sizeof($info[0]) - $start)) ? $str.$trim : $str;
-}
 
-function mgStrLen($str)
+if(function_exists('mb_substr'))
 {
-	preg_match_all("/[\x01-\x7f]|[\xc2-\xdf][\x80-\xbf]|\xe0[\xa0-\xbf][\x80-\xbf]|[\xe1-\xef][\x80-\xbf][\x80-\xbf]|\xf0[\x90-\xbf][\x80-\xbf][\x80-\xbf]|[\xf1-\xf7][\x80-\xbf][\x80-\xbf][\x80-\xbf]/", $str, $info);
-	return sizeof($info[0]);
+	function mgSubStr($str,$start,$end,$trim = "...")
+	{
+		global $stack;
+		$charset = isset($stack['static_var']['charset']) ? $stack['static_var']['charset'] : 'UTF-8';
+		$str = mb_substr($str,$start,$end - $start,$charset);
+		return ($end < mb_strlen($str,$charset)) ? $str.$trim : $str;
+	}
+	
+	function mgStrLen($str)
+	{
+		global $stack;
+		$charset = isset($stack['static_var']['charset']) ? $stack['static_var']['charset'] : 'UTF-8';
+		return mb_strlen($str,$charset);
+	}
+}
+else
+{
+	function mgSubStr($str,$start,$end,$trim = "...")
+	{
+		preg_match_all("/[\x01-\x7f]|[\xc2-\xdf][\x80-\xbf]|\xe0[\xa0-\xbf][\x80-\xbf]|[\xe1-\xef][\x80-\xbf][\x80-\xbf]|\xf0[\x90-\xbf][\x80-\xbf][\x80-\xbf]|[\xf1-\xf7][\x80-\xbf][\x80-\xbf][\x80-\xbf]/", $str, $info);
+		$str = join("",array_slice($info[0],$start,$end));
+		return ($end < (sizeof($info[0]) - $start)) ? $str.$trim : $str;
+	}
+
+	function mgStrLen($str)
+	{
+		preg_match_all("/[\x01-\x7f]|[\xc2-\xdf][\x80-\xbf]|\xe0[\xa0-\xbf][\x80-\xbf]|[\xe1-\xef][\x80-\xbf][\x80-\xbf]|\xf0[\x90-\xbf][\x80-\xbf][\x80-\xbf]|[\xf1-\xf7][\x80-\xbf][\x80-\xbf][\x80-\xbf]/", $str, $info);
+		return sizeof($info[0]);
+	}
 }
 
 function mgStripTags($string)
@@ -525,18 +546,24 @@ function mgSendTrackback($url,$args)
 				$request .= "\r\n";
 				$request .= $content;
 
-				$socket = fsockopen($parsed_url['host'], $port, $errno, $errstr);
+				$socket = @fsockopen($parsed_url['host'], $port, $errno, $errstr,5);
 				if(!$socket)
 				{
+					$result[$val] = false;
 					continue;
 				}
 
 				//send ping
 				fputs( $socket, $request );
+				
+				stream_set_blocking($socket, true);
+				stream_set_timeout($socket, 5);
+				$info = stream_get_meta_data($socket);
+				
 				$response = "";
 
 				//get response
-				while ( ! feof ( $socket ) )
+				while ( ! feof ( $socket )  && !$info['timed_out'] )
 				{
 					$response .= fgets( $socket, 4096 );
 				}
@@ -545,15 +572,17 @@ function mgSendTrackback($url,$args)
 				//here is response
 				if ( strstr($response,'<error>1</error>') )
 				{
+					$result[$val] = false;
 					continue;
 				}
-				if ( strstr($response,'<error>0</error>') )
+				else if ( strstr($response,'<error>0</error>') )
 				{
-					$result[] = $val;
+					$result[$val] = true;
 					continue;
 				}
-				if ( !strstr($response,'<error>') )
+				else if ( !strstr($response,'<error>') )
 				{
+					$result[$val] = false;
 					continue;
 				}
 		}

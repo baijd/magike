@@ -17,11 +17,17 @@ class HttpLocation extends MagikeModule
 		{
 			if('get' == $getArgs['referer'])
 			{
-				header('location: '.$_GET['referer']);
+				if(isset($_GET['referer']))
+				{
+					header('location: '.$_GET['referer']);
+				}
 			}
 			else if('post' == $getArgs['referer'])
 			{
-				header('location: '.$_POST['referer']);
+				if(isset($_POST['referer']))
+				{
+					header('location: '.$_POST['referer']);
+				}
 			}
 			else
 			{

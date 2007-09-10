@@ -14,6 +14,7 @@ class AdminLogin extends MagikeModule
 	{
 		$this->result = array();
 		$this->result['message_open'] = false;
+		$this->result['login_open'] = true;
 		if(!$this->stack['access']['login'])
 		{
 			$this->onPost('do','loginAction','login');
@@ -21,7 +22,8 @@ class AdminLogin extends MagikeModule
 		else
 		{
 			$this->result['message_open'] = true;
-			$this->result['message'] = $this->getLanguage('login','error_open');
+			$this->result['message'] = $this->getLanguage('error_open','login');
+			$this->result['login_open'] = false;
 		}
 		return $this->result;
 	}
@@ -51,13 +53,20 @@ class AdminLogin extends MagikeModule
 			
 			setcookie('auth_data',$_SESSION['auth_data'],0,'/');
 			
-			if($user['user_group'] == $this->stack['static_var']['user_register_group'])
+			if(isset($_GET['referer']))
 			{
-				header('location: '.$this->stack['static_var']['siteurl']);
+				header('location: '.$this->stack['static_var']['index'].$_GET['referer']);
 			}
 			else
 			{
-				header('location: '.$this->stack['static_var']['index'].'/admin/');
+				if($user['user_group'] >= $this->stack['static_var']['user_register_group'])
+				{
+					header('location: '.$this->stack['static_var']['siteurl']);
+				}
+				else
+				{
+					header('location: '.$this->stack['static_var']['index'].'/admin/');
+				}
 			}
 		}
 	}

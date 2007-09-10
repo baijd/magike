@@ -176,7 +176,7 @@ function registerInputFocus(element)
 		}
 	);
 	
-	$("textarea",element).focus
+	$("textarea.text",element).focus
 	(
 		function()
 		{
@@ -313,9 +313,274 @@ function magikeConfirm(el)
 	confirmElement = el;
 	if(confirm($(el).attr("msg")))
 	{
-		setTimeout("window.location.href = $(confirmElement).attr('rel'); ",0);
+		magikeLocation($(confirmElement).attr('rel'));
 	}
 }
+
+function magikeLocation(url)
+{
+	setTimeout("window.location.href = '" + url + "'; ",0);
+}
+
+function magikeCreateSelect(item)
+{
+	select = $(document.createElement("select"));
+	for(var i in item)
+	{
+		option = $(document.createElement("option"));
+		option.attr("value",item[i]);
+		option.html(i);
+		select.append(option);
+	}
+	
+	return select;
+}
+
+MagikeUI = function()
+{
+	
+}
+
+MagikeUI.prototype = {
+	//实例化一个窗口
+	createPopup: function(args)
+	{
+		popupTitleText = args.title ? args.title : 'Magike Window';
+		//判断浏览器
+		var isIE = $.browser.msie;
+		
+		//创建窗口外框
+		var popupWindow = $(document.createElement("div"));
+		popupWindow.addClass("magikePopup");
+		popupWindow.released = true;
+		popupWindow.x = false;
+		popupWindow.y = false;
+		
+		//是否有遮罩层
+		popupWindow.shadow = args.shadow ? args.shadow : false;
+		
+		if(popupWindow.shadow)
+		{
+			this.createShadow();
+		}
+		
+		//创建窗口阴影
+		var popupShadow = $(document.createElement("div"));
+		popupShadow.addClass("magikePopupShadow");
+		
+		//创建窗口内部
+		var popupContent = $(document.createElement("div"));
+		popupContent.addClass("magikePopupContent");
+		popupWindow.append(popupContent);
+		popupWindow.append(popupShadow);
+		
+		//创建窗口文本部分
+		var popupText = $(document.createElement("div"));
+		popupText.addClass("magikePopupText");
+		popupText.append(args.text ? args.text : null);
+		
+		//创建窗口按钮部分
+		var popupButton = $(document.createElement("div"));
+		
+		var okButton = $(document.createElement("span"));
+		okButton.addClass("button");
+		okButton.css("margin-left","10px");
+		okButton.text(args.ok ? args.ok : "OK");
+		
+		var cancelButton = $(document.createElement("span"));
+		cancelButton.addClass("button");
+		cancelButton.css("float","right");
+		cancelButton.css("margin-right","10px");
+		cancelButton.text(args.cancel ? args.cancel : "Cancel");
+		
+		popupButton.addClass("magikePopupButton");
+		popupButton.append(okButton);
+		popupButton.append(cancelButton);
+		
+		if(args.width)
+		{
+			popupWindow.width(args.width+2);
+			popupShadow.width(args.width);
+			popupContent.width(args.width);
+		}
+		if(args.height)
+		{
+			popupWindow.height(args.height+2);
+			popupShadow.height(args.height);
+			popupContent.height(args.height);
+			popupText.height(args.height - 61);
+			popupButton.height(36);
+		}
+		
+		//创建窗口标题
+		var popupTitle = $(document.createElement("div"));
+		popupTitle.addClass("magikePopupTitle");
+		popupTitle.html(popupTitleText);
+		
+		popupWindow.block = args.block ? args.block : false;
+		if(!popupWindow.block)
+		{
+			popupTitle.css("cursor","move");
+		}
+		
+		//创建窗口关闭按钮
+		var closeBar = $(document.createElement("span"));
+		closeBar.addClass("magikePopupClose");
+		popupTitle.append(closeBar);
+		popupContent.append(popupTitle);
+		popupContent.append(popupText);
+		popupContent.append(popupButton);
+		
+		$(document.body).append(popupWindow);
+		if(args.center)
+		{
+			size = getPageSize();
+			pos = getScrollTop();
+			
+			vleft = parseInt((size[0] - popupWindow.width())/2 + pos[0]);
+			vtop = parseInt((size[1] - popupWindow.height())/2 + pos[1]);
+			popupWindow.css({left:vleft + 'px',top:vtop + 'px'});
+		}
+		
+		//增加事件监听
+		registerInputFocus(popupWindow);
+		
+		if(!popupWindow.block)
+		{
+		popupTitle.mousedown(
+			function()
+			{
+				popupWindow.released = false;
+				popupShadow.hide();
+			}
+		);
+		
+		popupWindow.mousedown(
+			function()
+			{
+				$('.magikePopup').css('z-index',995);
+				$('.magikePopupShadow').css('z-index',996);
+				$('.magikePopupContent').css('z-index',997);
+				popupWindow.css('z-index',998);
+				popupShadow.css('z-index',999);
+				popupContent.css('z-index',1000);
+			}
+		);
+		
+		$(document).mouseup(
+			function()
+			{
+				popupWindow.released = true;
+				popupWindow.x = false;
+				popupWindow.y = false;
+				popupShadow.show();
+			}
+		);
+		
+		popupTitle.mousemove(
+			function(e)
+			{
+				if(!popupWindow.released)
+				{
+					if(isIE ? e.button : !e.button)
+					{
+						if(!popupWindow.x && !popupWindow.y)
+						{
+							popupWindow.x = e.clientX;
+							popupWindow.y = e.clientY;
+						}
+						
+						popupWindow.css('left',parseInt(popupWindow.css('left').replace('px',''))+(e.clientX - popupWindow.x)+'px');
+						popupWindow.css('top',parseInt(popupWindow.css('top').replace('px',''))+(e.clientY - popupWindow.y)+'px');
+						popupWindow.x = e.clientX;
+						popupWindow.y = e.clientY;
+					}
+					else
+					{
+						popupWindow.released = true;
+					}
+				}
+			}
+		);
+		
+		$(document).mousemove(
+			function(e)
+			{
+				
+				if(!popupWindow.released)
+				{
+					if(isIE ? e.button : !e.button)
+					{
+						if(!popupWindow.x && !popupWindow.y)
+						{
+							popupWindow.x = e.clientX;
+							popupWindow.y = e.clientY;
+						}
+						
+						popupWindow.css('left',parseInt(popupWindow.css('left').replace('px',''))+(e.clientX - popupWindow.x)+'px');
+						popupWindow.css('top',parseInt(popupWindow.css('top').replace('px',''))+(e.clientY - popupWindow.y)+'px');
+						popupWindow.x = e.clientX;
+						popupWindow.y = e.clientY;
+					}
+					else
+					{
+						popupWindow.released = true;
+					}
+				}
+			}
+		);
+		}
+		
+		$('.magikePopupClose',popupWindow).click(
+			function()
+			{
+				popupWindow.remove();
+				if(popupWindow.shadow)
+				{
+					$('.magikeShadow').remove();
+				}
+			}
+		);
+		
+		cancelButton.click(
+			function()
+			{
+				popupWindow.remove();
+				if(popupWindow.shadow)
+				{
+					$('.magikeShadow').remove();
+				}
+			}
+		);
+		
+		okButton.click(args.handle ? args.handle : null);
+	},
+	
+	//创建一个阴影
+	createShadow: function()
+	{
+		var shadow = $(document.createElement("div"));
+		shadow.addClass("magikeShadow");
+		shadow.css('width',document.documentElement.scrollWidth > document.documentElement.clientWidth ? 
+		document.documentElement.scrollWidth : document.documentElement.clientWidth);
+		shadow.css('height',document.documentElement.scrollHeight > document.documentElement.clientHeight ? 
+		document.documentElement.scrollHeight : document.documentElement.clientHeight);
+		$(document.body).append(shadow);
+		
+		$(window).resize(
+			function()
+			{
+				shadow.css('width',document.documentElement.scrollWidth > document.documentElement.clientWidth ? 
+				document.documentElement.scrollWidth : document.documentElement.clientWidth);
+				shadow.css('height',document.documentElement.scrollHeight > document.documentElement.clientHeight ? 
+				document.documentElement.scrollHeight : document.documentElement.clientHeight);
+			}
+		);
+	}
+};
+
+var MagikeUI = MagikeUI; 
+var magikeUI = new MagikeUI();
 
 function fixCssHack()
 {
