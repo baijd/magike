@@ -102,7 +102,7 @@ function registerTableCheckbox(table,className)
 	(
 		function()
 		{
-			if($("."+className,$(this)).attr("checked") != true && $(this).attr("className") != "heading")
+			if($("."+className,$(this)).attr("checked") != true && !$(this).hasClass("heading"))
 			{
 				$(this).addClass("hover");
 			}
@@ -113,7 +113,7 @@ function registerTableCheckbox(table,className)
 	(
 		function()
 		{
-			if($("."+className,$(this)).attr("checked") != true && $(this).attr("className") != "heading")
+			if($("."+className,$(this)).attr("checked") != true && !$(this).hasClass("heading"))
 			{
 				$(this).removeClass("hover");
 			}

@@ -211,6 +211,14 @@ abstract class MagikeModule extends MagikeObject
 			}
 		}
 	}
+	
+	protected function requireAccess($access)
+	{
+		if($this->stack['access']['user_group'] > $this->stack['static_var']['group'][$access])
+		{
+			$this->throwException(E_ACCESSDENIED,$this->stack['action']['path']);
+		}
+	}
 
 	protected function onGet($key,$callback,$val = NULL)
 	{

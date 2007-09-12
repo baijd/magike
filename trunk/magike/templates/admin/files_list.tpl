@@ -32,7 +32,7 @@
 				<td>
 					<a class="img" title="删除" href="javascript:;" onclick="magikeConfirm(this);" msg="您确定删除文件 '{$file.file_name}' 吗?" rel="{$static_var.index}/admin/posts/files_list/?file_id={$file.id}&do=del"><img src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/delete.gif" alt="删除"/></a>
 					<[if:$file.is_image]>
-					<a class="img" title="查看" href="javascript:;" onclick="imageView('{$file.view_thumbnail_permalink}','{$file.file_name}');" msg="您确定删除文件 '{$file.file_name}' 吗?" rel="{$static_var.index}/admin/posts/files_list/?file_id={$file.id}&do=del"><img src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/eye.gif" alt="查看"/></a>
+					<a class="img" title="查看" href="javascript:;" onclick="imageView('{$file.view_thumbnail_permalink}','{$file.file_name}','{$static_var.index}/admin/posts/files_list/?file_id={$file.id}&do=del');" msg="您确定删除文件 '{$file.file_name}' 吗?" rel="{$static_var.index}/admin/posts/files_list/?file_id={$file.id}&do=del"><img src="{$static_var.siteurl}/templates/{$static_var.admin_template}/images/eye.gif" alt="查看"/></a>
 					<[/if]>
 				</td>
 			</tr>
@@ -54,14 +54,32 @@
 
 <script>
 	registerTableCheckbox("files_list","checkbox_element");
-	function imageView(url,name)
+	var currentImage;
+	var currentImageName;
+	function imageView(url,name,delUrl)
 	{
+		im=new Image();
+		im.src = url;
+		currentImage = delUrl;
+		currentImageName = name;
+		
 		div = $(document.createElement("div"));
 		div.css("width","598px");
 		div.css("height","400px");
-		div.css("background","url("+url+") center no-repeat");
+		div.css("float","left");
+		div.css("display","block");
+		div.css("z-index","1001");
+		div.css("background","url("+im.src+") center no-repeat");
 		
-		magikeUI.createPopup({title: name,center: true,width: 600,height: 460,text:div,ok:"确定",cancel:"取消"});
+		magikeUI.createPopup({title: name,center: true,width: 600,height: 460,text:div,handle:viewDeleteImage,ok:"删除",cancel:"取消"});
+	}
+	
+	function viewDeleteImage()
+	{
+		if(confirm("您确定删除文件 '" + currentImageName + "'吗?"))
+		{
+			magikeLocation(currentImage);
+		}
 	}
 </script>
 <[include:footer]>
