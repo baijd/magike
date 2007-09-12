@@ -2,7 +2,7 @@
 <[include:menu]>
 
 <[module:post_input]>
-<[module:posts.is_admin?&sub=20&striptags=1&limit=20 as posts]>
+<[module:posts.is_admin?sub=20&striptags=1&limit=20 as posts]>
 <[module:page_navigator.posts_is_admin?limit=20 as page_navigator.posts]>
 <div id="content">
 	<div id="element">

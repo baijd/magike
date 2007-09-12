@@ -73,18 +73,6 @@ $data['custom_tags'] = $data['static_var']['write_editor_custom_tags'] ? explode
 		<div class="tab_content" id="write_tab">
 			<div id="write_content" class="tab_element first">
 				<p style="margin-bottom:10px;font-size:11pt;line-height:26px"><input type="text" onfocus="this.select();" class="validate-me text" name="post_title" size=60 value="<[if:$write_post.post_title]>{$write_post.post_title}<[else]>无标题文档<[/if]>" />
-				 <select name="category_id" class="text">
-					<[if:$write_post.do == "update"]>
-					<[loop:$categories_list AS $category]>
-						<option value="{$category.id}" <[if:$category.id == $write_post.category_id]>selected=true<[/if]>>{$category.category_name}</option>
-					<[/loop]>
-					<[/if]>
-					<[if:$write_post.do == "insert"]>
-					<[loop:$categories_list AS $category]>
-						<option value="{$category.id}" <[if:$category.id == $static_var.write_default_category]>selected=true<[/if]>>{$category.category_name}</option>
-					<[/loop]>
-					<[/if]>
-					</select>
 				</p>
 					<div class="toolbar">
 					<button type="button" accesskey="b" onclick="editorAdd('<strong>','</strong>');"><strong>B</strong></button>
@@ -94,36 +82,38 @@ $data['custom_tags'] = $data['static_var']['write_editor_custom_tags'] ? explode
 					<button type="button" accesskey="u" onclick="editorAdd('<ul>','</ul>');">ul</button>
 					<button type="button" accesskey="o" onclick="editorAdd('<ol>','</ol>');">ol</button>
 					<button type="button" accesskey="l" onclick="editorAdd('<li>','</li>');">li</button>
-					<button type="button" accesskey="a" onclick="editorInsertLink('插入链接','链接地址:','链接标题:','打开方式:','确定','取消');">link</button>
+					<button type="button" accesskey="a" style="color:#0000EE;text-decoration: underline;" onclick="editorInsertLink('插入链接','链接地址:','链接标题:','打开方式:','确定','取消');">link</button>
 					<button type="button" accesskey="ctrl+i" onclick="editorInsertImage('插入文件','{$static_var.index}/admin/posts/upload/','确定','取消');">img</button>
 					<button type="button" accesskey="c" onclick="editorAdd('<code>','</code>');">code</button>
 					<button type="button" accesskey="m" onclick="editorAdd('<!--more-->','');">more</button>
 					<[loop:$custom_tags AS $custom_tag]>
 					<button type="button" onclick="editorAdd('<{$custom_tag}>','</{$custom_tag}>');">{$custom_tag}</button>
 					<[/loop]>
+					<button type="button" style="color:#990000">Preferences</button>
 					</div>
 						<textarea name="post_content" id="post_content" class="validate-me textarea" style="width:710px;height:<[php]>echo $data['static_var']['write_editor_rows']*18<[/php]>px">{$write_post.post_content}</textarea>
 						<span class="validate-word" id="post_content-word"></span>
+					<h2 style="margin:15px 0 0 0;width:710px">文章分类<span class="discribe">(选择将您的文章发表在哪个分类)</span></h2>
+					<p style="margin:5px">
+						<select name="category_id" class="text">
+						<[if:$write_post.do == "update"]>
+						<[loop:$categories_list AS $category]>
+							<option value="{$category.id}" <[if:$category.id == $write_post.category_id]>selected=true<[/if]>>{$category.category_name}</option>
+						<[/loop]>
+						<[/if]>
+						<[if:$write_post.do == "insert"]>
+						<[loop:$categories_list AS $category]>
+							<option value="{$category.id}" <[if:$category.id == $static_var.write_default_category]>selected=true<[/if]>>{$category.category_name}</option>
+						<[/loop]>
+						<[/if]>
+						</select>
+					</p>
+					<h2 style="margin:15px 0 0 0;width:710px">{lang.admin_write.tag}<span class="discribe">({lang.admin_write.tag_describe})</span></h2>
+					<p style="margin:5px">
+						<input type="text" class="text" id="post_tags" name="post_tags" value="{$write_post.post_tags}" style="width:706px" />
+					</p>
 			</div>
-			<div id="write_tools" class="tab_element">
-				<div class="input">
-				<h2>文章分类</h2>
-				<p>
-					<select name="category_id">
-					<[if:$write_post.do == "update"]>
-					<[loop:$categories_list AS $category]>
-						<option value="{$category.id}" <[if:$category.id == $write_post.category_id]>selected=true<[/if]>>{$category.category_name}</option>
-					<[/loop]>
-					<[/if]>
-					<[if:$write_post.do == "insert"]>
-					<[loop:$categories_list AS $category]>
-						<option value="{$category.id}" <[if:$category.id == $static_var.write_default_category]>selected=true<[/if]>>{$category.category_name}</option>
-					<[/loop]>
-					<[/if]>
-					</select> <br />
-					<span class="discribe">(选择将您的文章发表在哪个分类)</span>
-				</p>
-				</div>
+			<div id="write_option" class="tab_element">
 				<div class="input">
 				<h2>发布者</h2>
 				<p><input type="hidden" name="user_id" value="{$get_current_user.id}" />
@@ -157,27 +147,11 @@ $data['custom_tags'] = $data['static_var']['write_editor_custom_tags'] ? explode
 				</p>
 				</div>
 				<div class="input">
-				<h2>{lang.admin_write.tag}</h2>
-				<p><input type="text" class="text" id="post_tags" name="post_tags" value="{$write_post.post_tags}" style="width:400px" /> <br />
-				<span class="discribe">({lang.admin_write.tag_describe})</span></p>
-				</div>
-				<div class="input">
 				<h2>{lang.admin_write.trackback}</h2>
 				<p>
 				<textarea class="text" name="post_trackback" cols=60 rows=5 ></textarea> <br />
 				<span class="discribe">({lang.admin_write.trackback_describe})</span></p>
 				</div>
-			</div>
-			<div id="write_upload" class="tab_element">
-				<iframe frameborder=0 width=100% height=200 src="{$static_var.index}/admin/posts/upload/"></iframe>
-				<div class="input" style="padding:10px 0;margin-bottom:0 !important;margin-bottom:6px;">
-					<h2 style="padding-top:0">文件列表</h2>
-						<ul id="files_grid">
-						</ul>
-						<p style="padding:0 !important;padding:10px 0 0 0;width:35px;"><input type="button" id="next-button" onclick="getFilesList(filePage + 1);" style="border:1px solid #CCC;border-left:none;background:#EEE;width:20px;height:76px;float:left;padding:0;" value="&raquo;"/> <input type="button" id="prev-button" onclick="getFilesList(filePage - 1);" style="border:1px solid #CCC;border-left:none;background:#EEE;width:20px;height:76px;float:left;padding:0;" value="&laquo;"/></p>
-				</div>
-			</div>
-			<div id="write_option" class="tab_element">
 				<div class="input">
 					<h2>{lang.admin_write.write_type}</h2> 
 					<p>
@@ -226,7 +200,6 @@ $data['custom_tags'] = $data['static_var']['write_editor_custom_tags'] ? explode
 		<span class="button" onclick="unloadConfirm = true;$('#post_is_draft').val(0);magikeValidator('{$static_var.index}/helper/validator/','write_post');">{lang.admin_write.publish}</span>
 		<input type="hidden" name="post_is_draft" id="post_is_draft" value="0" /><input type="hidden" id="post_id" name="post_id" class="validate-me" value="{$write_post.post_id}" />
 		<span class="hit_message"></span>
-		<span style="float:right;font-size:10pt;text-decoration:underline;cursor:pointer">+ 打开发布选项</span>
 		</div>
 	</form>
 	</div>
