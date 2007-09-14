@@ -39,6 +39,11 @@ class StaticVar extends MagikeModule
 			'visitor'		=> 3
 		);
 		
+		if(function_exists('mb_internal_encoding'))
+		{
+			mb_internal_encoding($staticVar['charset']);
+		}
+
 		//add pingback header support
 		header("X-Pingback:".$staticVar['index']."/xmlrpc.api");
 		return $staticVar;

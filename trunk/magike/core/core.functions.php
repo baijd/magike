@@ -100,29 +100,27 @@ function mgPraseVar($str,$var,$explode = '.')
 
 //适用于utf8的字符串函数
 
-if(function_exists('mb_substr'))
+if(function_exists('mb_get_info'))
 {
-	function mgSubStr($str,$start,$end,$trim = "...")
+	function mgSubStr($str,$start,$length,$trim = "...")
 	{
-		global $stack;
-		$charset = isset($stack['static_var']['charset']) ? $stack['static_var']['charset'] : 'UTF-8';
-		return mb_strimwidth($str,$start,($end - $start)*2 + mb_strlen($trim,$charset),$trim,$charset);
+		$iLength = mb_strlen($str);
+		$str = mb_substr($str,$start,$length);
+		return ($length < $iLength - $start) ? $str.$trim : $str;
 	}
 
 	function mgStrLen($str)
 	{
-		global $stack;
-		$charset = isset($stack['static_var']['charset']) ? $stack['static_var']['charset'] : 'UTF-8';
-		return mb_strlen($str,$charset);
+		return mb_strlen($str);
 	}
 }
 else
 {
-	function mgSubStr($str,$start,$end,$trim = "...")
+	function mgSubStr($str,$start,$length,$trim = "...")
 	{
 		preg_match_all("/[\x01-\x7f]|[\xc2-\xdf][\x80-\xbf]|\xe0[\xa0-\xbf][\x80-\xbf]|[\xe1-\xef][\x80-\xbf][\x80-\xbf]|\xf0[\x90-\xbf][\x80-\xbf][\x80-\xbf]|[\xf1-\xf7][\x80-\xbf][\x80-\xbf][\x80-\xbf]/", $str, $info);
-		$str = join("",array_slice($info[0],$start,$end));
-		return ($end < (sizeof($info[0]) - $start)) ? $str.$trim : $str;
+		$str = join("",array_slice($info[0],$start,$length));
+		return ($length < (sizeof($info[0]) - $start)) ? $str.$trim : $str;
 	}
 
 	function mgStrLen($str)
@@ -506,6 +504,195 @@ function mgIsAjaxForm()
 	return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && 'XMLHttpRequest' == $_SERVER['HTTP_X_REQUESTED_WITH'] ? true : false;
 }
 
+//分析response参数
+function mgGetHttpResponse($response)
+{
+	$rows = explode("\r\n\r\n",$response);
+	
+	$header = isset($rows[0]) ? trim($rows[0]) : NULL;
+	if(NULL == $header)
+	{
+		return false;
+	}
+
+	$result = array();
+	array_shift($rows);
+	$body = implode("\r\n",$rows);
+	$result["body"] = $body;
+	
+	$headerRows = explode("\r\n",str_replace("  "," ",trim($header)));
+	$status = explode(" ",array_shift($headerRows));
+	$result['status'] = intval(trim($status[1]));
+	
+	foreach($headerRows as $val)
+	{
+		$item = explode(":",$val);
+		$key = strtolower(trim(array_shift($item)));
+		$result[$key] = trim(implode(':',$item));
+	}
+	
+	return $result;
+}
+
+//http发送函数
+if(function_exists('curl_version'))
+{
+	function mgHttpSender($url,$agent = NULL,$getData = NULL,$postData = NULL,$timeOut = 5,$locationTimes = 0)
+	{
+		//check locationTimes
+		if($locationTimes >= 3)
+		{
+			return NULL;
+		}
+		
+		//get user agent
+		$agent = (NULL == $agent) ? $_SERVER['HTTP_USER_AGENT'] : $agent;
+		
+		if($url)
+		{
+			//building get string
+			$ch = curl_init();
+			$url = $url.(NULL == $getData ? NULL : ((false != strpos($url,"?") ? "&" : "?").http_build_query($getData)));
+			
+			//setting http header
+			curl_setopt($ch, CURLOPT_URL, $url);
+			curl_setopt($ch, CURLOPT_HEADER, 1);
+			curl_setopt($ch, CURLOPT_USERAGENT, $agent);
+			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($ch,CURLOPT_AUTOREFERER,1);
+			curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,$timeOut);
+			curl_setopt($ch,CURLOPT_TIMEOUT,$timeOut);
+			curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+			curl_setopt($ch,CURLOPT_HEADER,1);
+			
+			//set method to post
+			if (NULL != $postData)
+			{
+				curl_setopt($ch, CURLOPT_POST, 1);
+				curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
+			}
+			
+			$data = curl_exec($ch);
+			curl_close($ch);
+			$response = mgGetHttpResponse($data);
+			
+			//do location
+			if(isset($response['location']) && $response['location'] != $url)
+			{
+				return mgHttpSender($response['location'],$agent,$getData,$postData,$timeOut,$locationTimes+1);
+			}
+			else
+			{
+				return $response;
+			}
+		}
+		else
+		{
+			return NULL;
+		}
+	}
+}
+else
+{
+	//$locationTimes is a hidden parm
+	function mgHttpSender($url,$agent = NULL,$getData = NULL,$postData = NULL,$timeOut = 5,$locationTimes = 0)
+	{
+		//check locationTimes
+		if($locationTimes >= 3)
+		{
+			return NULL;
+		}
+	
+		//get user agent
+		$agent = (NULL == $agent) ? $_SERVER['HTTP_USER_AGENT'] : $agent;
+		
+		if($url)
+		{
+			$url = $url.(NULL == $getData ? NULL : ((false != strpos($url,"?") ? "&" : "?").http_build_query($getData)));
+			$parsedUrl = parse_url($url);
+			if ($parsedUrl['host'] == '')
+			{
+				return false;
+			}
+			
+			$port = isset($parsedUrl['port']) ? $parsedUrl['port'] : 80;
+			
+			if(NULL != $postData)
+			{
+				$request  = 'POST ' . $parsedUrl['path'];
+			}
+			else
+			{
+				$request  = 'GET ' . $parsedUrl['path'];
+			}
+			
+			if (isset($parsedUrl['query']))	
+			{
+				$request .= '?' . $parsedUrl['query'];
+			}
+			
+			$request .= " HTTP/1.1\r\n";
+			$request .= "Accept: */*\r\n";
+			$request .= "User-Agent: " . $agent . "\r\n";
+			$request .= "Host: " . $parsedUrl['host'] . ":" . $port . "\r\n";
+			$request .= "Connection: Keep-Alive\r\n";
+			$request .= "Keep-Alive: 300\r\n";
+			$request .= "Cache-Control: no-cache\r\n";
+			$request .= "Connection: Close\r\n";
+			
+			if(NULL != $postData)
+			{
+				$content = http_build_query($postData);
+				$request .= "Content-Length: " . strlen($content) . "\r\n";
+				$request .= "Content-Type: application/x-www-form-urlencoded\r\n";
+				$request .= "\r\n";
+				$request .= $content;
+			}
+			else
+			{
+				$request .= "\r\n";
+			}
+			
+			$socket = @fsockopen($parsedUrl['host'], $port, $errno, $errstr,$timeOut);
+			if(!$socket)
+			{
+				return false;
+			}
+			
+			//sending it
+			fputs( $socket, $request);
+			stream_set_timeout($socket, 5);
+			$info = stream_get_meta_data($socket);
+			
+			$data = "";
+
+			//get response
+			while ( ! feof ( $socket )  && !$info['timed_out'] )
+			{
+				$data .= fgets( $socket, 4096 );
+			}
+			
+			fclose($socket);
+			$response = mgGetHttpResponse($data);
+			
+			//do location
+			if(isset($response['location']) && $response['location'] != $url)
+			{
+				return mgHttpSender($response['location'],$agent,$getData,$postData,$timeOut,$locationTimes+1);
+			}
+			else
+			{
+				return $response;
+			}
+		}
+		else
+		{
+			return NULL;
+		}
+	}
+}
+
 //tackback提交函数
 function mgSendTrackback($url,$args)
 {
@@ -513,82 +700,53 @@ function mgSendTrackback($url,$args)
 	{
 		$urls = explode("\n",$url);
 		$result = array();
+		$agent  = $args['agent'];
+		unset($args['agent']);
+		reset($args);
 
 		//send information
 		foreach($urls as $val)
 		{
-			$parsed_url = parse_url($val);
-			if ( $parsed_url['scheme'] != 'http' ||   $parsed_url['host'] == '' )
+			unset($args['agent']);
+			$data = mgHttpSender(trim($val),$agent,$args);
+			if(NULL == $data)
 			{
+				$result[$val] = false;
 				continue;
 			}
-			$port = isset($parsed_url['port']) ? $parsed_url['port'] : 80;
+			if(200 != $data['status'])
+			{
+				$result[$val] = false;
+				continue;
+			}
 			
-				$content  = 'title=' . urlencode($args["title"]);
-				$content .= '&url=' . urlencode($args["url"]);
-				$content .= '&excerpt=' . urlencode($args["excerpt"]);
-				$content .= '&blog_name=' . urlencode($args["blog_name"]);
-
-				$user_agent = str_replace(" ","/", $args["agent"]);
-				$request  = 'POST ' . $parsed_url['path'];
-
-				if (isset($parsed_url['query']))	$request .= '?' . $parsed_url['query'];
-				$request .= " HTTP/1.1\r\n";
-				$request .= "Accept: */*\r\n";
-				$request .= "User-Agent: " . $user_agent . "\r\n";
-				$request .= "Host: " . $parsed_url['host'] . ":" . $port . "\r\n";
-				$request .= "Connection: Keep-Alive\r\n";
-				$request .= "Cache-Control: no-cache\r\n";
-				$request .= "Connection: Close\r\n";
-				$request .= "Content-Length: " . strlen( $content ) . "\r\n";
-				$request .= "Content-Type: application/x-www-form-urlencoded\r\n";
-				$request .= "\r\n";
-				$request .= $content;
-
-				$socket = @fsockopen($parsed_url['host'], $port, $errno, $errstr,5);
-				if(!$socket)
-				{
-					$result[$val] = false;
-					continue;
-				}
-
-				//send ping
-				fputs( $socket, $request );
-				
-				stream_set_blocking($socket, true);
-				stream_set_timeout($socket, 5);
-				$info = stream_get_meta_data($socket);
-				
-				$response = "";
-
-				//get response
-				while ( ! feof ( $socket )  && !$info['timed_out'] )
-				{
-					$response .= fgets( $socket, 4096 );
-				}
-				fclose($socket);
-				
-				//here is response
-				if ( strstr($response,'<error>1</error>') )
-				{
-					$result[$val] = false;
-					continue;
-				}
-				else if ( strstr($response,'<error>0</error>') )
-				{
-					$result[$val] = true;
-					continue;
-				}
-				else if ( !strstr($response,'<error>') )
-				{
-					$result[$val] = false;
-					continue;
-				}
+			$response = $data['body'];
+			//here is response
+			if ( strstr($response,'<error>1</error>') )
+			{
+				$result[$val] = false;
+				continue;
+			}
+			else if ( strstr($response,'<error>0</error>') )
+			{
+				$result[$val] = true;
+				continue;
+			}
+			else if ( !strstr($response,'<error>') )
+			{
+				$result[$val] = false;
+				continue;
+			}
 		}
 		return $result;
 	}
 
 	return array();
+}
+
+function mgCheckPingback($url)
+{
+	
 }
 
 //this function is powered by others
