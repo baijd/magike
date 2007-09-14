@@ -39,13 +39,18 @@ class TbVariable extends TemplateBuild
 			{
 				case 'length':
 				{
-					$result = 'mgSubStr('.$result.',0,'.$parm[0].')';
+					$result = 'mgSubStr('.$result.',0,'.$parm[0].',"'.(isset($parm[1]) ? $parm[1] : '...').'")';
+					break;
+				}
+				case 'width':
+				{
+					$result = 'mb_strimwidth('.$result.',0,'.$parm[0].',"'.(isset($parm[1]) ? $parm[1] : '...').'")';
 					break;
 				}
 				case 'strtodate':
 				case 'date':
 				{
-					$result = 'date("'.$parm[0].'",strtotime('.$result.'))';
+					$result = 'date("'.$parms.'",strtotime('.$result.'))';
 					break;
 				}
 				case 'inttodate':

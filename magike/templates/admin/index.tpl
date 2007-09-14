@@ -9,6 +9,7 @@
 	#element
 	{
 		text-align:left;
+		font-family:'trebuchet ms',arial,verdana,sans-serif;
 	}
 	
 	#element-center
@@ -22,8 +23,6 @@
 		float:right;
 		width:250px;
 		margin-left:-250px;
-		background:#292D34;
-		border:1px solid #222;
 	}
 	
 	#element-right h2,#element-center h2
@@ -42,13 +41,13 @@
 	
 	#element-right h2
 	{
-		border-bottom:1px solid #222;
-		color:#CCC;
-	}
-	
-	#element-right ul.info
-	{
-		border-top:1px solid #5B686F;
+		color:#444;
+		font-size:12px;
+		height:12px;
+		line-height:12px;
+		background:#EEF0F2;
+		border-bottom:#BEC9D1 solid 1px;
+		padding:4px 7px;
 	}
 	
 	#element ul.info
@@ -63,21 +62,21 @@
 		font-size:9pt;
 		padding:0 0 0 7px;
 		margin:0;
-		color:#AAA;
-		line-height:24px;
-		height:24px;
+		color:#444;
+		line-height:22px;
+		height:22px;
 		overflow:hidden;
 	}
 	
 	#element u
 	{
 		text-decoration: none;
-		color:#AAA;
+		color:#777;
 	}
 	
 	#element ul.info li a
 	{
-		color:#AAA;
+		color:#444;
 		padding-right:2px;
 	}
 	
@@ -85,7 +84,6 @@
 	{
 		line-height:24px;
 		height:24px;
-		color:#444;
 	}
 	
 	#element-center ul.info li.alt
@@ -97,12 +95,10 @@
 	#element-center u
 	{
 		text-decoration: none;
-		color:#777;
 	}
 	
 	#element-center ul.info li a
 	{
-		color:#444;
 		padding-right:2px;
 	}
 	
@@ -113,7 +109,7 @@
 	
 	.element-info
 	{
-		margin-bottom:10px;
+		margin-bottom:15px;
 	}
 </style>
 <div id="content">

@@ -51,6 +51,14 @@ class Validator extends MagikeModule
 		$mod = isset($_GET['mod']) ? $_GET['mod'] : NULL;
 		$requireDir = __MODULE__.'/'.$this->moduleName.'/';
 		$result = 0;
+		
+		//fix jquery 1.2.0 Bug
+		if(isset($_POST['mod']))
+		{
+			unset($_POST['mod']);
+			reset($_POST);
+		}
+		
 		$input = $_POST;
 		$_SESSION['validator_val'] = md5(serialize($input));
 		$_SESSION['validator_key'] = array_keys($input);

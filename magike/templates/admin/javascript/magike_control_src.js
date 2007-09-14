@@ -6,46 +6,6 @@
 	powered by qining
 ********************************************/
 
-//json 解析扩展
-if (!Object.prototype.toJSONString) {
-    (function (s) {
-        var m = {
-            '\b': '\\b',
-            '\t': '\\t',
-            '\n': '\\n',
-            '\f': '\\f',
-            '\r': '\\r',
-            '"' : '\\"',
-            '\\': '\\\\'
-        };
-
-        s.parseJSON = function (hook) {
-            try {
-                if (/^("(\\.|[^"\\\n\r])*?"|[,:{}\[\]0-9.\-+Eaeflnr-u \n\r\t])+?$/.
-                        test(this)) {
-                    var j = eval('(' + this + ')');
-                    if (typeof hook === 'function') {
-                        function walk(v) {
-                            if (v && typeof v === 'object') {
-                                for (var i in v) {
-                                    if (v.hasOwnProperty(i)) {
-                                        v[i] = walk(v[i]);
-                                    }
-                                }
-                            }
-                            return hook(v);
-                        }
-                        return walk(j);
-                    }
-                    return j;
-                }
-            } catch (e) {
-            }
-            throw new SyntaxError("parseJSON");
-        };
-    })(String.prototype);
-}
-
 function getScrollTop(){
 	var yScrolltop;
 	var xScrollleft;
@@ -97,7 +57,7 @@ function registerTableCheckbox(table,className)
 			$(this.parentNode.parentNode).toggleClass("select");
 		}
 	);
-	
+
 	$("tr",$("#"+table)).mouseover
 	(
 		function()
@@ -625,8 +585,9 @@ function magikeValidator(url,mod)
 		type: 'POST',
 		url: url + '?mod=' + mod,
 		data: s,
-		success: function(data){
-			js = data.parseJSON();
+		cache: false,
+		dataType: "json",
+		success: function(js){
 			if(js != 0)
 			{
 				for(var i in js)
